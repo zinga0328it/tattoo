@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Gallery Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            border: 3px solid green;
+            padding: 20px;
+            min-height: 100px;
+        }
+        .gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test Gallery - Debug Mode</h1>
+    <p>Apri la Console del Browser (F12) per vedere i log di debug!</p>
+    
+    <div id="gallery-container">
+        <p>Caricamento in corso...</p>
+    </div>
+    
+    <script src="gallery-test.js"></script>
+</body>
+</html>

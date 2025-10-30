@@ -1,0 +1,38 @@
+{
+  "generated_at": "2025-09-21T13:06:26.636680",
+  "total_tattoos": 4,
+  "tattoos": [
+    {
+      "id": 4,
+      "username": "ale0328it",
+      "description": "Test di l'ia",
+      "filename": "ale0328it_Test di lia_AgACAgQAAxkBAANMaM_tN6Z0oX7-GOWjDV--eUwU1AEAAqDJMRtUwoFSGeXXQVcX3IsBAAMCAAN5AAM2BA.jpg",
+      "uploaded_at": "2025-09-21 12:44:06",
+      "image_url": "images/ale0328it_Test di lia_AgACAgQAAxkBAANMaM_tN6Z0oX7-GOWjDV--eUwU1AEAAqDJMRtUwoFSGeXXQVcX3IsBAAMCAAN5AAM2BA.jpg"
+    },
+    {
+      "id": 1,
+      "username": "testuser",
+      "description": "Tatuaggio artistico numero 1",
+      "filename": "ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg",
+      "uploaded_at": "2025-09-21 11:47:56",
+      "image_url": "images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg"
+    },
+    {
+      "id": 2,
+      "username": "testuser",
+      "description": "Tatuaggio artistico numero 2",
+      "filename": "test.jpg",
+      "uploaded_at": "2025-09-21 11:47:56",
+      "image_url": "images/test.jpg"
+    },
+    {
+      "id": 3,
+      "username": "testuser",
+      "description": "Tatuaggio artistico numero 3",
+      "filename": "ale0328it_AgACAgQAAxkBAAMyaM3cmNmPOqFGRFVVxbZcsIICabUAApvIMRuFpHFSFehbWH_yKh0BAAMCAAN5AAM2BA.jpg",
+      "uploaded_at": "2025-09-21 11:47:56",
+      "image_url": "images/ale0328it_AgACAgQAAxkBAAMyaM3cmNmPOqFGRFVVxbZcsIICabUAApvIMRuFpHFSFehbWH_yKh0BAAMCAAN5AAM2BA.jpg"
+    }
+  ]
+}

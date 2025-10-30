@@ -1,0 +1,43 @@
+{% extends 'gallery/base.html' %}
+
+{% block title %}Roma Studio Tattoo - Galleria Tatuaggi{% endblock %}
+{% block description %}Scopri la nostra galleria di tatuaggi artistici. {{ total_count }} opere realizzate dai nostri artisti a Roma. Contatta direttamente l'artista su Telegram.{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>🎨 Roma Studio Tattoo</h1>
+        <p>Galleria Tatuaggi Artistici - {{ total_count }} opere</p>
+        <p>✨ Clicca su ogni tatuaggio per vedere i dettagli e contattare l'artista</p>
+    </div>
+    
+    <div class="grid">
+        {% for tattoo in tattoos %}
+            {% if tattoo.file_exists %}
+            <div class="card">
+                <a href="{{ tattoo.get_absolute_url }}">
+                    <img src="{{ tattoo.image_url }}" alt="{{ tattoo.description }} - Roma Studio Tattoo" loading="lazy">
+                </a>
+                <div class="card-content">
+                    <div class="card-title">{{ tattoo.description }}</div>
+                    <div class="card-description">
+                        Realizzato da: <strong>{{ tattoo.username }}</strong>
+                    </div>
+                    <div class="card-meta">
+                        <a href="{{ tattoo.telegram_url }}" class="username" target="_blank">
+                            📱 @{{ tattoo.username }}
+                        </a>
+                        <span class="date">{{ tattoo.uploaded_at|date:"d/m/Y" }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% empty %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                <h3>Nessun tatuaggio caricato ancora</h3>
+                <p>Torna presto per vedere le nostre opere!</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

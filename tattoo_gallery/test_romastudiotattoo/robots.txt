@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.romastudiotattoo.com/sitemap.xml
+Sitemap: https://romastudiotattoo.com/sitemap.xml

@@ -1,0 +1,102 @@
+{% extends 'gallery/base.html' %}
+
+{% block title %}{{ tattoo.seo_title }}{% endblock %}
+{% block description %}{{ tattoo.seo_description }}{% endblock %}
+{% block keywords %}{{ tattoo.keywords }}{% endblock %}
+
+{% block og_title %}{{ tattoo.seo_title }}{% endblock %}
+{% block og_description %}{{ tattoo.seo_description }}{% endblock %}
+{% block og_image %}{{ request.build_absolute_uri }}{{ tattoo.image_url }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <a href="/" class="back-btn">← Torna alla Galleria</a>
+    
+    <div class="detail-hero">
+        <h1>{{ tattoo.description }}</h1>
+        <img src="{{ tattoo.image_url }}" alt="{{ tattoo.description }} - Roma Studio Tattoo">
+        
+        <div style="margin: 30px 0; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <h2>📋 Dettagli del Tatuaggio</h2>
+            <p style="font-size: 1.2em; margin: 15px 0; line-height: 1.6;">
+                <strong>Descrizione:</strong> {{ tattoo.description }}
+            </p>
+            <p style="margin: 10px 0;">
+                <strong>Artista:</strong> {{ tattoo.username }}
+            </p>
+            <p style="margin: 10px 0;">
+                <strong>Data realizzazione:</strong> {{ tattoo.uploaded_at|date:"d F Y" }}
+            </p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <h3>💬 Contatta direttamente l'artista</h3>
+                <p style="margin: 15px 0; color: #666;">
+                    Vuoi un tatuaggio simile? Parla direttamente con {{ tattoo.username }}!
+                </p>
+                <a href="{{ tattoo.telegram_url }}" class="telegram-btn" target="_blank">
+                    📱 Chatta con @{{ tattoo.username }} su Telegram
+                </a>
+                <p style="font-size: 0.9em; color: #999; margin-top: 10px;">
+                    ⚡ Risposta immediata • 🎨 Preventivo gratuito • 📍 Roma Studio Tattoo
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    {% if related_tattoos %}
+    <div class="related">
+        <h3>🎨 Altri lavori di {{ tattoo.username }}</h3>
+        <div class="grid">
+            {% for related in related_tattoos %}
+                {% if related.file_exists %}
+                <div class="card">
+                    <a href="{{ related.get_absolute_url }}">
+                        <img src="{{ related.image_url }}" alt="{{ related.description }}" loading="lazy">
+                    </a>
+                    <div class="card-content">
+                        <div class="card-title">{{ related.description }}</div>
+                        <div class="card-meta">
+                            <span class="date">{{ related.uploaded_at|date:"d/m/Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <div style="text-align: center; margin: 50px 0; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px;">
+        <h3>🏆 Roma Studio Tattoo</h3>
+        <p style="margin: 15px 0; opacity: 0.9;">
+            I migliori tatuatori di Roma. Professionalità, creatività e passione per l'arte corporea.
+        </p>
+        <a href="/" style="color: white; text-decoration: underline;">
+            Scopri tutti i nostri lavori →
+        </a>
+    </div>
+</div>
+
+<!-- Schema.org per Google -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "{{ tattoo.description }}",
+  "description": "{{ tattoo.seo_description }}",
+  "image": "{{ request.build_absolute_uri }}{{ tattoo.image_url }}",
+  "creator": {
+    "@type": "Person",
+    "name": "{{ tattoo.username }}",
+    "url": "{{ tattoo.telegram_url }}"
+  },
+  "dateCreated": "{{ tattoo.uploaded_at|date:'c' }}",
+  "keywords": "{{ tattoo.keywords }}",
+  "provider": {
+    "@type": "Organization",
+    "name": "Roma Studio Tattoo",
+    "url": "{{ request.build_absolute_uri }}"
+  }
+}
+</script>
+{% endblock %}
