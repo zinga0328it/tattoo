@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roma Studio Tattoo - In costruzione</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            margin: 0;
+            padding: 50px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 600px;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .coming-soon {
+            background: #ff6b35;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .gallery {
+            margin: 30px 0;
+        }
+        .gallery h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: opacity 1s ease-in-out;
+            cursor: pointer;
+        }
+        .gallery img.fade-out {
+            opacity: 0;
+        }
+        .contact {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏴‍☠️ Roma Studio Tattoo</h1>
+        <div class="subtitle">Il miglior studio di tatuaggi di Roma</div>
+        
+        <div class="coming-soon">
+            🚧 Sito in costruzione 🚧<br>
+            <small>Coming Soon - Presto Online!</small>
+        </div>
+        
+        <div class="gallery">
+            <h2>🖼️ Galleria dei Tatuaggi</h2>
+            <div id="gallery-container">
+                <!-- Immagini caricate dinamicamente -->
+            </div>
+        </div>
+        
+        <div class="contact">
+            <h3>📞 Contattaci</h3>
+            <p>Contatta Ginevra per informazioni e prenotazioni:</p>
+            <p>📱 WhatsApp: +39 350 149 3778</p>
+            <p>📧 Email: info@romastudiotattoo.com</p>
+            <p>📍 Via Roma, 123 - Roma (RM)</p>
+        </div>
+    </div>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        function loadImages() {
+            // Carica l'immagine esistente
+            const img = new Image();
+            img.src = 'images/ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg';
+            img.onload = () => {
+                img.alt = 'Tatuaggio';
+                img.addEventListener('click', () => {
+                    img.classList.add('fade-out');
+                    setTimeout(() => {
+                        img.remove();
+                    }, 1000);
+                });
+                galleryContainer.appendChild(img);
+            };
+            img.onerror = () => {
+                console.log('Nessuna immagine trovata');
+            };
+        }
+        
+        loadImages();
+    </script>
+</body>
+</html>

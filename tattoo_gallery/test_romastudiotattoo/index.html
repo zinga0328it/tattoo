@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roma Studio Tattoo - Arte sulla Pelle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🏴‍☠️ Roma Studio Tattoo</h1>
+        <div class="subtitle">Il miglior studio di tatuaggi di Roma</div>
+        
+        <div class="poetic-text">
+            <p>L'inchiostro eterno sulla pelle narra storie silenziose,<br>
+            dove ogni disegno è un verso di vita inciso per sempre.<br>
+            Scopri l'arte che non svanisce, ma cresce con te.</p>
+        </div>
+        
+        <div class="gallery">
+            <h2>🖼️ Galleria dei Tatuaggi</h2>
+            <div id="gallery-container">
+                <!-- Immagini caricate dinamicamente -->
+            </div>
+        </div>
+        
+        <div class="contact">
+            <h3>📞 Siti dinamici gestiti tramite telegram</h3>
+            <p>webmaster per siti web dinamici gestiti via telegram:</p>
+            <p>📱 WhatsApp: +39 3510120753</p>
+            <p>📧 Email: info@romastudiotattoo.com</p>
+            <p>📍 Via Roma, 123 - Roma (RM)</p>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner">
+        <p>🍪 Utilizziamo cookie tecnici per migliorare la tua esperienza sul nostro sito. Continuando a navigare, accetti il loro uso.</p>
+        <div class="cookie-buttons">
+            <button class="cookie-btn accept" onclick="acceptCookies()">Accetta</button>
+            <button class="cookie-btn decline" onclick="declineCookies()">Rifiuta</button>
+        </div>
+    </div>
+
+    <script>
+window.tattoosData = [{"id":5,"username":"testuser","description":"Tatuaggio di test","filename":"img1.jpg","uploaded_at":"2025-09-27T09:50:25.725961+00:00","image_url":"/images/img1.jpg","detail_url":"/detail.html?id=5","telegram_url":"https://t.me/testuser","seo_title":"Tatuaggio di test - Roma Studio Tattoo","seo_description":"Tatuaggio: Tatuaggio di test. Realizzato presso Roma Studio Tattoo Roma. Contatta testuser su Telegram.","keywords":"tatuaggio, tatuaggio di test, roma, studio tattoo, testuser"}];console.log("Dati caricati inline:", window.tattoosData);
+</script>
+<script src="gallery.js?v=11"></script>
+
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        
+        // Lista delle immagini presenti (aggiorna questa lista quando carichi nuove foto)
+        const imageFiles = [
+            'ale0328it_AgACAgQAAxkBAAM0aM3c1F3zbYvcf2QGgX5MNsxLLtYAApzIMRuFpHFS4zm6OJRGbIUBAAMCAAN5AAM2BA.jpg',
+            'ale0328it_AgACAgQAAxkBAAM6aM3fcqVAax3ykcFmIU7WbfHR1dgAAp7IMRuFpHFSdT0Gfxz5j7YBAAMCAAN5AAM2BA.jpg',
+            'ale0328it_AgACAgQAAxkBAAM8aM3kGLOYaLxQq-Lq2-11FyXIYQEAAqTIMRuFpHFSeaaLy96TlX8BAAMCAAN5AAM2BA.jpg',
+            'ale0328it_AgACAgQAAxkBAAMuaM3bSqcX9oj4kq7Yd5rwWLLqcmAAApjIMRuFpHFSSvEAAWpBq5NKAQADAgADeQADNgQ.jpg',
+            'ale0328it_AgACAgQAAxkBAAMwaM3cVeI3-x-1AAGFvhR2cAcFGtjZAAKayDEbhaRxUuHq9XTmjhtXAQADAgADeQADNgQ.jpg',
+            'ale0328it_AgACAgQAAxkBAAMyaM3cmNmPOqFGRFVVxbZcsIICabUAApvIMRuFpHFSFehbWH_yKh0BAAMCAAN5AAM2BA.jpg'
+        ];
+        
+        function loadImages() {
+            imageFiles.forEach(fileName => {
+                const img = new Image();
+                img.src = `images/${fileName}`;
+                img.onload = () => {
+                    img.alt = 'Tatuaggio';
+                    img.style.width = '200px';
+                    img.style.height = '200px';
+                    img.style.objectFit = 'cover';
+                    img.style.borderRadius = '10px';
+                    img.style.transition = 'opacity 1s ease-in-out';
+                    img.style.cursor = 'pointer';
+                    
+                    // Crea il container del tatuaggio
+                    const tattooItem = document.createElement('div');
+                    tattooItem.className = 'tattoo-item';
+                    
+                    // Crea il container dei like
+                    const likeContainer = document.createElement('div');
+                    likeContainer.className = 'like-container';
+                    
+                    // Crea il pulsante like
+                    const likeButton = document.createElement('button');
+                    likeButton.className = 'like-button';
+                    likeButton.innerHTML = '❤️';
+                    likeButton.title = 'Mi piace';
+                    
+                    // Disabilita il pulsante se l'utente ha già messo like
+                    if (hasUserLiked(fileName)) {
+                        likeButton.classList.add('disabled');
+                        likeButton.title = 'Hai già messo like';
+                    }
+                    
+                    // Crea il contatore dei like
+                    const likeCount = document.createElement('span');
+                    likeCount.className = 'like-count';
+                    likeCount.textContent = getLikes(fileName);
+                    
+                    // Gestisci il click sul pulsante like
+                    likeButton.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Evita che scatti l'evento dell'immagine
+                        
+                        if (hasUserLiked(fileName)) {
+                            // Utente ha già messo like - animazione di feedback
+                            likeButton.style.transform = 'scale(1.2)';
+                            setTimeout(() => likeButton.style.transform = 'scale(1)', 200);
+                            return;
+                        }
+                        
+                        const currentLikes = addLike(fileName);
+                        likeCount.textContent = currentLikes;
+                        likeButton.classList.add('liked');
+                        likeButton.classList.add('disabled');
+                        likeButton.title = 'Hai già messo like';
+                        setTimeout(() => likeButton.classList.remove('liked'), 300);
+                    });
+                    
+                    // Gestisci il click sull'immagine (fade out)
+                    img.addEventListener('click', () => {
+                        img.classList.add('fade-out');
+                        setTimeout(() => {
+                            tattooItem.remove();
+                        }, 1000);
+                    });
+                    
+                    // Assembla gli elementi
+                    likeContainer.appendChild(likeButton);
+                    likeContainer.appendChild(likeCount);
+                    tattooItem.appendChild(img);
+                    tattooItem.appendChild(likeContainer);
+                    galleryContainer.appendChild(tattooItem);
+                };
+                img.onerror = () => {
+                    console.log(`Immagine non trovata: ${fileName}`);
+                };
+            });
+        }
+        
+        function getLikes(filename) {
+            const likes = JSON.parse(localStorage.getItem('tattoo_likes') || '{}');
+            return likes[filename] || 0;
+        }
+        
+        function addLike(filename) {
+            const userLikes = JSON.parse(localStorage.getItem('user_likes') || '{}');
+            if (userLikes[filename]) {
+                // Utente ha già messo like a questa immagine
+                return userLikes[filename];
+            }
+            
+            const likes = JSON.parse(localStorage.getItem('tattoo_likes') || '{}');
+            likes[filename] = (likes[filename] || 0) + 1;
+            localStorage.setItem('tattoo_likes', JSON.stringify(likes));
+            
+            // Segna che questo utente ha messo like
+            userLikes[filename] = likes[filename];
+            localStorage.setItem('user_likes', JSON.stringify(userLikes));
+            
+            return likes[filename];
+        }
+        
+        function hasUserLiked(filename) {
+            const userLikes = JSON.parse(localStorage.getItem('user_likes') || '{}');
+            return !!userLikes[filename];
+        }
+        
+        // Cookie Banner Functions
+        function showCookieBanner() {
+            const banner = document.getElementById('cookie-banner');
+            const cookiesAccepted = localStorage.getItem('cookies_accepted');
+            if (!cookiesAccepted) {
+                banner.classList.add('show');
+            }
+        }
+        
+        function acceptCookies() {
+            localStorage.setItem('cookies_accepted', 'true');
+            document.getElementById('cookie-banner').classList.remove('show');
+        }
+        
+        function declineCookies() {
+            localStorage.setItem('cookies_accepted', 'false');
+            document.getElementById('cookie-banner').classList.remove('show');
+            // Disabilita funzionalità che richiedono cookie
+            alert('Alcune funzionalità potrebbero non essere disponibili senza cookie.');
+        }
+        
+        // Carica le immagini quando la pagina è pronta
+        document.addEventListener('DOMContentLoaded', function() {
+            loadImages();
+            showCookieBanner();
+        });
+    </script>
+</body>
+</html>

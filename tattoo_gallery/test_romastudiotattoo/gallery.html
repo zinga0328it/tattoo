@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galleria Completa Tatuaggi - Roma Studio Tattoo</title>
+    <meta name="description" content="Galleria completa dei tatuaggi realizzati presso Roma Studio Tattoo. Clicca sui tatuaggi per vedere i dettagli e contattare direttamente gli artisti.">
+    <meta name="keywords" content="galleria tatuaggi roma, tattoo gallery, tatuatori roma, studio tattoo">
+    
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #666;
+        }
+        
+        .gallery { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 25px; 
+            margin-top: 30px;
+        }
+        
+        .tattoo-card { 
+            background: white; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tattoo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .tattoo-image { 
+            width: 100%; 
+            height: 250px; 
+            object-fit: cover; 
+        }
+        
+        .tattoo-info { 
+            padding: 20px; 
+        }
+        
+        .tattoo-description { 
+            font-weight: bold; 
+            margin-bottom: 10px; 
+            font-size: 1.1em;
+            color: #333;
+        }
+        
+        .tattoo-author { 
+            color: #667eea; 
+            font-size: 0.9em; 
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .tattoo-date { 
+            color: #999; 
+            font-size: 0.8em; 
+            margin-bottom: 15px;
+        }
+        
+        .telegram-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #0088cc, #0099dd);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .telegram-link:hover {
+            background: linear-gradient(135deg, #007bb3, #0088cc);
+            transform: translateY(-1px);
+        }
+        
+        .stats { 
+            text-align: center; 
+            margin: 20px 0; 
+            color: #666; 
+            background: rgba(255,255,255,0.8);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #e74c3c;
+            background: #ffeaea;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-btn">← Torna alla Homepage</a>
+        
+        <div class="header">
+            <h1>🎨 Galleria Completa Tatuaggi</h1>
+            <p>Roma Studio Tattoo - Clicca su qualsiasi tatuaggio per i dettagli</p>
+            <div id="stats" class="stats">
+                <div id="loading" class="loading">🎨 Caricamento galleria...</div>
+            </div>
+        </div>
+        
+        <div id="error" class="error" style="display: none;">
+            ⚠️ Errore nel caricamento della galleria
+        </div>
+        
+        <div id="gallery" class="gallery">
+            <!-- Contenuto caricato dinamicamente -->
+        </div>
+    </div>
+
+    <script>
+        // Carica tutti i tatuaggi dalla API Django
+        async function loadFullGallery() {
+            try {
+                const response = await fetch('/gallery/api/tattoos/');
+                const tattoos = await response.json();
+                
+                displayFullGallery(tattoos);
+                updateStats(tattoos.length);
+                
+            } catch (error) {
+                console.error('Errore caricamento galleria:', error);
+                showError();
+            }
+        }
+        
+        // Mostra la galleria completa
+        function displayFullGallery(tattoos) {
+            const gallery = document.getElementById('gallery');
+            
+            if (tattoos.length === 0) {
+                gallery.innerHTML = '<p style="text-align: center; color: #666;">Nessun tatuaggio disponibile al momento.</p>';
+                return;
+            }
+            
+            const galleryHTML = tattoos.map(tattoo => `
+                <div class="tattoo-card" onclick="openTattooDetail(${tattoo.id})">
+                    <img src="${tattoo.image_url}" alt="${tattoo.description}" class="tattoo-image" loading="lazy">
+                    <div class="tattoo-info">
+                        <div class="tattoo-description">${tattoo.description}</div>
+                        <div class="tattoo-author">👤 ${tattoo.username}</div>
+                        <div class="tattoo-date">📅 ${new Date(tattoo.uploaded_at).toLocaleDateString('it-IT')}</div>
+                        <a href="${tattoo.telegram_url}" class="telegram-link" onclick="event.stopPropagation()">
+                            💬 Contatta ${tattoo.username}
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+            
+            gallery.innerHTML = galleryHTML;
+        }
+        
+        // Aggiorna le statistiche
+        function updateStats(count) {
+            const stats = document.getElementById('stats');
+            const now = new Date().toLocaleDateString('it-IT');
+            stats.innerHTML = `📸 ${count} tatuaggi disponibili | 🕒 Aggiornato: ${now}`;
+        }
+        
+        // Apre la pagina dettaglio
+        function openTattooDetail(tattooId) {
+            window.location.href = `/detail.html?id=${tattooId}`;
+        }
+        
+        // Mostra errore
+        function showError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+        }
+        
+        // Carica la galleria quando la pagina è pronta
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFullGallery();
+        });
+    </script>
+</body>
+</html>

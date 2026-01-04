@@ -1,0 +1,25 @@
+# CONFIGURAZIONE PROXY SICURA PER DJANGO
+# Aggiungi queste righe al VirtualHost SSL PRIMA di </VirtualHost>
+
+    # Proxy per le pagine dettaglio Django (SICURO - Django interno)
+    ProxyPass /gallery/ http://127.0.0.1:8888/
+    ProxyPassReverse /gallery/ http://127.0.0.1:8888/
+    ProxyPreserveHost On
+    
+    # Headers di sicurezza per il proxy
+    ProxyPassReverse /gallery/ http://127.0.0.1:8888/
+    Header always set X-Frame-Options DENY
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Blocca accesso diretto a Django dall'esterno
+    <Location "/gallery/">
+        # Solo dal localhost interno
+        Require local
+        # Oppure da specifici IP interni se necessario
+    </Location>
+
+# COMANDI PER APPLICARE:
+# sudo nano /etc/apache2/sites-enabled/romastudiotattoo-ssl.conf
+# Aggiungi le righe sopra PRIMA di </VirtualHost>
+# sudo systemctl reload apache2

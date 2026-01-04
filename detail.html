@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Galleria Tatuaggi - Roma Studio Tattoo</title>
+    <meta name="description" id="page-description" content="Scopri i migliori tatuaggi realizzati dai nostri artisti a Roma. Galleria completa con contatti diretti.">
+    <meta name="keywords" id="page-keywords" content="tatuaggi roma, tattoo studio, gallery tatuaggi">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" id="og-title" content="Galleria Tatuaggi - Roma Studio Tattoo">
+    <meta property="og:description" id="og-description" content="Scopri i migliori tatuaggi realizzati dai nostri artisti a Roma">
+    <meta property="og:image" id="og-image" content="">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            min-height: 100vh;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .detail-hero {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .detail-hero img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 20px 0;
+        }
+        
+        .detail-info {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+        
+        .telegram-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #0088cc, #0099dd);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.3);
+            margin: 20px 0;
+        }
+        
+        .telegram-btn:hover {
+            background: linear-gradient(135deg, #007bb3, #0088cc);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+            color: white;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #666;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #e74c3c;
+            background: #ffeaea;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .related-gallery {
+            margin: 50px 0;
+        }
+        
+        .related-gallery h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-container">
+        <a href="/gallery.html" class="back-btn">← Torna alla Galleria</a>
+        
+        <div id="loading" class="loading">
+            🎨 Caricamento dettagli tatuaggio...
+        </div>
+        
+        <div id="error" class="error" style="display: none;">
+            ⚠️ Errore nel caricamento. <a href="/gallery.html">Torna alla galleria</a>
+        </div>
+        
+        <div id="tattoo-detail" style="display: none;">
+            <!-- Contenuto caricato dinamicamente -->
+        </div>
+    </div>
+
+    <script>
+        // Estrae l'ID del tatuaggio dall'URL
+        function getTattooId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+        
+        // Carica i dettagli del tatuaggio tramite proxy sicuro
+        async function loadTattooDetail() {
+            const tattooId = getTattooId();
+            
+            if (!tattooId) {
+                showError('ID tatuaggio non specificato');
+                return;
+            }
+            
+            try {
+                // Chiamata SICURA tramite proxy Apache
+                const response = await fetch(`/gallery/api/tattoo/${tattooId}/`);
+                
+                if (!response.ok) {
+                    throw new Error('Tatuaggio non trovato');
+                }
+                
+                const tattoo = await response.json();
+                displayTattooDetail(tattoo);
+                
+                // Carica tatuaggi correlati
+                loadRelatedTattoos(tattoo.username, tattooId);
+                
+            } catch (error) {
+                console.error('Errore:', error);
+                showError('Impossibile caricare il tatuaggio');
+            }
+        }
+        
+        // Mostra i dettagli del tatuaggio
+        function displayTattooDetail(tattoo) {
+            // Aggiorna SEO
+            updateSEO(tattoo);
+            
+            // Crea il contenuto
+            const content = `
+                <div class="detail-hero">
+                    <h1>${tattoo.description}</h1>
+                    <img src="${tattoo.image_url}" alt="${tattoo.description} - Roma Studio Tattoo" loading="lazy">
+                </div>
+                
+                <div class="detail-info">
+                    <h2>📋 Dettagli del Tatuaggio</h2>
+                    <p style="font-size: 1.2em; margin: 15px 0; line-height: 1.6;">
+                        <strong>Descrizione:</strong> ${tattoo.description}
+                    </p>
+                    <p style="margin: 10px 0;">
+                        <strong>Artista:</strong> ${tattoo.username}
+                    </p>
+                    <p style="margin: 10px 0;">
+                        <strong>Data realizzazione:</strong> ${new Date(tattoo.uploaded_at).toLocaleDateString('it-IT')}
+                    </p>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <h3>💬 Contatta direttamente l'artista</h3>
+                        <p style="margin: 15px 0; color: #666;">
+                            Vuoi un tatuaggio simile? Parla direttamente con ${tattoo.username}!
+                        </p>
+                        <a href="${tattoo.telegram_url}" class="telegram-btn" target="_blank">
+                            📱 Chatta con @${tattoo.username} su Telegram
+                        </a>
+                        <p style="font-size: 0.9em; color: #999; margin-top: 10px;">
+                            ⚡ Risposta immediata • 🎨 Preventivo gratuito • 📍 Roma Studio Tattoo
+                        </p>
+                    </div>
+                </div>
+                
+                <div id="related-tattoos" class="related-gallery">
+                    <!-- Tatuaggi correlati caricati dinamicamente -->
+                </div>
+                
+                <div class="cta-section">
+                    <h3>🏆 Roma Studio Tattoo</h3>
+                    <p style="margin: 15px 0; opacity: 0.9;">
+                        I migliori tatuatori di Roma. Professionalità, creatività e passione per l'arte corporea.
+                    </p>
+                    <a href="/gallery.html" style="color: white; text-decoration: underline;">
+                        Scopri tutti i nostri lavori →
+                    </a>
+                </div>
+            `;
+            
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('tattoo-detail').innerHTML = content;
+            document.getElementById('tattoo-detail').style.display = 'block';
+        }
+        
+        // Aggiorna SEO dinamicamente
+        function updateSEO(tattoo) {
+            document.title = tattoo.seo_title || `${tattoo.description} - Roma Studio Tattoo`;
+            document.getElementById('page-title').content = document.title;
+            document.getElementById('page-description').content = tattoo.seo_description || tattoo.description;
+            document.getElementById('page-keywords').content = tattoo.keywords || 'tatuaggi roma, tattoo';
+            document.getElementById('og-title').content = document.title;
+            document.getElementById('og-description').content = tattoo.seo_description || tattoo.description;
+            document.getElementById('og-image').content = `${window.location.origin}${tattoo.image_url}`;
+        }
+        
+        // Carica tatuaggi correlati
+        async function loadRelatedTattoos(username, excludeId) {
+            try {
+                const response = await fetch(`/gallery/api/artist/${encodeURIComponent(username)}/`);
+                const relatedTattoos = await response.json();
+                
+                const filtered = relatedTattoos.filter(t => t.id != excludeId).slice(0, 6);
+                
+                if (filtered.length > 0) {
+                    displayRelatedTattoos(filtered, username);
+                }
+                
+            } catch (error) {
+                console.error('Errore caricamento correlati:', error);
+            }
+        }
+        
+        // Mostra tatuaggi correlati
+        function displayRelatedTattoos(tattoos, username) {
+            const content = `
+                <h3>🎨 Altri lavori di ${username}</h3>
+                <div class="gallery-grid">
+                    ${tattoos.map(tattoo => `
+                        <div class="gallery-item">
+                            <a href="detail.html?id=${tattoo.id}">
+                                <img src="${tattoo.image_url}" alt="${tattoo.description}" loading="lazy">
+                                <div class="overlay">
+                                    <h3>${tattoo.description}</h3>
+                                    <p>📅 ${new Date(tattoo.uploaded_at).toLocaleDateString('it-IT')}</p>
+                                </div>
+                            </a>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            document.getElementById('related-tattoos').innerHTML = content;
+        }
+        
+        // Mostra errore
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').innerHTML = `⚠️ ${message}. <a href="/gallery.html">Torna alla galleria</a>`;
+            document.getElementById('error').style.display = 'block';
+        }
+        
+        // Avvia il caricamento
+        document.addEventListener('DOMContentLoaded', loadTattooDetail);
+    </script>
+</body>
+</html>

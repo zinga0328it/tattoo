@@ -1,0 +1,23 @@
+[Unit]
+Description=Django Tattoo Gallery (SICURO)
+After=network.target
+
+[Service]
+User=alex
+Group=alex
+WorkingDirectory=/home/alex/web/tatuaggi/tattoo_gallery
+Environment=PYTHONPATH=/home/alex/web/tatuaggi/tattoo_gallery
+Environment=DJANGO_SETTINGS_MODULE=tattoo_gallery.settings
+ExecStart=/usr/bin/python3 manage.py runserver 127.0.0.1:8888
+Restart=always
+RestartSec=3
+
+# SICUREZZA
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/home/alex/web/tatuaggi
+
+[Install]
+WantedBy=multi-user.target

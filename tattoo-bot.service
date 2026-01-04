@@ -1,0 +1,24 @@
+[Unit]
+Description=Roma Studio Tattoo Bot
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=alex
+Group=alex
+WorkingDirectory=/home/alex/web/tatuaggi
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=PYTHONPATH=/home/alex/web/tatuaggi
+ExecStart=/usr/bin/python3 /home/alex/web/tatuaggi/bot.py
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/alex/web/tatuaggi/bot.log
+StandardError=append:/home/alex/web/tatuaggi/bot_error.log
+
+# Restart policy
+RestartPreventExitStatus=0
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
