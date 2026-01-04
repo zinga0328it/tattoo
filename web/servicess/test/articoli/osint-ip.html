@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSINT IP – AiVigilanza</title>
+<style>
+  body{margin:0;background:#fff;color:#222;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+  .wrap{max-width:900px;margin:32px auto;padding:0 16px}
+  h1{font-size:28px;margin:0 0 16px;color:#d35400}
+  .card{background:#fff;border:2px solid #f39c12;border-radius:14px;padding:18px 16px;box-shadow:0 6px 20px rgba(0,0,0,.15)}
+  form{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  input,button{font-size:16px;border-radius:8px;border:1px solid #ccc;padding:10px}
+  input{flex:1 1 320px}
+  button{cursor:pointer;background:#e67e22;color:#fff;border:none}
+  button:hover{background:#d35400}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+  .box{background:#fffbe6;border:1px solid #f39c12;border-radius:10px;padding:12px;min-height:120px}
+  .muted{color:#777;font-size:14px}
+  pre{white-space:pre-wrap;word-break:break-word;margin:0}
+  .tag{display:inline-block;background:#f39c12;color:#fff;border-radius:999px;padding:3px 8px;margin:2px;font-size:13px}
+  .foot{margin-top:14px;font-size:12px;color:#555}
+  a{color:#e67e22;text-decoration:none}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔎 OSINT IP / Dominio</h1>
+  <div class="card">
+    <form id="f">
+      <input id="q" placeholder="Es. 159.223.238.185 oppure www.aivigilanza.it" autocomplete="off">
+      <button type="submit">Analizza</button>
+    </form>
+
+    <div class="row">
+      <div class="box">
+        <b>Identità & Geo</b>
+        <div id="id"></div>
+      </div>
+      <div class="box">
+        <b>Reverse DNS & ASN</b>
+        <div id="dns"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="box">
+        <b>Contatto Abuse (RDAP)</b>
+        <div id="abuse" class="muted">—</div>
+      </div>
+      <div class="box">
+        <b>Dettagli & Link utili</b>
+        <div id="links" class="muted">—</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="box">
+        <b>⏱ Tempo di risposta</b>
+        <div id="ping" class="muted">—</div>
+      </div>
+    </div>
+
+    <div class="foot">
+      🔸 Strumento OSINT pubblico. Nessuna scansione attiva, solo fonti open (ipapi/ipinfo/RDAP/DNS).
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+async function rdapFor(ip){
+  const registries = [
+    `https://rdap.arin.net/registry/ip/${ip}`,
+    `https://rdap.db.ripe.net/ip/${ip}`,
+    `https://rdap.apnic.net/ip/${ip}`,
+    `https://rdap.lacnic.net/rdap/ip/${ip}`,
+    `https://rdap.afrinic.net/rdap/ip/${ip}`
+  ];
+  for (const url of registries){
+    try{
+      const r = await fetch(url, {mode:'cors'});
+      if(r.ok){ return {...await r.json(), _rdap:url}; }
+    }catch(e){}
+  }
+  return null;
+}
+
+function abuseFromRDAP(j){
+  if(!j || !j.entities) return [];
+  const out = [];
+  for(const ent of j.entities){
+    if(ent.roles && ent.roles.includes('abuse')){
+      const v = ent.vcardArray?.[1] || [];
+      for(const item of v){ if(item[0]==='email' && item[3]) out.push(item[3]); }
+    }
+  }
+  return [...new Set(out)];
+}
+
+function isIP(x){ return /^(\d{1,3}\.){3}\d{1,3}$/.test(x); }
+
+async function resolveHost(host){
+  try{
+    const r = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(host)}&type=A`);
+    const j = await r.json();
+    const ans = (j.Answer||[]).map(a=>a.data).filter(a=>isIP(a));
+    return ans[0]||null;
+  }catch(e){ return null; }
+}
+
+async function reverseDNS(ip){
+  try{
+    const r = await fetch(`https://dns.google/resolve?name=${ip}.in-addr.arpa&type=PTR`);
+    const j = await r.json();
+    const ans = (j.Answer||[]).map(a=>a.data);
+    return ans[0]||null;
+  }catch(e){ return null; }
+}
+
+function tag(txt){ return `<span class="tag">${txt}</span>`; }
+
+$('f').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const q = $('q').value.trim();
+  if(!q) return;
+
+  $('id').innerHTML='...';
+  $('dns').innerHTML='...';
+  $('abuse').innerHTML='...';
+  $('links').innerHTML='...';
+  $('ping').innerHTML='...';
+
+  let ip=q;
+  if(!isIP(q)){ ip=await resolveHost(q); if(!ip){$('id').innerHTML="Non risolto"; return;} }
+
+  let geo=null;
+  try{ geo=await (await fetch(`https://ipapi.co/${ip}/json/`)).json(); }catch(e){}
+  const org=geo?.org||'—', cc=geo?.country_name||geo?.country||'—', city=geo?.city||'—';
+
+  $('id').innerHTML=`
+    <div>${tag('IP')} ${ip}</div>
+    <div>${tag('Org')} ${org}</div>
+    <div>${tag('Paese')} ${cc}</div>
+    <div>${tag('Città')} ${city}</div>
+  `;
+
+  const rev=await reverseDNS(ip);
+  $('dns').innerHTML=`
+    <div>${tag('ASN')} ${geo?.asn||'—'}</div>
+    <div>${tag('PTR')} ${rev||'—'}</div>
+  `;
+
+  const rdap=await rdapFor(ip);
+  const abuses=abuseFromRDAP(rdap);
+  $('abuse').innerHTML=abuses.length? abuses.map(tag).join(' ') : 'Nessun contatto trovato.';
+
+  $('links').innerHTML=`
+    <div><a href="https://ipapi.co/${ip}/json/" target="_blank">ipapi</a></div>
+    <div><a href="${rdap?rdap._rdap:'#'}" target="_blank">RDAP</a></div>
+  `;
+
+  // Fake ping: misura tempo fetch
+  try{
+    const t0=performance.now();
+    await fetch(`https://${ip}`, {mode:'no-cors'});
+    const t1=performance.now();
+    $('ping').innerHTML=`${Math.round(t1-t0)} ms (HTTP)`;
+  }catch(e){ $('ping').innerHTML="—"; }
+});
+</script>
+</body>
+</html>

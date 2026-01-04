@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Eternia - Login Sicuro </title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1> Eternia </h1>
+        <form action="/login" method="post" id="loginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+            <!-- CAPTCHA -->
+            <div class="form-group">
+                <label for="captcha">CAPTCHA:</label>
+                {{ captcha }}
+                <input type="text" name="captcha" required>
+            </div>
+            <!-- Honeypot field (nascosto) -->
+            <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off">
+            <button type="submit">Accedi Sicuramente</button>
+        </form>
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        <div class="footer">
+            <p>Accesso sicuro con crittografia avanzata.</p>
+            <a href="/register">Non hai un account? Registrati</a>
+        </div>
+    </div>
+
+    <script>
+        // Sicurezza aggiuntiva: prevenzione injection e rate limiting lato client
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Controllo lunghezza minima
+            if (username.length < 3 || password.length < 8) {
+                e.preventDefault();
+                alert('Username deve essere almeno 3 caratteri, password almeno 8.');
+                return;
+            }
+
+            // Sanitizzazione base
+            if (/[<>\"'&]/.test(username) || /[<>\"'&]/.test(password)) {
+                e.preventDefault();
+                alert('Caratteri non validi rilevati.');
+                return;
+            }
+
+            // Aggiungi timestamp per prevenire replay attacks
+            const timestamp = Date.now();
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'timestamp';
+            hiddenInput.value = timestamp;
+            this.appendChild(hiddenInput);
+        });
+
+        // Protezione contro brute force: limita tentativi
+        let attempts = 0;
+        const maxAttempts = 5;
+        const lockoutTime = 300000; // 5 minuti
+
+        function handleFailedLogin() {
+            attempts++;
+            if (attempts >= maxAttempts) {
+                alert('Troppi tentativi falliti. Riprova tra 5 minuti.');
+                document.getElementById('loginForm').style.display = 'none';
+                setTimeout(() => {
+                    attempts = 0;
+                    document.getElementById('loginForm').style.display = 'block';
+                }, lockoutTime);
+            }
+        }
+
+        // Se c'è un errore, chiama handleFailedLogin
+        {% if error %}
+        handleFailedLogin();
+        {% endif %}
+    </script>
+</body>
+</html>

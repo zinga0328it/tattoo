@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guida Sistema FTTH - Versione Pubblica</title>
+    <meta name="description" content="Guida introduttiva al sistema di gestione lavori FTTH per coordinare squadre tecniche nell'installazione e manutenzione di reti in fibra ottica.">
+    <meta name="keywords" content="FTTH, fibra ottica, gestione lavori, telecomunicazioni, bot Telegram, dashboard, Alessandro Pepe, operaio elettronico, sviluppatore software, IoT, automazioni industriali">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #f1c40f;
+            min-height: 100vh;
+        }
+        h1, h2, h3, h4 {
+            color: #f1c40f;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #f1c40f;
+            padding-bottom: 15px;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        h2 {
+            border-left: 6px solid #f1c40f;
+            padding-left: 15px;
+            margin-top: 50px;
+            font-size: 1.8em;
+        }
+        blockquote {
+            background: rgba(241, 196, 15, 0.1);
+            border-left: 5px solid #f1c40f;
+            padding: 15px 25px;
+            margin: 25px 0;
+            font-style: italic;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: linear-gradient(135deg, #f1c40f 0%, #d4af37 100%);
+            color: #2d2d2d;
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin: 12px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(241, 196, 15, 0.1);
+        }
+        ul li:before {
+            content: "⚡";
+            margin-right: 12px;
+            color: #f1c40f;
+        }
+        pre {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            color: #f1c40f;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #d4af37;
+        }
+        .contact-section {
+            background: linear-gradient(135deg, rgba(59, 43, 32, 0.9) 0%, rgba(89, 63, 42, 0.9) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(241, 196, 15, 0.3);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            margin-top: 30px;
+        }
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #f1c40f 50%, transparent 100%);
+            margin: 40px 0;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            table {
+                font-size: 0.9em;
+            }
+            .contact-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>📁 Guida Sistema FTTH - Guida al gestionale FTTH</h1>
+    
+    <blockquote>
+        <p><strong>Guida introduttiva al sistema di gestione lavori FTTH</strong><br>
+        Versione: 1.2 | Data: 29 Dicembre 2025</p>
+    </blockquote>
+    
+    <hr>
+    
+    <h2 id="indice">📋 Indice</h2>
+    <ol>
+        <li><a href="#panoramica">Panoramica</a></li>
+        <li><a href="#architettura">Architettura Sistema</a></li>
+        <li><a href="#funzionalita">Funzionalità Principali</a></li>
+        <li><a href="#interfacce">Interfacce Web</a></li>
+        <li><a href="#bot">Bot Telegram</a></li>
+        <li><a href="#contatti">Contatti</a></li>
+    </ol>
+    
+    <hr>
+    
+    <h2 id="panoramica">🎯 Panoramica</h2>
+    <p>Questa guida introduce il <strong>Sistema di Gestione Lavori FTTH</strong> (Fiber To The Home), una soluzione completa per coordinare squadre tecniche nell'installazione e manutenzione di reti in fibra ottica.</p>
+    
+    <h3>Cosa Offre il Sistema</h3>
+    <ul>
+        <li>✅ <strong>Gestione Lavori</strong>: Creazione, assegnazione e monitoraggio lavori</li>
+        <li>✅ <strong>Coordinamento Squadre</strong>: Organizzazione tecnica per territorio</li>
+        <li>✅ <strong>Comunicazione Real-time</strong>: Notifiche automatiche via Telegram</li>
+        <li>✅ <strong>Dashboard Analisi</strong>: Statistiche e report operativi</li>
+        <li>✅ <strong>Interfacce Mobile</strong>: Accesso facilitato da smartphone</li>
+    </ul>
+    
+    <h3>Tecnologie Utilizzate</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Componente</th>
+                <th>Tecnologia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Frontend</td>
+                <td>HTML5, CSS3, JavaScript, Bootstrap</td>
+            </tr>
+            <tr>
+                <td>Backend</td>
+                <td>API REST con autenticazione</td>
+            </tr>
+            <tr>
+                <td>Database</td>
+                <td>Sistema relazionale</td>
+            </tr>
+            <tr>
+                <td>Notifiche</td>
+                <td>Bot Telegram integrato</td>
+            </tr>
+            <tr>
+                <td>Sicurezza</td>
+                <td>Autenticazione multi-livello</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <hr>
+    
+    <h2 id="architettura">🏗️ Architettura Sistema</h2>
+    <pre>
+┌──────────────────────────────────────────────────────────────┐
+│                    🌐 INTERNET PUBBLICO                      │
+│                         ↓                                    │
+│              🔒 Server Web Sicuro (HTTPS)                   │
+└──────────────────────────────────────────────────────────────┘
+                          ↓
+┌──────────────────────────────────────────────────────────────┐
+│  🖥️  Server Applicativo                                     │
+│  ─────────────────────────────────────────────────────────   │
+│  • API REST per gestione dati                               │
+│  • Database centralizzato                                   │
+│  • Integrazione notifiche                                   │
+│  • Sicurezza enterprise                                     │
+└──────────────────────────────────────────────────────────────┘
+                          ↓
+┌──────────────────────────────────────────────────────────────┐
+│  📱 Tecnici sul Campo                                       │
+│  ─────────────────────────────────────────────────────────   │
+│  • Dashboard mobile                                         │
+│  • Notifiche push                                           │
+│  • Aggiornamenti real-time                                  │
+└──────────────────────────────────────────────────────────────┘
+    </pre>
+    
+    <h3>Sicurezza Implementata</h3>
+    <ul>
+        <li>🔐 <strong>Autenticazione Multi-Fattore</strong>: Accesso sicuro per tutti gli utenti</li>
+        <li>🛡️ <strong>Crittografia End-to-End</strong>: Dati protetti in transito e a riposo</li>
+        <li>📊 <strong>Audit Logging</strong>: Tracciamento completo delle operazioni</li>
+        <li>🚫 <strong>Controllo Accessi</strong>: Permessi granulari per ruolo</li>
+    </ul>
+    
+    <hr>
+    
+    <h2 id="funzionalita">✨ Funzionalità Principali</h2>
+    
+    <h3>📋 Gestione Lavori</h3>
+    
+    <h4>Creazione Lavori</h4>
+    <ul>
+        <li><strong>Form Intuitivo</strong>: Inserimento guidato con validazione</li>
+        <li><strong>Campi Completi</strong>: Cliente, indirizzo, operatore, tipo lavoro</li>
+        <li><strong>Assegnazione Automatica</strong>: Sistema intelligente di distribuzione</li>
+    </ul>
+    
+    <h4>Stati Lavori</h4>
+    <ul>
+        <li>🔴 <strong>Da Fare</strong>: Lavoro pianificato</li>
+        <li>🟡 <strong>In Corso</strong>: Lavoro iniziato</li>
+        <li>🟠 <strong>Sospeso</strong>: Lavoro temporaneamente fermato</li>
+        <li>🟢 <strong>Completato</strong>: Lavoro terminato con successo</li>
+    </ul>
+    
+    <h4>Cancellazione Sicura</h4>
+    <ul>
+        <li><strong>Nota Obbligatoria</strong>: Motivazione richiesta per audit</li>
+        <li><strong>Conferma Multi-Step</strong>: Prevenzione cancellazioni accidentali</li>
+        <li><strong>Tracciamento</strong>: Storico completo delle operazioni</li>
+    </ul>
+    
+    <h3>👥 Gestione Squadre e Tecnici</h3>
+    
+    <h4>Organizzazione Gerarchica</h4>
+    <ul>
+        <li><strong>Squadre Territoriali</strong>: Raggruppamento per zona geografica</li>
+        <li><strong>Tecnici Specializzati</strong>: Competenze specifiche per tipo lavoro</li>
+        <li><strong>Coordinamento</strong>: Assegnazione ottimale risorse</li>
+    </ul>
+    
+    <h4>Profili Tecnici</h4>
+    <ul>
+        <li><strong>Informazioni Complete</strong>: Contatti, specializzazioni, disponibilità</li>
+        <li><strong>Storico Lavori</strong>: Track record prestazioni</li>
+        <li><strong>Certificazioni</strong>: Qualifiche e abilitazioni</li>
+    </ul>
+    
+    <h3>📊 Dashboard e Analytics</h3>
+    
+    <h4>Metriche Real-Time</h4>
+    <ul>
+        <li><strong>Lavori per Stato</strong>: Panoramica situazione corrente</li>
+        <li><strong>Performance Squadre</strong>: Efficienza e produttività</li>
+        <li><strong>Trend Temporali</strong>: Analisi evoluzione nel tempo</li>
+    </ul>
+    
+    <h4>Report Personalizzati</h4>
+    <ul>
+        <li><strong>Filtri Avanzati</strong>: Ricerca per data, squadra, tecnico</li>
+        <li><strong>Esportazione</strong>: PDF, Excel, CSV</li>
+        <li><strong>Condivisione</strong>: Report condivisibili via link sicuro</li>
+    </ul>
+    
+    <hr>
+    
+    <h2 id="interfacce">🌐 Interfacce Web</h2>
+    
+    <h3>🏠 Pannello Principale (<code>index.html</code>)</h3>
+    <p><strong>Dashboard amministrativa completa</strong></p>
+    <ul>
+        <li>Statistiche generali sistema</li>
+        <li>Form rapido creazione lavori</li>
+        <li>Gestione tecnici e squadre</li>
+        <li>Configurazione notifiche</li>
+    </ul>
+    
+    <h3>📊 Gestionale Completo (<code>gestionale-ftth.html</code>)</h3>
+    <p><strong>Interfaccia professionale per operatori</strong></p>
+    <ul>
+        <li>Vista completa tutti i lavori</li>
+        <li>Filtri avanzati e ricerca</li>
+        <li>Modifica stati in tempo reale</li>
+        <li>Assegnazione tecnici drag&drop</li>
+    </ul>
+    
+    <h3>📱 Dashboard Tecnici (<code>dashboard.html</code>)</h3>
+    <p><strong>Interfaccia mobile-first per campo</strong></p>
+    <ul>
+        <li>Lista lavori assegnati</li>
+        <li>Aggiornamento stati touch</li>
+        <li>Navigazione integrata</li>
+        <li>Notifiche push</li>
+    </ul>
+    
+    <h3>📝 Inserimento Manuale (<code>manual_entry.html</code>)</h3>
+    <p><strong>Form completo per nuovi lavori</strong></p>
+    <ul>
+        <li>Tutti i campi necessari</li>
+        <li>Validazione automatica</li>
+        <li>Creazione squadre on-demand</li>
+        <li>Assegnazione immediata</li>
+    </ul>
+    
+    <hr>
+    
+    <h2 id="bot">🤖 Bot Telegram</h2>
+    
+    <h3>Funzionalità Bot</h3>
+    <p>Il sistema include un <strong>bot Telegram intelligente</strong> per comunicazione bidirezionale con i tecnici:</p>
+    
+    <h4>📨 Notifiche Automatiche</h4>
+    <ul>
+        <li><strong>Assegnazione Lavori</strong>: Messaggi immediati quando assegnati</li>
+        <li><strong>Aggiornamenti Stato</strong>: Notifiche cambiamenti importanti</li>
+        <li><strong>Promemoria</strong>: Ricordi appuntamenti e scadenze</li>
+    </ul>
+    
+    <h4>💬 Comandi Interattivi</h4>
+    <ul>
+        <li><code>/start</code> - Benvenuto e setup iniziale</li>
+        <li><code>/miei_lavori</code> - Lista lavori assegnati</li>
+        <li><code>/accetta</code> - Conferma presa in carico</li>
+        <li><code>/rifiuta</code> - Declino con motivazione</li>
+        <li><code>/chiudi</code> - Completamento lavoro</li>
+        <li><code>/help</code> - Guida comandi disponibili</li>
+    </ul>
+    
+    <h3>Esempio Conversazione</h3>
+    <pre>
+🤖 Bot: 📋 NUOVO LAVORO ASSEGNATO
+🔢 WR: WR-001
+👤 Cliente: Mario Rossi
+📍 Indirizzo: Via Roma 25, Milano
+🔧 Tipo: Installazione Fibra
+
+[✅ Accetta] [❌ Rifiuta]
+[📍 Navigazione Maps]
+    </pre>
+    
+    <h3>Configurazione Tecnico</h3>
+    <ol>
+        <li><strong>Installa Telegram</strong> sul tuo dispositivo</li>
+        <li><strong>Cerca</strong> il bot aziendale</li>
+        <li><strong>Invia</strong> <code>/start</code> per registrazione</li>
+        <li><strong>Condividi</strong> il tuo ID Telegram con l'amministratore</li>
+        <li><strong>Ricevi</strong> conferma attivazione</li>
+    </ol>
+    
+    <hr>
+    
+    <div class="contact-section">
+        <h2 id="contatti">🏗️ Contatti e Supporto</h2>
+        
+        <h3>🔧 Alessandro Pepe</h3>
+        <p><strong>Operaio Elettronico & Sviluppatore Software</strong></p>
+        
+        <h4>📱 Contatti:</h4>
+        <ul>
+            <li><strong>WhatsApp</strong>: +39 351 012 0753</li>
+            <li><strong>Telegram</strong>: @ale0328it</li>
+            <li><strong>Email</strong>: Disponibile su richiesta</li>
+        </ul>
+        
+        <h4>🛠️ Servizi Offerti</h4>
+        
+        <p><strong>Sviluppo Software Personalizzato:</strong></p>
+        <ul>
+            <li>✅ <strong>Applicazioni Web</strong>: Siti, portali, gestionali online</li>
+            <li>✅ <strong>App Mobile</strong>: iOS e Android native e ibride</li>
+            <li>✅ <strong>Bot Telegram</strong>: Automazione, notifiche, assistenza clienti</li>
+            <li>✅ <strong>API e Backend</strong>: Sistemi scalabili e sicuri</li>
+            <li>✅ <strong>Progetti IoT</strong>: Arduino, ESP32, sensori e attuatori</li>
+            <li>✅ <strong>Automazioni Industriali</strong>: PLC, SCADA, controllo processi</li>
+        </ul>
+        
+        <p><strong>Consulenza Tecnica:</strong></p>
+        <ul>
+            <li>✅ <strong>Architetture Server</strong>: Design e ottimizzazione</li>
+            <li>✅ <strong>Reti e Telecomunicazioni</strong>: Configurazione e troubleshooting</li>
+            <li>✅ <strong>Sicurezza Informatica</strong>: Audit e implementazione</li>
+            <li>✅ <strong>Cloud & Hosting</strong>: Migrazione e gestione</li>
+        </ul>
+        
+        <p><strong>Settori di Specializzazione:</strong></p>
+        <ul>
+            <li>🔧 <strong>Telecomunicazioni</strong>: FTTH, reti ottiche, infrastruttura</li>
+            <li>🏗️ <strong>Architetture Enterprise</strong>: Sistemi distribuiti e microservizi</li>
+            <li>📊 <strong>Business Intelligence</strong>: Dashboard e analytics</li>
+            <li>🤖 <strong>Automazione</strong>: Workflow e processi aziendali</li>
+            <li>⚡ <strong>Elettronica & IoT</strong>: Arduino, Raspberry Pi, automazioni industriali</li>
+            <li>🔌 <strong>Domotica</strong>: Sistemi smart home e building automation</li>
+        </ul>
+        
+        <h4>💡 Perché Scegliere i Miei Servizi</h4>
+        <ul>
+            <li>🎯 <strong>Esperienza Decennale</strong>: Oltre 10 anni in IT e telecomunicazioni</li>
+            <li>⚡ <strong>Competenza Pratica</strong>: Operaio elettronico con esperienza sul campo</li>
+            <li>🚀 <strong>Soluzioni Innovative</strong>: Tecnologie all'avanguardia</li>
+            <li>🔒 <strong>Sicurezza Garantita</strong>: Privacy e protezione dati prioritaria</li>
+            <li>📞 <strong>Supporto Continuativo</strong>: Assistenza post-implementazione</li>
+            <li>💰 <strong>Preventivi Trasparenti</strong>: Nessuna sorpresa sui costi</li>
+        </ul>
+        
+        <h4>📞 Contattami</h4>
+        <p>Hai bisogno di un <strong>sistema gestionale personalizzato</strong>? Una <strong>app per la tua attività</strong>? O <strong>consulenza tecnica</strong> per il tuo progetto?</p>
+        <p><strong>Scrivi su WhatsApp o Telegram - Rispondo entro 24 ore!</strong></p>
+    </div>
+    
+    <hr>
+    <p style="text-align: center; font-size: 0.9em; color: #777;"><em>Questa guida è distribuita liberamente per scopi informativi. Tutti i diritti riservati.</em></p>
+</body>
+</html>

@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /home.html
+Disallow: /fibra/
+Allow: /
+
+Sitemap: https://servicess.net/sitemap.xml

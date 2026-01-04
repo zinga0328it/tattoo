@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Our System Works - Site-Python.com</title>
+    <meta name="description" content="Discover how our system isolates databases and APIs via Yggdrasil, combining Apache ProxyPass, Flask API and SQLite for maximum security and privacy.">
+    <meta name="keywords" content="Yggdrasil, Flask, SQLite, ProxyPass, isolated APIs, employee management, secure websites">
+    <link rel="canonical" href="https://site-python.com/spiegazione-en.html" />
+    <link rel="alternate" hreflang="it" href="https://site-python.com/spiegazione.html" />
+    <link rel="alternate" hreflang="en" href="https://site-python.com/spiegazione-en.html" />
+    <link rel="alternate" hreflang="ru" href="https://site-python.com/spiegazione-ru.html" />
+    <link rel="alternate" hreflang="ar" href="https://site-python.com/spiegazione-ar.html" />
+    <link rel="alternate" hreflang="zh" href="https://site-python.com/spiegazione-zh.html" />
+    <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_SITE_VERIFICATION_CODE" />
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Site-Python.com",
+        "url": "https://site-python.com",
+        "contactPoint": [{
+            "@type": "ContactPoint",
+            "telephone": "+393510120753",
+            "contactType": "customer service"
+        }]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2303858135011011" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: #0b1320;
+            color: #e8f0ff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #4da3ff;
+        }
+        h1 {
+            text-align: center;
+        }
+        p, li {
+            margin-bottom: 15px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .step {
+            background: rgba(255,255,255,.05);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #4da3ff;
+        }
+        .tech {
+            background: rgba(77, 163, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .flow {
+            text-align: center;
+            font-family: monospace;
+            background: rgba(0,0,0,.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        a {
+            color: #1ee37d;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .flag-bar {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            padding: 10px 0 20px 0;
+        }
+        .flag { width: 32px; height: 24px; border-radius: 4px; cursor: pointer; transition: transform 0.2s; border: 1px solid rgba(255,255,255,.1); }
+        .flag img { display:block; width:100%; height:100%; object-fit:contain; border-radius:4px; }
+        .flag:hover { transform: scale(1.1); }
+        .flag.active { border-color: #4da3ff; }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4da3ff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 20px 10px;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="flag-bar">
+        <a href="spiegazione.html" class="flag flag-it" title="Italiano">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 100'%3E%3Crect width='50' height='100' x='0' y='0' fill='%2300B04F'/%3E%3Crect width='50' height='100' x='50' y='0' fill='%23fff'/%3E%3Crect width='50' height='100' x='100' y='0' fill='%23DC143C'/%3E%3C/svg%3E" alt="IT">
+        </a>
+        <div class="flag flag-en active" title="English">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Cpath fill='%23006' d='M0 0h60v30H0z'/%3E%3Cpath stroke='%23fff' stroke-width='6' d='M0 0l60 30m0-30L0 30'/%3E%3Cpath stroke='%23c00' stroke-width='4' d='M0 0l60 30m0-30L0 30'/%3E%3Cpath stroke='%23fff' stroke-width='10' d='M30 0v30M0 15h60'/%3E%3Cpath stroke='%23c00' stroke-width='6' d='M30 0v30M0 15h60'/%3E%3C/svg%3E" alt="EN">
+        </div>
+        <a href="spiegazione-ru.html" class="flag flag-ru" title="Русский">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23fff' d='M0 0h900v200H0z'/%3E%3Cpath fill='%2300B4D8' d='M0 200h900v200H0z'/%3E%3Cpath fill='%23D52B1E' d='M0 400h900v200H0z'/%3E%3C/svg%3E" alt="RU">
+        </a>
+        <a href="spiegazione-ar.html" class="flag flag-ar" title="العربية">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23CE1126' d='M0 0h900v600H0z'/%3E%3Cpath fill='%23fff' d='M0 200h900v200H0z'/%3E%3Cpath fill='%2314B53A' d='M0 400h900v200H0z'/%3E%3C/svg%3E" alt="AR">
+        </a>
+        <a href="spiegazione-zh.html" class="flag flag-zh" title="中文">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23DE2910' d='M0 0h900v600H0z'/%3E%3Cpath fill='%23FFDE00' d='M0 0l300 300h600V0z'/%3E%3Cpath fill='%23FFDE00' d='M0 600l300-300h600v300z'/%3E%3C/svg%3E" alt="ZH">
+        </a>
+    </div>
+
+    <div class="container">
+        <h1>How Our System Works</h1>
+
+        <p>Our system uses an innovative architecture that combines <strong>Apache ProxyPass</strong>, <strong>Flask API</strong>, and <strong>Yggdrasil network</strong> to ensure maximum security and privacy for your data.</p>
+
+        <h2>🏗️ System Architecture</h2>
+
+        <div class="step">
+            <h3>1. Public Frontend (Apache)</h3>
+            <p>The website is hosted on a public Apache server with HTTPS certificate. This layer handles static content and user interface.</p>
+        </div>
+
+        <div class="step">
+            <h3>2. Secure Proxy (Apache ProxyPass)</h3>
+            <p>When users interact with dynamic content (forms, API calls), Apache forwards requests to the isolated backend via Yggdrasil network.</p>
+        </div>
+
+        <div class="step">
+            <h3>3. Isolated Backend (Flask + SQLite)</h3>
+            <p>The Flask application runs on a separate server accessible only through Yggdrasil. The database (SQLite/PostgreSQL) is completely isolated from the public internet.</p>
+        </div>
+
+        <h2>🔒 Security Features</h2>
+        <ul>
+            <li><strong>Zero Public Exposure:</strong> Database and API are not accessible from traditional networks</li>
+            <li><strong>Yggdrasil Encryption:</strong> All communications are encrypted end-to-end</li>
+            <li><strong>Isolated Environment:</strong> Backend runs in a separate network segment</li>
+            <li><strong>Minimal Attack Surface:</strong> Only essential ports are exposed</li>
+        </ul>
+
+        <h2>🌐 Yggdrasil Network</h2>
+        <p>Yggdrasil is a decentralized IPv6 network that creates encrypted mesh connections between devices. Learn more at <a href="https://yggdrasil-network.github.io/" target="_blank">yggdrasil-network.github.io</a></p>
+
+        <div class="flow">
+User Request → Apache (Public) → ProxyPass → Yggdrasil → Flask API → SQLite → Response
+        </div>
+
+        <h2>📊 Technologies Used</h2>
+        <div class="tech">
+            <strong>Frontend:</strong> HTML, CSS, JavaScript, Apache
+        </div>
+        <div class="tech">
+            <strong>Backend:</strong> Python Flask, SQLite/PostgreSQL
+        </div>
+        <div class="tech">
+            <strong>Network:</strong> Yggdrasil IPv6, Apache ProxyPass
+        </div>
+        <div class="tech">
+            <strong>Security:</strong> HTTPS, End-to-end encryption
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="index-en.html" class="btn">🏠 Back to Home</a>
+            <a href="dipendenti-en.html" class="btn">👥 Employee Management Demo</a>
+            <a href="fibra-en.html" class="btn">🚀 Fibra FTTH Project</a>
+        </div>
+    </div>
+</body>
+</html>

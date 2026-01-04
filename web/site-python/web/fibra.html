@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fibra FTTH Management System - Site-Python.com</title>
+  <meta name="description" content="Sistema avanzato di gestione ordini fibra ottica con architettura distribuita, isolamento Yggdrasil e integrazione IA.">
+  <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_SITE_VERIFICATION_CODE" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Fibra FTTH Management System",
+    "description": "Sistema di gestione ordini fibra ottica con architettura distribuita",
+    "url": "https://github.com/zinga0328it/Fibra",
+    "author": {
+      "@type": "Person",
+      "name": "zinga0328it"
+    }
+  }
+  </script>
+  <meta name="keywords" content="FTTH management, fibra ottica, Python FastAPI, Yggdrasil network, gestione ordini, sistema distribuito, IA GPT, Telegram bot">
+  <link rel="canonical" href="https://site-python.com/fibra.html" />
+  <link rel="alternate" hreflang="it" href="https://site-python.com/fibra.html?lang=it" />
+  <link rel="alternate" hreflang="en" href="https://site-python.com/fibra.html?lang=en" />
+  <link rel="alternate" hreflang="ru" href="https://site-python.com/fibra.html?lang=ru" />
+  <link rel="alternate" hreflang="ar" href="https://site-python.com/fibra.html?lang=ar" />
+  <link rel="alternate" hreflang="zh" href="https://site-python.com/fibra.html?lang=zh" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2303858135011011" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b1320;
+      --card: #111a2b;
+      --text: #e8f0ff;
+      --muted: #94a3b8;
+      --brand: #4da3ff;
+      --ok: #1ee37d;
+      --error: #ff4757;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, var(--brand), var(--ok));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.2em;
+      color: var(--muted);
+    }
+    .section {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .section h2 {
+      color: var(--brand);
+      margin-bottom: 20px;
+      font-size: 1.8em;
+    }
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .tech-item {
+      background: rgba(255,255,255,.05);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .tech-item h3 {
+      color: var(--ok);
+      margin-bottom: 10px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(45deg, var(--brand), var(--ok));
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 10px;
+      transition: transform 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .flag {
+      width: 32px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .flags {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="flags">
+      <img id="flag-it" class="flag" src="data:image/svg+xml,%3Csvg viewBox='0 0 32 24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='24' fill='%23009246'/%3E%3Crect width='21.33' height='24' fill='%23fff'/%3E%3Crect width='10.67' height='24' fill='%23c8102e'/%3E%3C/svg%3E" alt="IT" onclick="cambiaLingua('it')">
+      <img id="flag-en" class="flag active" src="data:image/svg+xml,%3Csvg viewBox='0 0 32 24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='24' fill='%23012169'/%3E%3Cpath d='M0 0L32 24M32 0L0 24' stroke='%23fff' stroke-width='2'/%3E%3Cpath d='M0 0L32 24M32 0L0 24' stroke='%23c8102e' stroke-width='1'/%3E%3Cpath d='M16 0V24M0 12H32' stroke='%23fff' stroke-width='4'/%3E%3Cpath d='M16 0V24M0 12H32' stroke='%23c8102e' stroke-width='2'/%3E%3C/svg%3E" alt="EN" onclick="cambiaLingua('en')">
+      <img id="flag-ru" class="flag" src="data:image/svg+xml,%3Csvg viewBox='0 0 32 24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='8' fill='%23fff'/%3E%3Crect width='32' height='8' y='8' fill='%23003da5'/%3E%3Crect width='32' height='8' y='16' fill='%23d52b1e'/%3E%3C/svg%3E" alt="RU" onclick="cambiaLingua('ru')">
+      <img id="flag-ar" class="flag" src="data:image/svg+xml,%3Csvg viewBox='0 0 32 24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='24' fill='%23ce1126'/%3E%3Crect width='21.33' height='24' fill='%23fff'/%3E%3Cpolygon points='0,0 14.22,12 0,24 5.33,24 19.55,12 5.33,0' fill='%23140000'/%3E%3C/svg%3E" alt="AR" onclick="cambiaLingua('ar')">
+      <img id="flag-zh" class="flag" src="data:image/svg+xml,%3Csvg viewBox='0 0 32 24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='24' fill='%23de2910'/%3E%3Cpolygon points='6,4 8,8 12,8 9,10 10,14 6,11 2,14 3,10 0,8 4,8' fill='%23ffde00'/%3E%3C/svg%3E" alt="ZH" onclick="cambiaLingua('zh')">
+    </div>
+
+    <div class="hero">
+      <h1 id="heroTitle">Fibra FTTH Management System</h1>
+      <p id="heroDesc">Sistema avanzato di gestione ordini fibra ottica con architettura distribuita e IA integrata</p>
+    </div>
+
+    <div class="section">
+      <h2 id="overviewTitle">Panoramica del Progetto</h2>
+      <p id="overviewText">Fibra è un sistema completo per la gestione degli ordini di lavoro FTTH (Fiber To The Home), sviluppato con tecnologie moderne per garantire massima sicurezza, scalabilità e automazione. Utilizza un'architettura distribuita con backend isolato via rete Yggdrasil, integrazione IA con GPT e comunicazione real-time tramite Telegram bot.</p>
+    </div>
+
+    <div class="section">
+      <h2 id="featuresTitle">Caratteristiche Principali</h2>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <h3 id="feature1Title">🏗️ Architettura Distribuita</h3>
+          <p id="feature1Desc">Backend isolato su rete Yggdrasil IPv6, zero esposizione pubblica</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="feature2Title">🤖 Integrazione GPT</h3>
+          <p id="feature2Desc">Automazione intelligente per creazione lavori e assistenza tecnica</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="feature3Title">📱 Telegram Bot</h3>
+          <p id="feature3Desc">Comunicazione real-time con tecnici sul campo</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="feature4Title">🔒 Sicurezza Zero-Trust</h3>
+          <p id="feature4Desc">Autenticazione multi-livello e crittografia end-to-end</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="feature5Title">📊 Dashboard Analytics</h3>
+          <p id="feature5Desc">Reportistica avanzata con metriche operative dettagliate</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="feature6Title">🚀 API RESTful</h3>
+          <p id="feature6Desc">Interfacce standard per integrazioni terze parti</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 id="techTitle">Tecnologie Utilizzate</h2>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <h3 id="tech1Title">🐍 Python FastAPI</h3>
+          <p id="tech1Desc">Backend asincrono ad alte prestazioni</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="tech2Title">🗄️ PostgreSQL</h3>
+          <p id="tech2Desc">Database relazionale con supporto JSONB</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="tech3Title">🌐 Yggdrasil Network</h3>
+          <p id="tech3Desc">Rete mesh crittografata per isolamento</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="tech4Title">🤖 OpenAI GPT</h3>
+          <p id="tech4Desc">Integrazione IA per automazione</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="tech5Title">📡 Telegram API</h3>
+          <p id="tech5Desc">Bot per comunicazione mobile</p>
+        </div>
+        <div class="tech-item">
+          <h3 id="tech6Title">🐳 Docker</h3>
+          <p id="tech6Desc">Containerizzazione per deployment</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 id="architectureTitle">Architettura del Sistema</h2>
+      <p id="architectureText">Il sistema utilizza un'architettura distribuita innovativa:</p>
+      <ul>
+        <li id="arch1"><strong>Frontend Pubblico:</strong> Interfaccia web responsive ospitata su Apache con HTTPS</li>
+        <li id="arch2"><strong>Proxy Sicuro:</strong> Apache ProxyPass che inoltra richieste alla rete Yggdrasil</li>
+        <li id="arch3"><strong>Backend Isolato:</strong> FastAPI che ascolta solo su interfaccia Yggdrasil privata</li>
+        <li id="arch4"><strong>Database Sicuro:</strong> PostgreSQL accessibile solo dal backend isolato</li>
+        <li id="arch5"><strong>Bot Telegram:</strong> Servizio separato per notifiche e comandi mobili</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 id="linksTitle">Link e Risorse</h2>
+      <div style="text-align: center;">
+        <a href="https://github.com/zinga0328it/Fibra" class="btn" target="_blank" id="githubBtn">📂 Repository GitHub</a>
+        <a href="https://github.com/zinga0328it/Fibra/blob/main/README.md" class="btn" target="_blank" id="docsBtn">📖 Documentazione Completa</a>
+  <a href="https://servicess.net/articoli/gestionale-python.html" class="btn" target="_blank" id="downloadBtn">Entra</a>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin: 40px 0;">
+      <a href="https://site-python.com/" class="btn" id="homeBtn">🏠 Torna alla Home</a>
+      <a href="https://site-python.com/spiegazione.html" class="btn" id="systemBtn">📋 Sistema Yggdrasil</a>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      it: {
+        heroTitle: "Sistema di Gestione Fibra FTTH",
+        heroDesc: "Sistema avanzato di gestione ordini fibra ottica con architettura distribuita e IA integrata",
+        overviewTitle: "Panoramica del Progetto",
+        overviewText: "Fibra è un sistema completo per la gestione degli ordini di lavoro FTTH (Fiber To The Home), sviluppato con tecnologie moderne per garantire massima sicurezza, scalabilità e automazione. Utilizza un'architettura distribuita con backend isolato via rete Yggdrasil, integrazione IA con GPT e comunicazione real-time tramite Telegram bot.",
+        featuresTitle: "Caratteristiche Principali",
+        feature1Title: "🏗️ Architettura Distribuita",
+        feature1Desc: "Backend isolato su rete Yggdrasil IPv6, zero esposizione pubblica",
+        feature2Title: "🤖 Integrazione GPT",
+        feature2Desc: "Automazione intelligente per creazione lavori e assistenza tecnica",
+        feature3Title: "📱 Telegram Bot",
+        feature3Desc: "Comunicazione real-time con tecnici sul campo",
+        feature4Title: "🔒 Sicurezza Zero-Trust",
+        feature4Desc: "Autenticazione multi-livello e crittografia end-to-end",
+        feature5Title: "📊 Dashboard Analytics",
+        feature5Desc: "Reportistica avanzata con metriche operative dettagliate",
+        feature6Title: "🚀 API RESTful",
+        feature6Desc: "Interfacce standard per integrazioni terze parti",
+        techTitle: "Tecnologie Utilizzate",
+        tech1Title: "🐍 Python FastAPI",
+        tech1Desc: "Backend asincrono ad alte prestazioni",
+        tech2Title: "🗄️ PostgreSQL",
+        tech2Desc: "Database relazionale con supporto JSONB",
+        tech3Title: "🌐 Yggdrasil Network",
+        tech3Desc: "Rete mesh crittografata per isolamento",
+        tech4Title: "🤖 OpenAI GPT",
+        tech4Desc: "Integrazione IA per automazione",
+        tech5Title: "📡 Telegram API",
+        tech5Desc: "Bot per comunicazione mobile",
+        tech6Title: "🐳 Docker",
+        tech6Desc: "Containerizzazione per deployment",
+        architectureTitle: "Architettura del Sistema",
+        architectureText: "Il sistema utilizza un'architettura distribuita innovativa:",
+        arch1: "<strong>Frontend Pubblico:</strong> Interfaccia web responsive ospitata su Apache con HTTPS",
+        arch2: "<strong>Proxy Sicuro:</strong> Apache ProxyPass che inoltra richieste alla rete Yggdrasil",
+        arch3: "<strong>Backend Isolato:</strong> FastAPI che ascolta solo su interfaccia Yggdrasil privata",
+        arch4: "<strong>Database Sicuro:</strong> PostgreSQL accessibile solo dal backend isolato",
+        arch5: "<strong>Bot Telegram:</strong> Servizio separato per notifiche e comandi mobili",
+        linksTitle: "Link e Risorse",
+        githubBtn: "📂 Repository GitHub",
+        docsBtn: "📖 Documentazione Completa",
+  downloadBtn: "Entra",
+        homeBtn: "🏠 Torna alla Home",
+        systemBtn: "📋 Sistema Yggdrasil",
+        metaDescription: "Sistema avanzato di gestione ordini fibra ottica con architettura distribuita, isolamento Yggdrasil e integrazione IA.",
+        metaKeywords: "FTTH management, fibra ottica, Python FastAPI, Yggdrasil network, gestione ordini, sistema distribuito, IA GPT, Telegram bot"
+      },
+      en: {
+        heroTitle: "Fibra FTTH Management System",
+        heroDesc: "Advanced fiber optic order management system with distributed architecture and AI integration",
+        overviewTitle: "Project Overview",
+        overviewText: "Fibra is a comprehensive system for managing FTTH (Fiber To The Home) work orders, developed with modern technologies to ensure maximum security, scalability and automation. It uses a distributed architecture with backend isolated via Yggdrasil network, GPT AI integration and real-time communication via Telegram bot.",
+        featuresTitle: "Key Features",
+        feature1Title: "🏗️ Distributed Architecture",
+        feature1Desc: "Backend isolated on Yggdrasil IPv6 network, zero public exposure",
+        feature2Title: "🤖 GPT Integration",
+        feature2Desc: "Intelligent automation for job creation and technical assistance",
+        feature3Title: "📱 Telegram Bot",
+        feature3Desc: "Real-time communication with field technicians",
+        feature4Title: "🔒 Zero-Trust Security",
+        feature4Desc: "Multi-level authentication and end-to-end encryption",
+        feature5Title: "📊 Dashboard Analytics",
+        feature5Desc: "Advanced reporting with detailed operational metrics",
+        feature6Title: "🚀 RESTful API",
+        feature6Desc: "Standard interfaces for third-party integrations",
+        techTitle: "Technologies Used",
+        tech1Title: "🐍 Python FastAPI",
+        tech1Desc: "High-performance asynchronous backend",
+        tech2Title: "🗄️ PostgreSQL",
+        tech2Desc: "Relational database with JSONB support",
+        tech3Title: "🌐 Yggdrasil Network",
+        tech3Desc: "Encrypted mesh network for isolation",
+        tech4Title: "🤖 OpenAI GPT",
+        tech4Desc: "AI integration for automation",
+        tech5Title: "📡 Telegram API",
+        tech5Desc: "Bot for mobile communication",
+        tech6Title: "🐳 Docker",
+        tech6Desc: "Containerization for deployment",
+        architectureTitle: "System Architecture",
+        architectureText: "The system uses an innovative distributed architecture:",
+        arch1: "<strong>Public Frontend:</strong> Responsive web interface hosted on Apache with HTTPS",
+        arch2: "<strong>Secure Proxy:</strong> Apache ProxyPass forwarding requests to Yggdrasil network",
+        arch3: "<strong>Isolated Backend:</strong> FastAPI listening only on private Yggdrasil interface",
+        arch4: "<strong>Secure Database:</strong> PostgreSQL accessible only from isolated backend",
+        arch5: "<strong>Telegram Bot:</strong> Separate service for notifications and mobile commands",
+        linksTitle: "Links and Resources",
+        githubBtn: "📂 GitHub Repository",
+        docsBtn: "📖 Complete Documentation",
+  downloadBtn: "Enter",
+        homeBtn: "🏠 Back to Home",
+        systemBtn: "📋 Yggdrasil System",
+        metaDescription: "Advanced fiber optic order management system with distributed architecture, Yggdrasil isolation and AI integration.",
+        metaKeywords: "FTTH management, fiber optics, Python FastAPI, Yggdrasil network, order management, distributed system, GPT AI, Telegram bot"
+      },
+      ru: {
+        heroTitle: "Система управления Fibra FTTH",
+        heroDesc: "Продвинутая система управления заказами волоконной оптики с распределенной архитектурой и интеграцией ИИ",
+        overviewTitle: "Обзор проекта",
+        overviewText: "Fibra - это комплексная система для управления заказами FTTH (Fiber To The Home), разработанная с использованием современных технологий для обеспечения максимальной безопасности, масштабируемости и автоматизации. Использует распределенную архитектуру с изолированным бэкендом через сеть Yggdrasil, интеграцию ИИ с GPT и связь в реальном времени через Telegram бота.",
+        featuresTitle: "Основные характеристики",
+        feature1Title: "🏗️ Распределенная архитектура",
+        feature1Desc: "Бэкенд изолирован в сети Yggdrasil IPv6, нулевое публичное воздействие",
+        feature2Title: "🤖 Интеграция GPT",
+        feature2Desc: "Интеллектуальная автоматизация для создания работ и технической поддержки",
+        feature3Title: "📱 Telegram бот",
+        feature3Desc: "Связь в реальном времени с полевыми техниками",
+        feature4Title: "🔒 Безопасность Zero-Trust",
+        feature4Desc: "Многоуровневая аутентификация и сквозное шифрование",
+        feature5Title: "📊 Аналитика дашборда",
+        feature5Desc: "Расширенная отчетность с детальными операционными метриками",
+        feature6Title: "🚀 RESTful API",
+        feature6Desc: "Стандартные интерфейсы для интеграций третьих сторон",
+        techTitle: "Используемые технологии",
+        tech1Title: "🐍 Python FastAPI",
+        tech1Desc: "Высокопроизводительный асинхронный бэкенд",
+        tech2Title: "🗄️ PostgreSQL",
+        tech2Desc: "Реляционная база данных с поддержкой JSONB",
+        tech3Title: "🌐 Yggdrasil Network",
+        tech3Desc: "Зашифрованная mesh-сеть для изоляции",
+        tech4Title: "🤖 OpenAI GPT",
+        tech4Desc: "Интеграция ИИ для автоматизации",
+        tech5Title: "📡 Telegram API",
+        tech5Desc: "Бот для мобильной связи",
+        tech6Title: "🐳 Docker",
+        tech6Desc: "Контейнеризация для развертывания",
+        architectureTitle: "Архитектура системы",
+        architectureText: "Система использует инновационную распределенную архитектуру:",
+        arch1: "<strong>Публичный фронтенд:</strong> Адаптивный веб-интерфейс, размещенный на Apache с HTTPS",
+        arch2: "<strong>Безопасный прокси:</strong> Apache ProxyPass перенаправляет запросы в сеть Yggdrasil",
+        arch3: "<strong>Изолированный бэкенд:</strong> FastAPI слушает только на приватном интерфейсе Yggdrasil",
+        arch4: "<strong>Безопасная база данных:</strong> PostgreSQL доступна только из изолированного бэкенда",
+        arch5: "<strong>Telegram бот:</strong> Отдельный сервис для уведомлений и мобильных команд",
+        linksTitle: "Ссылки и ресурсы",
+        githubBtn: "📂 Репозиторий GitHub",
+        docsBtn: "📖 Полная документация",
+  downloadBtn: "Войти",
+        homeBtn: "🏠 На главную",
+        systemBtn: "📋 Система Yggdrasil",
+        metaDescription: "Продвинутая система управления заказами волоконной оптики с распределенной архитектурой, изоляцией Yggdrasil и интеграцией ИИ.",
+        metaKeywords: "управление FTTH, волоконная оптика, Python FastAPI, сеть Yggdrasil, управление заказами, распределенная система, ИИ GPT, бот Telegram"
+      },
+      ar: {
+        heroTitle: "نظام إدارة Fibra FTTH",
+        heroDesc: "نظام متقدم لإدارة طلبات الألياف البصرية مع بنية موزعة وتكامل الذكاء الاصطناعي",
+        overviewTitle: "نظرة عامة على المشروع",
+        overviewText: "Fibra هو نظام شامل لإدارة طلبات العمل FTTH (Fiber To The Home)، تم تطويره باستخدام التقنيات الحديثة لضمان أقصى درجات الأمان والقابلية للتوسع والأتمتة. يستخدم بنية موزعة مع خلفية معزولة عبر شبكة Yggdrasil، تكامل الذكاء الاصطناعي مع GPT والاتصال في الوقت الفعلي عبر بوت Telegram.",
+        featuresTitle: "الميزات الرئيسية",
+        feature1Title: "🏗️ البنية الموزعة",
+        feature1Desc: "الخلفية معزولة على شبكة Yggdrasil IPv6، صفر تعرض عام",
+        feature2Title: "🤖 تكامل GPT",
+        feature2Desc: "الأتمتة الذكية لإنشاء الوظائف والمساعدة التقنية",
+        feature3Title: "📱 بوت Telegram",
+        feature3Desc: "الاتصال في الوقت الفعلي مع فنيي الميدان",
+        feature4Title: "🔒 أمان Zero-Trust",
+        feature4Desc: "المصادقة متعددة المستويات والتشفير من طرف إلى طرف",
+        feature5Title: "📊 تحليلات لوحة التحكم",
+        feature5Desc: "التقارير المتقدمة مع مقاييس تشغيلية مفصلة",
+        feature6Title: "🚀 API RESTful",
+        feature6Desc: "الواجهات القياسية لتكاملات الطرف الثالث",
+        techTitle: "التقنيات المستخدمة",
+        tech1Title: "🐍 Python FastAPI",
+        tech1Desc: "الخلفية غير المتزامنة عالية الأداء",
+        tech2Title: "🗄️ PostgreSQL",
+        tech2Desc: "قاعدة البيانات العلائقية مع دعم JSONB",
+        tech3Title: "🌐 Yggdrasil Network",
+        tech3Desc: "شبكة mesh مشفرة للعزل",
+        tech4Title: "🤖 OpenAI GPT",
+        tech4Desc: "تكامل الذكاء الاصطناعي للأتمتة",
+        tech5Title: "📡 Telegram API",
+        tech5Desc: "البوت للاتصال المحمول",
+        tech6Title: "🐳 Docker",
+        tech6Desc: "الحاويات للنشر",
+        architectureTitle: "بنية النظام",
+        architectureText: "يستخدم النظام بنية موزعة مبتكرة:",
+        arch1: "<strong>الواجهة الأمامية العامة:</strong> واجهة الويب المتجاوبة المستضافة على Apache مع HTTPS",
+        arch2: "<strong>الوكيل الآمن:</strong> Apache ProxyPass يحول الطلبات إلى شبكة Yggdrasil",
+        arch3: "<strong>الخلفية المعزولة:</strong> FastAPI يستمع فقط على واجهة Yggdrasil الخاصة",
+        arch4: "<strong>قاعدة البيانات الآمنة:</strong> PostgreSQL قابلة للوصول فقط من الخلفية المعزولة",
+        arch5: "<strong>بوت Telegram:</strong> خدمة منفصلة للإشعارات والأوامر المحمولة",
+        linksTitle: "الروابط والموارد",
+        githubBtn: "📂 مستودع GitHub",
+        docsBtn: "📖 الوثائق الكاملة",
+  downloadBtn: "دخول",
+        homeBtn: "🏠 العودة إلى الرئيسية",
+        systemBtn: "📋 نظام Yggdrasil",
+        metaDescription: "نظام متقدم لإدارة طلبات الألياف البصرية مع بنية موزعة، عزل Yggdrasil وتكامل الذكاء الاصطناعي.",
+        metaKeywords: "إدارة FTTH, الألياف البصرية, Python FastAPI, شبكة Yggdrasil, إدارة الطلبات, نظام موزع, ذكاء اصطناعي GPT, بوت Telegram"
+      },
+      zh: {
+        heroTitle: "Fibra FTTH 管理系统",
+        heroDesc: "具有分布式架构和 AI 集成的先进光纤订单管理系统",
+        overviewTitle: "项目概述",
+        overviewText: "Fibra 是一个全面的 FTTH（Fiber To The Home）工作订单管理系统，使用现代技术开发，以确保最大安全性、可扩展性和自动化。它使用分布式架构，通过 Yggdrasil 网络隔离后端，与 GPT AI 集成，并通过 Telegram 机器人进行实时通信。",
+        featuresTitle: "主要特点",
+        feature1Title: "🏗️ 分布式架构",
+        feature1Desc: "后端隔离在 Yggdrasil IPv6 网络上，零公共暴露",
+        feature2Title: "🤖 GPT 集成",
+        feature2Desc: "用于创建工作和技术援助的智能自动化",
+        feature3Title: "📱 Telegram 机器人",
+        feature3Desc: "与现场技术人员的实时通信",
+        feature4Title: "🔒 零信任安全",
+        feature4Desc: "多级认证和端到端加密",
+        feature5Title: "📊 仪表板分析",
+        feature5Desc: "具有详细运营指标的高级报告",
+        feature6Title: "🚀 RESTful API",
+        feature6Desc: "第三方集成的标准接口",
+        techTitle: "使用的技术",
+        tech1Title: "🐍 Python FastAPI",
+        tech1Desc: "高性能异步后端",
+        tech2Title: "🗄️ PostgreSQL",
+        tech2Desc: "支持 JSONB 的关系数据库",
+        tech3Title: "🌐 Yggdrasil Network",
+        tech3Desc: "用于隔离的加密 mesh 网络",
+        tech4Title: "🤖 OpenAI GPT",
+        tech4Desc: "用于自动化的 AI 集成",
+        tech5Title: "📡 Telegram API",
+        tech5Desc: "用于移动通信的机器人",
+        tech6Title: "🐳 Docker",
+        tech6Desc: "用于部署的容器化",
+        architectureTitle: "系统架构",
+        architectureText: "系统使用创新的分布式架构：",
+        arch1: "<strong>公共前端：</strong> 在 Apache 上托管的响应式 Web 界面，支持 HTTPS",
+        arch2: "<strong>安全代理：</strong> Apache ProxyPass 将请求转发到 Yggdrasil 网络",
+        arch3: "<strong>隔离后端：</strong> FastAPI 仅在私有 Yggdrasil 接口上监听",
+        arch4: "<strong>安全数据库：</strong> PostgreSQL 仅可从隔离后端访问",
+        arch5: "<strong>Telegram 机器人：</strong> 用于通知和移动命令的单独服务",
+        linksTitle: "链接和资源",
+        githubBtn: "📂 GitHub 仓库",
+        docsBtn: "📖 完整文档",
+  downloadBtn: "进入",
+        homeBtn: "🏠 返回首页",
+        systemBtn: "📋 Yggdrasil 系统",
+        metaDescription: "具有分布式架构、Yggdrasil 隔离和 AI 集成的先进光纤订单管理系统。",
+        metaKeywords: "FTTH 管理, 光纤, Python FastAPI, Yggdrasil 网络, 订单管理, 分布式系统, GPT AI, Telegram 机器人"
+      }
+    };
+
+    function cambiaLingua(lang) {
+      document.querySelectorAll('.flag').forEach(f => f.classList.remove('active'));
+      document.getElementById('flag-' + lang).classList.add('active');
+      localStorage.setItem('lang', lang);
+      setLanguage(lang);
+    }
+
+    function setLanguage(lang) {
+      const t = translations[lang] || translations['en'];
+      document.title = t.heroTitle + " - Site-Python.com";
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+      const setMeta = (name, value) => {
+        let el = document.querySelector(`meta[name="${name}"]`);
+        if (!el) {
+          el = document.createElement('meta');
+          el.setAttribute('name', name);
+          document.head.appendChild(el);
+        }
+        el.setAttribute('content', value || '');
+      };
+      setMeta('description', t.metaDescription || '');
+      setMeta('keywords', t.metaKeywords || '');
+
+      const setIf = (id, value, isHtml = false) => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (isHtml) el.innerHTML = value;
+          else el.textContent = value;
+        }
+      };
+
+      setIf('heroTitle', t.heroTitle);
+      setIf('heroDesc', t.heroDesc);
+      setIf('overviewTitle', t.overviewTitle);
+      setIf('overviewText', t.overviewText);
+      setIf('featuresTitle', t.featuresTitle);
+      setIf('feature1Title', t.feature1Title);
+      setIf('feature1Desc', t.feature1Desc);
+      setIf('feature2Title', t.feature2Title);
+      setIf('feature2Desc', t.feature2Desc);
+      setIf('feature3Title', t.feature3Title);
+      setIf('feature3Desc', t.feature3Desc);
+      setIf('feature4Title', t.feature4Title);
+      setIf('feature4Desc', t.feature4Desc);
+      setIf('feature5Title', t.feature5Title);
+      setIf('feature5Desc', t.feature5Desc);
+      setIf('feature6Title', t.feature6Title);
+      setIf('feature6Desc', t.feature6Desc);
+      setIf('techTitle', t.techTitle);
+      setIf('tech1Title', t.tech1Title);
+      setIf('tech1Desc', t.tech1Desc);
+      setIf('tech2Title', t.tech2Title);
+      setIf('tech2Desc', t.tech2Desc);
+      setIf('tech3Title', t.tech3Title);
+      setIf('tech3Desc', t.tech3Desc);
+      setIf('tech4Title', t.tech4Title);
+      setIf('tech4Desc', t.tech4Desc);
+      setIf('tech5Title', t.tech5Title);
+      setIf('tech5Desc', t.tech5Desc);
+      setIf('tech6Title', t.tech6Title);
+      setIf('tech6Desc', t.tech6Desc);
+      setIf('architectureTitle', t.architectureTitle);
+      setIf('architectureText', t.architectureText);
+      setIf('arch1', t.arch1, true);
+      setIf('arch2', t.arch2, true);
+      setIf('arch3', t.arch3, true);
+      setIf('arch4', t.arch4, true);
+      setIf('arch5', t.arch5, true);
+      setIf('linksTitle', t.linksTitle);
+      setIf('githubBtn', t.githubBtn);
+      setIf('docsBtn', t.docsBtn);
+      setIf('downloadBtn', t.downloadBtn);
+      // Ensure the download/entra button links to the gestionale article
+      try {
+        const dl = document.getElementById('downloadBtn');
+        if (dl && dl.tagName === 'A') {
+          dl.setAttribute('href', 'https://servicess.net/articoli/gestionale-python.html');
+          dl.setAttribute('target', '_blank');
+        }
+      } catch (e) { /* ignore */ }
+      // Update home and system links to localized pages
+      try {
+        const home = document.getElementById('homeBtn');
+        const system = document.getElementById('systemBtn');
+        const homeHref = (lang === 'it') ? 'index-it.html' : (lang === 'en') ? 'index-en.html' : (lang === 'ru') ? 'index-ru.html' : (lang === 'ar') ? 'index-ar.html' : 'index-zh.html';
+        const systemHref = (lang === 'it') ? 'spiegazione.html' : (lang === 'en') ? 'spiegazione-en.html' : (lang === 'ru') ? 'spiegazione-ru.html' : (lang === 'ar') ? 'spiegazione-ar.html' : 'spiegazione-zh.html';
+        if (home && home.tagName === 'A') home.setAttribute('href', homeHref);
+        if (system && system.tagName === 'A') system.setAttribute('href', systemHref);
+      } catch (e) { /* ignore */ }
+      setIf('homeBtn', t.homeBtn);
+      setIf('systemBtn', t.systemBtn);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const qs = new URLSearchParams(window.location.search);
+      const urlLang = qs.get('lang');
+      const lang = urlLang || localStorage.getItem('lang') || 'en';
+      if (urlLang) localStorage.setItem('lang', urlLang);
+      cambiaLingua(lang);
+    });
+  </script>
+</body>
+</html>

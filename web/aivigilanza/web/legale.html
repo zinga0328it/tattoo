@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="consulenze legali, licenze amministrative, pubblica amministrazione, assistenza legale, pratiche burocratiche, AiVigilanza, diritto amministrativo">
+    <meta name="description" content="Consulenze legali specializzate per licenze, autorizzazioni e problemi con la pubblica amministrazione. Assistenza professionale per pratiche burocratiche e diritto amministrativo.">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- Cache bust v1 -->
+    <title data-i18n="legale-title">Consulenze Legali - AiVigilanza</title>
+    <style>
+        :root {
+            --bg: #0b1320;
+            --card: #111a2b;
+            --text: #e8f0ff;
+            --muted: #94a3b8;
+            --brand: #4da3ff;
+            --ok: #1ee37d;
+            --error: #ff4757;
+            --warning: #ffa500;
+        }
+        * { box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative; /* required so .flag-bar can be absolutely positioned inside */
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,.2);
+        }
+        .card h2 {
+            margin: 0 0 16px;
+            color: var(--text);
+            font-size: 1.5em;
+        }
+        .card h3 {
+            margin: 20px 0 12px;
+            color: var(--brand);
+            font-size: 1.2em;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.16);
+            background: var(--brand);
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 18px;
+            box-shadow: 0 4px 16px rgba(77,163,255,.3);
+            transition: all 0.2s;
+            font-size: 1.1em;
+        }
+        .btn:hover {
+            background: var(--ok);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30,194,139,.4);
+        }
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--card) 0%, rgba(77,163,255,0.1) 100%);
+            border-radius: 16px;
+            margin: 20px 0 40px;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+        .hero h1 {
+            margin: 0 0 16px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, var(--brand), var(--ok));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            margin: 0;
+            font-size: 1.2em;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .contact-section {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px 20px;
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+        .contact-section h2 {
+            color: var(--brand);
+            margin-bottom: 20px;
+        }
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(0,0,0,.2);
+        }
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+        }
+        .whatsapp-btn:hover {
+            background: #128c7e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37,211,102,.4);
+        }
+        .telegram-btn {
+            background: #0088cc;
+            color: white;
+        }
+        .telegram-btn:hover {
+            background: #006699;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,136,204,.4);
+        }
+        .flag-bar {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            padding: 10px 18px 0 0;
+            user-select: none;
+            position: absolute; /* place on top-right */
+            top: 12px;
+            right: 18px;
+            z-index: 999;
+        }
+        .flag {
+            width: 32px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid rgba(255,255,255,.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            background: rgba(255,255,255,.05);
+        }
+    .flag:hover { transform: scale(1.1); }
+    .flag:focus { outline: 2px solid rgba(77,163,255,.45); transform: scale(1.05); }
+    .flag.active { border-color: var(--brand); }
+        /* Lock-menu styles (shared with other pages like contatti.html) */
+        .lock-menu-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 16px;
+            margin-bottom: 18px;
+            user-select: none;
+        }
+        .lock-menu-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 18px;
+        }
+        .lock-menu {
+            width: 340px;
+            height: 100px;
+            background: rgba(17,26,43,0.8);
+            border-radius: 30px;
+            box-shadow: 0 0 30px rgba(77,163,255,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .lock-menu .menu-item {
+            width: 260px;
+            height: 36px;
+            line-height: 36px;
+            font-size: 1rem;
+            color: var(--text);
+            opacity: 0.9;
+            transition: all 0.2s;
+            background: none;
+            border-radius: 10px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            pointer-events: none;
+            text-decoration: none;
+            display: block;
+            padding: 4px 12px;
+        }
+        .lock-menu .menu-item.selected {
+            background: var(--brand);
+            color: #0b1320;
+            font-size: 1.05rem;
+            opacity: 1;
+            box-shadow: 0 2px 12px rgba(77,163,255,0.25);
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        .lock-menu .menu-item.above, .lock-menu .menu-item.below {
+            opacity: 0.8;
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+        .lock-menu .menu-item.far {
+            opacity: 0.45;
+            font-size: 0.9rem;
+            color: #98a8c6;
+        }
+        #leftBtn, #rightBtn {
+            background: var(--brand);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(77,163,255,0.2);
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #leftBtn:hover, #rightBtn:hover { background: var(--ok); color: #04201a; }
+        .security-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 4px 8px 4px 0;
+            background: rgba(77,163,255,.1);
+            border: 1px solid rgba(77,163,255,.3);
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: var(--brand);
+        }
+        @media (max-width: 700px) {
+            .wrap { padding: 18px 4vw; }
+            .card { padding: 16px; }
+            .grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2em; }
+            .hero { padding: 20px; }
+            .contact-buttons { flex-direction: column; align-items: center; }
+            .flag-bar { position: static; margin: 8px 0 16px 0; justify-content: flex-end; right: auto; top: auto; }
+            /* Responsive adjustments per lock menu */
+            .lock-menu { width: 98vw; height: 120px; }
+            .lock-menu .menu-item { width: 98vw; height: 36px; font-size: 1.1em; }
+            #leftBtn, #rightBtn { width: 44px; height: 44px; font-size: 1.4em; }
+        }
+    </style>
+    <script>
+        // Traduzioni complete
+        const traduzioni = {
+      'it': {
+        'legale-title': 'Consulenze Legali - AiVigilanza',
+        'legale-hero-title': '⚖️ Consulenze Legali',
+        'legale-hero-subtitle': 'Assistenza professionale per licenze, autorizzazioni e problemi con la pubblica amministrazione',
+        'legale-badge-1': '🏛️ Diritto Amministrativo',
+        'legale-badge-2': '📄 Licenze e Autorizzazioni',
+        'legale-badge-3': '⚖️ Pratiche Burocratiche',
+        'legale-badge-4': '📋 Pubblica Amministrazione',
+        'legale-servizi': '📋 Servizi Legali Offerti',
+        'legale-diritto-amministrativo': '🏛️ Diritto Amministrativo',
+        'legale-consulenze-burocratiche': 'Consulenze per pratiche burocratiche',
+        'legale-assistenza-licenze': 'Assistenza per licenze e autorizzazioni',
+        'legale-risoluzione-controversie': 'Risoluzione controversie amministrative',
+        'legale-appelli-ricorsi': 'Appelli e ricorsi amministrativi',
+        'legale-pratiche-amministrative': '📄 Pratiche Amministrative',
+        'legale-redazione-istanze': 'Redazione e presentazione istanze',
+        'legale-gestione-procedimenti': 'Gestione procedimenti amministrativi',
+        'legale-consulenze-compliance': 'Consulenze per compliance normativa',
+        'legale-supporto-certificazioni': 'Supporto per certificazioni e nulla osta',
+        'legale-assistenza-legale': '⚖️ Assistenza Legale',
+        'legale-consulenze-preventive': 'Consulenze preventive',
+        'legale-rappresentanza-procedimenti': 'Rappresentanza in procedimenti',
+        'legale-redazione-contratti': 'Redazione contratti e accordi',
+        'legale-mediazione-conciliazione': 'Mediazione e conciliazione',
+        'legale-come-funziona': '📋 Come Lavoriamo',
+        'legale-step-1': '<strong>Consulenza Iniziale:</strong> Valutiamo il tuo caso e analizziamo la documentazione necessaria',
+        'legale-step-2': '<strong>Analisi e Strategia:</strong> Sviluppiamo la strategia legale più efficace per il tuo caso',
+        'legale-step-3': '<strong>Gestione Pratica:</strong> Curiamo tutti gli aspetti burocratici e amministrativi',
+        'legale-step-4': '<strong>Follow-up:</strong> Monitoriamo l\'evoluzione della pratica fino alla risoluzione',
+        'legale-contattaci': '📞 Contattaci',
+        'legale-contatto-descrizione': 'Hai bisogno di assistenza legale? Contattaci per una consulenza gratuita!',
+        'legale-footer': 'Rispondiamo entro 24 ore • Consulenza gratuita • Assistenza professionale'
+      },
+      'en': {
+        'legale-title': 'Legal Consultations - AiVigilanza',
+        'legale-hero-title': '⚖️ Legal Consultations',
+        'legale-hero-subtitle': 'Professional assistance for licenses, authorizations and problems with public administration',
+        'legale-badge-1': '🏛️ Administrative Law',
+        'legale-badge-2': '📄 Licenses and Authorizations',
+        'legale-badge-3': '⚖️ Bureaucratic Procedures',
+        'legale-badge-4': '📋 Public Administration',
+        'legale-servizi': '📋 Legal Services Offered',
+        'legale-diritto-amministrativo': '🏛️ Administrative Law',
+        'legale-consulenze-burocratiche': 'Consultations for bureaucratic procedures',
+        'legale-assistenza-licenze': 'Assistance for licenses and authorizations',
+        'legale-risoluzione-controversie': 'Resolution of administrative disputes',
+        'legale-appelli-ricorsi': 'Appeals and administrative appeals',
+        'legale-pratiche-amministrative': '📄 Administrative Procedures',
+        'legale-redazione-istanze': 'Drafting and submission of applications',
+        'legale-gestione-procedimenti': 'Management of administrative proceedings',
+        'legale-consulenze-compliance': 'Consultations for regulatory compliance',
+        'legale-supporto-certificazioni': 'Support for certifications and authorizations',
+        'legale-assistenza-legale': '⚖️ Legal Assistance',
+        'legale-consulenze-preventive': 'Preventive consultations',
+        'legale-rappresentanza-procedimenti': 'Representation in proceedings',
+        'legale-redazione-contratti': 'Drafting contracts and agreements',
+        'legale-mediazione-conciliazione': 'Mediation and conciliation',
+        'legale-come-funziona': '📋 How We Work',
+        'legale-step-1': '<strong>Initial Consultation:</strong> We evaluate your case and analyze the necessary documentation',
+        'legale-step-2': '<strong>Analysis and Strategy:</strong> We develop the most effective legal strategy for your case',
+        'legale-step-3': '<strong>Case Management:</strong> We handle all bureaucratic and administrative aspects',
+        'legale-step-4': '<strong>Follow-up:</strong> We monitor the evolution of the case until resolution',
+        'legale-contattaci': '📞 Contact Us',
+        'legale-contatto-descrizione': 'Need legal assistance? Contact us for a free consultation!',
+        'legale-footer': 'We respond within 24 hours • Free consultation • Professional assistance'
+      },
+      'es': {
+        'legale-title': 'Consultas Jurídicas - AiVigilanza',
+        'legale-hero-title': '⚖️ Consultas Jurídicas',
+        'legale-hero-subtitle': 'Asistencia profesional para licencias, autorizaciones y problemas con la administración pública',
+        'legale-badge-1': '🏛️ Derecho Administrativo',
+        'legale-badge-2': '📄 Licencias y Autorizaciones',
+        'legale-badge-3': '⚖️ Trámites Burocráticos',
+        'legale-badge-4': '📋 Administración Pública',
+        'legale-servizi': '📋 Servicios Jurídicos Ofrecidos',
+        'legale-diritto-amministrativo': '🏛️ Derecho Administrativo',
+        'legale-consulenze-burocratiche': 'Consultas para trámites burocráticos',
+        'legale-assistenza-licenze': 'Asistencia para licencias y autorizaciones',
+        'legale-risoluzione-controversie': 'Resolución de controversias administrativas',
+        'legale-appelli-ricorsi': 'Apelaciones y recursos administrativos',
+        'legale-pratiche-amministrative': '📄 Trámites Administrativos',
+        'legale-redazione-istanze': 'Redacción y presentación de solicitudes',
+        'legale-gestione-procedimenti': 'Gestión de procedimientos administrativos',
+        'legale-consulenze-compliance': 'Consultas para cumplimiento normativo',
+        'legale-supporto-certificazioni': 'Apoyo para certificaciones y autorizaciones',
+        'legale-assistenza-legale': '⚖️ Asistencia Jurídica',
+        'legale-consulenze-preventive': 'Consultas preventivas',
+        'legale-rappresentanza-procedimenti': 'Representación in procedimientos',
+        'legale-redazione-contratti': 'Redacción de contratos y acuerdos',
+        'legale-mediazione-conciliazione': 'Mediación y conciliación',
+        'legale-come-funziona': '📋 Cómo Trabajamos',
+        'legale-step-1': '<strong>Consulta Inicial:</strong> Evaluamos tu caso y analizamos la documentación necesaria',
+        'legale-step-2': '<strong>Análisis y Estrategia:</strong> Desarrollamos la estrategia jurídica más efectiva para tu caso',
+        'legale-step-3': '<strong>Gestión del Caso:</strong> Nos ocupamos de todos los aspectos burocráticos y administrativos',
+        'legale-step-4': '<strong>Seguimiento:</strong> Monitoreamos la evolución del caso hasta su resolución',
+        'legale-contattaci': '📞 Contáctanos',
+        'legale-contatto-descrizione': '¿Necesitas asistencia jurídica? ¡Contáctanos para una consulta gratuita!',
+        'legale-footer': 'Respondemos en 24 horas • Consulta gratuita • Asistencia profesional'
+      },
+      'fr': {
+        'legale-title': 'Consultations Juridiques - AiVigilanza',
+        'legale-hero-title': '⚖️ Consultations Juridiques',
+        'legale-hero-subtitle': 'Assistance professionnelle pour licences, autorisations et problèmes avec l\'administration publique',
+        'legale-badge-1': '🏛️ Droit Administratif',
+        'legale-badge-2': '📄 Licences et Autorisations',
+        'legale-badge-3': '⚖️ Démarches Bureaucratiques',
+        'legale-badge-4': '📋 Administration Publique',
+        'legale-servizi': '📋 Services Juridiques Offerts',
+        'legale-diritto-amministrativo': '🏛️ Droit Administratif',
+        'legale-consulenze-burocratiche': 'Consultations pour démarches bureaucratiques',
+        'legale-assistenza-licenze': 'Assistance pour licences et autorisations',
+        'legale-risoluzione-controversie': 'Résolution des litiges administratifs',
+        'legale-appelli-ricorsi': 'Appels et recours administratifs',
+        'legale-pratiche-amministrative': '📄 Démarches Administratives',
+        'legale-redazione-istanze': 'Rédaction et présentation de demandes',
+        'legale-gestione-procedimenti': 'Gestion des procédures administratives',
+        'legale-consulenze-compliance': 'Consultations pour conformité réglementaire',
+        'legale-supporto-certificazioni': 'Support pour certifications et autorisations',
+        'legale-assistenza-legale': '⚖️ Assistance Juridique',
+        'legale-consulenze-preventive': 'Consultations préventives',
+        'legale-rappresentanza-procedimenti': 'Représentation dans les procédures',
+        'legale-redazione-contratti': 'Rédaction de contrats et accords',
+        'legale-mediazione-conciliazione': 'Médiation et conciliation',
+        'legale-come-funziona': '📋 Comment Nous Travaillons',
+        'legale-step-1': '<strong>Consultation Initiale:</strong> Nous évaluons votre cas et analysons la documentation nécessaire',
+        'legale-step-2': '<strong>Analyse et Stratégie:</strong> Nous développons la stratégie juridique la plus efficace pour votre cas',
+        'legale-step-3': '<strong>Gestion du Dossier:</strong> Nous nous occupons de tous les aspects bureaucratiques et administratifs',
+        'legale-step-4': '<strong>Suivi:</strong> Nous surveillons l\'évolution du dossier jusqu\'à sa résolution',
+        'legale-contattaci': '📞 Contactez-Nous',
+        'legale-contatto-descrizione': 'Besoin d\'assistance juridique ? Contactez-nous pour une consultation gratuite !',
+        'legale-footer': 'Nous répondons sous 24 heures • Consultation gratuite • Assistance professionnelle'
+      },
+      'de': {
+        'legale-title': 'Rechtsberatung - AiVigilanza',
+        'legale-hero-title': '⚖️ Rechtsberatung',
+        'legale-hero-subtitle': 'Professionelle Unterstützung für Lizenzen, Genehmigungen und Probleme mit der öffentlichen Verwaltung',
+        'legale-badge-1': '🏛️ Verwaltungsrecht',
+        'legale-badge-2': '📄 Lizenzen und Genehmigungen',
+        'legale-badge-3': '⚖️ Bürokratische Verfahren',
+        'legale-badge-4': '📋 Öffentliche Verwaltung',
+        'legale-servizi': '📋 Angebotene Rechtsdienstleistungen',
+        'legale-diritto-amministrativo': '🏛️ Verwaltungsrecht',
+        'legale-consulenze-burocratiche': 'Beratung für bürokratische Verfahren',
+        'legale-assistenza-licenze': 'Unterstützung für Lizenzen und Genehmigungen',
+        'legale-risoluzione-controversie': 'Lösung von Verwaltungsstreitigkeiten',
+        'legale-appelli-ricorsi': 'Berufungen und Verwaltungsklagen',
+        'legale-pratiche-amministrative': '📄 Verwaltungsverfahren',
+        'legale-redazione-istanze': 'Erstellung und Einreichung von Anträgen',
+        'legale-gestione-procedimenti': 'Verwaltung von Verwaltungsverfahren',
+        'legale-consulenze-compliance': 'Beratung zur regulatorischen Compliance',
+        'legale-supporto-certificazioni': 'Unterstützung für Zertifizierungen und Genehmigungen',
+        'legale-assistenza-legale': '⚖️ Rechtsassistenz',
+        'legale-consulenze-preventive': 'Präventive Beratung',
+        'legale-rappresentanza-procedimenti': 'Vertretung in Verfahren',
+        'legale-redazione-contratti': 'Erstellung von Verträgen und Vereinbarungen',
+        'legale-mediazione-conciliazione': 'Mediation und Schlichtung',
+        'legale-come-funziona': '📋 Wie Wir Arbeiten',
+        'legale-step-1': '<strong>Erstberatung:</strong> Wir bewerten Ihren Fall und analysieren die erforderlichen Unterlagen',
+        'legale-step-2': '<strong>Analyse und Strategie:</strong> Wir entwickeln die effektivste Rechtsstrategie für Ihren Fall',
+        'legale-step-3': '<strong>Fallmanagement:</strong> Wir kümmern uns um alle bürokratischen und administrativen Aspekte',
+        'legale-step-4': '<strong>Nachverfolgung:</strong> Wir überwachen die Entwicklung des Falls bis zur Lösung',
+        'legale-contattaci': '📞 Kontaktieren Sie Uns',
+        'legale-contatto-descrizione': 'Brauchen Sie rechtliche Unterstützung? Kontaktieren Sie uns für eine kostenlose Beratung!',
+        'legale-footer': 'Wir antworten innerhalb von 24 Stunden • Kostenlose Beratung • Professionelle Unterstützung'
+      },
+      'ar': {
+        'legale-title': 'الاستشارات القانونية - AiVigilanza',
+        'legale-hero-title': '⚖️ الاستشارات القانونية',
+        'legale-hero-subtitle': 'مساعدة مهنية للتراخيص والتصاريح ومشاكل الإدارة العامة',
+        'legale-badge-1': '🏛️ القانون الإداري',
+        'legale-badge-2': '📄 التراخيص والتصاريح',
+        'legale-badge-3': '⚖️ الإجراءات البيروقراطية',
+        'legale-badge-4': '📋 الإدارة العامة',
+        'legale-servizi': '📋 الخدمات القانونية المقدمة',
+        'legale-diritto-amministrativo': '🏛️ القانون الإداري',
+        'legale-consulenze-burocratiche': 'استشارات للإجراءات البيروقراطية',
+        'legale-assistenza-licenze': 'مساعدة للتراخيص والتصاريح',
+        'legale-risoluzione-controversie': 'حل النزاعات الإدارية',
+        'legale-appelli-ricorsi': 'الاستئنافات والطعون الإدارية',
+        'legale-pratiche-amministrative': '📄 الإجراءات الإدارية',
+        'legale-redazione-istanze': 'صياغة وتقديم الطلبات',
+        'legale-gestione-procedimenti': 'إدارة الإجراءات الإدارية',
+        'legale-consulenze-compliance': 'استشارات للامتثال التنظيمي',
+        'legale-supporto-certificazioni': 'دعم للشهادات والتصاريح',
+        'legale-assistenza-legale': '⚖️ المساعدة القانونية',
+        'legale-consulenze-preventive': 'الاستشارات الوقائية',
+        'legale-rappresentanza-procedimenti': 'التمثيل في الإجراءات',
+        'legale-redazione-contratti': 'صياغة العقود والاتفاقيات',
+        'legale-mediazione-conciliazione': 'الوساطة والمصالحة',
+        'legale-come-funziona': '📋 كيف نعمل',
+        'legale-step-1': '<strong>الاستشارة الأولية:</strong> نقيم قضيتك ونحلل الوثائق المطلوبة',
+        'legale-step-2': '<strong>التحليل والاستراتيجية:</strong> نطور الاستراتيجية القانونية الأكثر فعالية لحالتك',
+        'legale-step-3': '<strong>إدارة القضية:</strong> نهتم بجميع الجوانب البيروقراطية والإدارية',
+        'legale-step-4': '<strong>المتابعة:</strong> نراقب تطور القضية حتى الحل',
+        'legale-contattaci': '📞 اتصل بنا',
+        'legale-contatto-descrizione': 'هل تحتاج إلى مساعدة قانونية؟ اتصل بنا للحصول على استشارة مجانية!',
+        'legale-footer': 'نرد خلال 24 ساعة • استشارة مجانية • مساعدة مهنية'
+      },
+      'ru': {
+        'legale-title': 'Юридические Консультации - AiVigilanza',
+        'legale-hero-title': '⚖️ Юридические Консультации',
+        'legale-hero-subtitle': 'Профессиональная помощь по лицензиям, разрешениям и проблемам с государственными органами',
+        'legale-badge-1': '🏛️ Административное Право',
+        'legale-badge-2': '📄 Лицензии и Разрешения',
+        'legale-badge-3': '⚖️ Бюрократические Процедуры',
+        'legale-badge-4': '📋 Государственное Управление',
+        'legale-servizi': '📋 Предоставляемые Юридические Услуги',
+        'legale-diritto-amministrativo': '🏛️ Административное Право',
+        'legale-consulenze-burocratiche': 'Консультации по бюрократическим процедурам',
+        'legale-assistenza-licenze': 'Помощь по лицензиям и разрешениям',
+        'legale-risoluzione-controversie': 'Разрешение административных споров',
+        'legale-appelli-ricorsi': 'Апелляции и административные жалобы',
+        'legale-pratiche-amministrative': '📄 Административные Процедуры',
+        'legale-redazione-istanze': 'Составление и подача заявлений',
+        'legale-gestione-procedimenti': 'Управление административными процессами',
+        'legale-consulenze-compliance': 'Консультации по нормативному соответствию',
+        'legale-supporto-certificazioni': 'Поддержка по сертификации и разрешениям',
+        'legale-assistenza-legale': '⚖️ Юридическая Помощь',
+        'legale-consulenze-preventive': 'Профилактические консультации',
+        'legale-rappresentanza-procedimenti': 'Представление в процессах',
+        'legale-redazione-contratti': 'Составление контрактов и соглашений',
+        'legale-mediazione-conciliazione': 'Медиация и примирение',
+        'legale-come-funziona': '📋 Как Мы Работаем',
+        'legale-step-1': '<strong>Первичная Консультация:</strong> Мы оцениваем ваше дело и анализируем необходимые документы',
+        'legale-step-2': '<strong>Анализ и Стратегия:</strong> Мы разрабатываем наиболее эффективную юридическую стратегию для вашего дела',
+        'legale-step-3': '<strong>Управление Делом:</strong> Мы занимаемся всеми бюрократическими и административными аспектами',
+        'legale-step-4': '<strong>Отслеживание:</strong> Мы мониторим развитие дела до разрешения',
+        'legale-contattaci': '📞 Свяжитесь с Нами',
+        'legale-contatto-descrizione': 'Нужна юридическая помощь? Свяжитесь с нами для бесплатной консультации!',
+        'legale-footer': 'Мы отвечаем в течение 24 часов • Бесплатная консультация • Профессиональная помощь'
+      },
+      'zh': {
+        'legale-title': '法律咨询 - AiVigilanza',
+        'legale-hero-title': '⚖️ 法律咨询',
+        'legale-hero-subtitle': '为许可证、授权和公共行政问题提供专业协助',
+        'legale-badge-1': '🏛️ 行政法',
+        'legale-badge-2': '📄 许可证和授权',
+        'legale-badge-3': '⚖️ 官僚程序',
+        'legale-badge-4': '📋 公共行政',
+        'legale-servizi': '📋 提供的法律服务',
+        'legale-diritto-amministrativo': '🏛️ 行政法',
+        'legale-consulenze-burocratiche': '官僚程序咨询',
+        'legale-assistenza-licenze': '许可证和授权协助',
+        'legale-risoluzione-controversie': '解决行政争议',
+        'legale-appelli-ricorsi': '上诉和行政申诉',
+        'legale-pratiche-amministrative': '📄 行政程序',
+        'legale-redazione-istanze': '起草和提交申请',
+        'legale-gestione-procedimenti': '管理行政程序',
+        'legale-consulenze-compliance': '监管合规咨询',
+        'legale-supporto-certificazioni': '认证和授权支持',
+        'legale-assistenza-legale': '⚖️ 法律援助',
+        'legale-consulenze-preventive': '预防性咨询',
+        'legale-rappresentanza-procedimenti': '程序代表',
+        'legale-redazione-contratti': '起草合同和协议',
+        'legale-mediazione-conciliazione': '调解和和解',
+        'legale-come-funziona': '📋 我们如何工作',
+        'legale-step-1': '<strong>初步咨询：</strong>我们评估您的案例并分析所需文件',
+        'legale-step-2': '<strong>分析和策略：</strong>我们为您的案例制定最有效的法律策略',
+        'legale-step-3': '<strong>案例管理：</strong>我们处理所有官僚和行政方面',
+        'legale-step-4': '<strong>跟进：</strong>我们监控案例的发展直至解决',
+        'legale-contattaci': '📞 联系我们',
+        'legale-contatto-descrizione': '需要法律帮助？联系我们获取免费咨询！',
+        'legale-footer': '我们在24小时内回复 • 免费咨询 • 专业协助'
+      },
+      'ja': {
+        'legale-title': '法律相談 - AiVigilanza',
+        'legale-hero-title': '⚖️ 法律相談',
+        'legale-hero-subtitle': 'ライセンス、許可、公共行政の問題に対する専門的な支援',
+        'legale-badge-1': '🏛️ 行政法',
+        'legale-badge-2': '📄 ライセンスと許可',
+        'legale-badge-3': '⚖️ 官僚的手続き',
+        'legale-badge-4': '📋 公共行政',
+        'legale-servizi': '📋 提供される法的サービス',
+        'legale-diritto-amministrativo': '🏛️ 行政法',
+        'legale-consulenze-burocratiche': '官僚的手続きに関する相談',
+        'legale-assistenza-licenze': 'ライセンスと許可の支援',
+        'legale-risoluzione-controversie': '行政紛争の解決',
+        'legale-appelli-ricorsi': '上訴と行政訴訟',
+        'legale-pratiche-amministrative': '📄 行政手続き',
+        'legale-redazione-istanze': '申請書の起草と提出',
+        'legale-gestione-procedimenti': '行政手続きの管理',
+        'legale-consulenze-compliance': '規制遵守に関する相談',
+        'legale-supporto-certificazioni': '認証と許可のサポート',
+        'legale-assistenza-legale': '⚖️ 法的支援',
+        'legale-consulenze-preventive': '予防相談',
+        'legale-rappresentanza-procedimenti': '手続きでの代表',
+        'legale-redazione-contratti': '契約と合意の起草',
+        'legale-mediazione-conciliazione': '調停と和解',
+        'legale-come-funziona': '📋 私たちの働き方',
+        'legale-step-1': '<strong>初回相談：</strong>あなたのケースを評価し、必要な文書を分析します',
+        'legale-step-2': '<strong>分析と戦略：</strong>あなたのケースに最も効果的な法的戦略を開発します',
+        'legale-step-3': '<strong>ケース管理：</strong>すべての官僚的および行政的な側面を処理します',
+        'legale-step-4': '<strong>フォローアップ：</strong>解決までケースの発展を監視します',
+        'legale-contattaci': '📞 お問い合わせ',
+        'legale-contatto-descrizione': '法的支援が必要ですか？無料相談のためにご連絡ください！',
+        'legale-footer': '24時間以内に返信 • 無料相談 • 専門的な支援'
+      },
+      'hi': {
+        'legale-title': 'कानूनी परामर्श - AiVigilanza',
+        'legale-hero-title': '⚖️ कानूनी परामर्श',
+        'legale-hero-subtitle': 'लाइसेंस, अनुमतियों और सार्वजनिक प्रशासन के साथ समस्याओं के लिए पेशेवर सहायता',
+        'legale-badge-1': '🏛️ प्रशासनिक कानून',
+        'legale-badge-2': '📄 लाइसेंस और अनुमतियां',
+        'legale-badge-3': '⚖️ ब्यूरोक्रेटिक प्रक्रियाएं',
+        'legale-badge-4': '📋 सार्वजनिक प्रशासन',
+        'legale-servizi': '📋 प्रदान की जाने वाली कानूनी सेवाएं',
+        'legale-diritto-amministrativo': '🏛️ प्रशासनिक कानून',
+        'legale-consulenze-burocratiche': 'ब्यूरोक्रेटिक प्रक्रियाओं के लिए परामर्श',
+        'legale-assistenza-licenze': 'लाइसेंस और अनुमतियों के लिए सहायता',
+        'legale-risoluzione-controversie': 'प्रशासनिक विवादों का समाधान',
+        'legale-appelli-ricorsi': 'अपील और प्रशासनिक अपील',
+        'legale-pratiche-amministrative': '📄 प्रशासनिक प्रक्रियाएं',
+        'legale-redazione-istanze': 'अनुरोधों का मसौदा और प्रस्तुति',
+        'legale-gestione-procedimenti': 'प्रशासनिक कार्यवाहियों का प्रबंधन',
+        'legale-consulenze-compliance': 'नियामक अनुपालन के लिए परामर्श',
+        'legale-supporto-certificazioni': 'प्रमाणन और अनुमतियों के लिए समर्थन',
+        'legale-assistenza-legale': '⚖️ कानूनी सहायता',
+        'legale-consulenze-preventive': 'निवारक परामर्श',
+        'legale-rappresentanza-procedimenti': 'कार्यवाहियों में प्रतिनिधित्व',
+        'legale-redazione-contratti': 'अनुबंधों और समझौतों का मसौदा',
+        'legale-mediazione-conciliazione': 'मध्यस्थता और सुलह',
+        'legale-come-funziona': '📋 हम कैसे काम करते हैं',
+        'legale-step-1': '<strong>प्रारंभिक परामर्श:</strong> हम आपके मामले का मूल्यांकन करते हैं और आवश्यक दस्तावेजों का विश्लेषण करते हैं',
+        'legale-step-2': '<strong>विश्लेषण और रणनीति:</strong> हम आपके मामले के लिए सबसे प्रभावी कानूनी रणनीति विकसित करते हैं',
+        'legale-step-3': '<strong>मामला प्रबंधन:</strong> हम सभी ब्यूरोक्रेटिक और प्रशासनिक पहलुओं का ध्यान रखते हैं',
+        'legale-step-4': '<strong>फॉलो-अप:</strong> हम समाधान तक मामले के विकास की निगरानी करते हैं',
+        'legale-contattaci': '📞 हमसे संपर्क करें',
+        'legale-contatto-descrizione': 'कानूनी सहायता की आवश्यकता है? मुफ्त परामर्श के लिए हमसे संपर्क करें!',
+        'legale-footer': 'हम 24 घंटों के भीतर जवाब देते हैं • मुफ्त परामर्श • पेशेवर सहायता'
+      }
+    };
+
+    // Funzione per cambiare lingua
+    function cambiaLingua(lang) {
+      // Salva la lingua selezionata
+      localStorage.setItem('lang', lang);
+
+            // Aggiorna le bandiere attive (class & ARIA)
+            document.querySelectorAll('.flag').forEach(flag => {
+                flag.classList.remove('active');
+                flag.setAttribute('aria-pressed', 'false');
+            });
+            const selFlag = document.getElementById(`flag-${lang}`);
+            if (selFlag) {
+                selFlag.classList.add('active');
+                selFlag.setAttribute('aria-pressed', 'true');
+            }
+
+      // Applica le traduzioni
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (traduzioni[lang] && traduzioni[lang][key]) {
+          element.innerHTML = traduzioni[lang][key];
+        }
+      });
+
+      // Aggiorna il titolo della pagina
+      if (traduzioni[lang] && traduzioni[lang]['legale-title']) {
+        document.title = traduzioni[lang]['legale-title'];
+      }
+    }
+
+    // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            const lang = localStorage.getItem('lang') || 'it';
+            cambiaLingua(lang);
+            // Permetti di attivare le bandiere anche con la tastiera (Enter/Space)
+            document.querySelectorAll('.flag').forEach(flagEl => {
+                flagEl.addEventListener('keydown', (ev) => {
+                    if (ev.key === 'Enter' || ev.key === ' ') {
+                        ev.preventDefault();
+                        const id = flagEl.id || '';
+                        const langId = id.replace('flag-', '');
+                        if (langId) cambiaLingua(langId);
+                    }
+                });
+            });
+        });
+  </script>
+</head>
+<body>
+    <div class="wrap">
+        <!-- Barra delle Bandiere per Cambio Lingua -->
+    <div class="flag-bar" aria-label="Seleziona lingua">
+            <div id="flag-it" role="button" tabindex="0" aria-pressed="true" class="flag flag-it active" onclick="cambiaLingua('it')" title="Italiano">🇮🇹</div>
+            <div id="flag-en" role="button" tabindex="0" aria-pressed="false" class="flag flag-en" onclick="cambiaLingua('en')" title="English">🇬🇧</div>
+            <div id="flag-es" role="button" tabindex="0" aria-pressed="false" class="flag flag-es" onclick="cambiaLingua('es')" title="Español">🇪🇸</div>
+            <div id="flag-fr" role="button" tabindex="0" aria-pressed="false" class="flag flag-fr" onclick="cambiaLingua('fr')" title="Français">🇫🇷</div>
+            <div id="flag-de" role="button" tabindex="0" aria-pressed="false" class="flag flag-de" onclick="cambiaLingua('de')" title="Deutsch">🇩🇪</div>
+            <div id="flag-ar" role="button" tabindex="0" aria-pressed="false" class="flag flag-ar" onclick="cambiaLingua('ar')" title="العربية">🇸🇦</div>
+            <div id="flag-ru" role="button" tabindex="0" aria-pressed="false" class="flag flag-ru" onclick="cambiaLingua('ru')" title="Русский">🇷🇺</div>
+            <div id="flag-zh" role="button" tabindex="0" aria-pressed="false" class="flag flag-zh" onclick="cambiaLingua('zh')" title="中文">🇨🇳</div>
+            <div id="flag-ja" role="button" tabindex="0" aria-pressed="false" class="flag flag-ja" onclick="cambiaLingua('ja')" title="日本語">🇯🇵</div>
+            <div id="flag-hi" role="button" tabindex="0" aria-pressed="false" class="flag flag-hi" onclick="cambiaLingua('hi')" title="हिन्दी">🇮🇳</div>
+        </div>
+
+        <!-- Navigation lock-menu (same as other root pages) -->
+        <div class="lock-menu-container">
+            <div class="lock-menu-row">
+                <button id="leftBtn" aria-label="Precedente">&#9664;</button>
+                <div class="lock-menu" id="lockMenu"></div>
+                <button id="rightBtn" aria-label="Successivo">&#9654;</button>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1 data-i18n="legale-hero-title">⚖️ Consulenze Legali</h1>
+            <p data-i18n="legale-hero-subtitle">Assistenza professionale per licenze, autorizzazioni e problemi con la pubblica amministrazione</p>
+            <div style="margin-top: 20px;">
+                <span class="security-badge" data-i18n="legale-badge-1">🏛️ Diritto Amministrativo</span>
+                <span class="security-badge" data-i18n="legale-badge-2">📄 Licenze e Autorizzazioni</span>
+                <span class="security-badge" data-i18n="legale-badge-3">⚖️ Pratiche Burocratiche</span>
+                <span class="security-badge" data-i18n="legale-badge-4">📋 Pubblica Amministrazione</span>
+            </div>
+        </div>
+
+        <!-- Servizi Offerti -->
+        <div class="card">
+            <h2 data-i18n="legale-servizi">📋 Servizi Legali Offerti</h2>
+            <div class="grid">
+                <div>
+                    <h3 data-i18n="legale-diritto-amministrativo">🏛️ Diritto Amministrativo</h3>
+                    <ul>
+                        <li data-i18n="legale-consulenze-burocratiche">Consulenze per pratiche burocratiche</li>
+                        <li data-i18n="legale-assistenza-licenze">Assistenza per licenze e autorizzazioni</li>
+                        <li data-i18n="legale-risoluzione-controversie">Risoluzione controversie amministrative</li>
+                        <li data-i18n="legale-appelli-ricorsi">Appelli e ricorsi amministrativi</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-i18n="legale-pratiche-amministrative">📄 Pratiche Amministrative</h3>
+                    <ul>
+                        <li data-i18n="legale-redazione-istanze">Redazione e presentazione istanze</li>
+                        <li data-i18n="legale-gestione-procedimenti">Gestione procedimenti amministrativi</li>
+                        <li data-i18n="legale-consulenze-compliance">Consulenze per compliance normativa</li>
+                        <li data-i18n="legale-supporto-certificazioni">Supporto per certificazioni e nulla osta</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-i18n="legale-assistenza-legale">⚖️ Assistenza Legale</h3>
+                    <ul>
+                        <li data-i18n="legale-consulenze-preventive">Consulenze preventive</li>
+                        <li data-i18n="legale-rappresentanza-procedimenti">Rappresentanza in procedimenti</li>
+                        <li data-i18n="legale-redazione-contratti">Redazione contratti e accordi</li>
+                        <li data-i18n="legale-mediazione-conciliazione">Mediazione e conciliazione</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Come Funziona -->
+        <div class="card">
+            <h2 data-i18n="legale-come-funziona">📋 Come Lavoriamo</h2>
+            <div style="counter-reset: step-counter;">
+                <div style="counter-increment: step-counter; display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; padding: 16px; background: rgba(255,255,255,.03); border-radius: 8px; border: 1px solid rgba(255,255,255,.05);">
+                    <div style="background: var(--brand); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9em; flex-shrink: 0;">1</div>
+                    <div data-i18n="legale-step-1"><strong>Consulenza Iniziale:</strong> Valutiamo il tuo caso e analizziamo la documentazione necessaria</div>
+                </div>
+                <div style="counter-increment: step-counter; display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; padding: 16px; background: rgba(255,255,255,.03); border-radius: 8px; border: 1px solid rgba(255,255,255,.05);">
+                    <div style="background: var(--brand); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9em; flex-shrink: 0;">2</div>
+                    <div data-i18n="legale-step-2"><strong>Analisi e Strategia:</strong> Sviluppiamo la strategia legale più efficace per il tuo caso</div>
+                </div>
+                <div style="counter-increment: step-counter; display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; padding: 16px; background: rgba(255,255,255,.03); border-radius: 8px; border: 1px solid rgba(255,255,255,.05);">
+                    <div style="background: var(--brand); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9em; flex-shrink: 0;">3</div>
+                    <div data-i18n="legale-step-3"><strong>Gestione Pratica:</strong> Curiamo tutti gli aspetti burocratici e amministrativi</div>
+                </div>
+                <div style="counter-increment: step-counter; display: flex; align-items: flex-start; gap: 16px; padding: 16px; background: rgba(255,255,255,.03); border-radius: 8px; border: 1px solid rgba(255,255,255,.05);">
+                    <div style="background: var(--brand); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9em; flex-shrink: 0;">4</div>
+                    <div data-i18n="legale-step-4"><strong>Follow-up:</strong> Monitoriamo l'evoluzione della pratica fino alla risoluzione</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contatti -->
+        <div id="contatti" class="contact-section">
+            <h2 data-i18n="legale-contattaci">📞 Contattaci</h2>
+            <p data-i18n="legale-contatto-descrizione">Hai bisogno di assistenza legale? Contattaci per una consulenza gratuita!</p>
+            <div class="contact-buttons">
+                <a href="https://wa.me/393510120753?text=Ciao,%20sono%20interessato%20a%20una%20consulenza%20legale"
+                   class="contact-btn whatsapp-btn"
+                   target="_blank">
+                    📱 WhatsApp
+                </a>
+                <a href="https://t.me/ale0328it"
+                   class="contact-btn telegram-btn"
+                   target="_blank">
+                    ✈️ Telegram @ale0328it
+                </a>
+            </div>
+            <p style="margin-top: 20px; color: var(--muted);" data-i18n="legale-footer">
+                Rispondiamo entro 24 ore • Consulenza gratuita • Assistenza professionale
+            </p>
+        </div>
+    </div>
+    <script>
+        // Menu stile lock-menu: navigation quick picker (reused from contatti.html)
+        const menuItems = [
+            { label: 'Home', href: 'index.html' },
+            { label: 'Guardiania', href: 'guardiania.html' },
+            { label: 'Legale', href: 'legale.html' },
+            { label: 'Domotica', href: 'domotica.html' },
+            { label: 'Criptotelefonia', href: 'https://vpn-gypsy.com/' },
+            { label: '7070', href: 'antivirus.html' },
+            { label: 'Bonifiche', href: 'bonifiche.html' },
+            { label: 'Pulizie Straordinarie', href: 'straordinarie.html' },
+            { label: 'Telecamere', href: 'articoli/telecamere.html' },
+            { label: 'Contatti', href: 'contatti.html' },
+            { label: 'Chi siamo', href: 'chisiamo.html' }
+        ];
+        (function(){
+            let selectedIdx = 0;
+            // Prova a selezionare automaticamente la pagina corrente nella lista
+            try {
+                const current = (window.location.pathname || '').split('/').pop() || 'index.html';
+                const found = menuItems.findIndex(item => item.href.split('/').pop() === current);
+                if (found !== -1) selectedIdx = found;
+            } catch (e) { /* non critico, fallback 0 */ }
+            const lockMenu = document.getElementById('lockMenu');
+            function renderMenu() {
+                if (!lockMenu) return;
+                lockMenu.innerHTML = '';
+                for (let i = -2; i <= 2; i++) {
+                    let idx = (selectedIdx + i + menuItems.length) % menuItems.length;
+                    let item = document.createElement('a');
+                    item.className = 'menu-item';
+                    if (i === 0) item.classList.add('selected');
+                    else if (Math.abs(i) === 1) item.classList.add(i < 0 ? 'above' : 'below');
+                    else item.classList.add('far');
+                    item.href = menuItems[idx].href;
+                    item.textContent = menuItems[idx].label;
+                    if (i === 0) item.tabIndex = 0;
+                    lockMenu.appendChild(item);
+                }
+            }
+            function moveUp() {
+                selectedIdx = (selectedIdx - 1 + menuItems.length) % menuItems.length;
+                renderMenu();
+            }
+            function moveDown() {
+                selectedIdx = (selectedIdx + 1) % menuItems.length;
+                renderMenu();
+            }
+            const leftBtn = document.getElementById('leftBtn');
+            const rightBtn = document.getElementById('rightBtn');
+            if (leftBtn) leftBtn.onclick = moveUp;
+            if (rightBtn) rightBtn.onclick = moveDown;
+            document.addEventListener('keydown', e => {
+                if (e.key === 'ArrowLeft') { moveUp(); e.preventDefault(); }
+                if (e.key === 'ArrowRight') { moveDown(); e.preventDefault(); }
+            });
+            // touch swipe support
+            let touchStartX = null;
+            if (lockMenu) {
+                lockMenu.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+                lockMenu.addEventListener('touchend', e => {
+                    if (touchStartX === null) return;
+                    let deltaX = e.changedTouches[0].clientX - touchStartX;
+                    if (Math.abs(deltaX) > 50) { if (deltaX > 0) moveUp(); else moveDown(); }
+                    touchStartX = null;
+                });
+                renderMenu();
+            }
+        })();
+    </script>
+</body>
+</html>

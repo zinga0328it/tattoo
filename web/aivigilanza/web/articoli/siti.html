@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Perché la pagina va fatta in Python (con difese serie) – AiVigilanza</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Perché costruire una pagina in Python con difese multilivello: rate-limit, tarpitting RAM, honeypot, CAPTCHA, WAF/Fail2Ban e monitor AI.">
+  <link rel="stylesheet" href="../stile.css">
+
+  <!-- Bot trap semplice (stesso stile del sito) -->
+  <script>
+    const safeBrowsers = ["Chrome","Firefox","Safari","Edg","Opera","Brave"];
+    let isBot = true;
+    for (const b of safeBrowsers) { if (navigator.userAgent.includes(b)) { isBot = false; break; } }
+    if (isBot) { window.location.href = "/home.html"; }
+  </script>
+</head>
+<body>
+  <div class="main-content">
+    <h2>Perché farla in <span style="color:#2ecc71">Python</span> con difese serie</h2>
+    <p>
+      La pagina non è solo “HTML”: è un <b>servizio</b>. Noi la costruiamo in <b>Python</b> (FastAPI/Flask)
+      e ci mettiamo intorno uno scudo a strati. Risultato: <b>veloce per umani</b>, <b>pesantissima per i bot</b>.
+    </p>
+
+    <hr style="margin:24px 0">
+
+    <h3 style="color:#2ecc71;">Strati di sicurezza (che attiviamo noi)</h3>
+    <ul>
+      <li><b>Rate-limit &amp; backoff</b>: max N richieste/minuto per IP/utente; ad ogni errore il tempo d’attesa cresce.</li>
+      <li><b>Tarpitting / “gioco della RAM”</b>: ai client sospetti rispondiamo <i>lentissimi</i> e allocando memoria controllata → il bot si impantana e molla.</li>
+      <li><b>Honeypot invisibile</b>: campo trappola nei form; se lo compili sei un bot ⇒ blocco immediato.</li>
+      <li><b>CAPTCHA leggero (se serve)</b>: utile contro bot banali; lo attiviamo solo quando il traffico è sospetto.</li>
+      <li><b>WAF + Fail2Ban</b>: regole OWASP CRS e ban automatici su IP che insistono (HTTP/HTTPS, login, reset password).</li>
+      <li><b>AI Monitor</b>: analisi dei log in tempo reale (pattern, ASN hosting, reputazione IP) con allarmi e blocchi automatici.</li>
+      <li><b>Hash sicuri</b>: Argon2id/bcrypt per password, sessioni firmate, 2FA/WebAuthn per pannelli admin.</li>
+      <li><b>Log forense</b>: tracciamo tentativi, user-agent, ASN, orari; report giornalieri.</li>
+    </ul>
+
+    <div class="box">
+      <h3>Come si presenta per l’utente</h3>
+      <ol>
+        <li><b>Veloce</b> per umani reali (cache e CDN dove utile).</li>
+        <li><b>Trasparente</b>: niente CAPTCHA inutile se non serve.</li>
+        <li><b>Robusta</b>: se parte un attacco, la pagina resta su, il bot rallenta.</li>
+      </ol>
+    </div>
+
+    <h3 style="color:#2ecc71;">Esempi pratici che mettiamo</h3>
+    <ul>
+      <li><code>rate-limit</code> per IP/utente con Redis (token bucket, backoff progressivo).</li>
+      <li><code>tarpit</code> su percorsi sensibili: ritardi crescenti e risposta chunked.</li>
+      <li><code>honeypot</code> nei form e controllo velocità di compilazione (umano vs bot).</li>
+      <li><code>Fail2Ban</code> profili per login e scraping, integrazione con WAF.</li>
+      <li><code>AI</code> che classifica traffico e alza le barriere solo quando serve.</li>
+    </ul>
+
+    <p style="font-size:.95em;opacity:.85">
+      <b>Nota legale:</b> le nostre tecniche sono <b>difensive</b> (tarpit/ritardi lato server). Nessuna contro-azione fuori dal perimetro del cliente.
+    </p>
+
+    <hr style="margin:24px 0">
+
+    <h3 style="color:#2ecc71;">Vuoi attivarla sul tuo sito?</h3>
+    <p>
+      Scrivici: in 24h montiamo Python + difese multilivello e ti consegniamo report e pannello log.
+      <br>WhatsApp 👉 <a href="https://wa.me/393510120753" style="color:#2ecc71;font-weight:bold;">contattaci ora</a>
+      <br><br>
+      <strong>💰 <a href="https://site-python.com/" target="_blank" rel="noopener noreferrer" style="color:#2ecc71;font-weight:bold;text-decoration:none;">Prezzo siti Python - Sviluppo siti web sicuri con Python | Site-Python.com</a></strong>
+      <br><small style="color:#666;">Sviluppo siti web Python, applicazioni web sicure, e-commerce Python, API REST, difese antibot multilivello</small>
+    </p>
+
+    <hr style="margin:24px 0">
+
+    <h3 style="color:#2ecc71;">Domande rapide</h3>
+    <details class="box"><summary><b>Serve per forza il CAPTCHA?</b></summary>
+      <p>No. Prima rate-limit, honeypot e WAF. Il CAPTCHA lo accendiamo solo se l’AI vede traffico sporco.</p>
+    </details>
+    <details class="box"><summary><b>Il “gioco della RAM” è pericoloso?</b></summary>
+      <p>No se fatto bene: è solo rallentamento controllato delle risposte a client sospetti.</p>
+    </details>
+    <details class="box"><summary><b>Funziona anche con siti esistenti (PHP/WordPress)?</b></summary>
+      <p>Sì: mettiamo un proxy Python davanti (reverse proxy) e le difese lavorano senza toccare i contenuti.</p>
+    </details>
+
+    <p style="margin-top:28px">
+      Vuoi una demo live? 👉 <a href="https://wa.me/393510120753" style="color:#2ecc71;font-weight:bold;">Scrivici su WhatsApp</a>
+    </p>
+  </div>
+</body>
+</html>

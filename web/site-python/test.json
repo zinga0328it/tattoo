@@ -1,0 +1,15 @@
+[
+    {
+        "type": "Dipendente",
+        "matricola": "123",
+        "stipendio": 1000,
+        "straordinario": 10
+    },
+    {
+        "type": "DipendenteA",
+        "matricola": "456",
+        "stipendio": 1200,
+        "straordinario": 12,
+        "malattia": 2
+    }
+]

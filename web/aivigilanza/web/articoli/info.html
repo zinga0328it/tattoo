@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I miei articoli sulla sicurezza</title>
+
+  <!-- Anti-bot -->
+  <script>
+    const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+    let isBot = true;
+    for (let b of safeBrowsers) {
+      if (navigator.userAgent.includes(b)) {
+        isBot = false;
+        break;
+      }
+    }
+    if (isBot) {
+      window.location.href = "/home.html";
+    }
+  </script>
+
+  <!-- Stile -->
+  <style>
+    body {
+      background: #2a1d12;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #f1c40f;
+      line-height: 1.5;
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .main-content {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px 16px;
+      box-sizing: border-box;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    .main-content h2 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #f1c40f;
+    }
+
+    .main-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .main-content ul li {
+      margin: 10px 0;
+    }
+
+    .main-content ul li a {
+      display: block;
+      background: #3b2b20;
+      color: #f1c40f;
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      border: 1px solid rgba(241, 196, 15, 0.1);
+    }
+
+    .main-content ul li a:hover {
+      background: #5c432f;
+    }
+
+    /* Responsive per telefoni */
+    @media (max-width: 480px) {
+      .main-content {
+        padding: 15px 10px;
+      }
+      .main-content h2 {
+        font-size: 20px;
+        margin-bottom: 25px;
+        line-height: 1.3;
+      }
+      .main-content ul li a {
+        font-size: 16px;
+        padding: 18px 12px;
+        margin: 6px 0;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+      }
+    }
+
+    /* Responsive per tablet */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 25px 20px;
+        max-width: 100%;
+      }
+      .main-content h2 {
+        font-size: 26px;
+        margin-bottom: 30px;
+      }
+      .main-content ul li a {
+        font-size: 18px;
+        padding: 20px 16px;
+        margin: 10px 0;
+        min-height: 52px;
+      }
+    }
+
+    /* Responsive per dispositivi molto piccoli */
+    @media (max-width: 360px) {
+      .main-content {
+        padding: 12px 8px;
+      }
+      .main-content h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      .main-content ul li a {
+        font-size: 15px;
+        padding: 16px 10px;
+        margin: 5px 0;
+        min-height: 44px;
+        border-radius: 10px;
+      }
+    }
+
+    /* Supporto per orientamento landscape su mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .main-content {
+        padding: 15px 10px;
+      }
+      .main-content h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+      }
+      .main-content ul li a {
+        padding: 14px 12px;
+        min-height: 44px;
+      }
+    }
+
+    /* Miglioramenti per dispositivi touch */
+    @media (hover: none) and (pointer: coarse) {
+      .main-content ul li a {
+        transition: background 0.1s, transform 0.1s;
+      }
+      .main-content ul li a:active {
+        background: #6d553f;
+        transform: scale(0.98);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <h2>I miei articoli sulla sicurezza</h2>
+    <ul>
+      <li><a href="siti.html">🔒 Siti blindati in Python</a></li>
+      <li><a href="carrello-pubblicitario-test.html">🛒 Carrelli Elettronici</a></li>
+      <li><a href="ricontatti.html">🔒 Ricontatti con Python</a></li>
+      <li><a href="gestionale-python.html">🔧 Gestionale Python</a></li>
+      <li><a href="antifurto.html">Antifurto con Yggdrasil</a></li>
+      <li><a href="osint-ip.html">Pannello OSINT</a></li>
+      <li><a href="prova.html">10 motivi per scegliere un mini</a></li>
+      <li><a href="telecamere.html">📹 Installazione Telecamere Sicurezza</a></li>
+      <li><a href="sistemi-sicurezza-personalizzati.html">🔐 Sistemi Sicurezza Personalizzati</a></li>
+    </ul>
+  </div>
+</body>
+</html>

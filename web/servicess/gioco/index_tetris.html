@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris con AI</title>
+    <link rel="stylesheet" href="style_tetris.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tetris con Intelligenza Artificiale</h1>
+
+        <div class="game-container">
+            <div class="game-area">
+                <div id="grid" class="grid"></div>
+                <div id="game-over" class="game-over hidden">GAME OVER</div>
+            </div>
+
+            <div class="sidebar">
+                <div class="score-panel">
+                    <h3>Punteggio: <span id="score">0</span></h3>
+                    <h3>Linee: <span id="lines">0</span></h3>
+                </div>
+
+                <div class="next-piece">
+                    <h3>Prossimo pezzo:</h3>
+                    <div id="next-piece-display" class="next-piece-grid"></div>
+                </div>
+
+                <div class="controls">
+                    <button id="new-game-btn">Nuova Partita</button>
+                    <button id="ai-play-btn">Gioca AI</button>
+                    <button id="ai-step-btn">Mossa AI</button>
+                </div>
+
+                <div class="manual-controls">
+                    <h3>Controlli Manuali:</h3>
+                    <div class="control-buttons">
+                        <button id="left-btn">←</button>
+                        <button id="rotate-btn">↻</button>
+                        <button id="right-btn">→</button>
+                        <button id="down-btn">↓</button>
+                        <button id="drop-btn">⬇</button>
+                    </div>
+                    <p>Tastiera: A/S/D/R/F</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script_tetris.js"></script>
+</body>
+</html>

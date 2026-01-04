@@ -1,0 +1,88 @@
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+import bcrypt
+import jwt
+import datetime
+import logging
+
+# Configurazione logging per sicurezza
+logging.basicConfig(filename="/home/alex/web/eternaai/login_attempts.log", level=logging.WARNING,
+                    format="%(asctime)s - %(message)s")
+
+import os
+
+app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', 'super-secret-key-change-in-production')
+
+# Limiter per prevenire brute force
+limiter = Limiter(app, key_func=get_remote_address)
+
+# Simulazione database utenti (in produzione usa un DB reale)
+users = {
+    'admin': bcrypt.hashpw(b'password123', bcrypt.gensalt()).decode('utf-8')
+}
+
+def generate_token(username):
+    payload = {
+        'username': username,
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+    }
+    return jwt.encode(payload, app.secret_key, algorithm='HS256')
+
+@app.route('/')
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if username in users:
+            return render_template('register.html', error='Username già esistente')
+        
+        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        users[username] = hashed
+        return redirect(url_for('login'))
+    
+    return render_template('register.html')
+
+def home():
+    return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+@limiter.limit("5 per minute")
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if username in users and bcrypt.checkpw(password.encode('utf-8'), users[username].encode('utf-8')):
+            token = generate_token(username)
+            session['token'] = token
+            return redirect(url_for('dashboard'))
+        else:
+            return render_template('login.html', error='Credenziali non valide')
+    
+    return render_template('login.html')
+
+@app.route('/dashboard')
+def dashboard():
+    token = session.get('token')
+    if not token:
+        return redirect(url_for('login'))
+    
+    try:
+        payload = jwt.decode(token, app.secret_key, algorithms=['HS256'])
+        return f'Benvenuto {payload["username"]} nel dashboard sicuro!'
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for('login'))
+    except jwt.InvalidTokenError:
+        return redirect(url_for('login'))
+
+@app.route('/logout')
+def logout():
+    session.pop('token', None)
+    return redirect(url_for('login'))
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=False)

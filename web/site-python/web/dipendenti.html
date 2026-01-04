@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Dipendenti - Site-Python.com</title>
+    <meta name="description" content="Interfaccia di gestione dipendenti: aggiungi e gestisci i dipendenti via API isolata su Yggdrasil. Requisiti: accesso autorizzato.">
+    <meta name="keywords" content="gestione dipendenti, API Yggdrasil, gestione stipendi, buste paga, amministrazione HR, backend protetto">
+    <link rel="alternate" hreflang="it" href="https://site-python.com/dipendenti.html?lang=it" />
+    <link rel="alternate" hreflang="en" href="https://site-python.com/dipendenti.html?lang=en" />
+    <!-- Default canonical for dipendenti (will be updated dynamically per lang) -->
+    <link rel="canonical" href="https://site-python.com/dipendenti.html" />
+    <!-- Google Site Verification: replace content value with the token from Search Console to verify site ownership -->
+    <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_SITE_VERIFICATION_CODE" />
+        <!-- JSON-LD Publisher / Organization schema for Google/SEO -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Site-Python.com",
+            "url": "https://site-python.com",
+            "contactPoint": [{
+                "@type": "ContactPoint",
+                "telephone": "+393510120753",
+                "contactType": "customer service"
+            }]
+        }
+        </script>
+    <!-- Google AdSense script: loads the adsbygoogle library for ad rendering -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2303858135011011" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: #0b1320;
+            color: #e8f0ff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #111a2b;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,.2);
+        }
+        h1 {
+            color: #4da3ff;
+        }
+        form {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        input, select, button {
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,.1);
+            color: #e8f0ff;
+        }
+        button {
+            background: #4da3ff;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1ee37d;
+        }
+        .list {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .dipendente {
+            background: rgba(255,255,255,.05);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .error {
+            color: #ff4757;
+        }
+        .success {
+            color: #1ee37d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💼 Gestione Dipendenti</h1>
+        <p>Gestisci i dipendenti via API Yggdrasil</p>
+
+        <!-- Form Aggiungi Dipendente -->
+        <h2>Aggiungi Dipendente</h2>
+        <form id="addForm">
+            <input type="text" id="matricola" placeholder="Matricola" required>
+            <input type="number" id="stipendio" placeholder="Stipendio base (€)" step="0.01" required>
+            <input type="number" id="straordinario" placeholder="Straordinario (€/ora)" step="0.01" required>
+            <select id="tipo">
+                <option value="Dipendente">Dipendente</option>
+                <option value="DipendenteA">Dipendente con Malattia</option>
+            </select>
+            <button type="submit">Aggiungi</button>
+        </form>
+
+        <!-- Lista Dipendenti -->
+        <h2>Lista Dipendenti</h2>
+        <button id="loadBtn">Carica Dipendenti</button>
+        <div id="list" class="list"></div>
+
+        <!-- Calcola Paga -->
+        <h2>Calcola Stipendio</h2>
+        <form id="pagaForm">
+            <input type="text" id="matricolaPaga" placeholder="Matricola" required>
+            <input type="number" id="ore" placeholder="Ore straordinario" step="0.01" required>
+            <button type="submit">Calcola</button>
+        </form>
+        <div id="pagaResult"></div>
+        <button id="downloadPdfBtn" style="display: none;">Scarica Busta Paga PDF</button>
+
+        <!-- Aggiungi Malattia -->
+        <h2>Aggiungi Giorni Malattia</h2>
+        <form id="malattiaForm">
+            <input type="text" id="matricolaMalattia" placeholder="Matricola" required>
+            <input type="number" id="giorni" placeholder="Giorni malattia" required>
+            <button type="submit">Aggiungi</button>
+        </form>
+
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+        let API_KEY = null;
+
+        async function getApiKey() {
+            if (API_KEY) return API_KEY;
+            try {
+                const response = await fetch('/api/getApiKey');
+                const ct = (response.headers.get('content-type') || '').toLowerCase();
+
+                // Se la risposta non è OK, proviamo a estrarre un messaggio d'errore
+                if (!response.ok) {
+                    let errMsg = `Errore HTTP ${response.status}`;
+                    if (ct.includes('application/json')) {
+                        const err = await response.json().catch(() => ({}));
+                        errMsg = err.error || err.message || errMsg;
+                    } else {
+                        const txt = await response.text().catch(() => '');
+                        // Se riceviamo HTML (pagina di errore), mostra un messaggio amichevole
+                        if (txt && txt.trim().startsWith('<!doctype')) {
+                            errMsg = `Backend non disponibile (HTTP ${response.status})`;
+                        } else if (txt) {
+                            errMsg = txt;
+                        }
+                    }
+                    console.error('Errore nel ottenere la chiave API:', errMsg);
+                    showMessage('Backend temporaneamente non disponibile. Riprova più tardi.', 'error');
+                    throw new Error(errMsg);
+                }
+
+                // Se la content-type non indica JSON, non provare a parsare direttamente
+                if (!ct.includes('application/json')) {
+                    const txt = await response.text().catch(() => null);
+                    console.error('Risposta non JSON da /api/key:', txt);
+                    showMessage('Risposta inattesa dal backend (non JSON).', 'error');
+                    throw new Error('Risposta non JSON');
+                }
+
+                const data = await response.json();
+                API_KEY = data.api_key;
+                return API_KEY;
+            } catch (error) {
+                console.error('Errore nel ottenere la chiave API:', error);
+                throw error;
+            }
+        }
+
+        async function apiCall(endpoint, options = {}) {
+            const key = await getApiKey();
+            const url = `${API_BASE}${endpoint}`;
+            const headers = {
+                'X-API-Key': key,
+                'Content-Type': 'application/json'
+            };
+            const config = { headers, ...options };
+            const response = await fetch(url, config);
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({ error: `Errore HTTP ${response.status}` }));
+                throw new Error(errorData.error || `Errore: ${response.status}`);
+            }
+            return response.json();
+        }
+
+        function showMessage(msg, type = 'info') {
+            const div = document.getElementById('message');
+            div.textContent = msg;
+            div.className = type;
+            setTimeout(() => div.textContent = '', 5000);
+        }
+
+        // Aggiungi Dipendente
+        document.getElementById('addForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                matricola: document.getElementById('matricola').value,
+                stipendio: parseFloat(document.getElementById('stipendio').value),
+                straordinario: parseFloat(document.getElementById('straordinario').value),
+                tipo: document.getElementById('tipo').value
+            };
+            try {
+                await apiCall('/dipendenti', {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+                showMessage('Dipendente aggiunto!', 'success');
+                loadDipendenti();
+            } catch (error) {
+                showMessage(error.message, 'error');
+            }
+        });
+
+        // Carica Dipendenti
+        async function loadDipendenti() {
+            try {
+                const dipendenti = await apiCall('/dipendenti');
+                const list = document.getElementById('list');
+                list.innerHTML = '';
+                dipendenti.forEach(d => {
+                    const div = document.createElement('div');
+                    div.className = 'dipendente';
+                    div.innerHTML = `
+                        <strong>${d.matricola}</strong> - Stipendio: ${d.stipendio}€, Straordinario: ${d.straordinario}€/ora
+                        ${d.giorni_malattia !== undefined ? `, Malattia: ${d.giorni_malattia} giorni` : ''}
+                    `;
+                    list.appendChild(div);
+                });
+            } catch (error) {
+                showMessage(error.message, 'error');
+            }
+        }
+
+        document.getElementById('loadBtn').addEventListener('click', loadDipendenti);
+
+        // Calcola Paga
+        document.getElementById('pagaForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const matricola = document.getElementById('matricolaPaga').value;
+            const ore = parseFloat(document.getElementById('ore').value);
+            try {
+                const result = await apiCall(`/dipendenti/${matricola}/paga`, {
+                    method: 'POST',
+                    body: JSON.stringify({ ore: ore })
+                });
+                document.getElementById('pagaResult').innerText = `Stipendio totale: ${result.paga}€`;
+                // Mostra il pulsante download
+                const btn = document.getElementById('downloadPdfBtn');
+                btn.style.display = 'inline';
+                btn.onclick = () => downloadPdf(matricola, ore);
+            } catch (error) {
+                showMessage(error.message, 'error');
+                document.getElementById('pagaResult').innerText = 'Errore nel calcolo';
+                document.getElementById('downloadPdfBtn').style.display = 'none';
+            }
+        });
+
+        // Funzione per scaricare PDF
+        async function downloadPdf(matricola, ore) {
+            try {
+                const key = await getApiKey();
+                const url = `${API_BASE}/dipendenti/${matricola}/paga/pdf`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-API-Key': key,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ore: ore })
+                });
+                if (!response.ok) {
+                    throw new Error('Errore nel download PDF');
+                }
+                const blob = await response.blob();
+                const urlBlob = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = urlBlob;
+                a.download = `busta_paga_${matricola}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(urlBlob);
+            } catch (error) {
+                showMessage(error.message, 'error');
+            }
+        }
+
+        // Aggiungi Malattia
+        document.getElementById('malattiaForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const matricola = document.getElementById('matricolaMalattia').value;
+            const giorni = parseInt(document.getElementById('giorni').value);
+            try {
+                await apiCall(`/dipendenti/${matricola}/malattia`, {
+                    method: 'POST',
+                    body: JSON.stringify({ giorni })
+                });
+                showMessage('Giorni di malattia aggiunti!', 'success');
+                loadDipendenti();  // Ricarica la lista
+            } catch (error) {
+                showMessage(error.message, 'error');
+            }
+        });
+
+        // Carica iniziale
+        loadDipendenti();
+        // Update canonical to include lang query param if provided
+        function setCanonical(lang) {
+            try {
+                const url = new URL(window.location.href);
+                url.host = 'site-python.com';
+                url.protocol = 'https:';
+                url.search = ''; // Remove all search params to set canonical to base URL
+                url.hash = '';
+                let link = document.querySelector('link[rel="canonical"]');
+                if (!link) {
+                    link = document.createElement('link');
+                    link.setAttribute('rel', 'canonical');
+                    document.head.appendChild(link);
+                }
+                link.setAttribute('href', url.toString());
+            } catch (e) {
+                // ignore
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const qs = new URLSearchParams(window.location.search);
+            const lang = qs.get('lang') || 'it';
+            setCanonical(lang);
+        });
+    </script>
+
+    <p style="text-align: center; margin-top: 20px;">
+        <a href="spiegazione.html" style="color: #4da3ff; text-decoration: none;">Scopri come funziona il sistema</a>
+    </p>
+    <div style="text-align: center; margin-top: 10px;">
+        <a href="https://wa.me/393510120753" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 10px 18px; background: #4da3ff; color: #e8f0ff; text-decoration: none; border-radius: 8px; margin: 6px;">Contact Us on WhatsApp</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+[Unit]
+Description=Carrello API - Sistema ordini con Telegram
+After=network.target
+
+[Service]
+Type=simple
+User=alex
+WorkingDirectory=/home/alex/web/aivigilanza/shop/consegne
+ExecStart=/usr/bin/python3 /home/alex/web/aivigilanza/shop/consegne/carrello.py
+Restart=always
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

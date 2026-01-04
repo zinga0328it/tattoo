@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://servicess.net/test-captcha.html">
+  <title>🤖 Test CAPTCHA Anti-Bot - Servicess.net</title>
+  <link rel="canonical" href="https://servicess.net/test-captcha.html" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .captcha-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .captcha-question {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #dc6900;
+            margin: 15px 0;
+        }
+        .captcha-input {
+            width: 100px;
+            height: 40px;
+            font-size: 1.3em;
+            text-align: center;
+            border: 2px solid #ffc107;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .refresh-btn {
+            background: #6c757d;
+        }
+        .refresh-btn:hover {
+            background: #545b62;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        input[type="text"] {
+            width: 200px;
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Test CAPTCHA Anti-Bot</h1>
+        <p>Questa pagina testa il sistema CAPTCHA matematico che protegge dai bot automatici.</p>
+        
+        <form id="testForm">
+            <div>
+                <label>Nome: <input type="text" id="nome" value="Test" required></label>
+            </div>
+            <div>
+                <label>Cognome: <input type="text" id="cognome" value="User" required></label>
+            </div>
+            
+            <div class="captcha-box">
+                <h3>🧮 Risolvi l'operazione matematica:</h3>
+                <div class="captcha-question" id="captcha-question">Loading...</div>
+                <div>
+                    <input type="number" 
+                           id="captcha-answer" 
+                           class="captcha-input" 
+                           placeholder="?" 
+                           required>
+                    <button type="button" class="refresh-btn" onclick="generateCaptcha()">
+                        🔄 Nuova Domanda
+                    </button>
+                </div>
+            </div>
+            
+            <button type="submit">✅ Testa CAPTCHA</button>
+        </form>
+        
+        <div class="result" id="result"></div>
+        
+        <hr>
+        <h2>📊 Test Automatici</h2>
+        <button type="button" onclick="runAutomaticTests()">🚀 Esegui Test Automatici</button>
+        <div id="autoResults"></div>
+    </div>
+
+    <script>
+        let currentCaptcha = {};
+
+        function generateCaptcha() {
+            const num1 = Math.floor(Math.random() * 50) + 1;
+            const num2 = Math.floor(Math.random() * 50) + 1;
+            const operations = ['+', '-', '*'];
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            
+            let answer;
+            switch(operation) {
+                case '+':
+                    answer = num1 + num2;
+                    break;
+                case '-':
+                    if (num1 < num2) {
+                        answer = num2 - num1;
+                        currentCaptcha = { num1: num2, num2: num1, operation, answer };
+                    } else {
+                        answer = num1 - num2;
+                        currentCaptcha = { num1, num2, operation, answer };
+                    }
+                    break;
+                case '*':
+                    const smallNum1 = Math.floor(Math.random() * 12) + 1;
+                    const smallNum2 = Math.floor(Math.random() * 12) + 1;
+                    answer = smallNum1 * smallNum2;
+                    currentCaptcha = { num1: smallNum1, num2: smallNum2, operation, answer };
+                    break;
+            }
+            
+            if (operation !== '*') {
+                currentCaptcha = currentCaptcha || { num1, num2, operation, answer };
+            }
+            
+            document.getElementById('captcha-question').textContent = 
+                `${currentCaptcha.num1} ${operation} ${currentCaptcha.num2} = ?`;
+            document.getElementById('captcha-answer').value = '';
+        }
+
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const resultDiv = document.getElementById('result');
+            const nome = document.getElementById('nome').value;
+            const cognome = document.getElementById('cognome').value;
+            const answer = parseInt(document.getElementById('captcha-answer').value);
+            
+            const data = {
+                nome: nome,
+                cognome: cognome,
+                captcha_question: `${currentCaptcha.num1} ${currentCaptcha.operation} ${currentCaptcha.num2}`,
+                captcha_answer: answer,
+                captcha_expected: currentCaptcha.answer
+            };
+            
+            try {
+                const response = await fetch('/test-captcha', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                resultDiv.style.display = 'block';
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✅ ' + result.message;
+                    generateCaptcha(); // Nuova domanda dopo successo
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '❌ ' + result.error;
+                }
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '❌ Errore di rete: ' + error.message;
+            }
+        });
+
+        async function runAutomaticTests() {
+            const autoResults = document.getElementById('autoResults');
+            autoResults.innerHTML = '<h3>🔄 Esecuzione test automatici...</h3>';
+            
+            const tests = [
+                {
+                    name: 'Test 1: Senza CAPTCHA',
+                    data: { nome: 'Bot1', cognome: 'Test' },
+                    expectedStatus: 400
+                },
+                {
+                    name: 'Test 2: CAPTCHA sbagliato',
+                    data: { 
+                        nome: 'Bot2', 
+                        cognome: 'Test',
+                        captcha_question: '5 + 5',
+                        captcha_answer: 11,
+                        captcha_expected: 10
+                    },
+                    expectedStatus: 400
+                },
+                {
+                    name: 'Test 3: CAPTCHA corretto',
+                    data: { 
+                        nome: 'Human', 
+                        cognome: 'Test',
+                        captcha_question: '6 + 4',
+                        captcha_answer: 10,
+                        captcha_expected: 10
+                    },
+                    expectedStatus: 200
+                }
+            ];
+            
+            let results = '';
+            for (const test of tests) {
+                try {
+                    const response = await fetch('/test-captcha', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(test.data)
+                    });
+                    
+                    const result = await response.json();
+                    const status = response.status === test.expectedStatus ? '✅' : '❌';
+                    
+                    results += `<p>${status} <strong>${test.name}</strong>: Status ${response.status} (atteso ${test.expectedStatus})</p>`;
+                    if (result.message) results += `<p style="margin-left: 20px; color: green;">➤ ${result.message}</p>`;
+                    if (result.error) results += `<p style="margin-left: 20px; color: red;">➤ ${result.error}</p>`;
+                    
+                } catch (error) {
+                    results += `<p>❌ <strong>${test.name}</strong>: Errore di rete</p>`;
+                }
+            }
+            
+            autoResults.innerHTML = '<h3>📊 Risultati Test Automatici:</h3>' + results;
+        }
+
+        // Genera CAPTCHA al caricamento
+        window.addEventListener('load', generateCaptcha);
+    </script>
+</body>
+</html>

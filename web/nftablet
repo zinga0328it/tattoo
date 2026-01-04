@@ -1,0 +1,5 @@
+#!/usr/sbin/nft -f
+flush ruleset
+
+include "/etc/nftables.d/00-base.nft"
+include "/etc/nftables.d/*.nft"

@@ -1,0 +1,184 @@
+/* Stile generale */
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #2f1f0d, #1b0c05);
+  font-family: 'Georgia', serif;
+  color: gold;
+  text-align: center;
+}
+
+/* Header */
+header {
+  background: black;
+  padding: 2rem;
+  border-bottom: 3px solid gold;
+  box-shadow: 0 0 15px gold;
+  position: relative;
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+p {
+  font-size: 1.5rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  color: #ffdd77;
+}
+
+a {
+  display: inline-block;
+  background: gold;
+  color: black;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-top: 2rem;
+  transition: 0.3s;
+}
+
+a:hover {
+  background: #fff8dc;
+  box-shadow: 0 0 10px gold;
+}
+
+/* Sezioni */
+section {
+  background-color: #1b0c05;
+  border-top: 2px dashed gold;
+  margin-top: 3rem;
+  padding: 2rem;
+  text-align: left;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+section h2 {
+  color: gold;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+section ul {
+  color: #ffddaa;
+  font-size: 1.2rem;
+  list-style: square;
+  padding-left: 2rem;
+}
+
+/* Footer */
+footer {
+  margin-top: 4rem;
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: #ffaa44;
+}
+
+blockquote {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #ffdd77;
+  margin: 2rem auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Gypsy Pack */
+.gypsy-pack {
+  background: linear-gradient(135deg, #333, #1b0c05);
+  color: gold;
+  padding: 2rem;
+  border-radius: 10px;
+  margin-top: 3rem;
+}
+
+.gypsy-pack h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.gypsy-pack p {
+  font-size: 1.3rem;
+  color: #ffdd77;
+}
+
+.gypsy-pack ul {
+  list-style: none;
+  padding: 0;
+}
+
+.gypsy-pack ul li {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
+.gypsy-pack ul li::before {
+  content: "🔒";
+  margin-right: 0.5rem;
+  color: gold;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: gold;
+  margin-top: 1rem;
+}
+
+.cta-button {
+  background: gold;
+  color: black;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-top: 2rem;
+  display: inline-block;
+}
+
+.cta-button:hover {
+  background: #fff8dc;
+  box-shadow: 0 0 10px gold;
+}
+
+/* Selettore di lingue */
+.language-selector {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.flag {
+  cursor: pointer;
+  font-size: 24px;
+  transition: transform 0.2s ease;
+}
+
+.flag:hover {
+  transform: scale(1.2);
+}
+
+.flag.sinti {
+  font-size: 28px;
+}
+
+/* Telegram Friends */
+.telegram-friends {
+  text-align: center !important;
+  margin: 0.3em 0 1.2em 0;
+  font-size: 0.92em;
+}
+
+.telegram-friends a {
+  color: #229ED9;
+  text-decoration: underline;
+}

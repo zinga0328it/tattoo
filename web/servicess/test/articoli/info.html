@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>I miei articoli sulla sicurezza</title>
+
+  <!-- Anti-bot -->
+  <script>
+    const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+    let isBot = true;
+    for (let b of safeBrowsers) {
+      if (navigator.userAgent.includes(b)) {
+        isBot = false;
+        break;
+      }
+    }
+    if (isBot) {
+      window.location.href = "/home.html";
+    }
+  </script>
+
+  <!-- Stile -->
+  <style>
+    body {
+      background: #2a1d12;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #f1c40f;
+    }
+
+    .main-content {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .main-content h2 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #f1c40f;
+    }
+
+    .main-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .main-content ul li {
+      margin: 10px 0;
+    }
+
+    .main-content ul li a {
+      display: block;
+      background: #3b2b20;
+      color: #f1c40f;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .main-content ul li a:hover {
+      background: #5c432f;
+    }
+
+    /* Responsive per telefoni */
+    @media (max-width: 480px) {
+      .main-content h2 {
+        font-size: 18px;
+      }
+      .main-content ul li a {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <h2>I miei articoli sulla sicurezza</h2>
+    <ul>
+      <li><a href="siti.html">🔒 Siti blindati in Python</a></li>
+      <li><a href="articolo2.html">Titolo Articolo 2</a></li>
+      <li><a href="antifurto.html">Antifurto con Yggdrasil</a></li>
+      <li><a href="osint-ip.html">Pannello OSINT</a></li>
+      <li><a href="prova.html">10 motivi per scegliere un mini</a></li>
+    </ul>
+  </div>
+</body>
+</html>

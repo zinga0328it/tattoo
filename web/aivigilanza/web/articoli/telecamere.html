@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <!-- Cache bust v1 -->
+  <title data-i18n="telecamere-title">📹 Installazione Telecamere di Sicurezza - AiVigilanza</title>
+  <meta name="keywords" content="telecamere sicurezza, installazione telecamere, videosorveglianza, domotica, sicurezza 24/7, telecamere HD 4K, AiVigilanza, sorveglianza professionale, telecamere wireless, sistema di sicurezza">
+  <meta name="description" content="Installazione professionale di telecamere di sicurezza con integrazione domotica. Sistema completo di videosorveglianza HD 4K per la tua sicurezza 24/7. Sopralluogo gratuito e assistenza tecnica inclusa.">
+  <style>
+    :root {
+      --bg: #0b1320;
+      --card: #111a2b;
+      --text: #e8f0ff;
+      --muted: #94a3b8;
+      --brand: #4da3ff;
+      --ok: #1ee37d;
+      --error: #ff4757;
+      --warning: #ffa500;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .flag-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding: 10px 18px 0 0;
+      user-select: none;
+    }
+    .flag {
+      width: 32px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      background: rgba(255,255,255,.05);
+    }
+    .flag:hover { transform: scale(1.1); }
+    .flag.active { border-color: var(--brand); }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    }
+    .card h2 {
+      margin: 0 0 16px;
+      color: var(--text);
+      font-size: 1.5em;
+    }
+    .card h3 {
+      margin: 20px 0 12px;
+      color: var(--brand);
+      font-size: 1.2em;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .card li {
+      margin: 8px 0;
+      color: var(--muted);
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: var(--brand);
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 18px;
+      box-shadow: 0 4px 16px rgba(77,163,255,.3);
+      transition: all 0.2s;
+      font-size: 1.1em;
+    }
+    .btn:hover {
+      background: var(--ok);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(30,194,139,.4);
+    }
+    .btn-demo {
+      background: var(--warning);
+      box-shadow: 0 4px 16px rgba(255,165,0,.3);
+    }
+    .btn-demo:hover {
+      background: #ff8c00;
+      box-shadow: 0 6px 20px rgba(255,140,0,.4);
+    }
+    .pricing-table {
+      display: grid;
+      gap: 16px;
+    }
+    .pricing-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background: rgba(255,255,255,.03);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.05);
+    }
+    .pricing-item .price {
+      font-weight: bold;
+      color: var(--ok);
+      font-size: 1.2em;
+    }
+    .steps {
+      counter-reset: step-counter;
+    }
+    .step {
+      counter-increment: step-counter;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: rgba(255,255,255,.03);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.05);
+    }
+    .step::before {
+      content: counter(step-counter);
+      background: var(--brand);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9em;
+      flex-shrink: 0;
+    }
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, var(--card) 0%, rgba(77,163,255,0.1) 100%);
+      border-radius: 16px;
+      margin: 20px 0 40px;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: 2.5em;
+      background: linear-gradient(45deg, var(--brand), var(--ok));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      margin: 0;
+      font-size: 1.2em;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .security-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      margin: 4px 8px 4px 0;
+      background: rgba(77,163,255,.1);
+      border: 1px solid rgba(77,163,255,.3);
+      border-radius: 20px;
+      font-size: 0.9em;
+      color: var(--brand);
+    }
+    .contact-section {
+      text-align: center;
+      margin-top: 60px;
+      padding: 40px 20px;
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .contact-section h2 {
+      color: var(--brand);
+      margin-bottom: 20px;
+    }
+    .contact-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 25px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1em;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    }
+    .whatsapp-btn {
+      background: #25d366;
+      color: white;
+    }
+    .whatsapp-btn:hover {
+      background: #128c7e;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37,211,102,.4);
+    }
+    .telegram-btn {
+      background: #0088cc;
+      color: white;
+    }
+    .telegram-btn:hover {
+      background: #006699;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,136,204,.4);
+    }
+
+    @media (max-width: 700px) {
+      .wrap { padding: 18px 4vw; }
+      .card { padding: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2em; }
+      .hero { padding: 20px; }
+      .contact-buttons { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Flag Bar -->
+  <div class="flag-bar">
+    <div id="flag-it" class="flag flag-it active" onclick="cambiaLingua('it')" title="Italiano">
+      🇮🇹
+    </div>
+    <div id="flag-en" class="flag flag-en" onclick="cambiaLingua('en')" title="English">
+      🇬🇧
+    </div>
+    <div id="flag-es" class="flag flag-es" onclick="cambiaLingua('es')" title="Español">
+      🇪🇸
+    </div>
+    <div id="flag-fr" class="flag flag-fr" onclick="cambiaLingua('fr')" title="Français">
+      🇫🇷
+    </div>
+    <div id="flag-de" class="flag flag-de" onclick="cambiaLingua('de')" title="Deutsch">
+      🇩🇪
+    </div>
+    <div id="flag-ar" class="flag flag-ar" onclick="cambiaLingua('ar')" title="العربية">
+      🇸🇦
+    </div>
+    <div id="flag-ru" class="flag flag-ru" onclick="cambiaLingua('ru')" title="Русский">
+      🇷🇺
+    </div>
+    <div id="flag-zh" class="flag flag-zh" onclick="cambiaLingua('zh')" title="中文">
+      🇨🇳
+    </div>
+    <div id="flag-ja" class="flag flag-ja" onclick="cambiaLingua('ja')" title="日本語">
+      🇯🇵
+    </div>
+    <div id="flag-hi" class="flag flag-hi" onclick="cambiaLingua('hi')" title="हिन्दी">
+      🇮🇳
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="wrap">
+    <!-- Navigation Menu -->
+    <div style="text-align: center; margin: 20px 0 40px 0;">
+      <select id="pageSelect" onchange="navigateToPage(this.value)" style="background: var(--card); color: var(--text); border: 1px solid rgba(255,255,255,.2); border-radius: 8px; padding: 10px 15px; font-size: 1em; cursor: pointer; min-width: 200px;">
+        <option value="">Seleziona pagina...</option>
+        <option value="../index.html">🏠 Home</option>
+        <option value="../SafeNode.html">🔒 SafeNode™</option>
+        <option value="../antivirus.html">🛡️ Antivirus</option>
+        <option value="../bonifiche.html">🧹 Bonifiche</option>
+        <option value="../straordinarie.html">🧽 Pulizie Straordinarie</option>
+        <option value="../guardiania.html">👮 Guardiania</option>
+        <option value="telecamere.html">📹 Telecamere Sicurezza</option>
+        <option value="../domotica.html">🏠 Domotica</option>
+        <option value="../sistemista.html">💻 Sistemista</option>
+        <option value="../yggdrasil.html">🌐 Yggdrasil</option>
+        <option value="../chisiamo.html">ℹ️ Chi Siamo</option>
+        <option value="../contatti.html">📞 Contatti</option>
+        <option value="shop/carrello.html">🛒 Carrello Elettronico</option>
+        <option value="../../gestionale.html">📊 Gestionale (Admin)</option>
+      </select>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1 data-i18n="telecamere-hero-title">📹 Installazione Telecamere di Sicurezza</h1>
+      <p data-i18n="telecamere-hero-subtitle">Sistema completo di videosorveglianza professionale con integrazione domotica per la tua sicurezza 24/7</p>
+      <div style="margin-top: 20px;">
+        <span class="security-badge" data-i18n="telecamere-badge-1">🔒 Sicurezza Massima</span>
+        <span class="security-badge" data-i18n="telecamere-badge-2">📱 Accesso Remoto</span>
+        <span class="security-badge" data-i18n="telecamere-badge-3">⚡ Installazione Rapida</span>
+        <span class="security-badge" data-i18n="telecamere-badge-4">🎥 HD 4K</span>
+      </div>
+    </div>
+
+    <!-- Come Funziona -->
+    <div class="card">
+      <h2 data-i18n="telecamere-come-funziona">📋 Come Funziona l'Installazione</h2>
+      <div class="steps">
+        <div class="step">
+          <div data-i18n="telecamere-step-1"><strong>Sopralluogo gratuito:</strong> Valutiamo le tue esigenze e progettiamo il sistema ideale con integrazione domotica</div>
+        </div>
+        <div class="step">
+          <div data-i18n="telecamere-step-2"><strong>Installazione professionale:</strong> Tecnici certificati installano telecamere e sistema di registrazione</div>
+        </div>
+        <div class="step">
+          <div data-i18n="telecamere-step-3"><strong>Sincronizzazione software:</strong> Connessione con la tua domotica esistente e configurazione app mobile</div>
+        </div>
+        <div class="step">
+          <div data-i18n="telecamere-step-4"><strong>Manutenzione inclusa:</strong> Assistenza tecnica, aggiornamenti e supporto 12 mesi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vantaggi -->
+    <div class="grid">
+      <div class="card">
+        <h2>🔒 Sicurezza Avanzata</h2>
+        <ul>
+          <li>Telecamere HD 4K con visione notturna</li>
+          <li>Rilevamento movimento intelligente</li>
+          <li>Registrazione su cloud sicuro</li>
+          <li>Crittografia end-to-end</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>📱 Controllo Totale</h2>
+        <ul>
+          <li>App mobile per iOS e Android</li>
+          <li>Accesso remoto 24/7</li>
+          <li>Notifiche push in tempo reale</li>
+          <li>Controllo vocale integrato</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>⚡ Installazione Professionale</h2>
+        <ul>
+          <li>Tecnici certificati e assicurati</li>
+          <li>Installazione in 1-2 giorni</li>
+          <li>Cablaggio professionale nascosto</li>
+          <li>Configurazione personalizzata</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pacchetti -->
+    <div class="card">
+      <h2>📦 Pacchetti Installazione Telecamere</h2>
+      <div class="pricing-table">
+        <div class="pricing-item">
+          <span><strong>🏠 Pacchetto Base (fino a 3 telecamere)</strong><br>Installazione + configurazione domotica + sincronizzazione software</span>
+          <span class="price">€100</span>
+        </div>
+        <div class="pricing-item">
+          <span><strong>📹 Telecamere Aggiuntive</strong><br>Oltre le prime 3 telecamere: €100 all'ora di lavoro</span>
+          <span class="price">€100/ora</span>
+        </div>
+        <div class="pricing-item">
+          <span><strong>🏢 Sistemi Aziendali</strong><br>Installazioni su misura per negozi/uffici con integrazione avanzata</span>
+          <span class="price">Preventivo</span>
+        </div>
+        <div class="pricing-item">
+          <span><strong>🔧 Sopralluogo + Consulenza</strong><br>Valutazione gratuita delle esigenze e progetto personalizzato</span>
+          <span class="price">GRATIS</span>
+        </div>
+      </div>
+      <p style="margin-top: 20px; color: var(--muted); font-size: 0.9em;">
+        💡 <strong>Servizi Inclusi:</strong> Installazione professionale, configurazione domotica, sincronizzazione software, assistenza post-installazione 12 mesi
+      </p>
+      <a href="#contatti" class="btn">Richiedi Preventivo</a>
+    </div>
+
+    <!-- Caratteristiche Tecniche -->
+    <div class="grid">
+      <div class="card">
+        <h2>🎥 Telecamere Disponibili</h2>
+        <h3>Telecamere Interne</h3>
+        <p style="color: var(--brand); font-size: 0.9em; margin-bottom: 10px;"><strong>🚀 Utilizziamo telecamere di qualità professionale leader di mercato</strong></p>
+        <ul>
+          <li>Risoluzione 4K Ultra HD</li>
+          <li>Visione notturna a colori</li>
+          <li>Angolo di visione 130°</li>
+          <li>Microfono integrato</li>
+        </ul>
+
+        <h3>Telecamere Esterne</h3>
+        <p style="color: var(--brand); font-size: 0.9em; margin-bottom: 10px;"><strong>🛡️ Telecamere resistenti per installazioni esterne professionali</strong></p>
+        <ul>
+          <li>Resistenti alle intemperie IP66</li>
+          <li>Visione notturna IR fino a 30m</li>
+          <li>Allarme integrato</li>
+          <li>Resistente a vandalismo</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>☁️ Sistema di Registrazione</h2>
+        <h3>Cloud Storage Sicuro</h3>
+        <ul>
+          <li>Registrazione 7 giorni gratuita</li>
+          <li>Backup automatico crittografato</li>
+          <li>Accesso da qualsiasi dispositivo</li>
+          <li>Condivisione sicura con familiari</li>
+        </ul>
+
+        <h3>Local Storage</h3>
+        <ul>
+          <li>NVR 4K con HDD 2TB</li>
+          <li>Registrazione locale sicura</li>
+          <li>Senza costi di abbonamento</li>
+          <li>Espandibile fino a 8TB</li>
+          <li><strong>🔗 Scopri il produttore:</strong> <a href="https://www.wansview.com/" target="_blank" style="color: var(--brand);">Sito ufficiale</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Integrazione Domotica -->
+    <div class="card">
+      <h2>🏠 Integrazione Domotica e Software</h2>
+      <p>Sincronizziamo perfettamente il tuo sistema di videosorveglianza con la domotica esistente, creando un ecosistema intelligente che lavora in armonia.</p>
+
+      <h3>🔄 Servizi di Integrazione</h3>
+      <ul>
+        <li><strong>Sincronizzazione Software:</strong> Connessione con sistemi domotici esistenti</li>
+        <li><strong>Automazioni Intelligenti:</strong> Attivazione telecamere basata su sensori di movimento</li>
+        <li><strong>Controllo Centrale:</strong> Gestione unificata da app singola</li>
+        <li><strong>Notifiche Smart:</strong> Avvisi personalizzati via app e assistenti vocali</li>
+        <li><strong>Backup Automatico:</strong> Salvataggio sicuro su cloud crittografato</li>
+      </ul>
+
+      <h3>📱 Compatibilità Domotica</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px;">
+        <div style="text-align: center; padding: 15px; background: rgba(77,163,255,.1); border-radius: 8px;">
+          <div style="font-size: 2em; margin-bottom: 5px;">🏠</div>
+          <div style="font-weight: bold;">Home Assistant</div>
+        </div>
+        <div style="text-align: center; padding: 15px; background: rgba(77,163,255,.1); border-radius: 8px;">
+          <div style="font-size: 2em; margin-bottom: 5px;">🍎</div>
+          <div style="font-weight: bold;">Apple HomeKit</div>
+        </div>
+        <div style="text-align: center; padding: 15px; background: rgba(77,163,255,.1); border-radius: 8px;">
+          <div style="font-size: 2em; margin-bottom: 5px;">🤖</div>
+          <div style="font-weight: bold;">Google Home</div>
+        </div>
+        <div style="text-align: center; padding: 15px; background: rgba(77,163,255,.1); border-radius: 8px;">
+          <div style="font-size: 2em; margin-bottom: 5px;">🟢</div>
+          <div style="font-weight: bold;">Alexa</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marchio Wansview -->
+    <div class="card">
+      <h2>🎥 Tecnologia Wansview - Qualità Garantita</h2>
+      <p>Utilizziamo esclusivamente telecamere <strong>Wansview</strong>, marchio leader mondiale nella videosorveglianza professionale con oltre 10 anni di esperienza.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+        <div>
+          <h3>🌟 Perché Wansview?</h3>
+          <ul>
+            <li><strong>Qualità Premium:</strong> Risoluzione 4K Ultra HD cristallina</li>
+            <li><strong>Reliability:</strong> Funzionamento 24/7 garantito</li>
+            <li><strong>Sicurezza:</strong> Crittografia end-to-end e aggiornamenti firmware</li>
+            <li><strong>Supporto:</strong> Assistenza tecnica diretta dal produttore</li>
+            <li><strong>Scalabilità:</strong> Facilmente espandibile per future esigenze</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>🔗 Scopri di Più</h3>
+          <p>Visita il sito ufficiale di Wansview per vedere tutte le caratteristiche tecniche e le ultime innovazioni:</p>
+          <a href="https://www.wansview.com/" target="_blank" class="btn" style="margin-top: 15px;">
+            🌐 Sito Ufficiale Wansview
+          </a>
+          <p style="margin-top: 15px; font-size: 0.9em; color: var(--muted);">
+            <strong>💡 Curiosità:</strong> Wansview è utilizzata da milioni di utenti in tutto il mondo per la sua affidabilità e qualità costruttiva superiore.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informazioni Aggiuntive -->
+    <div class="card">
+      <h2>ℹ️ Maggiori Informazioni sui Nostri Servizi</h2>
+      <p>Scopri di più sui nostri servizi di sicurezza e tecnologia attraverso la nostra pagina informativa dedicata.</p>
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="https://servicess.net/articoli/info.html" target="_blank" class="btn" style="background: var(--warning);">
+          📖 Scopri di Più sui Servizi
+        </a>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="card">
+      <h2>🚀 Pronto a Proteggere la Tua Casa/Azienda?</h2>
+      <p>Contattaci oggi per un sopralluogo gratuito e scopri come possiamo migliorare la tua sicurezza con un sistema di videosorveglianza professionale.</p>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="/articoli/ricontatti.html" class="btn">Richiedi Sopralluogo Gratuito</a>
+        <a href="tel:+393510120753" class="btn btn-demo">Chiama Ora</a>
+      </div>
+    </div>
+
+    <!-- Contatti -->
+    <div id="contatti" class="contact-section">
+      <h2>📞 Contattaci</h2>
+      <p>Pronto a installare il tuo sistema di sicurezza? Contattaci per un preventivo gratuito!</p>
+
+      <div style="text-align: center; margin: 25px 0;">
+        <a href="/articoli/ricontatti.html" 
+           style="display:inline-block; background:linear-gradient(135deg, #28a745, #20c997); color:#fff; font-size:1.4em; font-weight:bold; padding:18px 40px; border-radius:12px; text-decoration:none; box-shadow:0 4px 20px rgba(40,167,69,0.4); transition: transform 0.2s;">
+          📋 Compila il Modulo di Ricontatto
+        </a>
+      </div>
+
+      <div class="contact-buttons">
+        <a href="https://wa.me/393510120753?text=Ciao,%20sono%20interessato%20all'installazione%20di%20telecamere%20di%20sicurezza"
+           class="contact-btn whatsapp-btn"
+           target="_blank">
+          📱 WhatsApp
+        </a>
+
+        <a href="https://t.me/ale0328it"
+           class="contact-btn telegram-btn"
+           target="_blank">
+          ✈️ Telegram @ale0328it
+        </a>
+      </div>
+
+      <p style="margin-top: 20px; color: var(--muted);">
+        Rispondiamo entro 24 ore • Sopralluogo gratuito • Preventivo senza impegno
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Traduzioni complete
+    const traduzioni = {
+      'it': {
+        'telecamere-title': '📹 Installazione Telecamere di Sicurezza - AiVigilanza',
+        'telecamere-hero-title': '📹 Installazione Telecamere di Sicurezza',
+        'telecamere-hero-subtitle': 'Sistema completo di videosorveglianza professionale con integrazione domotica per la tua sicurezza 24/7',
+        'telecamere-badge-1': '🔒 Sicurezza Massima',
+        'telecamere-badge-2': '📱 Accesso Remoto',
+        'telecamere-badge-3': '⚡ Installazione Rapida',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 Come Funziona l\'Installazione',
+        'telecamere-step-1': '<strong>Sopralluogo gratuito:</strong> Valutiamo le tue esigenze e progettiamo il sistema ideale con integrazione domotica',
+        'telecamere-step-2': '<strong>Installazione professionale:</strong> Tecnici certificati installano telecamere e sistema di registrazione',
+        'telecamere-step-3': '<strong>Sincronizzazione software:</strong> Connessione con la tua domotica esistente e configurazione app mobile',
+        'telecamere-step-4': '<strong>Manutenzione inclusa:</strong> Assistenza tecnica, aggiornamenti e supporto 12 mesi'
+      },
+      'en': {
+        'telecamere-title': '📹 Security Camera Installation - AiVigilanza',
+        'telecamere-hero-title': '📹 Security Camera Installation',
+        'telecamere-hero-subtitle': 'Complete professional video surveillance system with smart home integration for your 24/7 security',
+        'telecamere-badge-1': '🔒 Maximum Security',
+        'telecamere-badge-2': '📱 Remote Access',
+        'telecamere-badge-3': '⚡ Fast Installation',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 How Installation Works',
+        'telecamere-step-1': '<strong>Free survey:</strong> We evaluate your needs and design the ideal system with smart home integration',
+        'telecamere-step-2': '<strong>Professional installation:</strong> Certified technicians install cameras and recording system',
+        'telecamere-step-3': '<strong>Software synchronization:</strong> Connection with your existing smart home and mobile app setup',
+        'telecamere-step-4': '<strong>Maintenance included:</strong> Technical support, updates and 12 months assistance'
+      },
+      'es': {
+        'telecamere-title': '📹 Instalación de Cámaras de Seguridad - AiVigilanza',
+        'telecamere-hero-title': '📹 Instalación de Cámaras de Seguridad',
+        'telecamere-hero-subtitle': 'Sistema completo de videovigilancia profesional con integración domótica para tu seguridad 24/7',
+        'telecamere-badge-1': '🔒 Seguridad Máxima',
+        'telecamere-badge-2': '📱 Acceso Remoto',
+        'telecamere-badge-3': '⚡ Instalación Rápida',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 Cómo Funciona la Instalación',
+        'telecamere-step-1': '<strong>Inspección gratuita:</strong> Evaluamos tus necesidades y diseñamos el sistema ideal con integración domótica',
+        'telecamere-step-2': '<strong>Instalación profesional:</strong> Técnicos certificados instalan cámaras y sistema de grabación',
+        'telecamere-step-3': '<strong>Sincronización de software:</strong> Conexión con tu domótica existente y configuración de app móvil',
+        'telecamere-step-4': '<strong>Mantenimiento incluido:</strong> Soporte técnico, actualizaciones y asistencia de 12 meses'
+      },
+      'fr': {
+        'telecamere-title': '📹 Installation de Caméras de Sécurité - AiVigilanza',
+        'telecamere-hero-title': '📹 Installation de Caméras de Sécurité',
+        'telecamere-hero-subtitle': 'Système complet de vidéosurveillance professionnel avec intégration domotique pour votre sécurité 24/7',
+        'telecamere-badge-1': '🔒 Sécurité Maximale',
+        'telecamere-badge-2': '📱 Accès à Distance',
+        'telecamere-badge-3': '⚡ Installation Rapide',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 Comment Fonctionne l\'Installation',
+        'telecamere-step-1': '<strong>Étude gratuite:</strong> Nous évaluons vos besoins et concevons le système idéal avec intégration domotique',
+        'telecamere-step-2': '<strong>Installation professionnelle:</strong> Techniciens certifiés installent caméras et système d\'enregistrement',
+        'telecamere-step-3': '<strong>Synchronisation logicielle:</strong> Connexion avec votre domotique existante et configuration d\'application mobile',
+        'telecamere-step-4': '<strong>Maintenance incluse:</strong> Support technique, mises à jour et assistance de 12 mois'
+      },
+      'de': {
+        'telecamere-title': '📹 Sicherheitskamerainstallation - AiVigilanza',
+        'telecamere-hero-title': '📹 Sicherheitskamerainstallation',
+        'telecamere-hero-subtitle': 'Vollständiges professionelles Videoüberwachungssystem mit Smart-Home-Integration für Ihre 24/7-Sicherheit',
+        'telecamere-badge-1': '🔒 Maximale Sicherheit',
+        'telecamere-badge-2': '📱 Fernzugriff',
+        'telecamere-badge-3': '⚡ Schnelle Installation',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 Wie die Installation Funktioniert',
+        'telecamere-step-1': '<strong>Kostenlose Begutachtung:</strong> Wir bewerten Ihre Bedürfnisse und entwerfen das ideale System mit Smart-Home-Integration',
+        'telecamere-step-2': '<strong>Professionelle Installation:</strong> Zertifizierte Techniker installieren Kameras und Aufzeichnungssystem',
+        'telecamere-step-3': '<strong>Software-Synchronisation:</strong> Verbindung mit Ihrem bestehenden Smart Home und mobile App-Konfiguration',
+        'telecamere-step-4': '<strong>Wartung inbegriffen:</strong> Technischer Support, Updates und 12 Monate Unterstützung'
+      },
+      'ar': {
+        'telecamere-title': '📹 تركيب كاميرات الأمان - AiVigilanza',
+        'telecamere-hero-title': '📹 تركيب كاميرات الأمان',
+        'telecamere-hero-subtitle': 'نظام مراقبة فيديو احترافي كامل مع تكامل المنزل الذكي لأمانك 24/7',
+        'telecamere-badge-1': '🔒 أقصى أمان',
+        'telecamere-badge-2': '📱 وصول عن بعد',
+        'telecamere-badge-3': '⚡ تركيب سريع',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 كيف يعمل التركيب',
+        'telecamere-step-1': '<strong>فحص مجاني:</strong> نقيم احتياجاتك ونصمم النظام المثالي مع تكامل المنزل الذكي',
+        'telecamere-step-2': '<strong>تركيب احترافي:</strong> فنيون معتمدون يركبون الكاميرات ونظام التسجيل',
+        'telecamere-step-3': '<strong>مزامنة البرمجيات:</strong> الاتصال بالمنزل الذكي الحالي وإعداد تطبيق الهاتف المحمول',
+        'telecamere-step-4': '<strong>الصيانة مشمولة:</strong> الدعم الفني، التحديثات ودعم 12 شهرًا'
+      },
+      'ru': {
+        'telecamere-title': '📹 Установка Камер Безопасности - AiVigilanza',
+        'telecamere-hero-title': '📹 Установка Камер Безопасности',
+        'telecamere-hero-subtitle': 'Полная профессиональная система видеонаблюдения с интеграцией умного дома для вашей безопасности 24/7',
+        'telecamere-badge-1': '🔒 Максимальная Безопасность',
+        'telecamere-badge-2': '📱 Удаленный Доступ',
+        'telecamere-badge-3': '⚡ Быстрая Установка',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 Как Работает Установка',
+        'telecamere-step-1': '<strong>Бесплатный осмотр:</strong> Мы оцениваем ваши потребности и проектируем идеальную систему с интеграцией умного дома',
+        'telecamere-step-2': '<strong>Профессиональная установка:</strong> Сертифицированные техники устанавливают камеры и систему записи',
+        'telecamere-step-3': '<strong>Синхронизация программного обеспечения:</strong> Подключение к вашему существующему умному дому и настройка мобильного приложения',
+        'telecamere-step-4': '<strong>Обслуживание включено:</strong> Техническая поддержка, обновления и поддержка 12 месяцев'
+      },
+      'zh': {
+        'telecamere-title': '📹 安全摄像头安装 - AiVigilanza',
+        'telecamere-hero-title': '📹 安全摄像头安装',
+        'telecamere-hero-subtitle': '完整的专业视频监控系统，集成智能家居，为您的24/7安全保驾护航',
+        'telecamere-badge-1': '🔒 最高安全性',
+        'telecamere-badge-2': '📱 远程访问',
+        'telecamere-badge-3': '⚡ 快速安装',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 安装如何工作',
+        'telecamere-step-1': '<strong>免费勘察：</strong>我们评估您的需求并设计理想的系统，集成智能家居',
+        'telecamere-step-2': '<strong>专业安装：</strong>认证技术人员安装摄像头和录制系统',
+        'telecamere-step-3': '<strong>软件同步：</strong>连接您现有的智能家居和移动应用程序设置',
+        'telecamere-step-4': '<strong>维护包括在内：</strong>技术支持、更新和12个月支持'
+      },
+      'ja': {
+        'telecamere-title': '📹 セキュリティカメラ設置 - AiVigilanza',
+        'telecamere-hero-title': '📹 セキュリティカメラ設置',
+        'telecamere-hero-subtitle': 'スマートホーム統合による24/7セキュリティのための完全なプロフェッショナルビデオ監視システム',
+        'telecamere-badge-1': '🔒 最大限のセキュリティ',
+        'telecamere-badge-2': '📱 リモートアクセス',
+        'telecamere-badge-3': '⚡ 迅速な設置',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 設置の仕組み',
+        'telecamere-step-1': '<strong>無料調査：</strong>お客様のニーズを評価し、スマートホーム統合で理想的なシステムを設計します',
+        'telecamere-step-2': '<strong>プロフェッショナル設置：</strong>認定技術者がカメラと録画システムを設置します',
+        'telecamere-step-3': '<strong>ソフトウェア同期：</strong>既存のスマートホームとの接続とモバイルアプリ設定',
+        'telecamere-step-4': '<strong>メンテナンス込み：</strong>テクニカルサポート、アップデート、12ヶ月サポート'
+      },
+      'hi': {
+        'telecamere-title': '📹 सुरक्षा कैमरा स्थापना - AiVigilanza',
+        'telecamere-hero-title': '📹 सुरक्षा कैमरा स्थापना',
+        'telecamere-hero-subtitle': 'आपकी 24/7 सुरक्षा के लिए स्मार्ट होम एकीकरण के साथ पूरा पेशेवर वीडियो निगरानी प्रणाली',
+        'telecamere-badge-1': '🔒 अधिकतम सुरक्षा',
+        'telecamere-badge-2': '📱 दूरस्थ पहुंच',
+        'telecamere-badge-3': '⚡ तेज़ स्थापना',
+        'telecamere-badge-4': '🎥 HD 4K',
+        'telecamere-come-funziona': '📋 स्थापना कैसे काम करती है',
+        'telecamere-step-1': '<strong>मुफ्त सर्वेक्षण:</strong> हम आपकी आवश्यकताओं का मूल्यांकन करते हैं और स्मार्ट होम एकीकरण के साथ आदर्श प्रणाली डिज़ाइन करते हैं',
+        'telecamere-step-2': '<strong>पेशेवर स्थापना:</strong> प्रमाणित तकनीशियन कैमरे और रिकॉर्डिंग सिस्टम स्थापित करते हैं',
+        'telecamere-step-3': '<strong>सॉफ्टवेयर सिंक्रोनाइज़ेशन:</strong> आपके मौजूदा स्मार्ट होम से कनेक्शन और मोबाइल ऐप कॉन्फ़िगरेशन',
+        'telecamere-step-4': '<strong>मेंटेनेंस शामिल:</strong> तकनीकी सहायता, अपडेट और 12 महीने का समर्थन'
+      }
+    };
+
+    // Funzione per cambiare lingua
+    function cambiaLingua(lang) {
+      // Salva la lingua selezionata
+      localStorage.setItem('lang', lang);
+
+      // Aggiorna le bandiere attive
+      document.querySelectorAll('.flag').forEach(flag => flag.classList.remove('active'));
+      document.getElementById(`flag-${lang}`).classList.add('active');
+
+      // Applica le traduzioni
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (traduzioni[lang] && traduzioni[lang][key]) {
+          element.innerHTML = traduzioni[lang][key];
+        }
+      });
+
+      // Aggiorna il titolo della pagina
+      if (traduzioni[lang] && traduzioni[lang]['telecamere-title']) {
+        document.title = traduzioni[lang]['telecamere-title'];
+      }
+    }
+
+    // Funzione per navigare alle pagine
+    function navigateToPage(page) {
+      if (page) {
+        window.location.href = page;
+      }
+    }
+
+    // Inizializzazione
+    document.addEventListener('DOMContentLoaded', function() {
+      const lang = localStorage.getItem('lang') || 'it';
+      cambiaLingua(lang);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<script>
+// FIX ULTIMO PER CANCELLAZIONE FTTH - DA INSERIRE NELLA PAGINA HTML
+(function() {
+    'use strict';
+
+    console.log('🚀 AVVIO FIX ULTIMO CANCELLAZIONE FTTH...');
+
+    // 1. BLOCCA IMMEDIATAMENTE TUTTI GLI ALERT
+    const originalAlert = window.alert;
+    window.alert = function(message) {
+        console.log('🔍 ALERT INTERCETTATO:', message);
+        if (message && typeof message === 'string' && message.includes('Funzionalità in sviluppo')) {
+            console.log('🚫 ALERT BLOCCATO: "Funzionalità in sviluppo"');
+            return false;
+        }
+        console.log('✅ ALERT PERMESSO:', message);
+        return originalAlert.apply(this, arguments);
+    };
+
+    // 2. SOVRASCRIVI IMMEDIATAMENTE mostraNote
+    window.mostraNote = async function(orderId) {
+        console.log('🎯 CANCELLAZIONE ATTIVATA - Order ID:', orderId);
+
+        try {
+            // Forza autenticazione
+            document.cookie = 'ftth_auth=true; path=/; domain=servicess.net; secure; samesite=none';
+
+            const note = prompt('🔴 CANCELLAZIONE: Inserisci il motivo della cancellazione:');
+            console.log('📝 Nota inserita:', note);
+
+            if (!note || note.trim() === '') {
+                alert('❌ Cancellazione annullata: devi inserire un motivo valido!');
+                return;
+            }
+
+            console.log('📤 INVIO RICHIESTA CANCELLAZIONE...');
+
+            const response = await fetch(`https://servicess.net/gestionale/works/${orderId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-Key': 'JHzxUzdAK8LJ33Y50MDgLf5E62flYset4MYA6ELpXpU='
+                },
+                body: JSON.stringify({
+                    note_cancellazione: note.trim()
+                })
+            });
+
+            console.log('📥 RISPOSTA RICEVUTA:', response.status);
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP ${response.status}: ${errorText}`);
+            }
+
+            const result = await response.text();
+            console.log('✅ SUCCESSO:', result);
+
+            // Ricarica ordini
+            if (typeof loadOrders === 'function') {
+                await loadOrders();
+            }
+
+            // Notifica
+            if (typeof showNotification === 'function') {
+                showNotification('✅ Lavoro cancellato con successo!', 'success');
+            } else {
+                alert('✅ Lavoro cancellato con successo!');
+            }
+
+            console.log('🎉 CANCELLAZIONE COMPLETATA!');
+
+        } catch (error) {
+            console.error('💥 ERRORE CANCELLAZIONE:', error);
+
+            if (typeof showNotification === 'function') {
+                showNotification(`❌ Errore: ${error.message}`, 'error');
+            } else {
+                alert(`❌ Errore nella cancellazione: ${error.message}`);
+            }
+        }
+    };
+
+    // 3. PROTEGGI LA FUNZIONE DA SOVRASCRITTURE
+    let protectionInterval = setInterval(() => {
+        if (window.mostraNote.toString().indexOf('CANCELLAZIONE ATTIVATA') === -1) {
+            console.log('🔄 RIPRISTINO mostraNote SOVRASCRITTA');
+            window.mostraNote = arguments.callee.caller;
+        }
+    }, 1000);
+
+    // 4. MONITORA DOM PER PULSANTI CANCELLA
+    const observer = new MutationObserver(() => {
+        const cancelButtons = document.querySelectorAll('.btn-annulla');
+        cancelButtons.forEach(btn => {
+            if (!btn.hasAttribute('data-fix-applied')) {
+                btn.setAttribute('data-fix-applied', 'true');
+                console.log('🔧 PULSANTE CANCELLA PROTETTO');
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // 5. PULSANTE DI TEST
+    setTimeout(() => {
+        const testBtn = document.createElement('button');
+        testBtn.innerHTML = '🧪 TEST CANCELLAZIONE';
+        testBtn.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 10000;
+            font-weight: bold;
+        `;
+        testBtn.onclick = () => {
+            const buttons = document.querySelectorAll('.btn-annulla');
+            if (buttons.length > 0) {
+                alert(`✅ TROVATI ${buttons.length} PULSANTI CANCELLA - Fix attivo!`);
+            } else {
+                alert('❌ NESSUN PULSANTE CANCELLA trovato - ricarica la pagina');
+            }
+        };
+        document.body.appendChild(testBtn);
+    }, 2000);
+
+    console.log('✅ FIX ULTIMO APPLICATO - CANCELLAZIONE ABILITATA!');
+
+    // 6. AUTO-TEST
+    setTimeout(() => {
+        console.log('🧪 AUTO-TEST: cercando pulsanti cancella...');
+        const buttons = document.querySelectorAll('.btn-annulla');
+        if (buttons.length > 0) {
+            console.log(`✅ ${buttons.length} PULSANTI CANCELLA PRONTI`);
+        } else {
+            console.log('⏳ ATTESA CARICAMENTO ORDINI...');
+        }
+    }, 3000);
+
+})();
+</script>

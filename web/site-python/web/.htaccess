@@ -1,0 +1,56 @@
+# Language redirect based on Cloudflare country header and Accept-Language
+# Applies only to the site root ("/" or "/index.html") when no "lang" query param is present.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # only for root (avoid redirect for already localized pages)
+  RewriteCond %{REQUEST_URI} ^/(|index\.html)?$ [NC]
+  RewriteCond %{QUERY_STRING} !(^|&)lang= [NC]
+  RewriteCond %{REQUEST_URI} !^/index-(en|ru|ar|zh|it)\.html$ [NC]
+
+  # 1) Prefer Cloudflare country header when available
+  RewriteCond %{HTTP:CF-IPCountry} ^IT$ [NC]
+  RewriteRule ^(index\.html)?$ /index-it.html [R=302,L]
+
+  RewriteCond %{HTTP:CF-IPCountry} ^RU$ [NC]
+  RewriteRule ^(index\.html)?$ /index-ru.html [R=302,L]
+
+  RewriteCond %{HTTP:CF-IPCountry} ^(CN|TW|HK)$ [NC]
+  RewriteRule ^(index\.html)?$ /index-zh.html [R=302,L]
+
+  RewriteCond %{HTTP:CF-IPCountry} ^(AE|SA|EG|IQ|JO|KW|OM|QA|LB|MA|DZ|TN|BH|SY)$ [NC]
+  RewriteRule ^(index\.html)?$ /index-ar.html [R=302,L]
+
+  # 2) Fall back to Accept-Language header checks (order matters)
+  RewriteCond %{HTTP:Accept-Language} ^it [NC,OR]
+  RewriteCond %{HTTP:Accept-Language} ,it [NC]
+  RewriteRule ^(index\.html)?$ /index-it.html [R=302,L]
+
+  RewriteCond %{HTTP:Accept-Language} ^ru [NC,OR]
+  RewriteCond %{HTTP:Accept-Language} ,ru [NC]
+  RewriteRule ^(index\.html)?$ /index-ru.html [R=302,L]
+
+  RewriteCond %{HTTP:Accept-Language} ^ar [NC,OR]
+  RewriteCond %{HTTP:Accept-Language} ,ar [NC]
+  RewriteRule ^(index\.html)?$ /index-ar.html [R=302,L]
+
+  RewriteCond %{HTTP:Accept-Language} ^zh [NC,OR]
+  RewriteCond %{HTTP:Accept-Language} ,zh [NC]
+  RewriteRule ^(index\.html)?$ /index-zh.html [R=302,L]
+
+  RewriteCond %{HTTP:Accept-Language} ^en [NC,OR]
+  RewriteCond %{HTTP:Accept-Language} ,en [NC]
+  RewriteRule ^(index\.html)?$ /index-en.html [R=302,L]
+
+  # Default fallback: Italian
+  RewriteRule ^(index\.html)?$ /index-it.html [R=302,L]
+</IfModule>
+
+# Prevent caching of redirects by intermediaries (short-lived)
+<IfModule mod_headers.c>
+  <FilesMatch "^index-.*\.html$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>
+
+# Note: this file should be copied to the live site root (/var/www/site-python/.htaccess)

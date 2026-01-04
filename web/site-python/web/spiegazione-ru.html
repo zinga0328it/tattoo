@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как работает наша система - Site-Python.com</title>
+    <meta name="description" content="Узнайте, как наша система изолирует базы данных и API с помощью Yggdrasil, Apache ProxyPass, Flask API и SQLite для максимальной безопасности.">
+    <meta name="keywords" content="Yggdrasil, Flask, SQLite, ProxyPass, изолированный API, управление сотрудниками, безопасные сайты">
+    <link rel="alternate" hreflang="it" href="https://site-python.com/spiegazione.html" />
+    <link rel="alternate" hreflang="en" href="https://site-python.com/spiegazione-en.html" />
+    <link rel="alternate" hreflang="ru" href="https://site-python.com/spiegazione-ru.html" />
+    <link rel="alternate" hreflang="ar" href="https://site-python.com/spiegazione-ar.html" />
+    <link rel="alternate" hreflang="zh" href="https://site-python.com/spiegazione-zh.html" />
+    <link rel="canonical" href="https://site-python.com/spiegazione-ru.html" />
+    <!-- Google Site Verification: replace content value with the token from Search Console to verify site ownership -->
+    <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_SITE_VERIFICATION_CODE" />
+        <!-- JSON-LD Publisher / Organization schema for Google/SEO -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Site-Python.com",
+            "url": "https://site-python.com",
+            "contactPoint": [{
+                "@type": "ContactPoint",
+                "telephone": "+393510120753",
+                "contactType": "customer service"
+            }]
+        }
+        </script>
+    <!-- Google AdSense script: loads the adsbygoogle library for ad rendering -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2303858135011011" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: #0b1320;
+            color: #e8f0ff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #111a2b;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,.2);
+        }
+        h1, h2, h3 {
+            color: #4da3ff;
+        }
+        h1 {
+            text-align: center;
+        }
+        p, li {
+            margin-bottom: 15px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .step {
+            background: rgba(255,255,255,.05);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #4da3ff;
+        }
+        .tech {
+            background: rgba(77, 163, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .flow {
+            text-align: center;
+            font-family: monospace;
+            background: rgba(0,0,0,.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        a {
+            color: #1ee37d;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* Flag styles (local) */
+        .flag { width: 32px; height: 24px; border-radius: 4px; cursor: pointer; transition: transform 0.2s; border: 1px solid rgba(255,255,255,.1); }
+        .flag img { display:block; width:100%; height:100%; object-fit:contain; border-radius:4px; }
+        .flag:hover { transform: scale(1.1); }
+    .flag:focus { outline:2px solid #4da3ff; outline-offset:2px; }
+    .flag.active { border-color: #4da3ff; }
+    </style>
+</head>
+<body>
+    <!-- Flag Bar -->
+    <div class="flag-bar" style="display:flex; gap:8px; justify-content:flex-end; padding:8px 18px 0 0;">
+        <a href="spiegazione.html" class="flag flag-it" title="Italiano" aria-label="Italiano">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Crect width='10.67' height='24' x='0' y='0' fill='%2300B04F'/%3E%3Crect width='10.67' height='24' x='10.67' y='0' fill='%23fff'/%3E%3Crect width='10.67' height='24' x='21.33' y='0' fill='%23DC143C'/%3E%3C/svg%3E" alt="IT">
+        </a>
+        <a href="spiegazione-en.html" class="flag flag-en" title="English" aria-label="English">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Cpath fill='%23006' d='M0 0h32v24H0z'/%3E%3Cpath stroke='%23fff' stroke-width='1.6' d='M0 0l32 24m0-24L0 24'/%3E%3Cpath stroke='%23c00' stroke-width='1.07' d='M0 0l32 24m0-24L0 24'/%3E%3Cpath stroke='%23fff' stroke-width='2.67' d='M16 0v24M0 12h32'/%3E%3Cpath stroke='%23c00' stroke-width='1.6' d='M16 0v24M0 12h32'/%3E%3C/svg%3E" alt="EN">
+        </a>
+        <div class="flag flag-ru active" title="Русский" aria-label="Русский">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Cpath fill='%23fff' d='M0 0h32v8H0z'/%3E%3Cpath fill='%2300B4D8' d='M0 8h32v8H0z'/%3E%3Cpath fill='%23D52B1E' d='M0 16h32v8H0z'/%3E%3C/svg%3E" alt="RU">
+        </div>
+        <a href="spiegazione-ar.html" class="flag flag-ar" title="العربية" aria-label="العربية">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Cpath fill='%23CE1126' d='M0 0h32v24H0z'/%3E%3Cpath fill='%23fff' d='M0 8h32v8H0z'/%3E%3Cpath fill='%2314B53A' d='M0 16h32v8H0z'/%3E%3C/svg%3E" alt="AR">
+        </a>
+        <a href="spiegazione-zh.html" class="flag flag-zh" title="中文" aria-label="中文">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Cpath fill='%23DE2910' d='M0 0h32v24H0z'/%3E%3Cpath fill='%23FFDE00' d='M0 0l10.67 10.67h21.33V0z'/%3E%3Cpath fill='%23FFDE00' d='M0 24l10.67-10.67h21.33v10.67z'/%3E%3C/svg%3E" alt="ZH">
+        </a>
+        </div>
+        <div class="container">
+    <h1>🔒 Как работает наша система управления сотрудниками</h1>
+    <p>Добро пожаловать! Эта страница объясняет пошагово, как работает наша защищенная система управления сотрудниками на Yggdrasil.</p>
+
+    <h2>Почему эта система особенная? 🚀 Наш инновационный патент!</h2>
+    <p>Представьте мир, где ваши самые ценные данные — зарплаты, личная информация — никогда не находятся в публичном интернете. Наша революционная система прячет их внутри <strong>безопасного виртуального туннеля</strong> под названием Yggdrasil, секретной децентрализованной сети, соединяющей невидимые ПК как цифровые привидения. База данных? Скрыта за удалённым ПК, доступна только через этот зашифрованный туннель.</p>
+    <p><strong>Это наш эксклюзивный патент:</strong> Распределённая архитектура, где публичный фронтенд соединяется с изолированным бэкендом через виртуальный туннель. Мы создали уникальный веб-приложение, работающее на Yggdrasil, с базой данных, скрытой за невидимым ПК.</p>
+
+    <h2>Основные шаги: От браузера до базы данных</h2>
+    <p>Когда пользователь (например, вы) посещает сайт и добавляет сотрудника, вот что происходит за кулисами:</p>
+
+        <div class="step">
+            <h3>Шаг 1: Публичный фронтенд (То, что вы видите)</h3>
+            <p>Сайт использует HTML/CSS/JS и размещен на Apache с HTTPS. При нажатии 'Добавить сотрудника' JS отправляет запрос на /api/dipendenti.</p>
+            <div class="tech">
+                <strong>Технологии:</strong> HTML для структуры, CSS для стиля, JavaScript для интерактивности. Сервер: Apache с HTTPS (Let's Encrypt для сертификатов).
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>Шаг 2: Прокси (секретный мост)</h3>
+            <p>Apache ProxyPass перенаправляет /api запросы на приватный Yggdrasil-адрес, изолированный от интернета.</p>
+            <div class="tech">
+                <strong>Технологии:</strong> Apache с модулями mod_proxy и mod_proxy_http. Конфигурация: ProxyPass /api http://[ygg-address]:port/api.
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>Шаг 3: Сеть Yggdrasil (секретная дорога)</h3>
+            <p>Yggdrasil — это децентрализованная сеть IPv6 (200::) с автоматическим шифрованием; общаются только авторизованные узлы.</p>
+            <div class="tech">
+                <strong>Технологии:</strong> Yggdrasil (open-source). Конфигурация: основные пиры, публичные/разрешенные ключи, архитектура из двух компьютеров (публичный фронтенд, удалённый бэкенд).
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>Шаг 4: Изолированный API (мозг системы)</h3>
+            <p>На удаленном сервере работает Flask/Python, который проверяет Ygg IP и API ключ, прежде чем обработать запрос.</p>
+            <div class="tech">
+                <strong>Технологии:</strong> Python + Flask (легковесный фреймворк). Безопасность: проверки в @app.before_request для Ygg IP и API ключей. Эндпоинты: /api/dipendenti, /api/key и т.д.
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>Шаг 5: Изолированная база данных (хранилище)</h3>
+            <p>Данные хранятся в SQLite на удаленном сервере и доступны только через API, не выставляются в интернет.</p>
+            <div class="tech">
+                <strong>Технологии:</strong> SQLite (легковесная реляционная БД). Схема: таблицы для сотрудников, зарплат, больничных и т.д. Доступ только через Flask API.
+            </div>
+        </div>
+
+    <h2>Полный поток: Визуальный пример</h2>
+    <p>Вот как выглядит путь запроса:</p>
+        <div class="flow">
+            <div>
+Браузер → Apache (ProxyPass) → Yggdrasil → Flask API → SQLite DB
+        </div>
+
+        <h2>Почему это безопаснее и лучше?</h2>
+        <ul>
+            <li><strong>Полная изоляция:</strong> База данных и API никогда не доступны из интернета. Даже если кто-то взломает публичный сайт, он не попадёт в бэкенд.</li>
+            <li><strong>Децентрализовано:</strong> Нет центрального сервера для атаки. Yggdrasil напрямую соединяет узлы.</li>
+            <li><strong>Зашифровано:</strong> Всё в Yggdrasil автоматически защищено.</li>
+            <li><strong>Масштабируемость:</strong> Вы можете легко добавить больше серверов Yggdrasil.</li>
+            <li><strong>Приватность:</strong> Нет публичного адреса для бэкенда — только приватные IPv6.</li>
+        </ul>
+
+    <h2>Заключение: Готово к будущему</h2>
+    <p>Эта система инновационна, потому что комбинирует современные технологии для создания чего-то нового: распределённого защищённого веб-приложения без компромиссов по приватности. Она идеально подходит для компаний, работающих с конфиденциальными данными.</p>
+
+        <h2>Проблемы и как мы их преодолели – наша сила!</h2>
+        <p>Во время разработки нашего патента мы столкнулись с серьёзными вызовами, но не сдались: восстановили бэкенд Flask с нуля, улучшили обработку ошибок и протестировали систему до полной изоляции. Результат – система на Yggdrasil с базой данных, скрытой за невидимыми ПК.</p>
+        <p>Проект завершён к 28 октября 2025 года с живой демонстрацией и полноценной документацией. Вот краткое содержание нашего шедевра:</p>
+        <ul>
+            <li><strong>Статус:</strong> ✅ Успешно завершено, изолировано на Yggdrasil – наш патент!</li>
+            <li><strong>Революционная архитектура:</strong> Публичный фронтенд + изолированный бэкенд в виртуальном туннеле, база данных за невидимым ПК.</li>
+            <li><strong>Ключевые изменения:</strong> Умные ошибки, максимальная безопасность, чистая инновация.</li>
+            <li><strong>Тестирование:</strong> Всё в порядке, полная изоляция – готово к патентованию!</li>
+            <li><strong>Преимущества:</strong> Экстремальная безопасность, децентрализация, бесконечная масштабируемость. Это будущее!</li>
+        </ul>
+        <p>С креативностью и опытом мы создали нечто уникальное. Это наш патент – система, путешествующая по виртуальным туннелям, с данными, скрытыми за невидимыми ПК!</p>
+
+    <h2>Другие проекты: примеры работ</h2>
+    <p>Чтобы показать больше примеров нашей работы, вот реальный проект, который я сделал для подруги: сайт с функциями загрузки фото с Telegram и динамическим SEO. Код доступен на GitHub как пример с открытым исходным кодом.</p>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <a href="https://www.romastudiotattoo.it/" target="_blank" style="display: inline-block; padding: 10px 20px; background: #4da3ff; color: #e8f0ff; text-decoration: none; border-radius: 8px; margin: 10px;">Tattoo Roma Studio – сайт (Проект)</a>
+            <p style="font-size: 14px; margin: 10px 0;">Живой сайт: бронирование, фото, SEO. Также доступен на <a href="https://www.romastudiotattoo.com/" target="_blank">romastudiotattoo.com</a>.</p>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <a href="https://github.com/zinga0328it/tattoo/" target="_blank" style="display: inline-block; padding: 10px 20px; background: #1ee37d; color: #0b1320; text-decoration: none; border-radius: 8px; margin: 10px;">Репозиторий GitHub: исходный код</a>
+            <p style="font-size: 14px; margin: 10px 0;">Код этого проекта с открытым исходным кодом для вдохновения и повторного использования.</p>
+        </div>
+
+    <p>Если есть вопросы, свяжитесь с нами!</p>
+        <div style="text-align: center; margin: 10px 0;">
+            <a href="https://wa.me/393510120753" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 10px 18px; background: #4da3ff; color: #e8f0ff; text-decoration: none; border-radius: 8px; margin: 6px;">Свяжитесь с нами в WhatsApp</a>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <button onclick="window.location.href='https://site-python.com/dipendenti-ru.html'" style="padding: 15px 30px; background: linear-gradient(45deg, #4da3ff, #1ee37d); color: #e8f0ff; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,.2); transition: transform 0.2s;">🚀 Демонстрация: Управление сотрудниками</button>
+            <p style="font-size: 16px; margin: 10px 0; color: #e8f0ff; font-weight: bold;">Узнайте об инновации: база данных скрыта за невидимыми ПК в Yggdrasil, максимальная безопасность и приватность – наш революционный патент!</p>
+            <button onclick="window.location.href='https://site-python.com/fibra-ru.html'" style="padding: 15px 30px; background: linear-gradient(45deg, #1ee37d, #4da3ff); color: #e8f0ff; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,.2); transition: transform 0.2s; margin-top: 10px;">🚀 Система Fibра FTTH</button>
+        </div>
+
+        <p style="text-align: center; margin: 20px 0; font-size: 14px; color: #94a3b8;">Произведено servicess.net</p>
+    </div>
+</body>
+</html>

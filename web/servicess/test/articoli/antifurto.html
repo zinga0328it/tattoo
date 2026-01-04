@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Antifurto + Rete Privata Mesh (Yggdrasil) | AiVigilanza.it</title>
+  <meta name="description" content="Antifurto con rete privata cifrata: telecamere e allarmi su mesh Yggdrasil. Nessuna porta esposta su Internet, accesso solo con chiavi autorizzate." />
+  <style>
+    :root{
+      --bg:#0b1320; --card:#111a2b; --muted:#8aa0bf; --text:#e8f0ff; --brand:#4da3ff; --ok:#1ec28b; --warn:#ffcc4d;
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif; color:var(--text); background:linear-gradient(180deg,#070d18,#0b1320);}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{padding:48px 20px; text-align:center; background:radial-gradient(1000px 400px at 50% -10%,#182743,transparent);}
+    header h1{margin:0 0 10px; font-size:clamp(28px,3.6vw,42px)}
+    header p{margin:0; color:var(--muted); font-size:clamp(15px,2.4vw,18px)}
+    .wrap{max-width:980px; margin:0 auto; padding:28px 20px}
+    .grid{display:grid; gap:18px}
+    @media(min-width:860px){ .grid{grid-template-columns:1fr 1fr} }
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .kpi{display:flex; gap:14px; align-items:flex-start; padding:14px 16px; border-radius:12px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05)}
+    .kpi b{display:block; font-size:15px}
+    .kpi span{color:var(--muted); font-size:14px}
+    .icon{font-size:22px; line-height:1.1}
+    h2{margin:0 0 12px; font-size:clamp(22px,2.8vw,28px)}
+    h3{margin:14px 0 8px; font-size:18px}
+    ul{margin:10px 0 0 20px; color:var(--text)}
+    li{margin:8px 0}
+    .muted{color:var(--muted)}
+    .table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,.08)}
+    .table th,.table td{padding:14px 12px; text-align:left}
+    .table thead{background:rgba(255,255,255,.06)}
+    .table tbody tr{background:rgba(255,255,255,.03)}
+    .table tbody tr:not(:last-child){border-bottom:1px solid rgba(255,255,255,.06)}
+    .badge{display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; border:1px solid rgba(255,255,255,.16); color:#d9e8ff}
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+    .btn{display:inline-block; padding:12px 18px; border-radius:12px; border:1px solid rgba(255,255,255,.16); background:#17325c; color:#eaf2ff; font-weight:600}
+    .btn.secondary{background:transparent}
+    .note{font-size:13px; color:var(--muted)}
+    footer{padding:30px 20px; text-align:center; color:var(--muted)}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:rgba(255,255,255,.06); padding:2px 6px; border-radius:8px}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Antifurto + Rete Privata Cifrata (Mesh Yggdrasil)</h1>
+  <p>Telecamere e allarmi in una LAN globale privata. Nessuna porta esposta. Solo dispositivi autorizzati. Privacy totale.</p>
+</header>
+
+<main class="wrap">
+
+  <section class="grid">
+    <div class="card">
+      <h2>Perché conviene</h2>
+      <div class="kpi">
+        <div class="icon">🔒</div>
+        <div><b>Cifratura end-to-end</b><span> Il flusso video è leggibile solo dai tuoi dispositivi autorizzati.</span></div>
+      </div>
+      <div class="kpi">
+        <div class="icon">🕵️</div>
+        <div><b>Nessuna esposizione su Internet</b><span> Niente porte aperte, niente IP pubblici sulle cam.</span></div>
+      </div>
+      <div class="kpi">
+        <div class="icon">⚡</div>
+        <div><b>Rete mesh efficiente</b><span> Peer-to-peer: non saturi la banda come con una VPN tradizionale.</span></div>
+      </div>
+      <div class="kpi">
+        <div class="icon">🧩</div>
+        <div><b>Plug &amp; Play</b><span> Ti forniamo le chiavi e la configurazione. Colleghi e funziona.</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Come funziona (facile)</h2>
+      <ul>
+        <li>Ogni dispositivo (telecamere, NVR, telefono, PC) ha <b>una chiave</b> e un <b>indirizzo privato</b> nella mesh.</li>
+        <li>Solo i dispositivi <b>in whitelist</b> entrano nella rete e vedono i flussi.</li>
+        <li>Il traffico viaggia <b>cifrato</b> da punto a punto: chi intercetta vede solo rumore.</li>
+        <li>Niente port-forwarding, niente DDNS, niente complicazioni: <b>NAT? Bucato.</b></li>
+      </ul>
+      <p class="muted" style="margin-top:10px">Opzione extra: uscita Internet via gateway (stile VPN). Utile ma consuma banda: la attiviamo solo se serve davvero.</p>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="sicurezza">
+    <h2 id="sicurezza">Sicurezza reale, non promessa</h2>
+    <h3>Perché non possono spiarti</h3>
+    <ul>
+      <li><b>Accesso solo con chiavi autorizzate</b>: chi non è nella rete, non vede nulla.</li>
+      <li><b>Zero superfici esposte</b>: i flussi non stanno su Internet pubblico.</li>
+      <li><b>Isolamento</b>: puoi limitare porte e servizi visibili sull’interfaccia <code>ygg0</code>.</li>
+      <li><b>Revoca immediata</b>: togli la chiave a un device e sparisce dalla rete.</li>
+    </ul>
+  </section>
+
+  <section class="card" aria-labelledby="offerta">
+    <h2 id="offerta">Cosa offriamo</h2>
+    <ul>
+      <li><span class="badge">Incluso</span> Rete privata Yggdrasil per telecamere, allarmi e NVR.</li>
+      <li><span class="badge">Incluso</span> Provisioning chiavi + configurazione guidata.</li>
+      <li><span class="badge">Incluso</span> Supporto tecnico e verifica sicurezza.</li>
+      <li><span class="badge">Opzionale</span> Uscita sicura “solo rete Yggdrasil” (flusso video interno).</li>
+      <li><span class="badge">Opzionale</span> Gateway Internet (stile VPN) quando serve.</li>
+    </ul>
+  </section>
+
+  <section class="card" aria-labelledby="piani">
+    <h2 id="piani">Piani chiari</h2>
+    <table class="table" role="table">
+      <thead>
+        <tr>
+          <th>Pacchetto</th>
+          <th>Dispositivi</th>
+          <th>Funzionalità</th>
+          <th>Per chi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Basic</b></td>
+          <td>fino a 5</td>
+          <td>Rete privata cifrata, chiavi incluse</td>
+          <td>Casa, piccolo studio</td>
+        </tr>
+        <tr>
+          <td><b>Pro</b></td>
+          <td>fino a 20</td>
+          <td>Dashboard, logging, alert</td>
+          <td>Negozi, uffici</td>
+        </tr>
+        <tr>
+          <td><b>Business</b></td>
+          <td>50+</td>
+          <td>SLA, banda riservata, integrazione NVR</td>
+          <td>Aziende, multi-sede</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">Richiedi personalizzazione per reti più grandi o requisiti speciali.</p>
+  </section>
+
+  <section class="card" aria-labelledby="cta">
+    <h2 id="cta">Pronto a blindare i tuoi video?</h2>
+    <p>Attiviamo la rete, carichiamo le chiavi e colleghiamo le tue telecamere. Sicuro, semplice, privato.</p>
+    <div class="cta">
+  <a class="btn" href="#contatti" aria-label="Contattaci">Contattaci</a>
+  <a class="btn secondary" href="tel:3510120753" aria-label="Chiama ora">📞 351 012 0753</a>
+</div>
+    <p class="note" style="margin-top:10px">* Offriamo anche il flusso sicuro <b>solo tramite rete Yggdrasil</b>: ideale per chi vuole restare totalmente fuori da Internet pubblico.</p>
+  </section>
+
+</main>
+
+<footer>
+  © <span id="y">2025</span> AiVigilanza.it — Rete privata cifrata per telecamere e allarmi.
+</footer>
+
+<script>
+  // aggiorna automaticamente l'anno
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

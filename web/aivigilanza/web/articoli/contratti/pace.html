@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contratto di Rinuncia al Risarcimento - Acquisto Smart TV</title>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #212529;
+            --muted: #6c757d;
+            --primary: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --border: #dee2e6;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px 0;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .header p {
+            color: var(--muted);
+            font-size: 1.1em;
+        }
+
+        .cookie-banner {
+            background: var(--warning);
+            color: #000;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .cookie-banner a {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .form-card {
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .form-card h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(0,123,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(0,123,255,0.2);
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 2px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-group label {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .consenso-text {
+            background: #f8f9fa;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+        }
+
+        .btn-secondary {
+            background: var(--muted);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .message.success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .message.error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+
+        .riepilogo {
+            background: var(--card);
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .riepilogo h3 {
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        .riepilogo-item {
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .riepilogo-item:last-child {
+            border-bottom: none;
+        }
+
+        .riepilogo-label {
+            font-weight: bold;
+            color: var(--muted);
+        }
+
+        .riepilogo-value {
+            color: var(--text);
+        }
+
+        .auth-badge {
+            background: var(--success);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        /* CAPTCHA Anti-Bot */
+        .captcha-section {
+            background: var(--card);
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .captcha-question {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--warning);
+            margin-bottom: 15px;
+        }
+
+        .captcha-input {
+            width: 100px;
+            height: 50px;
+            font-size: 1.5em;
+            text-align: center;
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            margin: 0 10px;
+        }
+
+        .captcha-refresh {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 0.9em;
+        }
+
+        .captcha-refresh:hover {
+            background: var(--primary);
+        }
+
+        .captcha-error {
+            color: var(--danger);
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤝 Contratto di Pace e Acquisto Smart TV</h1>
+            <p>Ordine Smart TV - Patto di fine controversia</p>
+        </div>
+
+        <div class="cookie-banner">
+            ℹ️ Questo sito utilizza cookie tecnici necessari per il funzionamento. <a href="/privacy.html">Maggiori informazioni</a>
+        </div>
+
+        <!-- Offerta Speciale -->
+        <div class="form-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
+            <h2 style="color: white; border-bottom: 2px solid white;">🎉 OFFERTA SPECIALE SMART TV</h2>
+            
+            <div style="display: flex; align-items: center; justify-content: center; gap: 30px; margin: 20px 0; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <img src="https://m.media-amazon.com/images/I/51Ksy+RQS7L._AC_SX679_.jpg" 
+                         alt="Smart TV" 
+                         style="max-width: 100%; height: auto; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <div style="font-size: 3em; font-weight: bold; margin: 20px 0;">
+                        <span style="text-decoration: line-through; opacity: 0.7; font-size: 0.6em;">179,00€</span><br/>
+                        149,00€
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; margin: 20px 0;">
+                        <div style="font-size: 1.5em; font-weight: bold; color: #ffd700;">-17% DI SCONTO</div>
+                        <div style="margin-top: 10px;">✅ Consegna in 1 giorno</div>
+                        <div>✅ Resi GRATUITI</div>
+                        <div>✅ IVA inclusa</div>
+                        <div>✅ Pagamento a rate disponibile</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; font-size: 0.9em; margin-top: 15px;">
+                💼 <strong>Aziende:</strong> Risparmia fino al 40% con Amazon Business
+            </div>
+        </div>
+
+        <!-- Caratteristiche Tecniche -->
+        <div class="form-card">
+            <h2>📋 Caratteristiche Tecniche Smart TV XIAOMI</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 20px;">
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #007bff;">
+                    <strong>📺 Schermo</strong>
+                    <div style="margin-top: 8px; color: #6c757d;">
+                        • Dimensioni: 32 pollici<br/>
+                        • Tecnologia: LED<br/>
+                        • Risoluzione: 720p HD<br/>
+                        • Proporzioni: 16:9<br/>
+                        • Frequenza: 60 Hz
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745;">
+                    <strong>🔊 Audio & Smart Features</strong>
+                    <div style="margin-top: 8px; color: #6c757d;">
+                        • Dolby Audio™<br/>
+                        • DTS Virtual:X<br/>
+                        • Fire TV integrato<br/>
+                        • Apple AirPlay<br/>
+                        • Controllo Vocale Alexa
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                    <strong>📡 Connettività</strong>
+                    <div style="margin-top: 8px; color: #6c757d;">
+                        • Wi-Fi integrato<br/>
+                        • Bluetooth<br/>
+                        • Ethernet (LAN)<br/>
+                        • HDMI<br/>
+                        • USB<br/>
+                        • Triple Tuner DVB-C/S2/T2
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #17a2b8;">
+                    <strong>📦 Contenuto Confezione</strong>
+                    <div style="margin-top: 8px; color: #6c757d;">
+                        • Smart TV 32"<br/>
+                        • Telecomando Bluetooth<br/>
+                        • Cavo di alimentazione<br/>
+                        • Componenti base<br/>
+                        • Kit viti e manuale
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form id="paceForm">
+            <!-- Dati Personali -->
+            <div class="form-card">
+                <h2>� Indirizzo di Consegna</h2>
+                <p style="color: var(--muted); margin-bottom: 20px;">I campi con l'asterisco <span class="required">*</span> sono obbligatori</p>
+
+                <div style="margin-bottom: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="usaPosizione()" style="width: 100%;">
+                        📍 Usa posizione attuale
+                    </button>
+                    <p style="font-size: 0.9em; color: var(--muted); margin-top: 5px;">Risparmia tempo. Compila automaticamente la tua posizione attuale.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="paese">Stato/regione <span class="required">*</span></label>
+                    <select id="paese" name="paese" required disabled>
+                        <option value="Italia">Italia</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="nome_completo">Nome completo (nome e cognome) <span class="required">*</span></label>
+                    <input type="text" id="nome_completo" name="nome_completo" required placeholder="Mario Rossi">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Numero di telefono <span class="required">*</span></label>
+                    <input type="tel" id="telefono" name="telefono" required placeholder="+393510120753">
+                    <p style="font-size: 0.85em; color: var(--muted); margin-top: 5px;">Può essere utilizzato come ausilio alla consegna</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="indirizzo_1">Riga indirizzo 1 <span class="required">*</span></label>
+                    <input type="text" id="indirizzo_1" name="indirizzo_1" required placeholder="Via Roma 123">
+                    <p style="font-size: 0.85em; color: var(--muted); margin-top: 5px;">Indirizzo stradale</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="indirizzo_2">Riga indirizzo 2</label>
+                    <input type="text" id="indirizzo_2" name="indirizzo_2" placeholder="Scala B, Piano 3, Interno 12">
+                    <p style="font-size: 0.85em; color: var(--muted); margin-top: 5px;">Scala, piano, interno, azienda (facoltativo)</p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cap">CAP <span class="required">*</span></label>
+                        <input type="text" id="cap" name="cap" required placeholder="00100" maxlength="5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="citta">Città <span class="required">*</span></label>
+                        <input type="text" id="citta" name="citta" required placeholder="Roma">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="provincia">Provincia</label>
+                        <select id="provincia" name="provincia">
+                            <option value="">Seleziona provincia</option>
+                            <option value="AG">Agrigento</option>
+                            <option value="AL">Alessandria</option>
+                            <option value="AN">Ancona</option>
+                            <option value="AO">Aosta</option>
+                            <option value="AR">Arezzo</option>
+                            <option value="AP">Ascoli Piceno</option>
+                            <option value="AT">Asti</option>
+                            <option value="AV">Avellino</option>
+                            <option value="BA">Bari</option>
+                            <option value="BT">Barletta-Andria-Trani</option>
+                            <option value="BL">Belluno</option>
+                            <option value="BN">Benevento</option>
+                            <option value="BG">Bergamo</option>
+                            <option value="BI">Biella</option>
+                            <option value="BO">Bologna</option>
+                            <option value="BZ">Bolzano</option>
+                            <option value="BS">Brescia</option>
+                            <option value="BR">Brindisi</option>
+                            <option value="CA">Cagliari</option>
+                            <option value="CL">Caltanissetta</option>
+                            <option value="CB">Campobasso</option>
+                            <option value="CE">Caserta</option>
+                            <option value="CT">Catania</option>
+                            <option value="CZ">Catanzaro</option>
+                            <option value="CH">Chieti</option>
+                            <option value="CO">Como</option>
+                            <option value="CS">Cosenza</option>
+                            <option value="CR">Cremona</option>
+                            <option value="KR">Crotone</option>
+                            <option value="CN">Cuneo</option>
+                            <option value="EN">Enna</option>
+                            <option value="FM">Fermo</option>
+                            <option value="FE">Ferrara</option>
+                            <option value="FI">Firenze</option>
+                            <option value="FG">Foggia</option>
+                            <option value="FC">Forlì-Cesena</option>
+                            <option value="FR">Frosinone</option>
+                            <option value="GE">Genova</option>
+                            <option value="GO">Gorizia</option>
+                            <option value="GR">Grosseto</option>
+                            <option value="IM">Imperia</option>
+                            <option value="IS">Isernia</option>
+                            <option value="SP">La Spezia</option>
+                            <option value="AQ">L'Aquila</option>
+                            <option value="LT">Latina</option>
+                            <option value="LE">Lecce</option>
+                            <option value="LC">Lecco</option>
+                            <option value="LI">Livorno</option>
+                            <option value="LO">Lodi</option>
+                            <option value="LU">Lucca</option>
+                            <option value="MC">Macerata</option>
+                            <option value="MN">Mantova</option>
+                            <option value="MS">Massa-Carrara</option>
+                            <option value="MT">Matera</option>
+                            <option value="ME">Messina</option>
+                            <option value="MI">Milano</option>
+                            <option value="MO">Modena</option>
+                            <option value="MB">Monza e della Brianza</option>
+                            <option value="NA">Napoli</option>
+                            <option value="NO">Novara</option>
+                            <option value="NU">Nuoro</option>
+                            <option value="OR">Oristano</option>
+                            <option value="PD">Padova</option>
+                            <option value="PA">Palermo</option>
+                            <option value="PR">Parma</option>
+                            <option value="PV">Pavia</option>
+                            <option value="PG">Perugia</option>
+                            <option value="PU">Pesaro e Urbino</option>
+                            <option value="PE">Pescara</option>
+                            <option value="PC">Piacenza</option>
+                            <option value="PI">Pisa</option>
+                            <option value="PT">Pistoia</option>
+                            <option value="PN">Pordenone</option>
+                            <option value="PZ">Potenza</option>
+                            <option value="PO">Prato</option>
+                            <option value="RG">Ragusa</option>
+                            <option value="RA">Ravenna</option>
+                            <option value="RC">Reggio Calabria</option>
+                            <option value="RE">Reggio Emilia</option>
+                            <option value="RI">Rieti</option>
+                            <option value="RN">Rimini</option>
+                            <option value="RM">Roma</option>
+                            <option value="RO">Rovigo</option>
+                            <option value="SA">Salerno</option>
+                            <option value="SS">Sassari</option>
+                            <option value="SV">Savona</option>
+                            <option value="SI">Siena</option>
+                            <option value="SR">Siracusa</option>
+                            <option value="SO">Sondrio</option>
+                            <option value="TA">Taranto</option>
+                            <option value="TE">Teramo</option>
+                            <option value="TR">Terni</option>
+                            <option value="TO">Torino</option>
+                            <option value="TP">Trapani</option>
+                            <option value="TN">Trento</option>
+                            <option value="TV">Treviso</option>
+                            <option value="TS">Trieste</option>
+                            <option value="UD">Udine</option>
+                            <option value="VA">Varese</option>
+                            <option value="VE">Venezia</option>
+                            <option value="VB">Verbano-Cusio-Ossola</option>
+                            <option value="VC">Vercelli</option>
+                            <option value="VR">Verona</option>
+                            <option value="VV">Vibo Valentia</option>
+                            <option value="VI">Vicenza</option>
+                            <option value="VT">Viterbo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="checkbox-group" style="background: rgba(0,123,255,0.05);">
+                    <input type="checkbox" id="indirizzo_predefinito" name="indirizzo_predefinito">
+                    <label for="indirizzo_predefinito">Usa come indirizzo predefinito</label>
+                </div>
+
+                <div class="form-group">
+                    <label for="istruzioni_consegna">Istruzioni di consegna</label>
+                    <textarea id="istruzioni_consegna" name="istruzioni_consegna" rows="3" 
+                              style="width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 16px;"
+                              placeholder="Aggiungi istruzioni consegna (opzionale)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo di proprietà</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 10px;">
+                        <label style="display: flex; align-items: center; gap: 8px; padding: 10px; background: #f8f9fa; border-radius: 8px; cursor: pointer;">
+                            <input type="radio" name="tipo_proprieta" value="casa" checked>
+                            <span>🏠 Casa</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; padding: 10px; background: #f8f9fa; border-radius: 8px; cursor: pointer;">
+                            <input type="radio" name="tipo_proprieta" value="appartamento">
+                            <span>🏢 Appartamento</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; padding: 10px; background: #f8f9fa; border-radius: 8px; cursor: pointer;">
+                            <input type="radio" name="tipo_proprieta" value="azienda">
+                            <span>💼 Azienda</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; padding: 10px; background: #f8f9fa; border-radius: 8px; cursor: pointer;">
+                            <input type="radio" name="tipo_proprieta" value="altro">
+                            <span>📍 Altro</span>
+                        </label>
+                    </div>
+                    <p style="font-size: 0.85em; color: var(--muted); margin-top: 8px;">Casa indipendente o villa a schiera</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="punto_consegna">Dove dobbiamo lasciare i pacchi se non entrano nella tua cassetta delle lettere?</label>
+                    <select id="punto_consegna" name="punto_consegna" 
+                            style="width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 16px;">
+                        <option value="porta">🚪 Porta di casa</option>
+                        <option value="terrazza">🏖️ Terrazza</option>
+                        <option value="magazzino">📦 Magazzino/Deposito</option>
+                        <option value="giardino">🌳 Giardino</option>
+                        <option value="garage">🚗 Garage</option>
+                        <option value="vicino">👥 Vicino di casa</option>
+                        <option value="nessuna">⚡ Nessuna preferenza</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Contratto di Pace -->
+            <div class="form-card">
+                <h2>🤝 Patto di Pace e Acquisto Smart TV</h2>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consenso_pace" name="consenso_pace" required>
+                    <label for="consenso_pace">
+                        <strong>Accetto il patto di pace e procedo con l'ordine della Smart TV</strong> <span class="required">*</span>
+                    </label>
+                </div>
+
+                <div class="consenso-text" id="testo-pace">
+CONTRATTO DI PACE E ORDINE SMART TV
+
+Io sottoscritto [Nome Cognome],
+residente in [Indirizzo], [CAP] [Città] ([Provincia]),
+telefono [Telefono],
+
+DICHIARO SOLENNEMENTE E LIBERAMENTE:
+
+1. ORDINE SMART TV
+   Confermo l'ordine di acquisto di una Smart TV dal venditore Servicess.net
+   di Alessandro Pepe, con le seguenti condizioni commerciali concordate.
+   La consegna avverrà presso l'indirizzo sopra indicato e l'identità
+   sarà verificata dal corriere al momento della consegna tramite documento valido.
+
+2. PATTO DI PACE
+   Con la firma del presente contratto, dichiaro espressamente che:
+   - Qualsiasi controversia, rancore, malinteso o disaccordo pregresso con
+     il venditore Servicess.net e/o Alessandro Pepe è da considerarsi DEFINITIVAMENTE
+     CHIUSO e SUPERATO
+   - Rinuncio a qualsiasi rivendicazione, pretesa o azione legale relativa
+     a fatti accaduti prima della firma del presente contratto
+   - Mi impegno a mantenere rapporti cordiali e rispettosi d'ora in avanti
+
+3. RINUNCIA AL RISARCIMENTO
+   Dichiaro inoltre di rinunciare espressamente e irrevocabilmente a qualsiasi
+   diritto al risarcimento danni per eventuali malfunzionamenti, difetti o
+   problemi tecnici che possano verificarsi nel prodotto acquistato.
+
+4. CONFERMA VOLONTÀ
+   Confermo che la presente dichiarazione è resa:
+   - In piena libertà e coscienza
+   - Senza alcuna coercizione o pressione
+   - Con piena comprensione delle conseguenze giuridiche
+   - Come gesto di buona volontà per chiudere ogni questione pregressa
+
+5. EFFICACIA
+   Il presente patto ha efficacia immediata e perpetua, non è revocabile
+   e vale come transazione ai sensi degli artt. 1965 e ss. del Codice Civile.
+
+Il presente contratto è regolato dalla legge italiana.
+Foro competente: Roma.
+
+Data: [Data attuale]
+IP di autenticazione: [Rilevato automaticamente]
+Firma digitale: [Hash crittografico del contratto]
+
+FATTO IN BUONA FEDE PER FARE PACE E GUARDARE AVANTI! 🤝
+                </div>
+            </div>
+
+            <!-- CAPTCHA Anti-Bot -->
+            <div class="captcha-section">
+                <h3>🤖 Verifica Anti-Bot</h3>
+                <p>Per prevenire spam, risolvi questa semplice operazione matematica:</p>
+                
+                <div class="captcha-question" id="captcha-question">
+                    Loading...
+                </div>
+                
+                <div>
+                    <input type="number" 
+                           id="captcha-answer" 
+                           class="captcha-input" 
+                           placeholder="?" 
+                           required 
+                           min="0" 
+                           max="999">
+                    <button type="button" class="captcha-refresh" onclick="generateCaptcha()">
+                        🔄 Nuova Domanda
+                    </button>
+                </div>
+                
+                <div class="captcha-error" id="captcha-error" style="display: none;"></div>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    🤝 Firma Patto di Pace e Ordina Smart TV
+                </button>
+                <a href="/" class="btn btn-secondary">🏠 Torna alla Home</a>
+            </div>
+
+            <div class="message" id="message"></div>
+
+            <div class="riepilogo" id="riepilogo">
+                <div class="auth-badge">✅ Patto di Pace Firmato Digitalmente</div>
+                <h3>🤝 Riepilogo Ordine e Patto di Pace</h3>
+                <div id="riepilogo-content"></div>
+                <div class="riepilogo-item">
+                    <span class="riepilogo-label">IP Autenticazione:</span>
+                    <span class="riepilogo-value" id="ip-auth"></span>
+                </div>
+                <div class="riepilogo-item">
+                    <span class="riepilogo-label">Timestamp:</span>
+                    <span class="riepilogo-value" id="timestamp-auth"></span>
+                </div>
+                <div class="buttons" style="margin-top: 30px;">
+                    <button type="button" class="btn btn-primary" onclick="scaricaPDF()">
+                        📄 Scarica PDF Contratto di Pace
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Servicess.net - Alessandro Pepe. Tutti i diritti riservati.</p>
+    </div>
+
+    <script>
+        // ===== CAPTCHA ANTI-BOT =====
+        let currentCaptcha = {};
+
+        function generateCaptcha() {
+            // Genera due numeri casuali tra 1 e 50
+            const num1 = Math.floor(Math.random() * 50) + 1;
+            const num2 = Math.floor(Math.random() * 50) + 1;
+            
+            // Scegli operazione casuale (+, -, *)
+            const operations = ['+', '-', '*'];
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            
+            let answer;
+            switch(operation) {
+                case '+':
+                    answer = num1 + num2;
+                    break;
+                case '-':
+                    // Assicurati che il risultato sia positivo
+                    if (num1 < num2) {
+                        answer = num2 - num1;
+                        currentCaptcha = { num1: num2, num2: num1, operation, answer };
+                    } else {
+                        answer = num1 - num2;
+                        currentCaptcha = { num1, num2, operation, answer };
+                    }
+                    break;
+                case '*':
+                    // Usa numeri più piccoli per moltiplicazione
+                    const smallNum1 = Math.floor(Math.random() * 12) + 1;
+                    const smallNum2 = Math.floor(Math.random() * 12) + 1;
+                    answer = smallNum1 * smallNum2;
+                    currentCaptcha = { num1: smallNum1, num2: smallNum2, operation, answer };
+                    break;
+            }
+            
+            if (operation !== '*') {
+                currentCaptcha = { num1: currentCaptcha.num1 || num1, num2: currentCaptcha.num2 || num2, operation, answer };
+            }
+            
+            // Mostra la domanda
+            document.getElementById('captcha-question').textContent = 
+                `Quanto fa ${currentCaptcha.num1} ${operation} ${currentCaptcha.num2} ?`;
+            
+            // Pulisci input e errori
+            document.getElementById('captcha-answer').value = '';
+            document.getElementById('captcha-error').style.display = 'none';
+            
+            console.log('CAPTCHA generato:', currentCaptcha); // Debug
+        }
+
+        function validateCaptcha() {
+            const userAnswer = parseInt(document.getElementById('captcha-answer').value);
+            const errorDiv = document.getElementById('captcha-error');
+            
+            if (isNaN(userAnswer)) {
+                errorDiv.textContent = '❌ Inserisci un numero valido';
+                errorDiv.style.display = 'block';
+                return false;
+            }
+            
+            if (userAnswer !== currentCaptcha.answer) {
+                errorDiv.textContent = `❌ Risposta errata! La risposta corretta era ${currentCaptcha.answer}`;
+                errorDiv.style.display = 'block';
+                generateCaptcha(); // Genera nuovo CAPTCHA
+                return false;
+            }
+            
+            errorDiv.style.display = 'none';
+            return true;
+        }
+
+        // Genera CAPTCHA al caricamento della pagina
+        window.addEventListener('load', function() {
+            generateCaptcha();
+        });
+        // ===== FINE CAPTCHA =====
+
+        document.getElementById('paceForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // ===== VALIDAZIONE CAPTCHA =====
+            if (!validateCaptcha()) {
+                return; // Blocca l'invio se CAPTCHA è sbagliato
+            }
+            // ===== FINE VALIDAZIONE CAPTCHA =====
+
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('message');
+            const riepilogoDiv = document.getElementById('riepilogo');
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="loading"></div>Elaborazione...';
+
+            try {
+                const formData = new FormData(this);
+                const rawData = Object.fromEntries(formData);
+
+                // Adatta i campi per il backend
+                const [nome, cognome] = rawData.nome_completo.split(' ', 2);
+                const indirizzo = rawData.indirizzo_2 
+                    ? `${rawData.indirizzo_1}, ${rawData.indirizzo_2}`
+                    : rawData.indirizzo_1;
+
+                const data = {
+                    nome: nome || rawData.nome_completo,
+                    cognome: cognome || '',
+                    email: 'noemail@cliente.it', // Placeholder
+                    codice_fiscale: 'N/A', // Non richiesto
+                    telefono: rawData.telefono,
+                    indirizzo: indirizzo,
+                    citta: rawData.citta,
+                    provincia: rawData.provincia || 'N/A',
+                    cap: rawData.cap,
+                    consenso_pace: true,
+                    // Campi extra
+                    tipo_proprieta: rawData.tipo_proprieta,
+                    punto_consegna: rawData.punto_consegna,
+                    istruzioni_consegna: rawData.istruzioni_consegna || '',
+                    indirizzo_predefinito: rawData.indirizzo_predefinito === 'on',
+                    // CAPTCHA Anti-Bot
+                    captcha_question: `${currentCaptcha.num1} ${currentCaptcha.operation} ${currentCaptcha.num2}`,
+                    captcha_answer: parseInt(document.getElementById('captcha-answer').value),
+                    captcha_expected: currentCaptcha.answer
+                };
+
+                // Invia al backend
+                const response = await fetch('/invia-pace', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Errore HTTP: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                // Successo - mostra riepilogo
+                messageDiv.className = 'message success';
+                messageDiv.textContent = result.messaggio;
+                messageDiv.style.display = 'block';
+
+                // Popola riepilogo
+                const riepilogo = result.riepilogo;
+                document.getElementById('ip-auth').textContent = riepilogo.ip_autenticazione;
+                document.getElementById('timestamp-auth').textContent = riepilogo.timestamp;
+
+                const riepilogoContent = document.getElementById('riepilogo-content');
+                riepilogoContent.innerHTML = `
+                    <div class="riepilogo-item">
+                        <span class="riepilogo-label">ID Contratto:</span>
+                        <span class="riepilogo-value">${riepilogo.id}</span>
+                    </div>
+                    <div class="riepilogo-item">
+                        <span class="riepilogo-label">Nome completo:</span>
+                        <span class="riepilogo-value">${riepilogo.nome_completo}</span>
+                    </div>
+                    <div class="riepilogo-item">
+                        <span class="riepilogo-label">Indirizzo:</span>
+                        <span class="riepilogo-value">${riepilogo.indirizzo_completo}</span>
+                    </div>
+                    <div class="riepilogo-item">
+                        <span class="riepilogo-label">Telefono:</span>
+                        <span class="riepilogo-value">${riepilogo.telefono}</span>
+                    </div>
+                    <div class="riepilogo-item">
+                        <span class="riepilogo-label">Hash contratto:</span>
+                        <span class="riepilogo-value">${riepilogo.hash_pace}</span>
+                    </div>
+                `;
+
+                riepilogoDiv.style.display = 'block';
+
+                submitBtn.innerHTML = '✅ Firmato!';
+                submitBtn.disabled = true;
+
+                // Scroll al riepilogo
+                riepilogoDiv.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Errore:', error);
+                messageDiv.className = 'message error';
+                messageDiv.textContent = `❌ Errore: ${error.message}`;
+                messageDiv.style.display = 'block';
+
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '📤 Riprova';
+            }
+        });
+
+        // Validazione in tempo reale
+        document.querySelectorAll('input[required], select[required]').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = 'var(--danger)';
+                } else {
+                    this.style.borderColor = 'var(--primary)';
+                }
+            });
+        });
+
+        // Validazione CAP
+        document.getElementById('cap').addEventListener('input', function() {
+            const cap = this.value.replace(/\D/g, '');
+            this.value = cap;
+            if (cap.length !== 5) {
+                this.style.borderColor = 'var(--danger)';
+            } else {
+                this.style.borderColor = 'var(--primary)';
+            }
+        });
+
+        // Funzione per scaricare PDF
+        function scaricaPDF() {
+            const id = document.querySelector('.riepilogo-value').textContent;
+            window.open(`/genera-pace-pdf?id=${id}`, '_blank');
+        }
+
+        // Funzione usa posizione attuale
+        function usaPosizione() {
+            alert('📍 Funzione di geolocalizzazione non ancora implementata. Compila manualmente i campi.');
+        }
+    </script>
+</body>
+</html>

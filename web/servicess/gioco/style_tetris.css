@@ -1,0 +1,202 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    color: #e94560;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #e94560;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.game-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.game-area {
+    position: relative;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 30px);
+    grid-template-rows: repeat(20, 30px);
+    gap: 1px;
+    background: #333;
+    border: 2px solid #e94560;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    background: #1a1a2e;
+    border-radius: 3px;
+}
+
+.cell.filled {
+    background: #e94560;
+    box-shadow: inset 0 0 5px rgba(255,255,255,0.3);
+}
+
+.cell.current {
+    background: #f39c12;
+    box-shadow: 0 0 10px #f39c12;
+}
+
+.game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.8);
+    color: #e74c3c;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.sidebar {
+    background: rgba(26, 26, 46, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #e94560;
+    min-width: 250px;
+}
+
+.score-panel h3 {
+    margin: 10px 0;
+    color: #f39c12;
+}
+
+.next-piece {
+    margin: 20px 0;
+}
+
+.next-piece-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 15px);
+    grid-template-rows: repeat(4, 15px);
+    gap: 1px;
+    background: #333;
+    padding: 10px;
+    border-radius: 5px;
+    justify-content: center;
+}
+
+.next-cell {
+    width: 15px;
+    height: 15px;
+    background: #1a1a2e;
+    border-radius: 2px;
+}
+
+.next-cell.filled {
+    background: #e94560;
+}
+
+.controls {
+    margin: 20px 0;
+}
+
+.controls button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #e94560;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s;
+}
+
+.controls button:hover {
+    background: #c0392b;
+}
+
+.manual-controls {
+    margin: 20px 0;
+}
+
+.control-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.control-buttons button {
+    padding: 15px;
+    background: #34495e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background 0.3s;
+}
+
+.control-buttons button:hover {
+    background: #2c3e50;
+}
+
+#rotate-btn {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#down-btn {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#drop-btn {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .grid {
+        grid-template-columns: repeat(10, 20px);
+        grid-template-rows: repeat(20, 20px);
+    }
+
+    .cell {
+        width: 20px;
+        height: 20px;
+    }
+
+    .sidebar {
+        min-width: auto;
+        width: 100%;
+        max-width: 400px;
+    }
+}

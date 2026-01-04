@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Status - FTTH Gestionale</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .card { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .btn-success { background: linear-gradient(45deg, #28a745, #20c997); border: none; }
+        .btn-primary { background: linear-gradient(45deg, #007bff, #6610f2); border: none; }
+        .status-indicator { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+        .status-active { background-color: #28a745; }
+        .status-inactive { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4 class="mb-0">🤖 Stato Bot Telegram - FTTH Gestionale</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="status-loading" class="text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Caricamento...</span>
+                            </div>
+                            <p class="mt-2">Caricamento stato bot...</p>
+                        </div>
+
+                        <div id="status-content" class="d-none">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <h5>📊 Stato Bot</h5>
+                                    <p id="bot-status">
+                                        <span id="bot-indicator" class="status-indicator"></span>
+                                        <span id="bot-text">Verifica in corso...</span>
+                                    </p>
+                                    <p><strong>Username:</strong> <span id="bot-username">-</span></p>
+                                    <p><strong>Chat ID:</strong> <span id="chat-id">-</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>🤖 GPT Integration</h5>
+                                    <p id="gpt-status">
+                                        <span id="gpt-indicator" class="status-indicator"></span>
+                                        <span id="gpt-text">Verifica in corso...</span>
+                                    </p>
+                                    <div id="enable-gpt-section" class="d-none">
+                                        <button id="enable-gpt-btn" class="btn btn-success btn-lg w-100">
+                                            🟢 Abilita invio GPT
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5>🧪 Test Invio Messaggio</h5>
+                                    <div id="test-section" class="d-none">
+                                        <div class="mb-3">
+                                            <label for="test-message" class="form-label">Messaggio di test:</label>
+                                            <textarea id="test-message" class="form-control" rows="3"
+                                                placeholder="Inserisci il messaggio da inviare...">✅ Test invio messaggio da FTTH Gestionale - Tutto funziona correttamente!</textarea>
+                                        </div>
+                                        <button id="send-test-btn" class="btn btn-primary">
+                                            📤 Invia Test Message
+                                        </button>
+                                        <div id="test-result" class="mt-3 d-none">
+                                            <div class="alert" role="alert"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.protocol + '//' + window.location.host + '/gestionale';
+
+        async function loadStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/telegram/status`);
+                const data = await response.json();
+
+                document.getElementById('status-loading').classList.add('d-none');
+                document.getElementById('status-content').classList.remove('d-none');
+
+                // Stato Bot
+                const botIndicator = document.getElementById('bot-indicator');
+                const botText = document.getElementById('bot-text');
+
+                if (data.bot_active) {
+                    botIndicator.className = 'status-indicator status-active';
+                    botText.textContent = 'Bot Attivo ✅';
+                } else {
+                    botIndicator.className = 'status-indicator status-inactive';
+                    botText.textContent = 'Bot Non Attivo ❌';
+                }
+
+                document.getElementById('bot-username').textContent = data.bot_username || '-';
+                document.getElementById('chat-id').textContent = data.chat_id || '-';
+
+                // Stato GPT
+                const gptIndicator = document.getElementById('gpt-indicator');
+                const gptText = document.getElementById('gpt-text');
+
+                if (data.gpt_authorized) {
+                    gptIndicator.className = 'status-indicator status-active';
+                    gptText.textContent = 'GPT Autorizzato ✅';
+                    document.getElementById('test-section').classList.remove('d-none');
+                } else {
+                    gptIndicator.className = 'status-indicator status-inactive';
+                    gptText.textContent = 'GPT Non Autorizzato ❌';
+                    if (data.enable_gpt_button) {
+                        document.getElementById('enable-gpt-section').classList.remove('d-none');
+                    }
+                }
+
+            } catch (error) {
+                console.error('Errore caricamento stato:', error);
+                document.getElementById('status-loading').innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5>❌ Errore di connessione</h5>
+                        <p>Impossibile caricare lo stato del bot Telegram.</p>
+                        <small>Verifica che il backend sia attivo e raggiungibile.</small>
+                    </div>
+                `;
+            }
+        }
+
+        async function enableGPT() {
+            const btn = document.getElementById('enable-gpt-btn');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '⏳ Abilitazione...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE}/telegram/status`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    btn.innerHTML = '✅ Abilitato!';
+                    setTimeout(() => loadStatus(), 1500);
+                } else {
+                    throw new Error(data.message || 'Errore sconosciuto');
+                }
+
+            } catch (error) {
+                console.error('Errore abilitazione GPT:', error);
+                btn.innerHTML = '❌ Errore - Riprova';
+                btn.disabled = false;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 3000);
+            }
+        }
+
+        async function sendTestMessage() {
+            const message = document.getElementById('test-message').value.trim();
+            const btn = document.getElementById('send-test-btn');
+            const resultDiv = document.getElementById('test-result');
+            const alertDiv = resultDiv.querySelector('.alert');
+
+            if (!message) {
+                showResult('⚠️ Inserisci un messaggio da inviare', 'warning');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '📤 Invio...';
+
+            try {
+                const response = await fetch(`${API_BASE}/telegram/send`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'sendTelegramMessage',
+                        chat_id: document.getElementById('chat-id').textContent,
+                        text: message
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showResult(`✅ Messaggio inviato con successo! (ID: ${data.message_id})`, 'success');
+                } else {
+                    throw new Error(data.detail || 'Errore invio messaggio');
+                }
+
+            } catch (error) {
+                console.error('Errore invio messaggio:', error);
+                showResult(`❌ Errore: ${error.message}`, 'danger');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '📤 Invia Test Message';
+            }
+        }
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('test-result');
+            const alertDiv = resultDiv.querySelector('.alert');
+
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            resultDiv.classList.remove('d-none');
+
+            if (type === 'success') {
+                setTimeout(() => resultDiv.classList.add('d-none'), 5000);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('enable-gpt-btn').addEventListener('click', enableGPT);
+        document.getElementById('send-test-btn').addEventListener('click', sendTestMessage);
+
+        // Carica stato all'avvio
+        loadStatus();
+    </script>
+</body>
+</html>

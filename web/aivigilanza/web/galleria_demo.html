@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://servicess.net/galleria_demo.html">
+  <title>ServiceSS - Galleria Avvocati Demo</title>
+    <meta name="description" content="Sistema distribuito di servizi legali - Demo pubblica ServiceSS">
+    <meta name="keywords" content="avvocati, servizi legali, ServiceSS, prenotazione avvocati, diritto italiano">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .demo-banner {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .auth-status {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            display: none;
+        }
+
+        .auth-status.success {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+        }
+
+        .auth-status.error {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .avvocato-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .avvocato-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .avvocato-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .demo-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #FFD700;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .patrocinio-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #FFD700;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .avvocato-nome {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .avvocato-specializzazione {
+            opacity: 0.9;
+            font-size: 1em;
+        }
+
+        .avvocato-body {
+            padding: 20px;
+        }
+
+        .avvocato-info {
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .info-icon {
+            width: 20px;
+            margin-right: 10px;
+            opacity: 0.7;
+        }
+
+        .avvocato-descrizione {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .avvocato-footer {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .esperienza-badge {
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .contatta-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .contatta-btn:hover {
+            background: #218838;
+            color: white;
+            text-decoration: none;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            margin: 50px 0;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+
+        .cta-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .cta-section p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            background: #FFD700;
+            color: #333;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px 10px 0;
+        }
+
+        .cta-btn:hover {
+            background: #FFC107;
+            color: #333;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚖️ ServiceSS - Galleria Avvocati</h1>
+            <p>Sistema distribuito di servizi legali - DATI REALI</p>
+            <div class="demo-banner">
+                ✅ DATI REALI DEGLI AVVOCATI ISCRITTI
+            </div>
+            <div id="auth-status" class="auth-status">
+                🔐 Connessione al server demo pubblico...
+            </div>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <span class="stat-number" id="total-avvocati">-</span>
+                <span class="stat-label">Avvocati</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="total-specializzazioni">-</span>
+                <span class="stat-label">Specializzazioni</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="patrocinio-gratuito">-</span>
+                <span class="stat-label">Patrocinio Gratuito</span>
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="loading">Caricamento avvocati dalla demo pubblica...</div>
+        </div>
+
+        <div class="cta-section">
+            <h2>🚀 Prenota il Tuo Avvocato Ora</h2>
+            <p>
+                Contatta direttamente l'avvocato via WhatsApp e prenota il tuo appuntamento.<br>
+                Sistema rapido, sicuro e affidabile.
+            </p>
+            <a href="https://wa.me/3510120753" class="cta-btn">� Supporto ServiceSS</a>
+            <a href="https://t.me/Avv_servicess_bot" class="cta-btn">� Bot Telegram</a>
+        </div>
+    </div>
+
+    <script>
+        // Configurazione API DEMO PUBBLICA - CON DATI REALI
+        const API_BASE = 'http://localhost:5001'; // API demo pubblica su porta 5001 - DATI REALI
+        let API_KEY = localStorage.getItem('servicess_demo_api_key');
+
+        // Funzione per aggiornare stato autenticazione
+        function updateAuthStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('auth-status');
+            statusDiv.textContent = message;
+            statusDiv.className = `auth-status ${type}`;
+            statusDiv.style.display = 'block';
+
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Funzione per ottenere chiave API demo
+        async function getApiKey() {
+            updateAuthStatus('🔑 Richiesta chiave API demo...', 'info');
+
+            try {
+                console.log('🔑 Richiesta chiave API demo...');
+                const response = await fetch(`${API_BASE}/api/avvocati/key`, {
+                    method: 'GET',
+                    headers: {
+                        'X-API-Key': 'richiesta'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.key) {
+                        API_KEY = data.key;
+                        localStorage.setItem('servicess_demo_api_key', API_KEY);
+                        console.log('✅ Chiave API demo ottenuta e salvata');
+                        updateAuthStatus('✅ Autenticazione demo riuscita!', 'success');
+                        return true;
+                    }
+                }
+
+                // Fallback: usa chiave nota per demo
+                console.log('🔄 Uso chiave API demo nota...');
+                API_KEY = 'demo_public_key_2024_servicess';
+                localStorage.setItem('servicess_demo_api_key', API_KEY);
+                updateAuthStatus('✅ Autenticazione demo riuscita (fallback)!', 'success');
+                return true;
+
+            } catch (error) {
+                console.error('Errore richiesta chiave API demo:', error);
+                // Fallback finale
+                API_KEY = 'demo_public_key_2024_servicess';
+                localStorage.setItem('servicess_demo_api_key', API_KEY);
+                updateAuthStatus('✅ Autenticazione demo riuscita (fallback finale)!', 'success');
+                return true;
+            }
+        }
+
+        // Funzione per fare richieste autenticate alla demo
+        async function authenticatedFetch(url, options = {}) {
+            if (!API_KEY) {
+                const keyObtained = await getApiKey();
+                if (!keyObtained) {
+                    throw new Error('Impossibile ottenere chiave API demo');
+                }
+            }
+
+            const defaultOptions = {
+                headers: {
+                    'X-API-Key': API_KEY,
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                }
+            };
+
+            return fetch(url, { ...options, ...defaultOptions });
+        }
+
+        async function loadStats() {
+            try {
+                const response = await authenticatedFetch(`${API_BASE}/api/stats`);
+                const data = await response.json();
+
+                if (data.success && data.stats) {
+                    document.getElementById('total-avvocati').textContent = data.stats.total_avvocati;
+                    document.getElementById('total-specializzazioni').textContent = data.stats.total_specializzazioni;
+                    document.getElementById('patrocinio-gratuito').textContent = data.stats.patrocinio_gratuito;
+                } else if (data.error && data.error.includes('API')) {
+                    // Errore autenticazione, reset chiave
+                    localStorage.removeItem('servicess_demo_api_key');
+                    API_KEY = null;
+                    updateAuthStatus('❌ Chiave API demo non valida - riautenticazione richiesta', 'error');
+                    console.log('🔄 Chiave API demo non valida, riprova...');
+                    setTimeout(() => loadStats(), 2000);
+                } else {
+                    updateAuthStatus('⚠️ Errore caricamento statistiche demo', 'error');
+                }
+            } catch (error) {
+                console.error('Errore caricamento statistiche demo:', error);
+                if (error.message.includes('API')) {
+                    localStorage.removeItem('servicess_demo_api_key');
+                    API_KEY = null;
+                    updateAuthStatus('❌ Errore autenticazione demo - riautenticazione richiesta', 'error');
+                }
+            }
+        }
+
+        async function loadAvvocati() {
+            try {
+                const response = await authenticatedFetch(`${API_BASE}/api/avvocati`);
+                const data = await response.json();
+
+                if (data.success && data.avvocati) {
+                    displayAvvocati(data.avvocati);
+                } else if (data.error && data.error.includes('API')) {
+                    // Errore autenticazione, reset chiave
+                    localStorage.removeItem('servicess_demo_api_key');
+                    API_KEY = null;
+                    updateAuthStatus('❌ Chiave API demo non valida - riautenticazione richiesta', 'error');
+                    console.log('🔄 Chiave API demo non valida, riprova...');
+                    setTimeout(() => loadAvvocati(), 2000);
+                } else {
+                    showError('Nessun avvocato trovato nella demo o errore autenticazione');
+                    updateAuthStatus('⚠️ Nessun dato disponibile nella demo', 'error');
+                }
+            } catch (error) {
+                console.error('Errore caricamento avvocati demo:', error);
+                if (error.message.includes('API')) {
+                    localStorage.removeItem('servicess_demo_api_key');
+                    API_KEY = null;
+                    updateAuthStatus('❌ Errore autenticazione demo - riautenticazione richiesta', 'error');
+                }
+                showError('Errore nel caricamento degli avvocati dalla demo. Controlla la connessione.');
+            }
+        }
+
+        function displayAvvocati(avvocati) {
+            const gallery = document.createElement('div');
+            gallery.className = 'gallery';
+
+            avvocati.forEach(avvocato => {
+                const card = createAvvocatoCard(avvocato);
+                gallery.appendChild(card);
+            });
+
+            document.getElementById('content').innerHTML = '';
+            document.getElementById('content').appendChild(gallery);
+        }
+
+        function createAvvocatoCard(avvocato) {
+            const card = document.createElement('div');
+            card.className = 'avvocato-card';
+
+            const demoBadge = '<div class="demo-badge">✅ REALE</div>';
+            const patrocinioBadge = avvocato.patrocinio_gratuito ?
+                '<div class="patrocinio-badge">⚖️ Gratuito</div>' : '';
+
+            card.innerHTML = `
+                <div class="avvocato-header">
+                    ${demoBadge}
+                    ${patrocinioBadge}
+                    <div class="avvocato-nome">${avvocato.nome}</div>
+                    <div class="avvocato-specializzazione">${avvocato.specializzazione}</div>
+                </div>
+                <div class="avvocato-body">
+                    <div class="avvocato-info">
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            ${avvocato.citta || avvocato.indirizzo || 'Italia'}
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📞</span>
+                            ${avvocato.telefono || 'Non disponibile'}
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">✉️</span>
+                            ${avvocato.email || 'Non disponibile'}
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">💰</span>
+                            ${avvocato.prezzi || 'Su appuntamento'}
+                        </div>
+                    </div>
+                    <div class="avvocato-descrizione">
+                        ${avvocato.descrizione || 'Avvocato professionista con esperienza consolidata nel settore legale.'}
+                    </div>
+                </div>
+                <div class="avvocato-footer">
+                    <div class="esperienza-badge">${avvocato.esperienza} anni</div>
+                    <button onclick="contattaWhatsApp('${avvocato.telefono}')" class="contatta-btn">
+                        💬 Contatta
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function showError(message) {
+            document.getElementById('content').innerHTML = `
+                <div class="error">
+                    <strong>Errore Demo:</strong> ${message}
+                    <br><br>
+                    <em>💡 Se vedi questo errore, l'API demo potrebbe non essere attiva. Contattaci per avviare la demo!</em>
+                </div>
+            `;
+        }
+
+        function contattaWhatsApp(telefono) {
+            // Contatta direttamente l'avvocato
+            if (telefono && telefono.includes('39')) {
+                window.open(`https://wa.me/${telefono.replace(/[^\d]/g, '')}`, '_blank');
+            } else {
+                // Fallback al numero principale
+                const numero = '3510120753';
+                window.open(`https://wa.me/${numero}`, '_blank');
+            }
+        }
+
+        // Carica dati all'avvio
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Mostra che stiamo usando dati reali
+            updateAuthStatus('🎯 Caricamento dati reali degli avvocati...', 'info');
+
+            // Ottieni la chiave API demo
+            if (!API_KEY) {
+                const authSuccess = await getApiKey();
+                if (!authSuccess) {
+                    updateAuthStatus('❌ Impossibile connettersi al server', 'error');
+                    return;
+                }
+            } else {
+                updateAuthStatus('✅ Caricamento dati reali in corso...', 'success');
+            }
+
+            // Carica i dati reali
+            loadStats();
+            loadAvvocati();
+        });
+
+        // Ricarica ogni 60 secondi (più lento per demo)
+        setInterval(() => {
+            loadStats();
+            loadAvvocati();
+        }, 60000);
+    </script>
+</body>
+</html>

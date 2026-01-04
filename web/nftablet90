@@ -1,0 +1,12 @@
+# /etc/nftables.d/90-ssh.nft
+# 🔐 Regole SSH ottimizzate (porta 2223, solo IP in allowlist)
+
+# Crea il set di IP autorizzati
+add set inet filter ssh_allowlist { type ipv4_addr; comment "IP autorizzati per SSH" }
+
+# Regola: accetta SSH solo se l'IP è nella allowlist
+add rule inet filter input tcp dport 2223 ip saddr @ssh_allowlist accept
+
+# Tutto il resto sul 2223 viene droppato
+add rule inet filter input tcp dport 2223 drop
+# Test append

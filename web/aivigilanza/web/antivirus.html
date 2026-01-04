@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema di sicurezza informatica avanzato con tecnologia innovativa per la protezione dei dati.">
+  <meta name="keywords" content="sicurezza informatica, protezione dati, cybersecurity, antivirus">
+  <link rel="canonical" href="https://servicess.net/antivirus.html">
+  <title>7070 RAMTrap – Antivirus Invisibile</title>
+  <style>
+    body {
+      font-family: 'Georgia', 'Segoe UI', serif;
+      background: linear-gradient(135deg, #181204 0%, #bfa14a 80%, #fffbe6 100%);
+      color: #fffbe6;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .lock-menu-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      margin-bottom: 30px;
+      user-select: none;
+    }
+    .lock-menu-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 18px;
+    }
+    .lock-menu {
+      width: 340px;
+      height: 220px;
+      background: rgba(34,34,34,0.8);
+      border-radius: 30px;
+      box-shadow: 0 0 30px #bfa14a99;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .lock-menu .menu-item {
+      width: 260px;
+      height: 54px;
+      line-height: 54px;
+      font-size: 1.45em;
+      color: #bfa14a;
+      opacity: 0.5;
+      transition: all 0.2s;
+      background: none;
+      border-radius: 20px;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+      text-align: center;
+    }
+    .lock-menu .menu-item.selected {
+      background: #bfa14a;
+      color: #181204;
+      font-size: 1.5em;
+      opacity: 1;
+      box-shadow: 0 2px 12px #bfa14a99;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .lock-menu .menu-item.above, .lock-menu .menu-item.below {
+      opacity: 0.8;
+      font-size: 1em;
+      color: #fffbe6;
+    }
+    .lock-menu .menu-item.far {
+      opacity: 0.3;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    #leftBtn, #rightBtn {
+      background: #bfa14a;
+      color: #181204;
+      border: none;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      font-size: 2.3em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #bfa14a88;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #leftBtn:hover, #rightBtn:hover {
+      background: #229ED9;
+      color: #fff;
+    }
+    .main-content {
+      background: rgba(34,34,34,0.92);
+      border-radius: 24px;
+      box-shadow: 0 0 32px #bfa14a99;
+      padding: 48px 32px 36px 32px;
+      max-width: 700px;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      z-index: 1;
+      position: relative;
+    }
+    h1 {
+      color: #bfa14a;
+      font-size: 2.1em;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+    h2 {
+      color: #fffbe6;
+      font-size: 1.25em;
+      font-weight: normal;
+      margin-bottom: 18px;
+    }
+    .features-list {
+      text-align: left;
+      margin: 28px auto 0 auto;
+      padding-left: 0;
+      list-style: none;
+      max-width: 520px;
+    }
+    .features-list li {
+      background: #bfa14a22;
+      color: #fffbe6;
+      border-left: 4px solid #bfa14a;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      padding: 12px 18px;
+      font-size: 1.13em;
+      font-family: inherit;
+      box-shadow: 0 2px 8px #bfa14a33;
+    }
+    .code-block {
+      background: #181204;
+      color: #bfa14a;
+      border-radius: 12px;
+      padding: 18px 12px;
+      font-size: 1em;
+      margin: 18px auto;
+      text-align: left;
+      overflow-x: auto;
+      box-shadow: 0 2px 8px #bfa14a33;
+      max-width: 95vw;
+    }
+    .alert {
+      color: #ff5252;
+      font-weight: bold;
+      margin: 18px 0 8px 0;
+      font-size: 1.1em;
+    }
+    .alert-privacy {
+      background: #2ecc71;
+      color: #222;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-bottom: 18px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .slogan {
+      color: #bfa14a;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 24px 0 12px 0;
+    }
+      margin: 56px auto 0 auto;
+      max-width: 520px;
+      background: linear-gradient(120deg, rgba(34,34,34,0.92) 70%, rgba(191,161,74,0.10) 100%);
+      border-radius: 28px;
+      box-shadow: 0 0 32px 6px #bfa14a77, 0 2px 24px #181204cc;
+      padding: 0 0 24px 0;
+      position: relative;
+      border: 2.5px solid #bfa14a55;
+      backdrop-filter: blur(6px) saturate(1.2);
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #bfa14a 0%, #fffbe6 50%, #bfa14a 100%);
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 0 18px 4px #bfa14a88, 0 0 8px 2px #fffbe6;
+      margin-bottom: 8px;
+      position: relative;
+      overflow: hidden;
+      animation: sparkle-glow 2.2s linear infinite;
+    }
+    @keyframes sparkle-glow {
+      0% { filter: brightness(1.1) drop-shadow(0 0 6px #fffbe6); }
+      50% { filter: brightness(1.6) drop-shadow(0 0 18px #bfa14a); }
+      100% { filter: brightness(1.1) drop-shadow(0 0 6px #fffbe6); }
+    }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 32px;
+      margin-bottom: 2px;
+      pointer-events: none;
+    }
+      width: 10px;
+      height: 10px;
+      margin: 0 4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fffbe6 60%, #bfa14a 100%);
+      box-shadow: 0 0 8px #bfa14a99, 0 0 2px #fffbe6;
+      opacity: 0.7;
+      animation: sparkleAnim 1.2s infinite alternate;
+    }
+      animation-delay: 0.3s;
+      opacity: 1;
+    }
+      animation-delay: 0.6s;
+      opacity: 0.8;
+    }
+    @keyframes sparkleAnim {
+      0% { transform: scale(1) translateY(0); filter: brightness(1.1); }
+      50% { transform: scale(1.3) translateY(-4px); filter: brightness(1.7); }
+      100% { transform: scale(1) translateY(0); filter: brightness(1.1); }
+    }
+      min-height: 100px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding: 18px 24px 0 24px;
+      font-size: 1.13em;
+      color: #fffbe6;
+      background: none;
+      border-radius: 18px 18px 8px 8px;
+      box-shadow: 0 2px 12px #bfa14a22 inset;
+      margin-bottom: 0;
+    }
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      opacity: 0;
+    }
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+      justify-content: flex-end;
+    }
+      justify-content: flex-start;
+    }
+      border-radius: 20px 20px 8px 20px;
+      padding: 13px 22px;
+      font-size: 1.08em;
+      max-width: 85%;
+      word-break: break-word;
+      box-shadow: 0 2px 12px #bfa14a33, 0 1px 8px #fffbe622;
+      transition: background 0.2s, color 0.2s;
+      border: 1.5px solid #bfa14a44;
+      background-clip: padding-box;
+    }
+      background: linear-gradient(120deg, #bfa14a 80%, #fffbe6 100%);
+      color: #181204;
+      align-self: flex-end;
+      margin-left: auto;
+      box-shadow: 0 2px 12px #bfa14a77, 0 1px 8px #fffbe622;
+      border: 1.5px solid #bfa14a99;
+    }
+      background: linear-gradient(120deg, #181204 80%, #bfa14a33 100%);
+      color: #bfa14a;
+      align-self: flex-start;
+      margin-right: auto;
+      box-shadow: 0 2px 12px #bfa14a44, 0 1px 8px #fffbe622;
+      border: 1.5px solid #bfa14a55;
+    }
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 18px;
+      padding: 0 18px;
+      gap: 10px;
+    }
+      flex: 1;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 1.13em;
+      background: #fffbe6cc;
+      color: #181204;
+      outline: none;
+      box-shadow: 0 2px 8px #bfa14a33;
+      margin-right: 4px;
+      border: 1.5px solid #bfa14a44;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+      box-shadow: 0 0 0 2px #bfa14a88;
+      border: 1.5px solid #bfa14a99;
+    }
+      background: linear-gradient(120deg, #bfa14a 80%, #fffbe6 100%);
+      color: #181204;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 22px;
+      font-size: 1.13em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #bfa14a33, 0 1px 8px #fffbe622;
+      border: 1.5px solid #bfa14a99;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+      background: #229ED9;
+      color: #fff;
+      box-shadow: 0 2px 16px #229ED9aa;
+    }
+    @media (max-width: 700px) {
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra bandierine per selezione lingua, visibile anche senza JS -->
+  <div class="flag-bar" style="display:flex;gap:8px;justify-content:flex-end;padding:10px 18px 0 0;">
+    <button class="flag-btn" data-lang="it" title="Italiano" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇹</button>
+    <button class="flag-btn" data-lang="en" title="English" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇬🇧</button>
+    <button class="flag-btn" data-lang="fr" title="Français" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇫🇷</button>
+    <button class="flag-btn" data-lang="de" title="Deutsch" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇩🇪</button>
+    <button class="flag-btn" data-lang="es" title="Español" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇪🇸</button>
+    <button class="flag-btn" data-lang="ar" title="العربية" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇸🇦</button>
+    <button class="flag-btn" data-lang="ru" title="Русский" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇷🇺</button>
+    <button class="flag-btn" data-lang="zh" title="中文" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇨🇳</button>
+    <button class="flag-btn" data-lang="ja" title="日本語" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇯🇵</button>
+    <button class="flag-btn" data-lang="hi" title="हिन्दी" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇳</button>
+  </div>
+  <div class="lock-menu-container">
+    <div class="lock-menu-row">
+      <button id="leftBtn" aria-label="Precedente">&#9664;</button>
+      <div class="lock-menu" id="lockMenu"></div>
+      <button id="rightBtn" aria-label="Successivo">&#9654;</button>
+    </div>
+  </div>
+  <div class="main-content">
+    <h1>7070 RAMTrap – Antivirus Invisibile</h1>
+    <h2>La Difesa Silenziosa per la tua Privacy<br><span style="color:#bfa14a;">Il tuo scudo invisibile su Termux</span></h2>
+    <div class="slogan">“7070 Defense System: chi tocca… salta!”</div>
+    <ul class="features-list">
+      <li>Honeypot invisibile nella RAM: nessun file su disco, nessuna traccia.</li>
+      <li>Controllo ogni 3 secondi: se qualcuno tocca la trappola, allarme istantaneo su Telegram.</li>
+      <li>Autodistruzione dopo 30 giorni: come un agente seg
+      <li>Compatibile solo con Termux (Android/Linux).</li>
+      <li>Zero installazioni pesanti: tutto in RAM, volatilizza tutto se ti beccano.</li>
+      <li>Supporto Telegram dedicato 24h.</li>
+    </ul>
+    <div class="alert">🚨 ALLARME ATTIVATO: ABBIAMO BECCATO GLI SPIONI 🚨</div>
+    <p style="margin-bottom:18px;">Durante i test, ROMOLO+FALCO hanno rilevato decine di accessi illegittimi su file RAM nascosti.<br>
+    Ogni tentativo è stato bloccato, tracciato e notificato in tempo reale.<br>
+    Prove schiaccianti raccolte. Nessuna possibilità di negare.</p>
+    <div class="slogan">Come funziona</div>
+    <ul class="features-list">
+      <li>Salva una trappola-esca nella RAM (/tmp).</li>
+      <li>Ogni 3 secondi controlla se qualcuno prova a leggerla.</li>
+      <li>Se qualcuno ci prova… ZAC! Ti arriva l’alert istantaneo su Telegram.</li>
+      <li>Dopo 30 giorni
+    </ul>
+    <div class="slogan">Istruzioni di Installazione</div>
+    <ol class="features-list" style="list-style:decimal inside;">
+      <li>Installa Python su Termux:<br><span class="code-block">pkg install python</span></li>
+      <li>Crea il file:<br><span class="code-block">nano 7070.py</span></li>
+      <li>Incolla il codice qui sotto, salva con CTRL+X, poi Y e INVIO.</li>
+    </ol>
+    <div class="slogan">Codice (scade dopo 30 giorni)</div>
+    <div class="slogan">Ultima versione: RAMTrap 7070.py</div>
+    <div class="code-block" style="white-space:pre-wrap;max-height:60vh;overflow:auto;font-size:0.98em;">
+#!/data/data/com.termux/files/usr/bin/python3
+import os
+import time
+import hashlib
+import threading
+import telebot
+import random
+from datetime import datetime, timedelta
+
+# === CONFIGURAZIONE INIZIALE ===
+print("[!] Configurazione iniziale necessaria.")
+token = input("Inserisci il tuo TOKEN Telegram: ").strip()
+try:
+    user_id = int(input("Inserisci il tuo ID Telegram: ").strip())
+except ValueError:
+    print("[!] ID Telegram deve essere un numero intero.")
+    exit(1)
+
+scadenza = datetime.now() + timedelta(days=30)
+print(f"[✔] Honeypot attivo. Scadrà il: {scadenza.strftime('%Y-%m-%d')}")
+
+# Cartelle da monitorare
+PERCORSI = [
+    "/data/data/com.termux/files/usr/tmp/",
+    "/sdcard/WhatsApp/Media/.Statuses/",
+    "/sdcard/WhatsApp/Media/WhatsApp Documents/",
+    "/data/local/tmp/",
+    "/sdcard/Android/data/com.whatsapp/cache/",
+    "/sdcard/Telegram/",
+    "/sdcard/Android/data/org.telegram.messenger/files/"
+]
+
+CONTENUTO_TRAPOLA = """[04:22] Marta: 'Hai copiato il seed?'
+[04:23] Tu: 'Sì, ma non dirlo a nessuno. Sta tutto lì: 1a2b3c4d5e…'"""
+LOG_PATH = "/sdcard/RomoloRAMTrap_logs.txt"
+
+bot = telebot.TeleBot(token)
+
+# === FUNZIONI UTILITARIE ===
+def registra_log(evento):
+    try:
+        with open(LOG_PATH, "a") as log:
+            log.write(f"{datetime.now()} – {evento}\n")
+    except Exception as e:
+        print(f"[!] Errore durante il logging: {e}")
+
+def cattura_processi():
+    nome = f"/sdcard/proc_dump_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    os.system(f"top -n 1 -b > {nome}")
+    return nome
+
+def scrivi_trappola(path):
+    try:
+        os.makedirs(path, exist_ok=True)
+        full_path = os.path.join(path, NOME_FILE)
+        with open(full_path, "w") as f:
+            f.write(CONTENUTO_TRAPOLA)
+        return hashlib.md5(CONTENUTO_TRAPOLA.encode()).hexdigest()
+    except Exception as e:
+        avvisa(f"[!] Errore trappola in {path}: {str(e)}")
+        return None
+
+def monitora(path):
+    hash_originale = scrivi_trappola(path)
+    if not hash_originale:
+        return
+    full_path = os.path.join(path, NOME_FILE)
+    while datetime.now() < scadenza:
+        try:
+            if not os.path.exists(full_path):
+                avvisa(f"[ALERT] File trappola ELIMINATO da {path}!")
+                break
+            with open(full_path, "r") as f:
+                if hashlib.md5(f.read().encode()).hexdigest() != hash_originale:
+                    avvisa(f"[ALERT] File trappola MODIFICATO in {path}!")
+                    break
+        except Exception as e:
+            avvisa(f"[!] Errore monitoraggio in {path}: {str(e)}")
+        time.sleep(5)
+    registra_log("[✔] Scadenza raggiunta. Monitoraggio terminato.")
+
+def avvisa(msg):
+    timestamp = datetime.now().strftime("[%H:%M:%S]")
+    full_msg = f"{timestamp} {msg}"
+    try:
+        bot.send_message(user_id, full_msg)
+        dump = cattura_processi()
+        if os.path.exists(dump):
+            with open(dump, "rb") as f:
+                bot.send_document(user_id, f)
+    except Exception as e:
+        print(f"[!] Errore Telegram: {str(e)}")
+    registra_log(full_msg)
+
+def sposta_file():
+    global posizione_attuale
+    while datetime.now() < scadenza:
+        valide = [p for p in PERCORSI if os.path.exists(p)]
+        if not valide:
+            registra_log("[!] Nessuna cartella valida trovata!")
+            time.sleep(60)
+            continue
+        posizione_attuale = random.choice(valide)
+        registra_log(f"File piazzato in: {posizione_attuale}")
+        threading.Thread(target=monitora, args=(posizione_attuale,), daemon=True).start()
+        time.sleep(3600)
+
+# === COMANDI BOT ===
+@bot.message_handler(commands=["start"])
+def start(m):
+        bot.reply_to(m, "✅ RAMTrap avviato. Operativo.")
+    else:
+        bot.reply_to(m, "🚫 Accesso negato.")
+
+@bot.message_handler(commands=["dove"])
+def dove(m):
+        bot.reply_to(m, f"📍 File attivo su: {posizione_attuale}")
+    else:
+        bot.reply_to(m, "🚫 Accesso negato.")
+
+@bot.message_handler(commands=["reset"])
+def reset(m):
+        if scrivi_trappola(posizione_attuale):
+            bot.reply_to(m, "♻️ Trappola ricreata con successo!")
+        else:
+            bot.reply_to(m, "❌ Errore durante la ricreazione.")
+    else:
+        bot.reply_to(m, "🚫 Accesso negato.")
+
+@bot.message_handler(commands=["scansiona"])
+def scansiona(m):
+        paths = "\n".join(PERCORSI)
+        bot.reply_to(m, f"🔍 Cartelle monitorate:\n{paths}")
+    else:
+        bot.reply_to(m, "🚫 Accesso negato.")
+
+@bot.message_handler(commands=["status"])
+def status(m):
+        giorni_rimanenti = (scadenza - datetime.now()).days
+        bot.reply_to(m, f"📊 *Stato Sistema:*\n"
+                        f"⏳ Scadenza: {scadenza.strftime('%Y-%m-%d')} ({giorni_rimanenti} giorni rimanenti)\n"
+                        f"📍 File attivo: {posizione_attuale}", parse_mode="Markdown")
+    else:
+        bot.reply_to(m, "🚫 Accesso negato.")
+
+@bot.message_handler(commands=["help"])
+def help(m):
+        bot.reply_to(m, """📚 Comandi disponibili:
+- /start → Avvia sistema trappola
+- /dove → Mostra percorso attuale
+- /reset → Ricrea il file trappola
+- /scansiona → Elenca cartelle monitorate
+- /status → Mostra stato del sistema
+- /help → Mostra questo messaggio""")
+    else:
+        bot.reply_to(m, "🚫 Accesso negato.")
+
+# === AVVIO ===
+if __name__ == "__main__":
+    posizione_attuale = random.choice([p for p in PERCORSI if os.path.exists(p)])
+    threading.Thread(target=sposta_file, daemon=True).start()
+    try:
+        bot.polling(none_stop=True)
+    except Exception as e:
+        print(f"[!] Errore polling: {str(e)}")
+    </div>
+    <div class="slogan">Protezione totale</div>
+    <ul class="features-list">
+      <li>Nessun file salvato su disco</li>
+      <li>Invisibile agli occhi degli script kiddies</li>
+      <li>Variabile di scadenza automatica</li>
+      <li>Impossibile da “spoilerare” senza toccarlo</li>
+    </ul>
+    <div class="slogan">RAMTrap – Sistema di Controintelligence Digitale</div>
+    <ul class="features-list">
+      <li>Honeypot invisibili nella RAM (non li trova nessuno)</li>
+      <li>Allarmi in tempo reale su Telegram se qualcuno osa toccare i tuoi file</li>
+      <li>Autodifesa automatica: il sistema si cancella da solo se sotto attacco</li>
+      <li>Protezione di WhatsApp e Telegram da intercettazioni interne</li>
+      <li>Rilevamento di processi sospetti anche dentro server SQL, browser e sistemi operativi</li>
+      <li>Blocca crawler Google, Israele, Russia, Cina… e pure il vicino curioso!</li>
+    </ul>
+    <div class="slogan">Offerta</div>
+    <ul class="features-list">
+      <li>100€ una volta sola: sistema configurato, manuale operativo, supporto Telegram 24h.</li>
+      <li>Versione PC militare su richiesta (1.000€).</li>
+      <li>Zero installazioni pesanti, nessuna firma antivirus, nessun rallentamento.</li>
+    </ul>
+    <div class="slogan">Classificazione</div>
+    <ul class="features-list">
+      <li>LIVELLO: BLACK OPS / ZERO TRACE</li>
+      <li>UTILIZZO: SICUREZZA DIGITALE AVANZATA – ZONE ROSSE</li>
+    </ul>
+    <div style="color:#bfa14a;margin-top:32px;font-size:1.1em;">Chi legge RAM, comanda il flusso.<br>Chi la ignora, è già sorvegliato.</div>
+  </div>
+      <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
+    </div>
+    </form>
+  </div>
+  <style>
+      margin: 56px auto 0 auto;
+      max-width: 520px;
+      background: linear-gradient(120deg, rgba(34,34,34,0.92) 70%, rgba(191,161,74,0.10) 100%);
+      border-radius: 28px;
+      box-shadow: 0 0 32px 6px #bfa14a77, 0 2px 24px #181204cc;
+      padding: 0 0 24px 0;
+      position: relative;
+      border: 2.5px solid #bfa14a55;
+      backdrop-filter: blur(6px) saturate(1.2);
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #bfa14a 0%, #fffbe6 50%, #bfa14a 100%);
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 0 18px 4px #bfa14a88, 0 0 8px 2px #fffbe6;
+      margin-bottom: 8px;
+      position: relative;
+      overflow: hidden;
+      animation: sparkle-glow 2.2s linear infinite;
+    }
+    @keyframes sparkle-glow {
+      0% { filter: brightness(1.1) drop-shadow(0 0 6px #fffbe6); }
+      50% { filter: brightness(1.6) drop-shadow(0 0 18px #bfa14a); }
+      100% { filter: brightness(1.1) drop-shadow(0 0 6px #fffbe6); }
+    }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 32px;
+      margin-bottom: 2px;
+      pointer-events: none;
+    }
+      width: 10px;
+      height: 10px;
+      margin: 0 4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fffbe6 60%, #bfa14a 100%);
+      box-shadow: 0 0 8px #bfa14a99, 0 0 2px #fffbe6;
+      opacity: 0.7;
+      animation: sparkleAnim 1.2s infinite alternate;
+    }
+      animation-delay: 0.3s;
+      opacity: 1;
+    }
+      animation-delay: 0.6s;
+      opacity: 0.8;
+    }
+    @keyframes sparkleAnim {
+      0% { transform: scale(1) translateY(0); filter: brightness(1.1); }
+      50% { transform: scale(1.3) translateY(-4px); filter: brightness(1.7); }
+      100% { transform: scale(1) translateY(0); filter: brightness(1.1); }
+    }
+      min-height: 100px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding: 18px 24px 0 24px;
+      font-size: 1.13em;
+      color: #fffbe6;
+      background: none;
+      border-radius: 18px 18px 8px 8px;
+      box-shadow: 0 2px 12px #bfa14a22 inset;
+      margin-bottom: 0;
+    }
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      opacity: 0;
+    }
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+      justify-content: flex-end;
+    }
+      justify-content: flex-start;
+    }
+      border-radius: 20px 20px 8px 20px;
+      padding: 13px 22px;
+      font-size: 1.08em;
+      max-width: 85%;
+      word-break: break-word;
+      box-shadow: 0 2px 12px #bfa14a33, 0 1px 8px #fffbe622;
+      transition: background 0.2s, color 0.2s;
+      border: 1.5px solid #bfa14a44;
+      background-clip: padding-box;
+    }
+      background: linear-gradient(120deg, #bfa14a 80%, #fffbe6 100%);
+      color: #181204;
+      align-self: flex-end;
+      margin-left: auto;
+      box-shadow: 0 2px 12px #bfa14a77, 0 1px 8px #fffbe622;
+      border: 1.5px solid #bfa14a99;
+    }
+      background: linear-gradient(120deg, #181204 80%, #bfa14a33 100%);
+      color: #bfa14a;
+      align-self: flex-start;
+      margin-right: auto;
+      box-shadow: 0 2px 12px #bfa14a44, 0 1px 8px #fffbe622;
+      border: 1.5px solid #bfa14a55;
+    }
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 18px;
+      padding: 0 18px;
+      gap: 10px;
+    }
+      flex: 1;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 1.13em;
+      background: #fffbe6cc;
+      color: #181204;
+      outline: none;
+      box-shadow: 0 2px 8px #bfa14a33;
+      margin-right: 4px;
+      border: 1.5px solid #bfa14a44;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+      box-shadow: 0 0 0 2px #bfa14a88;
+      border: 1.5px solid #bfa14a99;
+    }
+      background: linear-gradient(120deg, #bfa14a 80%, #fffbe6 100%);
+      color: #181204;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 22px;
+      font-size: 1.13em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #bfa14a33, 0 1px 8px #fffbe622;
+      border: 1.5px solid #bfa14a99;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+      background: #229ED9;
+      color: #fff;
+      box-shadow: 0 2px 16px #229ED9aa;
+    }
+    @media (max-width: 700px) {
+    }
+  </style>
+  <script>
+    function showSparkle(show) {
+    }
+          body: JSON.stringify({ message: text })
+        });
+        const data = await response.json();
+        showSparkle(false);
+      } catch {
+        showSparkle(false);
+      }
+    }
+    showSparkle(false);
+  </script>
+    <script>
+    // Menu stile "lucchetto a combinazione"
+    const menuItems = [
+      { label: 'Home', href: 'index.html' },
+      { label: 'Guardiania', href: 'guardiania.html' },
+      { label: 'Legale', href: 'legale.html' },
+      { label: 'Domotica', href: 'domotica.html' },
+      { label: 'Criptotelefonia', href: 'https://vpn-gypsy.com/' },
+      { label: '7070', href: 'antivirus.html' },
+      { label: 'Bonifiche', href: 'bonifiche.html' },
+      { label: 'Contatti', href: 'contatti.html' },
+      { label: 'Chi siamo', href: 'chisiamo.html' }
+    ];
+    let selectedIdx = 0;
+    const lockMenu = document.getElementById('lockMenu');
+    function renderMenu() {
+      lockMenu.innerHTML = '';
+      for (let i = -2; i <= 2; i++) {
+        let idx = (selectedIdx + i + menuItems.length) % menuItems.length;
+        let item = document.createElement('a');
+        item.className = 'menu-item';
+        if (i === 0) item.classList.add('selected');
+        else if (Math.abs(i) === 1) item.classList.add(i < 0 ? 'above' : 'below');
+        else item.classList.add('far');
+        item.href = menuItems[idx].href;
+        item.textContent = menuItems[idx].label;
+        if (i === 0) item.tabIndex = 0;
+        lockMenu.appendChild(item);
+      }
+    }
+    function moveUp() {
+      selectedIdx = (selectedIdx - 1 + menuItems.length) % menuItems.length;
+      renderMenu();
+    }
+    function moveDown() {
+      selectedIdx = (selectedIdx + 1) % menuItems.length;
+      renderMenu();
+    }
+    document.getElementById('leftBtn').onclick = moveUp;
+    document.getElementById('rightBtn').onclick = moveDown;
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') { moveUp(); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { moveDown(); e.preventDefault(); }
+    });
+    let touchStartX = null;
+    lockMenu.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    });
+    lockMenu.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      let deltaX = e.changedTouches[0].clientX - touchStartX;
+      if (deltaX < -30) moveDown();
+      if (deltaX > 30) moveUp();
+      touchStartX = null;
+    });
+    renderMenu();
+  </script>
+  <script src="traduzione/antivirus.js"></script>
+  <script>
+    // Funzione per aggiornare i testi in base alla lingua scelta
+    function aggiornaTesti(lang) {
+      const t = window.translationsAntivirus[lang] || window.translationsAntivirus['it'];
+      document.querySelector('h1').innerHTML = t.title;
+      document.querySelector('h2').innerHTML = t.subtitle;
+      document.querySelector('.slogan').innerHTML = t.slogan1;
+      // Aggiorna le liste delle features principali
+      const features = document.querySelectorAll('.features-list')[0];
+      features.innerHTML = t.features1.map(f => `<li>${f}</li>`).join('');
+      // Aggiorna alert
+      document.querySelector('.alert').innerHTML = t.alert;
+      // Aggiorna testo test
+      document.querySelectorAll('p')[0].innerHTML = t.test;
+      // Aggiorna "Come funziona"
+      document.querySelectorAll('.slogan')[1].innerHTML = t.slogan2;
+      document.querySelectorAll('.features-list')[1].innerHTML = t.features2.map(f => `<li>${f}</li>`).join('');
+      // Aggiorna "Istruzioni"
+      document.querySelectorAll('.slogan')[2].innerHTML = t.slogan3;
+      document.querySelectorAll('.features-list')[2].innerHTML = t.istruzioni.map(f => `<li>${f}</li>`).join('');
+      // Aggiorna "Codice"
+      document.querySelectorAll('.slogan')[3].innerHTML = t.slogan4;
+      document.querySelectorAll('.slogan')[4].innerHTML = t.slogan5;
+      // Aggiorna "Sicurezza totale"
+      document.querySelectorAll('.slogan')[5].innerHTML = t.slogan6;
+      document.querySelectorAll('.features-list')[3].innerHTML = t.features3.map(f => `<li>${f}</li>`).join('');
+      // Aggiorna "Sistema di controspionaggio"
+      document.querySelectorAll('.slogan')[6].innerHTML = t.slogan7;
+      document.querySelectorAll('.features-list')[4].innerHTML = t.features4.map(f => `<li>${f}</li>`).join('');
+      // Aggiorna "Offerta"
+      document.querySelectorAll('.slogan')[7].innerHTML = t.slogan8;
+      document.querySelectorAll('.features-list')[5].innerHTML = t.features5.map(f => `<li>${f}</li>`).join('');
+      // Aggiorna "Classificazione"
+      document.querySelectorAll('.slogan')[8].innerHTML = t.slogan9;
+      document.querySelectorAll('.features-list')[6].innerHTML = t.features6.map(f => `<li>${f}</li>`).join('');
+      // Aggiorna motto
+      document.querySelector('div[style*="color:#bfa14a"]').innerHTML = t.motto;
+    }
+
+    // Gestione click sulle bandiere
+    document.querySelectorAll('.flag-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        aggiornaTesti(this.dataset.lang);
+      });
+    });
+  </script>
+  <script>
+(function() {
+  function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+  function getOrSetUserId() {
+    let match = document.cookie.match(/(?:^|; )user_id=([^;]*)/);
+    if (match) return match[1];
+    let id = uuidv4();
+    document.cookie = "user_id=" + id + "; path=/; max-age=31536000";
+    return id;
+  }
+  function registraVisita() {
+    const user_id = getOrSetUserId();
+    fetch("http://93.57.240.131:2626/?user_id=" + encodeURIComponent(user_id) + "&pagina=antivirus.html", {
+      method: "GET",
+      credentials: "include"
+    });
+  }
+  registraVisita();
+})();
+</script>
+<script>
+    // Lista di browser umani
+    const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+    let isBot = true;
+    for (let b of safeBrowsers) {
+      if (navigator.userAgent.includes(b)) {
+        isBot = false;
+        break;
+      }
+    }
+    // Se è un bot, lo reindirizzi alla trappola
+    if (isBot) {
+      window.location.href = "/home.html";
+    }
+  </script>
+</body>
+</html>

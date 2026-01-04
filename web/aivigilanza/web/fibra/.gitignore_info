@@ -1,0 +1,26 @@
+# ⚠️ PROGETTO SPERIMENTALE - NON OPERATIVO
+
+Questa cartella contiene un **progetto separato e isolato** in fase di sviluppo.
+
+**NON È PARTE DEL SISTEMA PRINCIPALE SERVICESS.NET**
+
+## Scopo
+
+Sistema di gestionale FTTH sperimentale che:
+- Si collegherà a GPTs via API Yggdrasil
+- Usa autenticazione X-API-Key
+- Backend su PC separato (non in questo repo)
+
+## Stato
+
+🚧 **IN SVILUPPO** - Non operativo
+
+## File
+
+- `gestionale-ftth.html` - Frontend gestionale (non usare in produzione)
+- `README_YGGDRASIL.md` - Documentazione setup (WIP)
+
+---
+
+**Non includere nei backup di produzione**
+**Non deployare su servicess.net**

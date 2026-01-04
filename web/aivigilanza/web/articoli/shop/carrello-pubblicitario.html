@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="carrello elettronico, consegne sicure, SafeNode, Yggdrasil, sistema consegne, ordine online, consegna 45 minuti, SMS conferma, ServiceSS, sicurezza informatica, domotica, sistemista">
+  <meta name="description" content="Sistema innovativo di carrello elettronico sicuro basato su SafeNode™ e Yggdrasil Network. Consegne garantite in 45 minuti con massima sicurezza e privacy.">
+  <meta name="robots" content="index, follow">
+  <title>🚚 Carrello Elettronico Sicuro - ServiceSS</title>
+  <style>
+    :root {
+      --bg: #0b1320;
+      --card: #111a2b;
+      --text: #e8f0ff;
+      --muted: #94a3b8;
+      --brand: #4da3ff;
+      --ok: #1ee37d;
+      --error: #ff4757;
+      --warning: #ffa500;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .flag-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding: 10px 18px 0 0;
+      user-select: none;
+    }
+    .flag {
+      width: 32px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .flag:hover { transform: scale(1.1); }
+    .flag.active { border-color: var(--brand); }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    }
+    .card h2 {
+      margin: 0 0 16px;
+      color: var(--text);
+      font-size: 1.5em;
+    }
+    .card h3 {
+      margin: 20px 0 12px;
+      color: var(--brand);
+      font-size: 1.2em;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .card li {
+      margin: 8px 0;
+      color: var(--muted);
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: var(--brand);
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 18px;
+      box-shadow: 0 4px 16px rgba(77,163,255,.3);
+      transition: all 0.2s;
+      font-size: 1.1em;
+    }
+    .btn:hover {
+      background: var(--ok);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(30,194,139,.4);
+    }
+    .btn-demo {
+      background: var(--warning);
+      box-shadow: 0 4px 16px rgba(255,165,0,.3);
+    }
+    .btn-demo:hover {
+      background: #ff8c00;
+      box-shadow: 0 6px 20px rgba(255,140,0,.4);
+    }
+    .pricing-table {
+      display: grid;
+      gap: 16px;
+    }
+    .pricing-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background: rgba(255,255,255,.03);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.05);
+    }
+    .pricing-item .price {
+      font-weight: bold;
+      color: var(--ok);
+      font-size: 1.2em;
+    }
+    .steps {
+      counter-reset: step-counter;
+    }
+    .step {
+      counter-increment: step-counter;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: rgba(255,255,255,.03);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.05);
+    }
+    .step::before {
+      content: counter(step-counter);
+      background: var(--brand);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .security-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--brand), var(--ok));
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: bold;
+      margin: 8px 8px 0 0;
+      box-shadow: 0 2px 8px rgba(77,163,255,.3);
+    }
+    footer {
+      padding: 30px 20px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,.08);
+      margin-top: 60px;
+    }
+    .hero {
+      text-align: center;
+      margin: 40px 0;
+      padding: 40px;
+      background: linear-gradient(135deg, rgba(77,163,255,.1), rgba(30,227,125,.1));
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .hero h1 {
+      font-size: 3em;
+      margin: 0 0 20px;
+      background: linear-gradient(135deg, var(--brand), var(--ok));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.3em;
+      color: var(--muted);
+      margin: 0;
+    }
+    @media (max-width: 700px) {
+      .wrap { padding: 18px 4vw; }
+      .card { padding: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2em; }
+      .hero { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Flag Bar -->
+  <div class="flag-bar">
+    <div id="flag-it" class="flag flag-it active" onclick="cambiaLingua('it')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 100'%3E%3Cpath fill='%2300B04F' d='M0 0h50v100H0z'/%3E%3Cpath fill='%23fff' d='M50 0h50v100H50z'/%3E%3Cpath fill='%23DC143C' d='M100 0h50v100h-50z'/%3E%3C/svg%3E" alt="IT">
+    </div>
+    <div id="flag-en" class="flag flag-en" onclick="cambiaLingua('en')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Cpath fill='%23006' d='M0 0h60v30H0z'/%3E%3Cpath stroke='%23fff' stroke-width='6' d='M0 0l60 30m0-30L0 30'/%3E%3Cpath stroke='%23c00' stroke-width='4' d='M0 0l60 30m0-30L0 30'/%3E%3Cpath stroke='%23fff' stroke-width='10' d='M30 0v30M0 15h60'/%3E%3Cpath stroke='%23c00' stroke-width='6' d='M30 0v30M0 15h60'/%3E%3C/svg%3E" alt="EN">
+    </div>
+    <div id="flag-es" class="flag flag-es" onclick="cambiaLingua('es')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 750 500'%3E%3Cpath fill='%23AA151B' d='M0 0h750v125H0z'/%3E%3Cpath fill='%23F1BF00' d='M0 125h750v250H0z'/%3E%3Cpath fill='%23AA151B' d='M0 375h750v125H0z'/%3E%3C/svg%3E" alt="ES">
+    </div>
+    <div id="flag-fr" class="flag flag-fr" onclick="cambiaLingua('fr')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23002654' d='M0 0h300v600H0z'/%3E%3Cpath fill='%23fff' d='M300 0h300v600H300z'/%3E%3Cpath fill='%23CE1126' d='M600 0h300v600H600z'/%3E%3C/svg%3E" alt="FR">
+    </div>
+    <div id="flag-de" class="flag flag-de" onclick="cambiaLingua('de')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 3'%3E%3Cpath fill='%23000' d='M0 0h5v1H0z'/%3E%3Cpath fill='%23D00' d='M0 1h5v1H0z'/%3E%3Cpath fill='%23FFCE00' d='M0 2h5v1H0z'/%3E%3C/svg%3E" alt="DE">
+    </div>
+    <div id="flag-ar" class="flag flag-ar" onclick="cambiaLingua('ar')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23CE1126' d='M0 0h900v600H0z'/%3E%3Cpath fill='%23fff' d='M0 200h900v200H0z'/%3E%3Cpath fill='%2314B53A' d='M0 400h900v200H0z'/%3E%3C/svg%3E" alt="AR">
+    </div>
+    <div id="flag-ru" class="flag flag-ru" onclick="cambiaLingua('ru')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23fff' d='M0 0h900v200H0z'/%3E%3Cpath fill='%2300B4D8' d='M0 200h900v200H0z'/%3E%3Cpath fill='%23D52B1E' d='M0 400h900v200H0z'/%3E%3C/svg%3E" alt="RU">
+    </div>
+    <div id="flag-zh" class="flag flag-zh" onclick="cambiaLingua('zh')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23DE2910' d='M0 0h900v600H0z'/%3E%3Cpath fill='%23FFDE00' d='M0 0l300 300h600V0z'/%3E%3Cpath fill='%23FFDE00' d='M0 600l300-300h600v300z'/%3E%3C/svg%3E" alt="ZH">
+    </div>
+    <div id="flag-ja" class="flag flag-ja" onclick="cambiaLingua('ja')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23fff' d='M0 0h900v600H0z'/%3E%3Ccircle cx='450' cy='300' r='180' fill='%23BC002D'/%3E%3C/svg%3E" alt="JA">
+    </div>
+    <div id="flag-hi" class="flag flag-hi" onclick="cambiaLingua('hi')">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23FF9933' d='M0 0h900v200H0z'/%3E%3Cpath fill='%23fff' d='M0 200h900v200H0z'/%3E%3Cpath fill='%23128822' d='M0 400h900v200H0z'/%3E%3Ccircle cx='450' cy='300' r='60' fill='%230088B0'/%3E%3Cpath d='M450 240a60 60 0 0 1 0 120' stroke='%230088B0' stroke-width='3' fill='none'/%3E%3C/svg%3E" alt="HI">
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="wrap">
+    <!-- Navigation Menu -->
+    <div style="text-align: center; margin: 20px 0 40px 0;">
+      <select id="pageSelect" onchange="navigateToPage(this.value)" style="background: var(--card); color: var(--text); border: 1px solid rgba(255,255,255,.2); border-radius: 8px; padding: 10px 15px; font-size: 1em; cursor: pointer; min-width: 200px;">
+        <option value="">Seleziona pagina...</option>
+        <option value="../index.html">🏠 Home</option>
+        <option value="../SafeNode.html">🔒 SafeNode™</option>
+        <option value="../antivirus.html">🛡️ Antivirus</option>
+        <option value="../bonifiche.html">🧹 Bonifiche</option>
+        <option value="../straordinarie.html">🧽 Pulizie Straordinarie</option>
+        <option value="../guardiania.html">👮 Guardiania</option>
+        <option value="../telecamere.html">📹 Telecamere Sicurezza</option>
+        <option value="../domotica.html">🏠 Domotica</option>
+        <option value="../sistemista.html">💻 Sistemista</option>
+        <option value="../yggdrasil.html">🌐 Yggdrasil</option>
+        <option value="../chisiamo.html">ℹ️ Chi Siamo</option>
+        <option value="../contatti.html">📞 Contatti</option>
+        <option value="carrello.html">🛒 Carrello Elettronico</option>
+      </select>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>🚚 Carrello Elettronico Sicuro</h1>
+      <p>Sistema innovativo di consegne basato su SafeNode™ - Sicurezza massima, velocità garantita</p>
+      <div style="margin-top: 20px;">
+        <span class="security-badge">🔒 SafeNode™ Protetto</span>
+        <a href="https://servicess.net/guida_yggdrasil.html" class="security-badge" style="text-decoration: none; cursor: pointer;">🌐 Yggdrasil Network</a>
+        <span class="security-badge">📱 SMS Automatici</span>
+        <span class="security-badge">⚡ Consegna 45min</span>
+      </div>
+    </div>
+
+    <!-- Come Funziona -->
+    <div class="card">
+      <h2>📱 Come Funziona il Carrello Elettronico</h2>
+      <div class="steps">
+        <div class="step">
+          <div><strong>Cliente ordina online:</strong> Seleziona prodotti dal menu digitale, inserisce indirizzo e numero telefono</div>
+        </div>
+        <div class="step">
+          <div><strong>Riceve conferma immediata:</strong> SMS automatico con codice di conferma per validare l'ordine</div>
+        </div>
+        <div class="step">
+          <div><strong>Consegna garantita:</strong> Il rider consegna entro 45 minuti dall'ordine confermato</div>
+        </div>
+        <div class="step">
+          <div><strong>Sicurezza totale:</strong> Tutto protetto da SafeNode™ e rete Yggdrasil crittografata</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vantaggi -->
+    <div class="grid">
+      <div class="card">
+        <h2>🔒 Sicurezza Avanzata</h2>
+        <ul>
+          <li><strong>SafeNode™ Base:</strong> Hardware blindato, Linux ottimizzato, firewall nftables</li>
+          <li><strong>Yggdrasil Network:</strong> Doppia protezione con rete crittografata end-to-end</li>
+          <li><strong>Dati Protetti:</strong> Nessun salvataggio di carte di credito, solo telefono e indirizzo</li>
+          <li><strong>Connessione Sicura:</strong> IP fisso dedicato, SIM Business TIM</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>⚡ Velocità e Affidabilità</h2>
+        <ul>
+          <li><strong>Consegna 45 minuti:</strong> Garantita per tutto il territorio servito</li>
+          <li><strong>24/7 Disponibile:</strong> Sistema sempre attivo, riavvio automatico</li>
+          <li><strong>Notifiche Real-time:</strong> SMS e Telegram per ogni ordine</li>
+          <li><strong>Tracking Ordini:</strong> Controllo stato ordine via codice</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>🎯 Innovazione Unica</h2>
+        <ul>
+          <li><strong>Senza Email/Telegram:</strong> Solo numero telefono per privacy massima</li>
+          <li><strong>Conferma SMS:</strong> Sistema antifrode con codice di validazione</li>
+          <li><strong>Menu Dinamico:</strong> Prodotti aggiornati in tempo reale</li>
+          <li><strong>Multi-categoria:</strong> Cibo, bevande, dolci, combustibili</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Demo Interattiva -->
+    <div class="card" style="text-align: center;">
+      <h2>🎮 Prova il Sistema Demo</h2>
+      <p style="color: var(--muted); margin-bottom: 20px;">
+        Scopri come funziona il carrello elettronico con la nostra demo interattiva.<br>
+        Aggiungi prodotti, simula un ordine e vedi le notifiche in tempo reale!
+      </p>
+      <a href="carrello.html" class="btn btn-demo" target="_blank">
+        🚀 Prova Carrello Demo
+      </a>
+    </div>
+
+    <!-- Prezzi -->
+    <div class="card">
+      <h2>💰 Prezzi Carrello Elettronico</h2>
+      <div class="pricing-table">
+        <div class="pricing-item">
+          <span>Setup Sistema Completo (SafeNode™ + Software)</span>
+          <span class="price">499€ una tantum</span>
+        </div>
+        <div class="pricing-item">
+          <span>Manutenzione Mensile (aggiornamenti + supporto)</span>
+          <span class="price">29€/mese</span>
+        </div>
+        <div class="pricing-item">
+          <span>SIM TIM Business con IP fisso</span>
+          <span class="price">35€/mese</span>
+        </div>
+        <div class="pricing-item">
+          <span>SMS Twilio (per conferme ordini)</span>
+          <span class="price">0.05€/SMS</span>
+        </div>
+      </div>
+      <p style="color: var(--muted); font-size: 0.9em; margin-top: 16px;">
+        * Prezzi IVA esclusa. Setup include configurazione SafeNode™, installazione software carrello,
+        integrazione Yggdrasil e test completo del sistema.
+      </p>
+    </div>
+
+    <!-- Sicurezza -->
+    <div class="card">
+      <h2>🛡️ Sistema di Sicurezza a Doppio Livello</h2>
+      <h3>SafeNode™ Hardware</h3>
+      <ul>
+        <li>Black box blindata, progettata per funzionare 24/7</li>
+        <li>Linux ottimizzato con firewall nftables avanzato</li>
+        <li>IP fisso dedicato con SIM TIM Business</li>
+        <li>Protezione fisica e digitale integrata</li>
+      </ul>
+
+      <h3>Yggdrasil Network</h3>
+      <ul>
+        <li>Rete crittografata end-to-end globale</li>
+        <li>Nessun server centrale, architettura distribuita</li>
+        <li>IPv6 nativo con crittografia post-quantistica</li>
+        <li>Protezione aggiuntiva contro intercettazioni</li>
+      </ul>
+    </div>
+
+    <!-- CTA Finale -->
+    <div class="card" style="text-align: center;">
+      <h2>🚀 Pronto a Digitalizzare le Tue Consegne?</h2>
+      <p style="color: var(--muted); margin-bottom: 20px;">
+        Sistema sicuro, affidabile e innovativo basato sulla nostra tecnologia SafeNode™
+      </p>
+      <a href="../contatti.html" class="btn">Contattaci per il Carrello</a>
+      <a href="carrello.html" class="btn btn-demo" style="margin-left: 16px;">Prova Demo</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 ServiceSS - Sistema Carrello Elettronico Sicuro</p>
+  </footer>
+
+  <script>
+    // Funzione per cambiare lingua
+    function cambiaLingua(lang) {
+      // Rimuovi classe active da tutte le flag
+      document.querySelectorAll('.flag').forEach(f => f.classList.remove('active'));
+      // Aggiungi classe active alla flag selezionata
+      document.getElementById('flag-' + lang).classList.add('active');
+      // Salva la lingua nel localStorage
+      localStorage.setItem('lang', lang);
+    }
+
+    // Funzione per navigare alle pagine
+    function navigateToPage(page) {
+      if (page) {
+        window.location.href = page;
+      }
+    }
+
+    // Inizializzazione
+    document.addEventListener('DOMContentLoaded', function() {
+      const lang = localStorage.getItem('lang') || 'it';
+      cambiaLingua(lang);
+    });
+  </script>
+</body>
+</html>
