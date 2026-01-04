@@ -2,6 +2,7 @@ import os
 import logging
 import subprocess
 import sqlite3
+import re
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, CommandHandler, CallbackQueryHandler, filters
 from dotenv import load_dotenv
@@ -15,6 +16,60 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
+
+
+# Evita che httpx logghi i token completi nelle richieste
+class _BlockHttpxFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return False
+
+
+for logger_name in ("httpx", "httpx._client"):
+    logger = logging.getLogger(logger_name)
+    logger.setLevel(logging.CRITICAL)
+    logger.addFilter(_BlockHttpxFilter())
+
+TOKEN_PATTERN = re.compile(r"(bot\d+):[A-Za-z0-9_-]+")
+
+
+def _redact(value: str) -> str:
+    return TOKEN_PATTERN.sub(r"\1:<REDACTED>", value)
+
+
+_previous_record_factory = logging.getLogRecordFactory()
+
+
+def _redacting_record_factory(*args, **kwargs):
+    record = _previous_record_factory(*args, **kwargs)
+    if isinstance(record.msg, str):
+        record.msg = _redact(record.msg)
+    if record.args:
+        record.args = tuple(
+            _redact(arg) if isinstance(arg, str) else arg
+            for arg in record.args
+        )
+    return record
+
+
+logging.setLogRecordFactory(_redacting_record_factory)
+
+
+# I record vengono già sanitizzati dal LogRecordFactory personalizzato
+# aggiungendo un filtro per ulteriore sicurezza manteniamo la compatibilità
+class _RedactFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        if isinstance(record.msg, str):
+            record.msg = _redact(record.msg)
+        if record.args:
+            record.args = tuple(
+                _redact(arg) if isinstance(arg, str) else arg
+                for arg in record.args
+            )
+        return True
+
+
+root_logger = logging.getLogger()
+root_logger.addFilter(_RedactFilter())
 
 # Carica le variabili d'ambiente
 load_dotenv()

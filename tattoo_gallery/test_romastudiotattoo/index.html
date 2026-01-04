@@ -45,13 +45,13 @@
     <script>
 window.tattoosData = [{"id":5,"username":"testuser","description":"Tatuaggio di test","filename":"img1.jpg","uploaded_at":"2025-09-27T09:50:25.725961+00:00","image_url":"/images/img1.jpg","detail_url":"/detail.html?id=5","telegram_url":"https://t.me/testuser","seo_title":"Tatuaggio di test - Roma Studio Tattoo","seo_description":"Tatuaggio: Tatuaggio di test. Realizzato presso Roma Studio Tattoo Roma. Contatta testuser su Telegram.","keywords":"tatuaggio, tatuaggio di test, roma, studio tattoo, testuser"}];console.log("Dati caricati inline:", window.tattoosData);
 </script>
-<script src="gallery.js?v=11"></script>
 
     <script>
         const galleryContainer = document.getElementById('gallery-container');
-        
-        // Lista delle immagini presenti (aggiorna questa lista quando carichi nuove foto)
-        const imageFiles = [
+        const LIKES_MAP_KEY = 'tattoo_likes_map';
+        const LIKED_MAP_KEY = 'tattoo_liked_map';
+        const API_TATTOOS_URL = 'https://www.romastudiotattoo.com/gallery/api/tattoos/';
+        const STATIC_IMAGE_FILES = [
             'ale0328it_AgACAgQAAxkBAAM0aM3c1F3zbYvcf2QGgX5MNsxLLtYAApzIMRuFpHFS4zm6OJRGbIUBAAMCAAN5AAM2BA.jpg',
             'ale0328it_AgACAgQAAxkBAAM6aM3fcqVAax3ykcFmIU7WbfHR1dgAAp7IMRuFpHFSdT0Gfxz5j7YBAAMCAAN5AAM2BA.jpg',
             'ale0328it_AgACAgQAAxkBAAM8aM3kGLOYaLxQq-Lq2-11FyXIYQEAAqTIMRuFpHFSeaaLy96TlX8BAAMCAAN5AAM2BA.jpg',
@@ -59,139 +59,355 @@ window.tattoosData = [{"id":5,"username":"testuser","description":"Tatuaggio di 
             'ale0328it_AgACAgQAAxkBAAMwaM3cVeI3-x-1AAGFvhR2cAcFGtjZAAKayDEbhaRxUuHq9XTmjhtXAQADAgADeQADNgQ.jpg',
             'ale0328it_AgACAgQAAxkBAAMyaM3cmNmPOqFGRFVVxbZcsIICabUAApvIMRuFpHFSFehbWH_yKh0BAAMCAAN5AAM2BA.jpg'
         ];
-        
-        function loadImages() {
-            imageFiles.forEach(fileName => {
-                const img = new Image();
-                img.src = `images/${fileName}`;
-                img.onload = () => {
-                    img.alt = 'Tatuaggio';
-                    img.style.width = '200px';
-                    img.style.height = '200px';
-                    img.style.objectFit = 'cover';
-                    img.style.borderRadius = '10px';
-                    img.style.transition = 'opacity 1s ease-in-out';
-                    img.style.cursor = 'pointer';
-                    
-                    // Crea il container del tatuaggio
-                    const tattooItem = document.createElement('div');
-                    tattooItem.className = 'tattoo-item';
-                    
-                    // Crea il container dei like
-                    const likeContainer = document.createElement('div');
-                    likeContainer.className = 'like-container';
-                    
-                    // Crea il pulsante like
-                    const likeButton = document.createElement('button');
-                    likeButton.className = 'like-button';
-                    likeButton.innerHTML = '❤️';
-                    likeButton.title = 'Mi piace';
-                    
-                    // Disabilita il pulsante se l'utente ha già messo like
-                    if (hasUserLiked(fileName)) {
-                        likeButton.classList.add('disabled');
-                        likeButton.title = 'Hai già messo like';
-                    }
-                    
-                    // Crea il contatore dei like
-                    const likeCount = document.createElement('span');
-                    likeCount.className = 'like-count';
-                    likeCount.textContent = getLikes(fileName);
-                    
-                    // Gestisci il click sul pulsante like
-                    likeButton.addEventListener('click', (e) => {
-                        e.stopPropagation(); // Evita che scatti l'evento dell'immagine
-                        
-                        if (hasUserLiked(fileName)) {
-                            // Utente ha già messo like - animazione di feedback
-                            likeButton.style.transform = 'scale(1.2)';
-                            setTimeout(() => likeButton.style.transform = 'scale(1)', 200);
-                            return;
-                        }
-                        
-                        const currentLikes = addLike(fileName);
-                        likeCount.textContent = currentLikes;
-                        likeButton.classList.add('liked');
-                        likeButton.classList.add('disabled');
-                        likeButton.title = 'Hai già messo like';
-                        setTimeout(() => likeButton.classList.remove('liked'), 300);
-                    });
-                    
-                    // Gestisci il click sull'immagine (fade out)
-                    img.addEventListener('click', () => {
-                        img.classList.add('fade-out');
-                        setTimeout(() => {
-                            tattooItem.remove();
-                        }, 1000);
-                    });
-                    
-                    // Assembla gli elementi
-                    likeContainer.appendChild(likeButton);
-                    likeContainer.appendChild(likeCount);
-                    tattooItem.appendChild(img);
-                    tattooItem.appendChild(likeContainer);
-                    galleryContainer.appendChild(tattooItem);
-                };
-                img.onerror = () => {
-                    console.log(`Immagine non trovata: ${fileName}`);
-                };
+
+        function getStaticTattooData() {
+            if (!Array.isArray(STATIC_IMAGE_FILES) || !STATIC_IMAGE_FILES.length) {
+                return [];
+            }
+
+            return STATIC_IMAGE_FILES.map((filename, index) => ({
+                id: `static-${index + 1}`,
+                description: 'Tatuaggio Roma Studio Tattoo',
+                filename,
+                image_url: `images/${filename}`,
+                uploaded_at: '2024-01-01T00:00:00Z',
+                username: 'Roma Studio Tattoo'
+            }));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initGallery();
+            showCookieBanner();
+        });
+
+        async function initGallery() {
+            if (!galleryContainer) {
+                console.error('Elemento #gallery-container non trovato');
+                return;
+            }
+
+            const inlineData = Array.isArray(window.tattoosData) ? window.tattoosData : [];
+
+            if (inlineData.length) {
+                displayTattoos(inlineData);
+                return;
+            }
+
+            const apiData = await fetchTattooData();
+            if (apiData.length) {
+                displayTattoos(apiData);
+                return;
+            }
+
+            const staticData = getStaticTattooData();
+            if (staticData.length) {
+                console.warn('Nessun dato inline/API trovato: uso la galleria statica offline.');
+                displayTattoos(staticData);
+                return;
+            }
+
+            console.warn('Nessun dato disponibile per la galleria, mostro fallback.');
+            displayFallback();
+        }
+
+        async function fetchTattooData() {
+            try {
+                const response = await fetch(API_TATTOOS_URL, { credentials: 'omit' });
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const payload = await response.json();
+                if (payload && Array.isArray(payload.tattoos)) {
+                    return payload.tattoos;
+                }
+                if (Array.isArray(payload)) {
+                    return payload;
+                }
+
+                console.warn('Formato risposta API inatteso:', payload);
+            } catch (error) {
+                console.warn('Errore caricamento API tatuaggi:', error);
+            }
+            return [];
+        }
+
+        function displayTattoos(tattoos) {
+            if (!Array.isArray(tattoos) || !tattoos.length) {
+                displayFallback();
+                return;
+            }
+
+            galleryContainer.innerHTML = '';
+            tattoos.forEach((tattoo) => {
+                galleryContainer.appendChild(createTattooCard(tattoo));
             });
         }
-        
-        function getLikes(filename) {
-            const likes = JSON.parse(localStorage.getItem('tattoo_likes') || '{}');
-            return likes[filename] || 0;
-        }
-        
-        function addLike(filename) {
-            const userLikes = JSON.parse(localStorage.getItem('user_likes') || '{}');
-            if (userLikes[filename]) {
-                // Utente ha già messo like a questa immagine
-                return userLikes[filename];
+
+        function createTattooCard(tattoo) {
+            const item = document.createElement('div');
+            item.className = 'tattoo-item';
+            item.style.cssText = 'margin: 15px; padding: 25px; border-radius: 20px; text-align: center; background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%); box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: all 0.3s ease; position: relative; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);';
+
+            const imageWrapper = document.createElement('div');
+            imageWrapper.style.cssText = 'position: relative; display: inline-block; margin-bottom: 15px;';
+
+            const img = document.createElement('img');
+            const imageUrl = tattoo.image_url || `/images/${tattoo.filename}`;
+            img.src = imageUrl;
+            img.alt = tattoo.description || 'Tatuaggio';
+            img.loading = 'lazy';
+            img.style.cssText = 'width: 200px; height: 200px; object-fit: cover; border-radius: 10px; cursor: pointer; transition: transform 0.3s ease;';
+            img.addEventListener('click', () => openTattooDetail(tattoo));
+            img.addEventListener('error', () => {
+                img.alt = 'Immagine non disponibile';
+                img.style.background = '#ffebee';
+                img.style.border = '2px solid red';
+            });
+
+            const formattedDate = formatDate(tattoo.uploaded_at);
+            if (formattedDate) {
+                img.title = `Caricato il ${formattedDate}`;
             }
-            
-            const likes = JSON.parse(localStorage.getItem('tattoo_likes') || '{}');
-            likes[filename] = (likes[filename] || 0) + 1;
-            localStorage.setItem('tattoo_likes', JSON.stringify(likes));
-            
-            // Segna che questo utente ha messo like
-            userLikes[filename] = likes[filename];
-            localStorage.setItem('user_likes', JSON.stringify(userLikes));
-            
-            return likes[filename];
+
+            const dateOverlay = document.createElement('div');
+            dateOverlay.textContent = formattedDate ? `📅 ${formattedDate}` : '';
+            dateOverlay.style.cssText = 'position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); background: rgba(0,0,0,0.75); color: #fff; padding: 6px 12px; border-radius: 999px; font-size: 12px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;';
+
+            imageWrapper.addEventListener('mouseenter', () => {
+                img.style.transform = 'scale(1.05)';
+                dateOverlay.style.opacity = formattedDate ? '1' : '0';
+            });
+
+            imageWrapper.addEventListener('mouseleave', () => {
+                img.style.transform = 'scale(1)';
+                dateOverlay.style.opacity = '0';
+            });
+
+            imageWrapper.appendChild(img);
+            imageWrapper.appendChild(dateOverlay);
+
+            const desc = document.createElement('p');
+            desc.textContent = tattoo.description || 'Tatuaggio';
+            desc.style.cssText = 'margin: 15px 0; font-size: 16px; font-weight: bold; color: #333; line-height: 1.4;';
+
+            const username = document.createElement('p');
+            username.textContent = tattoo.username ? `👤 ${tattoo.username}` : '';
+            username.style.cssText = 'margin: 10px 0; font-size: 14px; color: #666; font-style: italic;';
+
+            const uploadDate = document.createElement('p');
+            uploadDate.textContent = formattedDate ? `📅 ${formattedDate}` : '';
+            uploadDate.style.cssText = 'margin: 10px 0; font-size: 14px; color: #666;';
+
+            const likeContainer = document.createElement('div');
+            likeContainer.className = 'like-container';
+            likeContainer.style.cssText = 'display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 18px; padding: 0; background: transparent; border: none;';
+
+            const heartBtn = document.createElement('button');
+            heartBtn.textContent = '♥';
+            heartBtn.style.cssText = 'font-size: 20px; color: #c44536; border: none; background: transparent; cursor: pointer; padding: 0; border-radius: 0; transition: transform 0.2s ease, color 0.2s ease; outline: none; line-height: 1;';
+
+            const likeCount = document.createElement('span');
+            likeCount.className = 'like-count';
+            likeCount.style.cssText = 'font-size: 16px; font-weight: bold; color: #d35400;';
+
+            const storageLikes = getStorageMap(LIKES_MAP_KEY);
+            const storageLiked = getStorageMap(LIKED_MAP_KEY);
+            const initialLikes = storageLikes[tattoo.id] || 0;
+            const hasLiked = Boolean(storageLiked[tattoo.id]);
+            likeCount.textContent = formatLikesLabel(initialLikes);
+
+            if (hasLiked) {
+                heartBtn.style.color = '#e17055';
+                heartBtn.style.transform = 'scale(1.05)';
+                heartBtn.classList.add('liked');
+                heartBtn.setAttribute('disabled', 'disabled');
+            }
+
+            heartBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                handleLike(tattoo.id, heartBtn, likeCount);
+            });
+
+            heartBtn.addEventListener('mouseenter', () => {
+                if (heartBtn.hasAttribute('disabled')) return;
+                heartBtn.style.transform = 'scale(1.15)';
+                heartBtn.style.color = '#a63632';
+            });
+
+            heartBtn.addEventListener('mouseleave', () => {
+                const liked = heartBtn.hasAttribute('disabled');
+                heartBtn.style.transform = liked ? 'scale(1.05)' : 'scale(1)';
+                heartBtn.style.color = liked ? '#e17055' : '#c44536';
+            });
+
+            likeContainer.appendChild(heartBtn);
+            likeContainer.appendChild(likeCount);
+
+            item.appendChild(imageWrapper);
+            item.appendChild(desc);
+            item.appendChild(username);
+            item.appendChild(uploadDate);
+            item.appendChild(likeContainer);
+
+            if (tattoo.telegram_url) {
+                const contactBtn = document.createElement('a');
+                contactBtn.href = tattoo.telegram_url;
+                contactBtn.target = '_blank';
+                contactBtn.rel = 'noopener';
+                contactBtn.textContent = 'Contatta su Telegram';
+                contactBtn.style.cssText = 'display: inline-block; margin-top: 15px; padding: 10px 18px; border-radius: 999px; background: #0088cc; color: #fff; text-decoration: none; font-weight: bold;';
+                item.appendChild(contactBtn);
+            }
+
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateY(-8px) scale(1.02)';
+                item.style.boxShadow = '0 12px 25px rgba(0,0,0,0.2)';
+            });
+
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateY(0) scale(1)';
+                item.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+            });
+
+            return item;
         }
-        
-        function hasUserLiked(filename) {
-            const userLikes = JSON.parse(localStorage.getItem('user_likes') || '{}');
-            return !!userLikes[filename];
+
+        function handleLike(tattooId, heartBtn, likeCount) {
+            const likesMap = getStorageMap(LIKES_MAP_KEY);
+            const likedMap = getStorageMap(LIKED_MAP_KEY);
+
+            if (likedMap[tattooId]) {
+                heartBtn.style.transform = 'scale(1.08)';
+                setTimeout(() => {
+                    heartBtn.style.transform = 'scale(1.05)';
+                }, 180);
+                return;
+            }
+
+            const nextLikes = (likesMap[tattooId] || 0) + 1;
+            likesMap[tattooId] = nextLikes;
+            likedMap[tattooId] = true;
+            localStorage.setItem(LIKES_MAP_KEY, JSON.stringify(likesMap));
+            localStorage.setItem(LIKED_MAP_KEY, JSON.stringify(likedMap));
+
+            likeCount.textContent = formatLikesLabel(nextLikes);
+            heartBtn.setAttribute('disabled', 'disabled');
+            heartBtn.classList.add('liked');
+            heartBtn.style.color = '#e17055';
+            heartBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                heartBtn.style.transform = 'scale(1.05)';
+            }, 220);
+
+            createSimpleHeartEffect(heartBtn);
+            if (navigator.vibrate) {
+                navigator.vibrate(40);
+            }
         }
-        
-        // Cookie Banner Functions
+
+        function createSimpleHeartEffect(button) {
+            const rect = button.getBoundingClientRect();
+            for (let i = 0; i < 3; i += 1) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.textContent = '♥';
+                    heart.style.cssText = 'position: fixed; font-size: 16px; color: #e17055; pointer-events: none; z-index: 9999; transition: all 1s ease-out; opacity: 1;';
+                    heart.style.left = `${rect.left + rect.width / 2}px`;
+                    heart.style.top = `${rect.top + rect.height / 2}px`;
+                    document.body.appendChild(heart);
+                    setTimeout(() => {
+                        heart.style.transform = 'translateY(-50px) scale(0.5)';
+                        heart.style.opacity = '0';
+                    }, 50);
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.parentNode.removeChild(heart);
+                        }
+                    }, 1100);
+                }, i * 100);
+            }
+        }
+
+    function getStorageMap(key) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) return {};
+                const parsed = JSON.parse(raw);
+                return (parsed && typeof parsed === 'object') ? parsed : {};
+            } catch (error) {
+                console.warn(`Valore locale corrotto per ${key}, resetto`, error);
+                localStorage.removeItem(key);
+                return {};
+            }
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const normalized = typeof dateString === 'string'
+                ? dateString.trim().replace(' ', 'T')
+                : dateString;
+            const parsed = new Date(normalized);
+            if (Number.isNaN(parsed.getTime())) {
+                return '';
+            }
+            return parsed.toLocaleDateString('it-IT', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function formatLikesLabel(count) {
+            const safe = Number.isFinite(count) ? count : 0;
+            return `${safe} like${safe === 1 ? '' : 's'}`;
+        }
+
+        function displayFallback() {
+            galleryContainer.innerHTML = '<div style="margin: 20px; padding: 25px; border: 2px solid orange; text-align: center; border-radius: 15px; background: #fff9e6;"><h3>🖼️ Galleria in costruzione</h3><p>Le immagini verranno caricate a breve!</p><img src="images/test.jpg" alt="Test" style="width: 200px; height: 200px; object-fit: cover; margin: 15px 0; border-radius: 10px;"><div style="margin-top: 20px; padding: 10px; background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%); border-radius: 25px; display: inline-flex; align-items: center; gap: 10px;"><button style="font-size: 24px; border: none; background: transparent; cursor: pointer;">❤️</button><span style="font-size: 16px; font-weight: bold; color: #e91e63;">0 likes</span></div></div>';
+        }
+
+        function openTattooDetail(tattoo) {
+            if (!tattoo) return;
+
+            if (tattoo.detail_url) {
+                window.location.href = tattoo.detail_url;
+                return;
+            }
+
+            const rawId = tattoo.id;
+            if (rawId && typeof rawId !== 'undefined' && !`${rawId}`.toString().startsWith('static-')) {
+                window.location.href = `/detail.html?id=${rawId}`;
+                return;
+            }
+
+            alert('Dettaglio disponibile solo online: salva questo tatuaggio tra i preferiti per ricordarlo!');
+        }
+
         function showCookieBanner() {
             const banner = document.getElementById('cookie-banner');
             const cookiesAccepted = localStorage.getItem('cookies_accepted');
-            if (!cookiesAccepted) {
+            if (banner && !cookiesAccepted) {
                 banner.classList.add('show');
             }
         }
-        
+
         function acceptCookies() {
             localStorage.setItem('cookies_accepted', 'true');
-            document.getElementById('cookie-banner').classList.remove('show');
+            const banner = document.getElementById('cookie-banner');
+            if (banner) {
+                banner.classList.remove('show');
+            }
         }
-        
+
         function declineCookies() {
             localStorage.setItem('cookies_accepted', 'false');
-            document.getElementById('cookie-banner').classList.remove('show');
-            // Disabilita funzionalità che richiedono cookie
+            const banner = document.getElementById('cookie-banner');
+            if (banner) {
+                banner.classList.remove('show');
+            }
             alert('Alcune funzionalità potrebbero non essere disponibili senza cookie.');
         }
-        
-        // Carica le immagini quando la pagina è pronta
-        document.addEventListener('DOMContentLoaded', function() {
-            loadImages();
-            showCookieBanner();
-        });
     </script>
 </body>
 </html>

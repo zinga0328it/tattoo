@@ -66,9 +66,12 @@ def update_homepage_data():
         # Pattern per trovare la linea con window.tattoosData
         pattern = r'window\.tattoosData\s*=\s*\[.*?\];'
         replacement = f'window.tattoosData = {tattoos_json};'
-        
-        # Sostituisci i dati
-        new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
+
+        # Sostituisci i dati usando una funzione per evitare problemi con escape (es. \u)
+        def replace_inline_data(match: re.Match) -> str:
+            return replacement
+
+        new_content = re.sub(pattern, replace_inline_data, content, flags=re.DOTALL)
         
         if new_content == content:
             print("Nessuna modifica necessaria o pattern non trovato")
