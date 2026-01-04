@@ -1,0 +1,562 @@
+openapi: 3.1.0
+info:
+  title: FTTH Management System API
+  description: |
+    API per la gestione dei lavori di installazione fibra ottica (FTTH).
+    Permette di creare, visualizzare e gestire lavori, tecnici e squadre.
+    
+    **Architettura**: Questo endpoint pubblico (servicess.net) fa da proxy 
+    verso il backend privato tramite rete Yggdrasil IPv6.
+  version: 1.0.0
+  contact:
+    name: Servicess.net
+    url: https://servicess.net
+
+servers:
+  - url: https://servicess.net/gestionale
+    description: Server di produzione (proxy Apache → Yggdrasil → Backend)
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /health/:
+    get:
+      operationId: getHealth
+      summary: Verifica stato del sistema
+      description: Restituisce lo stato di salute del backend FTTH
+      responses:
+        '200':
+          description: Sistema operativo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /works/:
+    get:
+      operationId: getWorks
+      summary: Lista tutti i lavori
+      description: Restituisce l'elenco completo dei lavori FTTH con dettagli cliente, stato e tecnico assegnato
+      responses:
+        '200':
+          description: Lista lavori
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Work'
+
+  /works/{work_id}:
+    get:
+      operationId: getWorkById
+      summary: Dettaglio singolo lavoro
+      description: Restituisce i dettagli completi di un lavoro specifico
+      parameters:
+        - name: work_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del lavoro
+      responses:
+        '200':
+          description: Dettaglio lavoro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Work'
+        '404':
+          description: Lavoro non trovato
+
+    put:
+      operationId: updateWork
+      summary: Aggiorna lavoro esistente
+      description: Modifica i dati di un lavoro esistente (stato, tecnico, note, etc.)
+      parameters:
+        - name: work_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del lavoro da aggiornare
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stato:
+                  type: string
+                  enum: [aperto, in_corso, sospeso, chiuso]
+                  description: Nuovo stato del lavoro
+                  example: "in_corso"
+                tecnico_assegnato:
+                  type: integer
+                  description: ID del tecnico da assegnare
+                  example: 1
+                note:
+                  type: string
+                  description: Nuove note aggiuntive
+                  example: "Aggiornato dal GPT"
+                nome_cliente:
+                  type: string
+                  description: Aggiorna nome cliente
+                  example: "Mario Rossi"
+                indirizzo:
+                  type: string
+                  description: Aggiorna indirizzo
+                  example: "Via Milano 456, Roma"
+                operatore:
+                  type: string
+                  description: Aggiorna operatore
+                  example: "Tecnico B"
+                tipo_lavoro:
+                  type: string
+                  description: Aggiorna tipo lavoro
+                  example: "Manutenzione"
+                telefono_cliente:
+                  type: string
+                  description: Aggiorna telefono
+                  example: "3339876543"
+                extra_fields:
+                  type: object
+                  description: Aggiorna campi extra
+                  example: {"priorita": "bassa", "data_appuntamento": "2025-02-01"}
+      responses:
+        '200':
+          description: Lavoro aggiornato con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Work'
+        '404':
+          description: Lavoro non trovato
+        '400':
+          description: Dati non validi
+
+    delete:
+      operationId: deleteWork
+      summary: Elimina lavoro esistente
+      description: Cancella definitivamente un lavoro dal database FTTH (richiede autorizzazione amministrativa)
+      parameters:
+        - name: work_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del lavoro da eliminare
+      responses:
+        '200':
+          description: Lavoro eliminato con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Lavoro eliminato"
+        '404':
+          description: Lavoro non trovato
+        '403':
+          description: Non autorizzato - Solo amministratori possono eliminare lavori
+
+  /manual/works:
+    post:
+      operationId: createManualWork
+      summary: Crea nuovo lavoro manuale
+      description: Inserisce un nuovo lavoro nel database FTTH con tutti i dettagli richiesti
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - numero_wr
+                - operatore
+                - indirizzo
+              properties:
+                numero_wr:
+                  type: string
+                  description: Numero identificativo unico del lavoro
+                  example: "WR-001"
+                nome_cliente:
+                  type: string
+                  description: Nome del cliente
+                  example: "Mario Rossi"
+                indirizzo:
+                  type: string
+                  description: Indirizzo dell'installazione
+                  example: "Via Roma 123, Milano"
+                operatore:
+                  type: string
+                  description: Operatore di rete (obbligatorio)
+                  example: "Open Fiber"
+                tipo_lavoro:
+                  type: string
+                  description: Tipo di lavoro
+                  enum: ["Installazione", "Attivazione", "Riparazione", "Manutenzione", "Installazione FTTH", "Manutenzione FTTH", "Test Connessione"]
+                  example: "Installazione"
+                telefono_cliente:
+                  type: string
+                  description: Numero di telefono del cliente
+                  example: "3331234567"
+                note:
+                  type: string
+                  description: Note aggiuntive
+                  example: "Installazione urgente"
+                stato:
+                  type: string
+                  enum: [aperto, in_corso, sospeso, chiuso]
+                  description: Stato iniziale del lavoro
+                  example: "aperto"
+                tecnico_assegnato:
+                  type: integer
+                  description: ID del tecnico da assegnare
+                  example: 1
+                extra_fields:
+                  type: object
+                  description: Campi aggiuntivi personalizzati
+                  example: {"priorita": "alta", "data_appuntamento": "2025-01-15"}
+      responses:
+        '200':
+          description: Lavoro creato con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+                  id:
+                    type: integer
+                    description: ID del lavoro creato
+                    example: 21
+                  numero_wr:
+                    type: string
+                    description: Numero WR confermato
+                    example: "WR-001"
+        '400':
+          description: Dati non validi
+        '500':
+          description: Errore interno del server
+
+  /technicians/:
+    get:
+      operationId: getTechnicians
+      summary: Lista tutti i tecnici
+      description: Restituisce l'elenco dei tecnici con informazioni su squadra e Telegram
+      responses:
+        '200':
+          description: Lista tecnici
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Technician'
+
+  /teams/:
+    get:
+      operationId: getTeams
+      summary: Lista tutte le squadre
+      description: Restituisce l'elenco delle squadre di lavoro
+      responses:
+        '200':
+          description: Lista squadre
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+
+  /stats/weekly:
+    get:
+      operationId: getWeeklyStats
+      summary: Statistiche settimanali
+      description: Restituisce il conteggio dei lavori chiusi e sospesi questa settimana
+      responses:
+        '200':
+          description: Statistiche settimanali
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  closed_this_week:
+                    type: integer
+                    description: Lavori chiusi questa settimana
+                  suspended:
+                    type: integer
+                    description: Lavori sospesi
+
+  /stats/closed_by_operator:
+    get:
+      operationId: getClosedByOperator
+      summary: Chiusure per operatore
+      description: Restituisce il conteggio dei lavori chiusi raggruppati per operatore (Open Fiber, FiberCop, etc.)
+      responses:
+        '200':
+          description: Statistiche per operatore
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    operatore:
+                      type: string
+                      example: "Open Fiber"
+                    closed:
+                      type: integer
+
+  /stats/closed_by_technician:
+    get:
+      operationId: getClosedByTechnician
+      summary: Chiusure per tecnico
+      description: Restituisce il conteggio dei lavori chiusi raggruppati per tecnico
+      responses:
+        '200':
+          description: Statistiche per tecnico
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tecnico:
+                      type: string
+                      example: "Mario Rossi"
+                    closed:
+                      type: integer
+
+  /stats/daily_closed:
+    get:
+      operationId: getDailyClosed
+      summary: Chiusure giornaliere
+      description: Restituisce il conteggio dei lavori chiusi per giorno
+      responses:
+        '200':
+          description: Statistiche giornaliere
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      example: "2025-12-14"
+                    closed:
+                      type: integer
+
+  /stats/yearly:
+    get:
+      operationId: getYearlyStats
+      summary: Statistiche annuali
+      description: Restituisce le statistiche aggregate per l'anno corrente
+      responses:
+        '200':
+          description: Statistiche annuali
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      example: "2025-12"
+                    closed:
+                      type: integer
+                      description: Lavori chiusi in quel mese
+
+  /telegram/commands:
+    get:
+      operationId: getTelegramCommands
+      summary: Comandi bot Telegram
+      description: Restituisce la lista dei comandi configurati per il bot Telegram
+      responses:
+        '200':
+          description: Lista comandi
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        command:
+                          type: string
+                        description:
+                          type: string
+
+  /telegram/status:
+    get:
+      operationId: getTelegramStatus
+      summary: Stato bot Telegram
+      description: Restituisce informazioni sullo stato del bot Telegram
+      responses:
+        '200':
+          description: Stato bot
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bot_active:
+                    type: boolean
+                    description: Se il bot è attivo
+                  bot_username:
+                    type: string
+                    description: Username del bot Telegram
+                  webhook_configured:
+                    type: boolean
+                    description: Se il webhook è configurato
+
+  /documents/:
+    get:
+      operationId: getDocuments
+      summary: Lista documenti
+      description: Restituisce l'elenco dei documenti caricati
+      responses:
+        '200':
+          description: Lista documenti
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  schemas:
+    Work:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID univoco del lavoro
+        numero_wr:
+          type: string
+          description: Numero Work Request (es. WR-001)
+        operatore:
+          type: string
+          description: Operatore di rete (Open Fiber, FiberCop)
+        indirizzo:
+          type: string
+          description: Indirizzo del cliente
+        nome_cliente:
+          type: string
+          description: Nome del cliente
+        tipo_lavoro:
+          type: string
+          description: Tipo di intervento (Installazione, Attivazione, Riparazione, Manutenzione)
+        note:
+          type: string
+          nullable: true
+          description: Note aggiuntive
+        stato:
+          type: string
+          enum: [aperto, in_corso, sospeso, chiuso]
+          description: Stato attuale del lavoro
+        data_apertura:
+          type: string
+          format: date-time
+          description: Data di apertura del lavoro
+        data_chiusura:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data di chiusura (se chiuso)
+        tecnico_assegnato:
+          $ref: '#/components/schemas/Technician'
+          nullable: true
+          description: Tecnico assegnato al lavoro
+        extra_fields:
+          type: object
+          description: Campi extra (telefono, etc.)
+
+    Technician:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID univoco del tecnico
+        nome:
+          type: string
+          description: Nome del tecnico
+        cognome:
+          type: string
+          description: Cognome del tecnico
+        telefono:
+          type: string
+          description: Numero di telefono
+        telegram_id:
+          type: string
+          nullable: true
+          description: ID Telegram per notifiche
+        squadra:
+          $ref: '#/components/schemas/Team'
+          nullable: true
+          description: Squadra di appartenenza
+
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID univoco della squadra
+        nome:
+          type: string
+          description: Nome della squadra
+
+    Document:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID univoco del documento
+        filename:
+          type: string
+          description: Nome del file
+        upload_date:
+          type: string
+          format: date-time
+          description: Data di caricamento
+        parsed:
+          type: boolean
+          description: Se il documento è stato processato

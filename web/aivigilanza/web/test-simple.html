@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Semplice</title>
+</head>
+<body>
+    <h1>Test Gestionale</h1>
+    <div id="ordersList"></div>
+    
+    <script>
+        const API_BASE = 'https://servicess.net/gestionale';
+
+        function apiFetch(path, opts = {}) {
+            const base = window.__API_BASE__ || API_BASE;
+            const url = base ? base + path : path;
+            
+            if (!opts.headers) opts.headers = {};
+            opts.headers['X-API-Key'] = 'JHzxUzdAK8LJ33Y50MDgLf5E62flYset4MYA6ELpXpU=';
+            
+            return fetch(url, opts);
+        }
+
+        async function loadOrders() {
+            try {
+                console.log('Loading orders...');
+                const response = await apiFetch('/works/');
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const allOrders = await response.json();
+                console.log('Loaded', allOrders.length, 'orders');
+                
+                const container = document.getElementById('ordersList');
+                container.innerHTML = `<p>Caricati ${allOrders.length} ordini</p>`;
+                
+                return allOrders;
+            } catch (e) {
+                console.error('Errore caricamento ordini', e);
+                throw e;
+            }
+        }
+
+        // Test immediato
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded, testing API...');
+            loadOrders().then(() => {
+                console.log('API test successful');
+            }).catch(err => {
+                console.error('API test failed:', err);
+            });
+        });
+    </script>
+</body>
+</html>

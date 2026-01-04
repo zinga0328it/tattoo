@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="servicess, sicurezza, AI, domotica, legale, antivirus, bonifiche, contatti, sistemista, server personali, SIM speciali, Yggdrasil, VPN, telecamere, ospedali intelligenti">
+  <link rel="canonical" href="https://servicess.net/sistemista.html">
+  <title>Servicess - Sicurezza Vera</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #000033, #007BFF 80%, #E0F7FF 100%);
+      color: #E0F7FF;
+      font-family: 'Georgia', 'Segoe UI', Arial, serif;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .flag-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding: 10px 18px 0 0;
+      user-select: none;
+    }
+    .flag-btn {
+      font-size: 1.7em;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+    }
+    .main-content {
+      background: rgba(34,34,34,0.92);
+      border-radius: 24px;
+      box-shadow: 0 0 32px #007BFF99;
+      padding: 48px 32px 36px 32px;
+      max-width: 700px;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      z-index: 1;
+      position: relative;
+    }
+    .main-content h2 {
+      color: #007BFF;
+      font-size: 2em;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+    .main-content p {
+      font-size: 1.15em;
+      color: #fffbe6;
+      margin-bottom: 20px;
+    }
+    .main-content ul {
+      text-align: left;
+      margin: 28px auto 0 auto;
+      padding-left: 0;
+      list-style: none;
+      max-width: 520px;
+    }
+    .main-content ul li {
+      background: #007BFF22;
+      color: #E0F7FF;
+      border-left: 4px solid #007BFF;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      padding: 12px 18px;
+      font-size: 1.13em;
+      font-family: inherit;
+      box-shadow: 0 2px 8px #007BFF33;
+    }
+    .telegram-btn {
+      display: inline-block;
+      background: #229ED9;
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1.1em;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 18px;
+      box-shadow: 0 2px 10px #229ed988;
+      transition: background 0.2s, color 0.2s;
+    }
+    .telegram-btn:hover {
+      background: #007BFF;
+      color: #222;
+    }
+    @media (max-width: 700px) {
+      .main-content { padding: 18px 4vw; }
+      .main-content h2 { font-size: 1.3em; }
+      .main-content ul li { font-size: 1em; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra bandierine per selezione lingua -->
+  <div class="flag-bar">
+    <button class="flag-btn" data-lang="it" title="Italiano">🇮🇹</button>
+    <button class="flag-btn" data-lang="en" title="English">🇬🇧</button>
+    <button class="flag-btn" data-lang="fr" title="Français">🇫🇷</button>
+    <button class="flag-btn" data-lang="de" title="Deutsch">🇩🇪</button>
+    <button class="flag-btn" data-lang="es" title="Español">🇪🇸</button>
+    <button class="flag-btn" data-lang="ar" title="العربية">🇸🇦</button>
+    <button class="flag-btn" data-lang="ru" title="Русский">🇷🇺</button>
+    <button class="flag-btn" data-lang="zh" title="中文">🇨🇳</button>
+    <button class="flag-btn" data-lang="ja" title="日本語">🇯🇵</button>
+    <button class="flag-btn" data-lang="hi" title="हिन्दी">🇮🇳</button>
+  </div>
+
+  <!-- Menu selezione pagine -->
+  <div style="text-align: center; margin: 40px 0;">
+    <select id="pageSelect" style="background: #ffffff; color: #000000; border: 2px solid #00BFFF; border-radius: 10px; padding: 10px; font-size: 1.2em; font-weight: bold;">
+  <option value="index.html">Home</option>
+  <option value="contatti.html">Contatti</option>
+  <option value="chisiamo.html">Chi Siamo</option>
+  <option value="guardiania.html">Guardiania</option>
+  <option value="domotica.html">Domotica</option>
+  <option value="bonifiche.html">Bonifiche</option>
+  <option value="straordinarie.html">Pulizie Straordinarie</option>
+  <option value="antivirus.html">Antivirus</option>
+  <option value="articoli/telecamere.html">Telecamere Sicurezza</option>
+    </select>
+  </div>
+
+  <!-- Contenuto principale -->
+  <div class="main-content">
+    <h1 id="welcome">Servicess — quello che facciamo</h1>
+    <p id="welcome-desc">Questo è il servizio base. Poi possiamo implementarlo con server potenti gestiti da intelligenza artificiale.</p>
+    <a href="https://wa.me/393510120753" id="whatsapp-btn" class="telegram-btn">Contattaci su WhatsApp</a>
+
+    <h2 id="cleaningTitle">1. Mini-server personali</h2>
+    <p id="cleaningDesc">Ti diamo due piccoli server da 69€, che consumano come una lampadina. Sono tuoi per sempre: niente più abbonamenti costosi agli hosting.</p>
+
+    <h2 id="shiftsTitle">2. Due SIM speciali</h2>
+    <p id="shiftsDesc">Il nostro sistema usa sempre due SIM, non una:<br><strong>SIM economica (dietro NAT):</strong> ti protegge già di base.<br><strong>SIM con IP pubblico:</strong> ti dà un indirizzo unico, visibile su internet.<br>Le colleghiamo insieme e diventano una sola rete privata.</p>
+
+    <h2 id="domoticsTitle">3. Yggdrasil</h2>
+    <p id="domoticsDesc">È una rete privata che cifra tutti i dati. Fuori non si vede nulla: nessuno può spiare i tuoi flussi.</p>
+
+    <h2 id="securityTitle">Cosa puoi avere</h2>
+    <p id="securityDesc"><strong>Sito web sicuro:</strong> niente più Aruba o altri hosting.<br><strong>VPN personale:</strong> navighi protetto, invisibile.<br><strong>Telecamere:</strong> anche se la password viene compromessa, non vedono nulla.<br><strong>Domotica e ospedali intelligenti:</strong> sistemi avanzati che gestiscono case, uffici e strutture con AI.</p>
+
+    <h2 id="mysteryTitle">Perché è diverso dagli altri</h2>
+    <p id="mysteryDesc">Paghi poco (69€ + 6€/mese) e sei indipendente.<br>Il server è tuo, non di aziende esterne.<br>La privacy è vera, non promessa.<br>Nessuno può leggere i tuoi dati.</p>
+
+    <h2 id="aiTitle">Persone + AI</h2>
+    <p id="aiDesc">Non solo tecnologia:<br>Addetti per pulizie e guardiania.<br>Operatori di controllo visivo guidati dalla nostra AI, che capiscono tutte le lingue.<br>Tecnici potenziati: configurano qualsiasi impianto grazie alle nostre chiavette AI.</p>
+
+    <h2>In sintesi</h2>
+    <p>Con Servicess hai:</p>
+    <ul>
+        <li>✅ Un server tuo.</li>
+        <li>✅ Due SIM che ti proteggono.</li>
+        <li>✅ Una rete cifrata che non si buca.</li>
+        <li>✅ Servizi che vanno dal sito web alla sicurezza di un ospedale.</li>
+    </ul>
+
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="https://wa.me/393510120753" class="telegram-btn">Scrivici su WhatsApp</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Servicess.net - Sicurezza Vera</p>
+  </footer>
+
+  <!-- Banner cookie -->
+  <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;width:100%;background:#222;color:#fff;padding:18px 10px;text-align:center;z-index:9999;font-size:1.1em;">
+    Questo sito utilizza cookie tecnici e registra i log di accesso per motivi di sicurezza e statistica. Proseguendo accetti la registrazione dei cookie e dei log.
+    <button id="accetta-cookie-btn" style="margin-left:18px;padding:7px 22px;border-radius:8px;border:none;background:#2ecc71;color:#111;font-weight:bold;cursor:pointer;">Accetta</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Oggetto con le traduzioni
+      const translationsIndex = {
+        it: {
+          "welcome": "Servicess — quello che facciamo",
+          "welcome-desc": "Questo è il servizio base. Poi possiamo implementarlo con server potenti gestiti da intelligenza artificiale.",
+          "whatsapp-btn": "Contattaci su WhatsApp",
+          "cleaningTitle": "1. Mini-server personali",
+          "cleaningDesc": "Ti diamo due piccoli server da 69€, che consumano come una lampadina. Sono tuoi per sempre: niente più abbonamenti costosi agli hosting.",
+          "shiftsTitle": "2. Due SIM speciali",
+          "shiftsDesc": "Il nostro sistema usa sempre due SIM, non una:<br><strong>SIM economica (dietro NAT):</strong> ti protegge già di base.<br><strong>SIM con IP pubblico:</strong> ti dà un indirizzo unico, visibile su internet.<br>Le colleghiamo insieme e diventano una sola rete privata.",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "È una rete privata che cifra tutti i dati. Fuori non si vede nulla: nessuno può spiare i tuoi flussi.",
+          "securityTitle": "Cosa puoi avere",
+          "securityDesc": "<strong>Sito web sicuro:</strong> niente più Aruba o altri hosting.<br><strong>VPN personale:</strong> navighi protetto, invisibile.<br><strong>Telecamere:</strong> anche se la password viene compromessa, non vedono nulla.<br><strong>Domotica e ospedali intelligenti:</strong> sistemi avanzati che gestiscono case, uffici e strutture con AI.",
+          "mysteryTitle": "Perché è diverso dagli altri",
+          "mysteryDesc": "Paghi poco (69€ + 6€/mese) e sei indipendente.<br>Il server è tuo, non di aziende esterne.<br>La privacy è vera, non promessa.<br>Nessuno può leggere i tuoi dati.",
+          "aiTitle": "Persone + AI",
+          "aiDesc": "Non solo tecnologia:<br>Addetti per pulizie e guardiania.<br>Operatori di controllo visivo guidati dalla nostra AI, che capiscono tutte le lingue.<br>Tecnici potenziati: configurano qualsiasi impianto grazie alle nostre chiavette AI."
+        },
+        en: {
+          "welcome": "Servicess — what we do",
+          "welcome-desc": "This is the basic service. We can then implement it with powerful servers managed by artificial intelligence.",
+          "whatsapp-btn": "Contact us on WhatsApp",
+          "cleaningTitle": "1. Personal Mini-servers",
+          "cleaningDesc": "We give you two small servers for €69, which consume as much as a light bulb. They are yours forever: no more expensive hosting subscriptions.",
+          "shiftsTitle": "2. Two special SIMs",
+          "shiftsDesc": "Our system always uses two SIMs, not one:<br><strong>Cheap SIM (behind NAT):</strong> protects you by default.<br><strong>SIM with public IP:</strong> gives you a unique address, visible on the internet.<br>We connect them together and they become a single private network.",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "It is a private network that encrypts all data. Nothing is visible from the outside: no one can spy on your streams.",
+          "securityTitle": "What you can have",
+          "securityDesc": "<strong>Secure website:</strong> no more Aruba or other hosting.<br><strong>Personal VPN:</strong> you browse protected, invisible.<br><strong>Cameras:</strong> even if the password is compromised, they see nothing.<br><strong>Home automation and smart hospitals:</strong> advanced systems that manage homes, offices, and facilities with AI.",
+          "mysteryTitle": "Why it's different from others",
+          "mysteryDesc": "You pay little (€69 + €6/month) and you are independent.<br>The server is yours, not from external companies.<br>Privacy is real, not promised.<br>No one can read your data.",
+          "aiTitle": "People + AI",
+          "aiDesc": "Not just technology:<br>Cleaning and security staff.<br>Visual control operators guided by our AI, who understand all languages.<br>Empowered technicians: they configure any system thanks to our AI keys."
+        },
+        fr: {
+          "welcome": "Servicess — ce que nous faisons",
+          "welcome-desc": "Ceci est le service de base. Nous pouvons ensuite le mettre en œuvre avec des serveurs puissants gérés par l'intelligence artificielle.",
+          "whatsapp-btn": "Contactez-nous sur WhatsApp",
+          "cleaningTitle": "1. Mini-serveurs personnels",
+          "cleaningDesc": "Nous vous donnons deux petits serveurs pour 69 €, qui consomment autant qu'une ampoule. Ils sont à vous pour toujours : plus d'abonnements d'hébergement coûteux.",
+          "shiftsTitle": "2. Deux SIM spéciales",
+          "shiftsDesc": "Notre système utilise toujours deux SIM, pas une :<br><strong>SIM économique (derrière NAT) :</strong> vous protège par défaut.<br><strong>SIM avec IP publique :</strong> vous donne une adresse unique, visible sur internet.<br>Nous les connectons ensemble et elles deviennent un seul réseau privé.",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "C'est un réseau privé qui crypte toutes les données. Rien n'est visible de l'extérieur : personne ne peut espionner vos flux.",
+          "securityTitle": "Ce que vous pouvez avoir",
+          "securityDesc": "<strong>Site web sécurisé :</strong> plus d'Aruba ou d'autre hébergement.<br><strong>VPN personnel :</strong> vous naviguez protégé, invisible.<br><strong>Caméras :</strong> même si le mot de passe est compromis, elles ne voient rien.<br><strong>Domotique et hôpitaux intelligents :</strong> systèmes avancés qui gèrent les maisons, les bureaux et les installations avec l'IA.",
+          "mysteryTitle": "Pourquoi est-ce différent des autres",
+          "mysteryDesc": "Vous payez peu (69 € + 6 €/mois) et vous êtes indépendant.<br>Le serveur est à vous, pas à des entreprises externes.<br>La confidentialité est réelle, pas promise.<br>Personne ne peut lire vos données.",
+          "aiTitle": "Personnes + IA",
+          "aiDesc": "Pas seulement la technologie :<br>Personnel de nettoyage et de sécurité.<br>Opérateurs de contrôle visuel guidés par notre IA, qui comprennent toutes les langues.<br>Techniciens habilités : ils configurent n'importe quel système grâce à nos clés IA."
+        },
+        de: {
+          "welcome": "Servicess — was wir tun",
+          "welcome-desc": "Dies ist der Basisdienst. Wir können ihn dann mit leistungsstarken Servern implementieren, die von künstlicher Intelligenz verwaltet werden.",
+          "whatsapp-btn": "Kontaktieren Sie uns auf WhatsApp",
+          "cleaningTitle": "1. Persönliche Mini-Server",
+          "cleaningDesc": "Wir geben Ihnen zwei kleine Server für 69 €, die so viel verbrauchen wie eine Glühbirne. Sie gehören Ihnen für immer: keine teuren Hosting-Abonnements mehr.",
+          "shiftsTitle": "2. Zwei spezielle SIMs",
+          "shiftsDesc": "Unser System verwendet immer zwei SIMs, nicht eine:<br><strong>Günstige SIM (hinter NAT):</strong> schützt Sie standardmäßig.<br><strong>SIM mit öffentlicher IP:</strong> gibt Ihnen eine eindeutige Adresse, die im Internet sichtbar ist.<br>Wir verbinden sie miteinander und sie werden zu einem einzigen privaten Netzwerk.",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "Es ist ein privates Netzwerk, das alle Daten verschlüsselt. Von außen ist nichts sichtbar: Niemand kann Ihre Streams ausspionieren.",
+          "securityTitle": "Was Sie haben können",
+          "securityDesc": "<strong>Sichere Website:</strong> kein Aruba oder anderes Hosting mehr.<br><strong>Persönliches VPN:</strong> Sie surfen geschützt, unsichtbar.<br><strong>Kameras:</strong> selbst wenn das Passwort kompromittiert wird, sehen sie nichts.<br><strong>Hausautomation und intelligente Krankenhäuser:</strong> fortschrittliche Systeme, die Häuser, Büros und Einrichtungen mit KI verwalten.",
+          "mysteryTitle": "Warum es sich von anderen unterscheidet",
+          "mysteryDesc": "Sie zahlen wenig (69 € + 6 €/Monat) und sind unabhängig.<br>Der Server gehört Ihnen, nicht externen Unternehmen.<br>Datenschutz ist echt, nicht versprochen.<br>Niemand kann Ihre Daten lesen.",
+          "aiTitle": "Menschen + KI",
+          "aiDesc": "Nicht nur Technologie:<br>Reinigungs- und Sicherheitspersonal.<br>Visuelle Kontrolloperatoren, die von unserer KI geleitet werden und alle Sprachen verstehen.<br>Ermächtigte Techniker: Sie konfigurieren jedes System dank unserer KI-Schlüssel."
+        },
+        es: {
+          "welcome": "Servicess — lo que hacemos",
+          "welcome-desc": "Este es el servicio básico. Luego podemos implementarlo con potentes servidores gestionados por inteligencia artificial.",
+          "whatsapp-btn": "Contáctanos en WhatsApp",
+          "cleaningTitle": "1. Mini-servidores personales",
+          "cleaningDesc": "Te damos dos pequeños servidores por 69 €, que consumen tanto como una bombilla. Son tuyos para siempre: no más costosas suscripciones de hosting.",
+          "shiftsTitle": "2. Dos SIM especiales",
+          "shiftsDesc": "Nuestro sistema siempre usa dos SIM, no una:<br><strong>SIM barata (detrás de NAT):</strong> te protege por defecto.<br><strong>SIM con IP pública:</strong> te da una dirección única, visible en internet.<br>Las conectamos juntas y se convierten en una única red privada.",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "Es una red privada que cifra todos los datos. No se ve nada desde fuera: nadie puede espiar tus flujos.",
+          "securityTitle": "Lo que puedes tener",
+          "securityDesc": "<strong>Sitio web seguro:</strong> no más Aruba u otro hosting.<br><strong>VPN personal:</strong> navegas protegido, invisible.<br><strong>Cámaras:</strong> incluso si la contraseña se ve comprometida, no ven nada.<br><strong>Domótica y hospitales inteligentes:</strong> sistemas avanzados que gestionan hogares, oficinas e instalaciones con IA.",
+          "mysteryTitle": "Por qué es diferente de los demás",
+          "mysteryDesc": "Pagas poco (69 € + 6 €/mes) y eres independiente.<br>El servidor es tuyo, no de empresas externas.<br>La privacidad es real, no prometida.<br>Nadie puede leer tus datos.",
+          "aiTitle": "Personas + IA",
+          "aiDesc": "No solo tecnología:<br>Personal de limpieza y seguridad.<br>Operadores de control visual guiados por nuestra IA, que entienden todos los idiomas.<br>Técnicos capacitados: configuran cualquier sistema gracias a nuestras llaves de IA."
+        },
+        ar: {
+          "welcome": "Servicess — ماذا نفعل",
+          "welcome-desc": "هذه هي الخدمة الأساسية. يمكننا بعد ذلك تنفيذها بخوادم قوية تديرها الذكاء الاصطناعي.",
+          "whatsapp-btn": "اتصل بنا على WhatsApp",
+          "cleaningTitle": "1. خوادم صغيرة شخصية",
+          "cleaningDesc": "نمنحك خادمين صغيرين مقابل 69 يورو، يستهلكان قدر لمبة ضوء. إنهما لك إلى الأبد: لا مزيد من اشتراكات الاستضافة الباهظة.",
+          "shiftsTitle": "2. شريحتا SIM خاصتان",
+          "shiftsDesc": "يستخدم نظامنا دائمًا شريحتي SIM، وليس واحدة:<br><strong>شريحة SIM رخيصة (خلف NAT):</strong> تحميك افتراضيًا.<br><strong>شريحة SIM مع IP عام:</strong> تمنحك عنوانًا فريدًا، مرئيًا على الإنترنت.<br>نقوم بتوصيلهما معًا وتصبحان شبكة خاصة واحدة.",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "إنها شبكة خاصة تشفر جميع البيانات. لا شيء مرئي من الخارج: لا أحد يستطيع التجسس على تدفقاتك.",
+          "securityTitle": "ما الذي يمكنك الحصول عليه",
+          "securityDesc": "<strong>موقع ويب آمن:</strong> لا مزيد من Aruba أو استضافة أخرى.<br><strong>VPN شخصي:</strong> تتصفح محميًا، غير مرئي.<br><strong>الكاميرات:</strong> حتى لو تم اختراق كلمة المرور، فإنها لا ترى شيئًا.<br><strong>أتمتة المنزل والمستشفيات الذكية:</strong> أنظمة متقدمة تدير المنازل والمكاتب والمرافق باستخدام الذكاء الاصطناعي.",
+          "mysteryTitle": "لماذا يختلف عن الآخرين",
+          "mysteryDesc": "تدفع القليل (69 يورو + 6 يورو/شهر) وأنت مستقل.<br>الخادم ملكك، وليس لشركات خارجية.<br>الخصوصية حقيقية وليست موعودة.<br>لا أحد يستطيع قراءة بياناتك.",
+          "aiTitle": "الناس + الذكاء الاصطناعي",
+          "aiDesc": "ليس فقط التكنولوجيا:<br>موظفو التنظيف والأمن.<br>مشغلو التحكم البصري مسترشدين بالذكاء الاصطناعي لدينا، الذين يفهمون جميع اللغات.<br>فنيون معززون: يقومون بتكوين أي نظام بفضل مفاتيح الذكاء الاصطناعي الخاصة بنا."
+        },
+        ru: {
+          "welcome": "Servicess — что мы делаем",
+          "welcome-desc": "Это базовый сервис. Затем мы можем реализовать его с помощью мощных серверов, управляемых искусственным интеллектом.",
+          "whatsapp-btn": "Свяжитесь с нами в WhatsApp",
+          "cleaningTitle": "1. Персональные мини-серверы",
+          "cleaningDesc": "Мы даем вам два небольших сервера за 69 евро, которые потребляют столько же, сколько лампочка. Они ваши навсегда: больше никаких дорогих подписок на хостинг.",
+          "shiftsTitle": "2. Две специальные SIM-карты",
+          "shiftsDesc": "Наша система всегда использует две SIM-карты, а не одну:<br><strong>Дешевая SIM-карта (за NAT):</strong> защищает вас по умолчанию.<br><strong>SIM-карта с публичным IP:</strong> дает вам уникальный адрес, видимый в интернете.<br>Мы соединяем их вместе, и они становятся единой частной сетью.",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "Это частная сеть, которая шифрует все данные. Снаружи ничего не видно: никто не может шпионить за вашими потоками.",
+          "securityTitle": "Что вы можете получить",
+          "securityDesc": "<strong>Безопасный веб-сайт:</strong> больше никакого Aruba или другого хостинга.<br><strong>Персональный VPN:</strong> вы просматриваете страницы защищенно, невидимо.<br><strong>Камеры:</strong> даже если пароль будет скомпрометирован, они ничего не увидят.<br><strong>Домашняя автоматизация и умные больницы:</strong> передовые системы, управляющие домами, офисами и объектами с помощью ИИ.",
+          "mysteryTitle": "Почему это отличается от других",
+          "mysteryDesc": "Вы платите мало (69 евро + 6 евро/месяц) и независимы.<br>Сервер ваш, а не сторонних компаний.<br>Конфиденциальность реальна, а не обещана.<br>Никто не может прочитать ваши данные.",
+          "aiTitle": "Люди + ИИ",
+          "aiDesc": "Не только технологии:<br>Персонал по уборке и охране.<br>Операторы визуального контроля, управляемые нашим ИИ, которые понимают все языки.<br>Уполномоченные техники: они настраивают любую систему благодаря нашим ключам ИИ."
+        },
+        zh: {
+          "welcome": "Servicess — 我们做什么",
+          "welcome-desc": "这是基础服务。然后我们可以用由人工智能管理的强大服务器来实现它。",
+          "whatsapp-btn": "在WhatsApp上联系我们",
+          "cleaningTitle": "1. 个人迷你服务器",
+          "cleaningDesc": "我们为您提供两台小型服务器，价格为69欧元，功耗与灯泡相当。它们永远属于您：不再有昂贵的托管订阅。",
+          "shiftsTitle": "2. 两张特殊的SIM卡",
+          "shiftsDesc": "我们的系统总是使用两张SIM卡，而不是一张：<br><strong>便宜的SIM卡（在NAT后面）：</strong>默认保护您。<br><strong>带公共IP的SIM卡：</strong>为您提供一个唯一的、在互联网上可见的地址。<br>我们将它们连接在一起，它们就成了一个单一的专用网络。",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "这是一个加密所有数据的专用网络。从外部看不到任何东西：没有人可以监视您的流量。",
+          "securityTitle": "您可以拥有什么",
+          "securityDesc": "<strong>安全的网站：</strong>不再有Aruba或其他托管。<br><strong>个人VPN：</strong>您受到保护，隐形浏览。<br><strong>摄像头：</strong>即使密码被泄露，它们也什么都看不到。<br><strong>家庭自动化和智能医院：</strong>使用人工智能管理家庭、办公室和设施的先进系统。",
+          "mysteryTitle": "为什么它与众不同",
+          "mysteryDesc": "您支付的费用很少（69欧元+6欧元/月），而且您是独立的。<br>服务器是您的，而不是外部公司的。<br>隐私是真实的，而不是承诺的。<br>没有人可以读取您的数据。",
+          "aiTitle": "人+人工智能",
+          "aiDesc": "不仅仅是技术：<br>清洁和安保人员。<br>由我们的人工智能引导的视觉控制操作员，他们懂所有语言。<br>授权技术人员：他们借助我们的人工智能密钥配置任何系统。"
+        },
+        ja: {
+          "welcome": "Servicess — 私たちがすること",
+          "welcome-desc": "これは基本サービスです。その後、人工知能によって管理される強力なサーバーで実装できます。",
+          "whatsapp-btn": "WhatsAppでお問い合わせください",
+          "cleaningTitle": "1. パーソナルミニサーバー",
+          "cleaningDesc": "電球と同じくらい消費する69ユーロの小型サーバーを2台提供します。これらは永久にあなたのものです：高価なホスティングサブスクリプションはもうありません。",
+          "shiftsTitle": "2. 2つの特別なSIM",
+          "shiftsDesc": "私たちのシステムは常に1つではなく2つのSIMを使用します：<br><strong>安価なSIM（NATの背後）：</strong>デフォルトであなたを保護します。<br><strong>パブリックIPを持つSIM：</strong>インターネット上で表示される一意のアドレスを提供します。<br>それらを接続すると、単一のプライベートネットワークになります。",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "すべてのデータを暗号化するプライベートネットワークです。外部からは何も見えません：誰もあなたのストリームをスパイすることはできません。",
+          "securityTitle": "あなたが得ることができるもの",
+          "securityDesc": "<strong>安全なウェブサイト：</strong>Arubaや他のホスティングはもうありません。<br><strong>パーソナルVPN：</strong>保護されて、見えないように閲覧します。<br><strong>カメラ：</strong>パスワードが侵害されても、何も見えません。<br><strong>ホームオートメーションとスマートホスピタル：</strong>AIで家庭、オフィス、施設を管理する高度なシステム。",
+          "mysteryTitle": "なぜ他と違うのか",
+          "mysteryDesc": "あなたは少し（69ユーロ+ 6ユーロ/月）支払い、独立しています。<br>サーバーは外部企業のものではなく、あなたのものです。<br>プライバシーは約束されたものではなく、本物です。<br>誰もあなたのデータを読むことはできません。",
+          "aiTitle": "人+ AI",
+          "aiDesc": "テクノロジーだけではありません：<br>清掃および警備スタッフ。<br>すべての言語を理解する私たちのAIによって導かれる視覚制御オペレーター。<br>権限を与えられた技術者：彼らは私たちのAIキーのおかげで任何のシステムを構成します。"
+        },
+        hi: {
+          "welcome": "Servicess — हम क्या करते हैं",
+          "welcome-desc": "यह मूल सेवा है। फिर हम इसे कृत्रिम बुद्धिमत्ता द्वारा प्रबंधित शक्तिशाली सर्वरों के साथ लागू कर सकते हैं।",
+          "whatsapp-btn": "WhatsApp पर हमसे संपर्क करें",
+          "cleaningTitle": "1. व्यक्तिगत मिनी-सर्वर",
+          "cleaningDesc": "हम आपको €69 में दो छोटे सर्वर देते हैं, जो एक लाइट बल्ब जितनी खपत करते हैं। वे हमेशा के लिए आपके हैं: अब कोई महंगी होस्टिंग सदस्यता नहीं।",
+          "shiftsTitle": "2. दो विशेष सिम",
+          "shiftsDesc": "हमारा सिस्टम हमेशा दो सिम का उपयोग करता है, एक नहीं:<br><strong>सस्ता सिम (NAT के पीछे):</strong> आपको डिफ़ॉल्ट रूप से बचाता है।<br><strong>सार्वजनिक आईपी वाला सिम:</strong> आपको एक अनूठा पता देता है, जो इंटरनेट पर दिखाई देता है।<br>हम उन्हें एक साथ जोड़ते हैं और वे एक एकल निजी नेटवर्क बन जाते हैं।",
+          "domoticsTitle": "3. Yggdrasil",
+          "domoticsDesc": "यह एक निजी नेटवर्क है जो सभी डेटा को एन्क्रिप्ट करता है। बाहर से कुछ भी दिखाई नहीं देता है: कोई भी आपके स्ट्रीम की जासूसी नहीं कर सकता है।",
+          "securityTitle": "आप क्या प्राप्त कर सकते हैं",
+          "securityDesc": "<strong>सुरक्षित वेबसाइट:</strong> अब कोई अरूबा या अन्य होस्टिंग नहीं।<br><strong>व्यक्तिगत वीपीएन:</strong> आप सुरक्षित, अदृश्य रूप से ब्राउज़ करते हैं।<br><strong>कैमरे:</strong> भले ही पासवर्ड से छेड़छाड़ हो, वे कुछ भी नहीं देखते हैं।<br><strong>होम ऑटोमेशन और स्मार्ट अस्पताल:</strong> उन्नत सिस्टम जो एआई के साथ घरों, कार्यालयों और सुविधाओं का प्रबंधन करते हैं।",
+          "mysteryTitle": "यह दूसरों से अलग क्यों है",
+          "mysteryDesc": "आप कम भुगतान करते हैं (€69 + €6/माह) और आप स्वतंत्र हैं।<br>सर्वर आपका है, बाहरी कंपनियों का नहीं।<br>गोपनीयता वास्तविक है, वादा नहीं।<br>कोई भी आपका डेटा नहीं पढ़ सकता है।",
+          "aiTitle": "लोग + एआई",
+          "aiDesc": "सिर्फ तकनीक ही नहीं:<br>सफाई और सुरक्षा कर्मचारी।<br>हमारे एआई द्वारा निर्देशित दृश्य नियंत्रण ऑपरेटर, जो सभी भाषाओं को समझते हैं।<br>सशक्त तकनीशियन: वे हमारे एआई कीज की बदौलत किसी भी सिस्टम को कॉन्फ़िगर करते हैं।"
+        }
+      };
+
+      // Funzione per impostare la lingua
+      function setIndexLanguage(lang) {
+        const translations = translationsIndex[lang] || translationsIndex.it;
+        for (const key in translations) {
+          const element = document.getElementById(key);
+          if (element) {
+            element.innerHTML = translations[key];
+          }
+        }
+      }
+
+      // Gestione banner cookie
+      if (!document.cookie.includes("accetta_cookie=1")) {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+        
+        const acceptBtn = document.getElementById('accetta-cookie-btn');
+        if (acceptBtn) {
+          acceptBtn.onclick = function() {
+            document.cookie = "accetta_cookie=1; path=/; max-age=31536000";
+            if (banner) banner.style.display = 'none';
+          };
+        }
+      }
+
+      // Gestione cambio lingua
+      function updateLanguage(lang) {
+        document.documentElement.lang = lang;
+        localStorage.setItem('lang', lang);
+        setIndexLanguage(lang);
+      }
+
+      document.querySelectorAll('.flag-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const lang = btn.getAttribute('data-lang');
+          if (lang) {
+            updateLanguage(lang);
+          }
+        });
+      });
+
+      // Imposta la lingua iniziale
+      const initialLang = (localStorage.getItem('lang') || (navigator.language || 'it').slice(0, 2).toLowerCase());
+      updateLanguage(initialLang);
+
+      // Menu dropdown
+      const pageSelect = document.getElementById('pageSelect');
+      if (pageSelect) {
+        pageSelect.addEventListener('change', function() {
+          window.location.href = this.value;
+        });
+      }
+
+      // Rilevamento bot
+      try {
+        const userAgent = navigator.userAgent || "";
+        const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+        let isBot = !safeBrowsers.some(b => userAgent.includes(b));
+        
+        if (isBot) {
+          // window.location.href = "/home.html";
+        }
+      } catch (e) {
+        console.error("Errore nel rilevamento del browser:", e);
+      }
+    });
+  </script>
+</body>
+</html>

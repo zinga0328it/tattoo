@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manutenzione - ServiceSS</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #2c1600, #bfa14a 80%, #fffbe6 100%);
+      color: #fffbe6;
+      font-family: 'Georgia', 'Segoe UI', Arial, serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .maintenance-container {
+      background: rgba(34,34,34,0.95);
+      border-radius: 24px;
+      box-shadow: 0 0 32px #ffa50099;
+      padding: 60px 40px;
+      max-width: 600px;
+      border: 3px solid #ffa500;
+    }
+    .maintenance-icon {
+      font-size: 5em;
+      margin-bottom: 20px;
+      color: #ffa500;
+    }
+    .maintenance-title {
+      color: #ffa500;
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+    .maintenance-subtitle {
+      color: #fffbe6;
+      font-size: 1.4em;
+      font-weight: normal;
+      margin-bottom: 30px;
+    }
+    .maintenance-desc {
+      font-size: 1.2em;
+      color: #fffbe6;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    .maintenance-schedule {
+      background: rgba(255, 165, 0, 0.1);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      border: 2px solid #ffa500;
+    }
+    .maintenance-schedule h3 {
+      color: #ffa500;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+    .maintenance-schedule p {
+      color: #fffbe6;
+      margin: 8px 0;
+      font-size: 1.1em;
+    }
+    .maintenance-services {
+      background: rgba(46, 204, 113, 0.1);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      border: 2px solid #2ecc71;
+    }
+    .maintenance-services h3 {
+      color: #2ecc71;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+    .maintenance-services ul {
+      text-align: left;
+      margin: 0;
+      padding-left: 20px;
+      list-style: none;
+    }
+    .maintenance-services li {
+      color: #fffbe6;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+    .maintenance-services li:before {
+      content: "✅";
+      margin-right: 10px;
+      color: #2ecc71;
+    }
+    .maintenance-button {
+      display: inline-block;
+      background: #2ecc71;
+      color: #111;
+      padding: 15px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin: 10px;
+      transition: all 0.3s ease;
+      border: 2px solid #2ecc71;
+    }
+    .maintenance-button:hover {
+      background: #27ae60;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    }
+    .maintenance-code {
+      font-family: monospace;
+      background: rgba(255, 165, 0, 0.2);
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid #ffa500;
+      color: #ffa500;
+      font-weight: bold;
+    }
+    .countdown {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #ffa500;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="maintenance-container">
+    <div class="maintenance-icon">🔧</div>
+    <h1 class="maintenance-title">Manutenzione</h1>
+    <h2 class="maintenance-subtitle">Il sito è temporaneamente in manutenzione</h2>
+
+    <div class="maintenance-code">HTTP 503 - Service Unavailable</div>
+
+    <div class="maintenance-desc">
+      Stiamo effettuando importanti aggiornamenti per migliorare il nostro servizio.
+      Torneremo online il prima possibile.
+    </div>
+
+    <div class="maintenance-schedule">
+      <h3>⏰ Orari di manutenzione</h3>
+      <p><strong>Data:</strong> In corso</p>
+      <p><strong>Durata prevista:</strong> Qualche ora</p>
+      <p><strong>Stato:</strong> Lavori in corso</p>
+    </div>
+
+    <div class="maintenance-services">
+      <h3>✅ Servizi ancora disponibili:</h3>
+      <ul>
+        <li>Guardiania e Sicurezza</li>
+        <li>Domotica e Automazione</li>
+        <li>Antivirus e Cybersecurity</li>
+        <li>Contatti e Assistenza</li>
+        <li>Chi siamo</li>
+      </ul>
+    </div>
+
+    <div class="countdown" id="countdown">Controllo stato del servizio...</div>
+
+    <div class="maintenance-desc" style="font-size: 1em; margin-top: 30px;">
+      Grazie per la tua pazienza. ServiceSS lavora costantemente per offrirti il miglior servizio possibile.
+    </div>
+
+    <a href="/" class="maintenance-button">🏠 Torna alla Home</a>
+    <a href="/contatti.html" class="maintenance-button">📞 Contattaci</a>
+  </div>
+
+  <script>
+    // Controllo automatico dello stato del servizio
+    function checkServiceStatus() {
+      fetch('/', { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            document.getElementById('countdown').innerHTML = '✅ Servizio ripristinato! <a href="/" style="color: #2ecc71;">Clicca qui per accedere</a>';
+          } else {
+            document.getElementById('countdown').innerHTML = '🔄 Manutenzione ancora in corso...';
+          }
+        })
+        .catch(() => {
+          document.getElementById('countdown').innerHTML = '🔄 Manutenzione ancora in corso...';
+        });
+    }
+
+    // Controlla ogni 30 secondi
+    checkServiceStatus();
+    setInterval(checkServiceStatus, 30000);
+  </script>
+</body>
+</html>

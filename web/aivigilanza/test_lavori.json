@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "numero_wr": "WR-001",
+    "operatore": "Open Fiber",
+    "indirizzo": "Via Roma 25, Fiumicino",
+    "nome_cliente": "Mario Rossi",
+    "tipo_lavoro": "Installazione",
+    "note": null,
+    "stato": "chiuso",
+    "data_apertura": "2025-12-14T10:38:15",
+    "data_chiusura": "2025-12-15T05:39:24.234537",
+    "tecnico_assegnato": null,
+    "extra_fields": {
+      "telefono": "3331112222"
+    }
+  },
+  {
+    "id": 2,
+    "numero_wr": "WR-002",
+    "operatore": "FiberCop",
+    "indirizzo": "Via Milano 10, Roma",
+    "nome_cliente": "Luca Bianchi",
+    "tipo_lavoro": "Attivazione",
+    "note": null,
+    "stato": "chiuso",
+    "data_apertura": "2025-12-14T10:38:15",
+    "data_chiusura": "2025-12-14T11:41:56.379852",
+    "tecnico_assegnato": null,
+    "extra_fields": {
+      "telefono": "3332223333"
+    }
+  },
+  {
+    "id": 3,
+    "numero_wr": "WR-003",
+    "operatore": "Open Fiber",
+    "indirizzo": "Via Napoli 5, Ostia",
+    "nome_cliente": "Anna Verdi",
+    "tipo_lavoro": "Installazione",
+    "note": null,
+    "stato": "chiuso",
+    "data_apertura": "2025-12-14T10:38:15",
+    "data_chiusura": "2025-12-14T19:12:51.006615",
+    "tecnico_assegnato": null,
+    "extra_fields": {
+      "telefono": "3333334444"
+    }
+  },
+  {
+    "id": 4,
+    "numero_wr": "WR-004",
+    "operatore": "Open Fiber",
+    "indirizzo": "Via Torino 15, Fiumicino",
+    "nome_cliente": "Paolo Neri",
+    "tipo_lavoro": "Installazione",
+    "note": null,
+    "stato": "chiuso",
+    "data_apertura": "2025-12-14T10:38:15",
+    "data_chiusura": "2025-12-14T19:12:49.644932",
+    "tecnico_assegnato": {
+      "id": 1,
+      "nome": "Tecnico",
+      "cognome": "Test",
+      "telefono": "3331234567",
+      "squadra": {
+        "id": 1,
+        "nome": "Squadra Principale"
+      },
+      "telegram_id": "7586394272"
+    },
+    "extra_fields": {
+      "telefono": "3334445555"
+    }
+  },
+  {
+    "id": 5,
+    "numero_wr": "WR-005",
+    "operatore": "FiberCop",
+    "indirizzo": "Via Firenze 8, Roma",
+    "nome_cliente": "Sara Gialli",
+    "tipo_lavoro": "Riparazione",
+    "note": "Cliente non risponde",
+    "stato": "chiuso",
+    "data_apertura": "2025-12-14T10:38:15",
+    "data_chiusura": "2025-12-15T05:39:24.884512",
+    "tecnico_assegnato": null,
+    "extra_fields": {
+      "telefono": "3335556666"
+    }
+  },
+  {
+    "id": 6,
+    "numero_wr": "WR-006",
+    "operatore": "Open Fiber",
+    "indirizzo": "Via Bologna 20, Ostia",
+    "nome_cliente": "Marco Blu",
+    "tipo_lavoro": "Attivazione",
+    "note": null,
+    "stato": "sospeso",
+    "data_apertura": "2025-12-13T10:38:15",
+    "data_chiusura": "2025-12-14T10:38:15",
+    "tecnico_assegnato": null,
+    "extra_fields": {
+      "telefono": "3336667777"
+    }
+  },
+  {
+    "id": 7,
+    "numero_wr": "TEST_1765742983",
+    "operatore": "Open Fiber",
+    "indirizzo": "Via Test 123, Roma",
+    "nome_cliente": "Cliente Test Automatico",
+    "tipo_lavoro": "Installazione",
+    "note": "Test workflow completo con notifica Telegram",
+    "stato": "chiuso",
+    "data_apertura": "2025-12-14T21:09:43.759312",
+    "data_chiusura": "2025-12-15T05:39:30.727402",
+    "tecnico_assegnato": {
+      "id": 1,
+      "nome": "Tecnico",
+      "cognome": "Test",
+      "telefono": "3331234567",
+      "squadra": {
+        "id": 1,
+        "nome": "Squadra Principale"
+      },
+      "telegram_id": "7586394272"
+    },
+    "extra_fields": null
+  }
+]

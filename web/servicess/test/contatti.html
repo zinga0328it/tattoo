@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contatti – AiVigilanza</title>
+  <style>
+    body {
+      font-family: 'Georgia', 'Segoe UI', serif;
+      background: linear-gradient(135deg, #181204 0%, #bfa14a 80%, #fffbe6 100%);
+      color: #fffbe6;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .lock-menu-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      margin-bottom: 30px;
+      user-select: none;
+    }
+    .lock-menu-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 18px;
+    }
+    .lock-menu {
+      width: 340px;
+      height: 220px;
+      background: rgba(34,34,34,0.8);
+      border-radius: 30px;
+      box-shadow: 0 0 30px #bfa14a99;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .lock-menu .menu-item {
+      width: 260px;
+      height: 54px;
+      line-height: 54px;
+      font-size: 1.45em;
+      color: #bfa14a;
+      opacity: 0.5;
+      transition: all 0.2s;
+      background: none;
+      border-radius: 20px;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+      text-align: center;
+    }
+    .lock-menu .menu-item.selected {
+      background: #bfa14a;
+      color: #181204;
+      font-size: 1.5em;
+      opacity: 1;
+      box-shadow: 0 2px 12px #bfa14a99;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .lock-menu .menu-item.above, .lock-menu .menu-item.below {
+      opacity: 0.8;
+      font-size: 1em;
+      color: #fffbe6;
+    }
+    .lock-menu .menu-item.far {
+      opacity: 0.3;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    #leftBtn, #rightBtn {
+      background: #bfa14a;
+      color: #181204;
+      border: none;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      font-size: 2.3em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #bfa14a88;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #leftBtn:hover, #rightBtn:hover {
+      background: #229ED9;
+      color: #fff;
+    }
+    .main-content {
+      background: rgba(34,34,34,0.92);
+      border-radius: 24px;
+      box-shadow: 0 0 32px #bfa14a99;
+      padding: 48px 32px 36px 32px;
+      max-width: 700px;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      z-index: 1;
+      position: relative;
+    }
+    h1 {
+      color: #bfa14a;
+      font-size: 2.1em;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 32px auto 32px auto;
+      max-width: 420px;
+      text-align: left;
+    }
+    .contact-list li {
+      background: #bfa14a22;
+      color: #fffbe6;
+      border-left: 4px solid #bfa14a;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      padding: 16px 22px;
+      font-size: 1.13em;
+      font-family: inherit;
+      box-shadow: 0 2px 8px #bfa14a33;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-list .icon {
+      font-size: 1.5em;
+      color: #bfa14a;
+      min-width: 32px;
+      text-align: center;
+    }
+    .contact-list a {
+      color: #bfa14a;
+      text-decoration: underline;
+      word-break: break-all;
+    }
+    .story {
+      margin: 36px auto 0 auto;
+      font-size: 1.13em;
+      color: #fffbe6;
+      background: #bfa14a11;
+      border-radius: 14px;
+      padding: 24px 22px;
+      box-shadow: 0 2px 8px #bfa14a22;
+      max-width: 600px;
+      text-align: left;
+    }
+    @media (max-width: 700px) {
+      .lock-menu {
+        width: 98vw;
+        height: 120px;
+      }
+      .lock-menu .menu-item {
+        width: 98vw;
+        height: 36px;
+        font-size: 1.1em;
+      }
+      #leftBtn, #rightBtn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.5em;
+      }
+      .main-content { padding: 18px 4vw; }
+      .contact-list li { font-size: 1em; padding: 12px 8px; }
+      .story { font-size: 1em; padding: 16px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra bandierine per selezione lingua, visibile anche senza JS -->
+  <div class="flag-bar" style="display:flex;gap:8px;justify-content:flex-end;padding:10px 18px 0 0;">
+    <button class="flag-btn" data-lang="it" title="Italiano" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇹</button>
+    <button class="flag-btn" data-lang="en" title="English" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇬🇧</button>
+    <button class="flag-btn" data-lang="fr" title="Français" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇫🇷</button>
+    <button class="flag-btn" data-lang="de" title="Deutsch" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇩🇪</button>
+    <button class="flag-btn" data-lang="es" title="Español" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇪🇸</button>
+    <button class="flag-btn" data-lang="ar" title="العربية" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇸🇦</button>
+    <button class="flag-btn" data-lang="ru" title="Русский" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇷🇺</button>
+    <button class="flag-btn" data-lang="zh" title="中文" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇨🇳</button>
+    <button class="flag-btn" data-lang="ja" title="日本語" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇯🇵</button>
+    <button class="flag-btn" data-lang="hi" title="हिन्दी" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇳</button>
+  </div>
+  <div class="lock-menu-container">
+    <div class="lock-menu-row">
+      <button id="leftBtn" aria-label="Precedente">&#9664;</button>
+      <div class="lock-menu" id="lockMenu"></div>
+      <button id="rightBtn" aria-label="Successivo">&#9654;</button>
+    </div>
+  </div>
+  <div class="main-content">
+    <h1 id="contatti-title">Contatti</h1>
+    <ul class="contact-list">
+      <li id="contatti-whatsapp">
+        <span class="icon">📱</span>
+        <b id="contatti-whatsapp-label">WhatsApp</b>:
+        <a id="contatti-whatsapp-link" href="https://wa.me/393510120753" target="_blank">+39 3510120753</a>
+        <span id="contatti-whatsapp-note" style="font-size:0.95em;color:#bfa14a;">(solo WhatsApp)</span>
+      </li>
+      <li id="contatti-pec">
+        <span class="icon">✉️</span>
+        <b id="contatti-pec-label">Email PEC</b>:
+        <a id="contatti-pec-link" href="mailto:info@pec.aivigilanza.it">info@pec.aivigilanza.it</a>
+      </li>
+      <li id="contatti-telegram">
+        <span class="icon">🕵️‍♂️</span>
+        <b id="contatti-telegram-label">Richieste anonime Telegram</b>:
+        <a id="contatti-telegram-link" href="https://t.me/ale0328it" target="_blank">@ale0328it</a>
+      </li>
+    </ul>
+    <div style="margin-top:32px;">
+      <b>Canale Telegram:</b>
+      <a href="https://t.me/annunci_Lotto_Bazar" target="_blank" style="color:#bfa14a;text-decoration:underline;">
+        https://t.me/annunci_Lotto_Bazar
+      </a>
+    </div>
+    <div style="margin-top:40px; text-align:center;">
+      <a href="https://t.me/annunci_Lotto_Bazar" target="_blank"
+         style="display:inline-block; background:#229ED9; color:#fff; font-size:2em; font-weight:bold; padding:24px 38px; border-radius:20px; text-decoration:none; box-shadow:0 4px 18px #229ED988; letter-spacing:1px; margin-top:18px;">
+        🛒 Shop Telegram
+      </a>
+    </div>
+  </div>
+  <script>
+    const menuItems = [
+      { label: 'Home', href: 'index.html' },
+      { label: 'Guardiania', href: 'guardiania.html' },
+      { label: 'Legale', href: 'legale.html' },
+      { label: 'Domotica', href: 'domotica.html' },
+      { label: 'Criptotelefonia', href: 'https://vpn-gypsy.com/' },
+      { label: '7070', href: 'antivirus.html' },
+      { label: 'Bonifiche', href: 'bonifiche.html' },
+      { label: 'Contatti', href: 'contatti.html' },
+      { label: 'Chi siamo', href: 'chisiamo.html' }
+    ];
+    let selectedIdx = 0;
+    const lockMenu = document.getElementById('lockMenu');
+    function renderMenu() {
+      lockMenu.innerHTML = '';
+      for (let i = -2; i <= 2; i++) {
+        let idx = (selectedIdx + i + menuItems.length) % menuItems.length;
+        let item = document.createElement('a');
+        item.className = 'menu-item';
+        if (i === 0) item.classList.add('selected');
+        else if (Math.abs(i) === 1) item.classList.add(i < 0 ? 'above' : 'below');
+        else item.classList.add('far');
+        item.href = menuItems[idx].href;
+        item.textContent = menuItems[idx].label;
+        if (i === 0) item.tabIndex = 0;
+        lockMenu.appendChild(item);
+      }
+    }
+    function moveUp() {
+      selectedIdx = (selectedIdx - 1 + menuItems.length) % menuItems.length;
+      renderMenu();
+    }
+    function moveDown() {
+      selectedIdx = (selectedIdx + 1) % menuItems.length;
+      renderMenu();
+    }
+    document.getElementById('leftBtn').onclick = moveUp;
+    document.getElementById('rightBtn').onclick = moveDown;
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') { moveUp(); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { moveDown(); e.preventDefault(); }
+    });
+    let touchStartX = null;
+    lockMenu.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    });
+    lockMenu.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      let deltaX = e.changedTouches[0].clientX - touchStartX;
+      if (deltaX < -30) moveDown();
+      if (deltaX > 30) moveUp();
+      touchStartX = null;
+    });
+    renderMenu();
+  </script>
+  <script>
+  // Funzione per salvare la lingua selezionata
+  function saveLanguage(lang) {
+    localStorage.setItem('selectedLanguage', lang);
+  }
+
+  // Funzione per impostare la lingua della pagina
+  function setLanguage(lang) {
+    document.documentElement.lang = lang;
+    document.getElementById('contatti-title').textContent = lang === 'it' ? 'Contatti' : (lang === 'en' ? 'Contacts' : (lang === 'fr' ? 'Contacts' : (lang === 'de' ? 'Kontakte' : (lang === 'es' ? 'Contactos' : (lang === 'ar' ? 'اتصل بنا' : (lang === 'ru' ? 'Контакты' : (lang === 'zh' ? '联系方式' : (lang === 'ja' ? 'お問い合わせ' : (lang === 'hi' ? 'संपर्क करें' : 'Contatti')))))))));
+    document.getElementById('contatti-whatsapp-label').textContent = lang === 'it' ? 'WhatsApp' : (lang === 'en' ? 'WhatsApp' : (lang === 'fr' ? 'WhatsApp' : (lang === 'de' ? 'WhatsApp' : (lang === 'es' ? 'WhatsApp' : (lang === 'ar' ? 'واتساب' : (lang === 'ru' ? 'WhatsApp' : (lang === 'zh' ? 'WhatsApp' : (lang === 'ja' ? 'WhatsApp' : (lang === 'hi' ? 'व्हाट्सएप्‍प': 'WhatsApp')))))))));
+    document.getElementById('contatti-whatsapp-link').textContent = lang === 'it' ? '+39 3510120753' : '+39 3510120753';
+    document.getElementById('contatti-pec-label').textContent = lang === 'it' ? 'Email PEC' : (lang === 'en' ? 'PEC Email' : 'Email PEC');
+    document.getElementById('contatti-pec-link').textContent = 'info@pec.aivigilanza.it';
+
+    const translations = window.translationsContatti || {};
+    const t = translations[lang] || translations['it'];
+
+    // --- AGGIUNGI QUESTO BLOCCO PER IL MENU ---
+    if (t && t.menu && Array.isArray(t.menu)) {
+      for (let i = 0; i < menuItems.length; i++) {
+        menuItems[i].label = t.menu[i] || menuItems[i].label;
+      }
+      renderMenu();
+    }
+    // ------------------------------------------
+
+    if (t) {
+      // Se hai ancora la storia, qui aggiorni la storia e Telegram
+      // document.getElementById('contatti-story-title').innerHTML = t.storyTitle;
+      // document.getElementById('contatti-story-desc').innerHTML = t.storyDesc;
+      document.getElementById('contatti-telegram-label').textContent = t.telegramLabel;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Imposta la lingua salvata se presente
+    const savedLang = localStorage.getItem('selectedLanguage');
+    if (savedLang) setLanguage(savedLang);
+
+    // Collega le bandiere
+    document.querySelectorAll('.flag-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const lang = btn.getAttribute('data-lang');
+        saveLanguage(lang);
+        setLanguage(lang);
+      });
+    });
+  });
+  </script>
+  <script>
+(function() {
+  function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+  function getOrSetUserId() {
+    let match = document.cookie.match(/(?:^|; )user_id=([^;]*)/);
+    if (match) return match[1];
+    let id = uuidv4();
+    document.cookie = "user_id=" + id + "; path=/; max-age=31536000";
+    return id;
+  }
+  function registraVisita() {
+    const user_id = getOrSetUserId();
+    fetch("http://93.57.240.131:2626/?user_id=" + encodeURIComponent(user_id) + "&pagina=contatti.html", {
+      method: "GET",
+      credentials: "include"
+    });
+  }
+  registraVisita();
+})();
+</script>
+<script>
+    // Lista di browser umani
+    const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+    let isBot = true;
+    for (let b of safeBrowsers) {
+      if (navigator.userAgent.includes(b)) {
+        isBot = false;
+        break;
+      }
+    }
+    // Se è un bot, lo reindirizzi alla trappola
+    if (isBot) {
+      window.location.href = "/home.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Avvocato - ServiceSS - Consulenza Legale</title>
+    <meta name="description" id="page-description" content="Profilo avvocato professionista - ServiceSS - Prenota la tua consulenza legale online.">
+    <meta name="keywords" id="page-keywords" content="avvocato, legale, consulenza, ServiceSS">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" id="og-title" content="Avvocato - ServiceSS">
+    <meta property="og:description" id="og-description" content="Profilo avvocato professionista - ServiceSS">
+    <meta property="og:image" id="og-image" content="">
+    <meta property="og:type" content="profile">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            min-height: 100vh;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .detail-hero {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .detail-hero img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 20px 0;
+        }
+        
+        .detail-info {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+        
+        .telegram-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #0088cc, #0099dd);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.3);
+            margin: 20px 0;
+        }
+        
+        .telegram-btn:hover {
+            background: linear-gradient(135deg, #007bb3, #0088cc);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+            color: white;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #666;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #e74c3c;
+            background: #ffeaea;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .related-gallery {
+            margin: 50px 0;
+        }
+        
+        .related-gallery h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-container">
+        <a href="/legale.html" class="back-btn">← Torna agli Avvocati</a>
+        
+        <div id="loading" class="loading">
+            ⚖️ Caricamento profilo avvocato...
+        </div>
+        
+        <div id="error" class="error" style="display: none;">
+            ⚠️ Errore nel caricamento del profilo. <a href="/legale.html">Torna agli avvocati</a>
+        </div>
+        
+        <div id="tattoo-detail" style="display: none;">
+            <!-- Contenuto caricato dinamicamente -->
+        </div>
+    </div>
+
+    <script>
+        // Estrae l'ID dell'avvocato dall'URL
+        function getAvvocatoId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+        
+        // Carica i dettagli dell'avvocato tramite proxy sicuro
+        async function loadAvvocatoDetail() {
+            const avvocatoId = getAvvocatoId();
+            
+            if (!avvocatoId) {
+                showError('ID avvocato non specificato');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/avvocato/' + avvocatoId + '/');
+                
+                if (!response.ok) {
+                    throw new Error('Avvocato non trovato');
+                }
+                
+                const data = await response.json();
+                displayAvvocatoDetail(data.avvocato);
+                
+            } catch (error) {
+                showError('Impossibile caricare il profilo avvocato');
+            }
+        }
+        
+        // Mostra i dettagli dell'avvocato
+        function displayAvvocatoDetail(avvocato) {
+            // Aggiorna SEO
+            updateSEO(avvocato);
+            
+            // Crea il contenuto
+            const content = '<div class="detail-hero">' +
+                (avvocato.biglietto_visita_url ? '<img src="' + avvocato.biglietto_visita_url + '" alt="Biglietto da visita ' + avvocato.nome + '" loading="lazy">' : '') +
+                '<h1>' + avvocato.nome + '</h1>' +
+                '<p style="font-size: 1.2em; color: #666;">⚖️ ' + avvocato.specializzazione + '</p>' +
+                '</div>' +
+                
+                '<div class="detail-info">' +
+                '<h2>📋 Informazioni Professionali</h2>' +
+                
+                '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">' +
+                '<div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">' +
+                '<strong>📅 Esperienza:</strong> ' + avvocato.esperienza + ' anni' +
+                '</div>' +
+                '<div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">' +
+                '<strong>⭐ Rating:</strong> ' + avvocato.rating.toFixed(1) + ' (' + avvocato.recensioni + ' recensioni)' +
+                '</div>' +
+                '</div>' +
+                
+                '<p style="font-size: 1.1em; margin: 15px 0; line-height: 1.6;">' +
+                avvocato.descrizione ||
+                'Avvocato professionista specializzato in ' + avvocato.specializzazione + ' con ' + avvocato.esperienza + ' anni di esperienza.' +
+                '</p>' +
+                
+                '<div style="background: #e8f4f8; padding: 20px; border-radius: 8px; margin: 20px 0;">' +
+                '<h3>💰 Prezzi</h3>' +
+                '<p>' + (avvocato.prezzi || 'Contatta l\'avvocato per informazioni sui prezzi') + '</p>' +
+                '</div>' +
+                
+                '<div style="background: #f0f8e8; padding: 20px; border-radius: 8px; margin: 20px 0;">' +
+                '<h3>📍 Contatti</h3>' +
+                '<p><strong>🏠 Indirizzo:</strong> ' + (avvocato.indirizzo || 'Non specificato') + '</p>' +
+                '<p><strong>📱 Telefono:</strong> ' + (avvocato.telefono || 'Non specificato') + '</p>' +
+                '<p><strong>📧 Email:</strong> ' + (avvocato.email || 'Non specificato') + '</p>' +
+                '</div>' +
+                
+                '<div style="text-align: center; margin: 30px 0;">' +
+                '<h3>💬 Prenota una Consulenza</h3>' +
+                '<p style="margin: 15px 0; color: #666;">' +
+                'Contatta direttamente l\'Avv. ' + avvocato.nome + ' per prenotare la tua consulenza legale!' +
+                '</p>' +
+                '<a href="tel:' + (avvocato.telefono || '') + '" class="telegram-btn" style="display: inline-block; margin: 10px;">' +
+                '📞 Chiama Ora' +
+                '</a>' +
+                (avvocato.telegram_username ? '<a href="https://t.me/' + avvocato.telegram_username + '" class="telegram-btn" target="_blank" style="display: inline-block; margin: 10px;">' +
+                '📱 Contatta su Telegram' +
+                '</a>' : '') +
+                '<p style="font-size: 0.9em; color: #999; margin-top: 10px;">' +
+                '⚡ Risposta rapida • 📋 Consulenza gratuita • 🏛️ Esperienza garantita' +
+                '</p>' +
+                '</div>' +
+                '</div>' +
+                
+                '<div class="cta-section">' +
+                '<h3>⚖️ ServiceSS - Consulenza Legale</h3>' +
+                '<p style="margin: 15px 0; opacity: 0.9;">' +
+                'La tua piattaforma di fiducia per consulenze legali online. Avvocati professionisti, prenotazioni semplici, assistenza garantita.' +
+                '</p>' +
+                '<a href="/legale.html" style="color: white; text-decoration: underline;">' +
+                'Scopri tutti gli avvocati →' +
+                '</a>' +
+                '</div>';
+            
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('tattoo-detail').innerHTML = content;
+            document.getElementById('tattoo-detail').style.display = 'block';
+        }
+        
+        // Aggiorna SEO dinamicamente
+        function updateSEO(avvocato) {
+            document.title = avvocato.nome + ' - Avvocato ' + avvocato.specializzazione + ' - ServiceSS';
+            document.getElementById('page-title').content = document.title;
+            document.getElementById('page-description').content = 'Avvocato ' + avvocato.nome + ' specializzato in ' + avvocato.specializzazione + ' con ' + avvocato.esperienza + ' anni di esperienza. ServiceSS - Consulenza Legale Online.';
+            document.getElementById('page-keywords').content = 'avvocato, ' + avvocato.specializzazione.toLowerCase() + ', legale, consulenza, ' + avvocato.nome.toLowerCase();
+            document.getElementById('og-title').content = document.title;
+            document.getElementById('og-description').content = 'Contatta l\'Avv. ' + avvocato.nome + ' per consulenze legali in ' + avvocato.specializzazione;
+            document.getElementById('og-image').content = avvocato.biglietto_visita_url || '';
+        }
+        
+        // Mostra errore
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').innerHTML = '⚠️ ' + message + '. <a href="/legale.html">Torna agli avvocati</a>';
+            document.getElementById('error').style.display = 'block';
+        }
+        
+        // Avvia il caricamento
+        // document.addEventListener('DOMContentLoaded', loadTattooDetail);
+        
+        // Test caricamento
+        setTimeout(function() {
+            const id = getAvvocatoId();
+            if (id) {
+                document.getElementById('loading').innerHTML = 'Caricamento profilo avvocato ID: ' + id + '...';
+                loadAvvocatoDetail();
+            } else {
+                showError('ID avvocato non trovato');
+            }
+        }, 100);
+    </script>
+</body>
+</html>

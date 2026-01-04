@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Accesso Sistema FTTH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-header {
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-error {
+            background-color: #fed7d7;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+        }
+
+        .security-notice {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .security-notice strong {
+            color: #2d3748;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>🔐 Accesso Sistema</h1>
+            <p>FTTH Management System</p>
+        </div>
+
+        <div id="alert" class="alert alert-error"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label">Password di Accesso</label>
+                <input type="password" class="form-control" id="password" placeholder="Inserisci la password" required>
+            </div>
+
+            <button type="submit" class="btn-login" id="loginBtn">
+                🔓 Accedi al Sistema
+            </button>
+        </form>
+
+        <div class="security-notice">
+            <strong>🔒 Sistema Protetto</strong><br>
+            L'accesso è riservato al personale autorizzato. Tutti gli accessi sono tracciati.
+        </div>
+    </div>
+
+    <script>
+        // Password corretta (caratteri speciali)
+        const CORRECT_PASSWORD = '!@#$%^&*()_+';
+
+        // Controlla se già autenticato
+        if (document.cookie.includes('ftth_auth=true')) {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const alertDiv = document.getElementById('alert');
+
+            // Disabilita pulsante durante controllo
+            loginBtn.disabled = true;
+            loginBtn.textContent = '🔄 Verifica...';
+
+            // Controlla password
+            if (password === CORRECT_PASSWORD) {
+                // Password corretta - salva cookie e reindirizza
+                document.cookie = 'ftth_auth=true; path=/; max-age=86400'; // 24 ore
+                alertDiv.style.display = 'none';
+                loginBtn.textContent = '✅ Accesso Autorizzato!';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            } else {
+                // Password sbagliata
+                alertDiv.textContent = '❌ Password non valida. Riprova.';
+                alertDiv.style.display = 'block';
+                loginBtn.disabled = false;
+                loginBtn.textContent = '🔓 Accedi al Sistema';
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+            }
+        });
+
+        // Permetti invio con Enter
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nuovo Lavoro - FTTH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #f5f7fa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 24px 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .nav-links a {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .nav-links .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+        
+        .nav-links .btn-primary:hover {
+            background: #4338ca;
+        }
+        
+        .nav-links .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        
+        .nav-links .btn-secondary:hover {
+            background: #d1d5db;
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .form-section {
+            margin-bottom: 32px;
+        }
+        
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+        
+        .form-label.required::after {
+            content: " *";
+            color: #ef4444;
+        }
+        
+        .form-control, .form-select {
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .form-helper {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 24px;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
+        }
+        
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+        
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 16px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            max-width: 350px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+        
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            
+            .header {
+                padding: 16px 20px;
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .form-card {
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Nuovo Lavoro</h1>
+            <div class="nav-links">
+                <a href="/fibra/gestionale-ftth.html" class="btn-primary">📊 Gestionale</a>
+                <a href="/fibra/dashboard.html" class="btn-secondary">📱 Dashboard</a>
+                <a href="/fibra/index.html" class="btn-secondary">🏠 Home</a>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            💡 <strong>Suggerimento:</strong> Compila solo i campi che conosci. I campi con asterisco (*) sono obbligatori.
+        </div>
+
+        <div class="form-card">
+            <form id="workForm">
+                <div class="form-section">
+                    <div class="section-title">📋 Informazioni Base</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required">Numero WR</label>
+                            <input type="text" class="form-control" id="numero_wr" placeholder="es: 15699897" required>
+                            <small class="form-helper">Numero identificativo del lavoro</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">Stato</label>
+                            <select class="form-select" id="stato" required>
+                                <option value="aperto">Da Fare</option>
+                                <option value="in_corso">In Corso</option>
+                                <option value="sospeso">Sospeso</option>
+                                <option value="chiuso">Completato</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">👤 Dati Cliente</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nome Cliente</label>
+                            <input type="text" class="form-control" id="nome_cliente" placeholder="Mario Rossi">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Telefono</label>
+                            <input type="tel" class="form-control" id="telefono_cliente" placeholder="3491234567">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Indirizzo</label>
+                        <input type="text" class="form-control" id="indirizzo" placeholder="Via Roma 123, Milano">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">🔧 Dettagli</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Operatore</label>
+                            <select class="form-select" id="operatore">
+                                <option value="">Seleziona...</option>
+                                <option value="Open Fiber">Open Fiber</option>
+                                <option value="FiberCop">FiberCop</option>
+                                <option value="TIM">TIM</option>
+                                <option value="Fastweb">Fastweb</option>
+                                <option value="Vodafone">Vodafone</option>
+                                <option value="WindTre">WindTre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tipo Lavoro</label>
+                            <select class="form-select" id="tipo_lavoro">
+                                <option value="">Seleziona...</option>
+                                <option value="Installazione">Installazione</option>
+                                <option value="Attivazione">Attivazione</option>
+                                <option value="Riparazione">Riparazione</option>
+                                <option value="Sopralluogo">Sopralluogo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Tecnico Assegnato</label>
+                            <select class="form-select" id="tecnico_select">
+                                <option value="">Nessuno</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nome Squadra</label>
+                            <input type="text" class="form-control" id="nome_squadra" placeholder="es: Squadra Nord">
+                            <small class="form-helper">Nome della squadra di appartenenza</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ID Telegram</label>
+                            <input type="text" class="form-control" id="telegram_id" placeholder="es: 123456789">
+                            <small class="form-helper">ID Telegram del tecnico (cerca @userinfobot)</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+                            <input type="checkbox" id="notify_telegram" style="width: 18px; height: 18px; cursor: pointer;">
+                            <label for="notify_telegram" style="cursor: pointer; margin: 0;">
+                                📱 Invia notifica Telegram al tecnico
+                            </label>
+                        </div>
+                        <small class="form-helper">Se selezionato, il tecnico riceverà una notifica su Telegram</small>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">📅 Appuntamento (opzionale)</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Data Inizio</label>
+                            <input type="datetime-local" class="form-control" id="data_inizio">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Data Fine</label>
+                            <input type="datetime-local" class="form-control" id="data_fine">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">📝 Note</div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="note" placeholder="Aggiungi note sul lavoro..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">🔒 Verifica Sicurezza</div>
+                    <div class="form-group">
+                        <label class="form-label required">Quanto fa 8 + 5?</label>
+                        <input type="number" class="form-control" id="captcha" placeholder="13" required>
+                        <small class="form-helper">Inserisci il risultato per confermare che sei umano</small>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">✅ Crea Lavoro</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var loc = window.location;
+        var isLocalHost = loc.hostname === 'localhost' || loc.hostname === '127.0.0.1' || loc.hostname === '::1';
+        var isPublicServer = loc.port === '6031' && !isLocalHost;
+        var forceDirect = sessionStorage.getItem('FORCE_DIRECT_API') === 'true';
+        
+        // Usa proxy Apache per connessione sicura HTTPS
+        var API_BASE = '/gestionale';
+        var API_KEY = 'JHzxUzdAK8LJ33Y50MDgLf5E62flYset4MYA6ELpXpU=';
+        
+        function apiFetch(path, opts) {
+            var base = window.__API_BASE__ || API_BASE;
+            var url = base ? base + path : path;
+            var headers = opts && opts.headers ? { ...opts.headers } : {};
+            headers['X-API-Key'] = API_KEY;
+            return fetch(url, { ...opts, headers });
+        }
+        
+        function loadTechnicians() {
+            apiFetch('/technicians/')
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(techs) {
+                    var select = document.getElementById('tecnico_select');
+                    for (var i = 0; i < techs.length; i++) {
+                        var tech = techs[i];
+                        var option = document.createElement('option');
+                        option.value = tech.id;
+                        option.textContent = tech.nome + ' ' + tech.cognome;
+                        select.appendChild(option);
+                    }
+                })
+                .catch(function(e) {
+                    console.error('Errore caricamento tecnici', e);
+                });
+        }
+        
+        document.getElementById('workForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Valida captcha
+            var captchaValue = parseInt(document.getElementById('captcha').value);
+            if (captchaValue !== 13) {
+                showToast('Captcha sbagliato! 8 + 5 = 13', 'error');
+                return;
+            }
+            
+            var payload = {
+                numero_wr: document.getElementById('numero_wr').value.trim(),
+                stato: document.getElementById('stato').value,
+                nome_cliente: document.getElementById('nome_cliente').value.trim() || undefined,
+                telefono_cliente: document.getElementById('telefono_cliente').value.trim() || undefined,
+                indirizzo: document.getElementById('indirizzo').value.trim() || undefined,
+                operatore: document.getElementById('operatore').value || undefined,
+                tipo_lavoro: document.getElementById('tipo_lavoro').value || undefined,
+                note: document.getElementById('note').value.trim() || undefined
+            };
+            
+            var dataInizio = document.getElementById('data_inizio').value;
+            if (dataInizio) {
+                payload.data_inizio = new Date(dataInizio).toISOString();
+            }
+            
+            var dataFine = document.getElementById('data_fine').value;
+            if (dataFine) {
+                payload.data_fine = new Date(dataFine).toISOString();
+            }
+            
+            var tecnicoId = document.getElementById('tecnico_select').value;
+            if (tecnicoId) {
+                payload.tecnico_assegnato_id = parseInt(tecnicoId);
+            }
+            
+            // GESTIONE SQUADRE E TECNICI
+            var nomeSquadra = document.getElementById('nome_squadra').value.trim();
+            var telegramId = document.getElementById('telegram_id').value.trim();
+            
+            // Se è specificata una squadra, creala o usala esistente
+            var squadraId = null;
+            if (nomeSquadra) {
+                // Cerca se la squadra esiste già
+                var squadreEsistenti = await apiFetch('/teams/').then(r => r.json());
+                var squadraEsistente = squadreEsistenti.find(s => s.nome.toLowerCase() === nomeSquadra.toLowerCase());
+                
+                if (squadraEsistente) {
+                    squadraId = squadraEsistente.id;
+                    showToast('Squadra esistente trovata: ' + squadraEsistente.nome, 'info');
+                } else {
+                    // Crea nuova squadra
+                    var nuovaSquadra = await apiFetch('/teams/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ nome: nomeSquadra })
+                    });
+                    
+                    if (nuovaSquadra.ok) {
+                        var squadraData = await nuovaSquadra.json();
+                        squadraId = squadraData.id;
+                        showToast('Nuova squadra creata: ' + nomeSquadra, 'success');
+                    } else {
+                        throw new Error('Errore creazione squadra');
+                    }
+                }
+            }
+            
+            // Se sono specificati telegram_id e squadra, crea un nuovo tecnico
+            if (telegramId && squadraId) {
+                var nomeTecnico = document.getElementById('nome_cliente').value.trim() || 'Tecnico';
+                var cognomeTecnico = 'Auto'; // Default
+                var telefonoTecnico = document.getElementById('telefono_cliente').value.trim() || 'N/A';
+                
+                try {
+                    var nuovoTecnico = await apiFetch('/technicians/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            nome: nomeTecnico,
+                            cognome: cognomeTecnico,
+                            telefono: telefonoTecnico,
+                            squadra_id: squadraId,
+                            telegram_id: telegramId
+                        })
+                    });
+                    
+                    if (nuovoTecnico.ok) {
+                        var tecnicoData = await nuovoTecnico.json();
+                        payload.tecnico_assegnato_id = tecnicoData.id;
+                        showToast('Nuovo tecnico creato e assegnato!', 'success');
+                        
+                        // Ricarica la lista tecnici
+                        loadTechnicians();
+                    }
+                } catch (e) {
+                    console.error('Errore creazione tecnico:', e);
+                    showToast('Lavoro creato, errore creazione tecnico', 'warning');
+                }
+            }
+            
+            apiFetch('/manual/works', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    return response.json().then(function(error) {
+                        throw new Error(error.detail || 'Errore inserimento');
+                    });
+                }
+                return response.json();
+            })
+            .then(function(result) {
+                showToast('Lavoro ' + result.numero_wr + ' creato!', 'success');
+                
+                var workId = result.id;
+                var assignedTechId = document.getElementById('tecnico_select').value;
+                var notifyTelegram = document.getElementById('notify_telegram').checked;
+                
+                // Se è selezionato un tecnico, assegnalo
+                if (assignedTechId && workId) {
+                    apiFetch('/works/' + workId + '/assign/' + assignedTechId, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({})
+                    })
+                    .then(function(assignRes) {
+                        if (assignRes.ok) {
+                            showToast('Tecnico assegnato!', 'success');
+                            
+                            // Se richiesta notifica Telegram, inviala
+                            if (notifyTelegram) {
+                                return apiFetch('/telegram/send?chat_id=' + assignedTechId + '&text=Nuovo+lavoro+assegnato%3A+' + result.numero_wr, {
+                                    method: 'POST'
+                                });
+                            }
+                        } else {
+                            throw new Error('Errore assegnazione tecnico');
+                        }
+                    })
+                    .then(function(telegramRes) {
+                        if (telegramRes && telegramRes.ok) {
+                            showToast('Notifica Telegram inviata!', 'success');
+                        }
+                    })
+                    .catch(function(e) {
+                        console.error('Errore assegnazione/notifica:', e);
+                        showToast('Lavoro creato, errore assegnazione/notifica', 'error');
+                    });
+                } else if (notifyTelegram && !assignedTechId) {
+                    showToast('Seleziona un tecnico per la notifica Telegram', 'warning');
+                }
+            })
+            .catch(function(error) {
+                showToast('Errore: ' + error.message, 'error');
+            });
+        });
+        
+        function updateTechnicianData(techId, data) {
+            return apiFetch('/technicians/' + techId, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        }
+        
+        function showToast(message, type) {
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<strong>' + message + '</strong>';
+            document.body.appendChild(toast);
+            
+            setTimeout(function() {
+                toast.remove();
+            }, 3000);
+        }
+        
+        window.addEventListener('DOMContentLoaded', loadTechnicians);
+    </script>
+    <script src="auth.js"></script>
+</body>
+</html>

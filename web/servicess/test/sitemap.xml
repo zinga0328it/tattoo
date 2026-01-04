@@ -1,0 +1,229 @@
+body {
+  background: linear-gradient(135deg, #2c1600, #bfa14a 80%, #fffbe6 100%);
+  color: #fffbe6;
+  font-family: 'Georgia', 'Segoe UI', Arial, serif;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.lock-menu {
+  width: 340px;
+  height: 220px;
+  background: rgba(34,34,34,0.7);
+  border-radius: 30px;
+  box-shadow: 0 0 30px #2ecc71aa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.lock-menu .menu-item {
+  width: 260px;
+  height: 54px;
+  line-height: 54px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 1.45em;
+  color: #2ecc71;
+  opacity: 0.5;
+  transition: all 0.2s;
+  background: none;
+  border-radius: 20px;
+  font-weight: bold;
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+.lock-menu .menu-item.selected {
+  background: #2ecc71;
+  color: #111;
+  font-size: 1.5em;
+  opacity: 1;
+  box-shadow: 0 2px 12px #2ecc71bb;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.lock-menu .menu-item.above, .lock-menu .menu-item.below {
+  opacity: 0.8;
+  font-size: 1em;
+  color: #fff;
+}
+.lock-menu .menu-item.far {
+  opacity: 0.3;
+  font-size: 0.9em;
+  color: #aaa;
+}
+.main-content {
+  background: rgba(34,34,34,0.92);
+  border-radius: 24px;
+  box-shadow: 0 0 32px #bfa14a99;
+  padding: 48px 32px 36px 32px;
+  max-width: 700px;
+  margin: 40px auto 0 auto;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+}
+.main-content h2 {
+  color: #bfa14a;
+  font-size: 2em;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+.main-content p {
+  font-size: 1.15em;
+  color: #fffbe6;
+  margin-bottom: 20px;
+}
+/* Chat Carmela stile AiVigilanza */
+.chat-sparkle-container {
+  max-width: 480px;
+  margin: 32px auto 0 auto;
+  background: rgba(34,34,34,0.92);
+  border-radius: 18px;
+  box-shadow: 0 0 18px #2ecc71aa;
+  padding: 18px 10px 12px 10px;
+}
+.chat-sparkle-box {
+  min-height: 80px;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #222;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 1em;
+  color: #fffbe6;
+  box-shadow: 0 2px 8px #2ecc7144;
+}
+.chat-sparkle-msg {
+  margin-bottom: 10px;
+  display: flex;
+}
+.chat-sparkle-msg.user {
+  justify-content: flex-end;
+}
+.chat-sparkle-msg.carmela {
+  justify-content: flex-start;
+}
+.chat-sparkle-bubble {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 18px;
+  background: #2ecc71;
+  color: #222;
+  max-width: 80%;
+  word-break: break-word;
+  font-size: 1em;
+  box-shadow: 0 1px 6px #2ecc7144;
+}
+.chat-sparkle-msg.user .chat-sparkle-bubble {
+  background: #bfa14a;
+  color: #fffbe6;
+  align-self: flex-end;
+}
+.chat-sparkle-form {
+  display: flex;
+  gap: 8px;
+}
+.chat-sparkle-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 16px;
+  border: none;
+  font-size: 1em;
+  outline: none;
+  background: #fffbe6;
+  color: #222;
+}
+.chat-sparkle-send {
+  background: #2ecc71;
+  color: #222;
+  border: none;
+  border-radius: 16px;
+  padding: 0 18px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.chat-sparkle-send:hover {
+  background: #27ae60;
+}
+/* Migliora la leggibilità della lista articoli su mobile */
+@media (max-width: 700px) {
+  .main-content ul li a {
+    background: #fffbe6;
+    color: #2c1600 !important;
+    display: block;
+    padding: 18px 14px;
+    margin: 12px 0;
+    border-radius: 14px;
+    font-size: 1.15em;
+    font-weight: bold;
+    box-shadow: 0 2px 8px #bfa14a55;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .main-content ul li a:hover {
+    background: #bfa14a;
+    color: #fffbe6 !important;
+  }
+}
+@media (max-width: 700px) {
+  .lock-menu {
+    width: 98vw;
+    height: 120px;
+  }
+  .lock-menu .menu-item {
+    width: 98vw;
+    height: 36px;
+    font-size: 1.1em;
+  }
+  .main-content { padding: 18px 4vw; }
+  .main-content h2 { font-size: 1.3em; }
+  .chat-sparkle-container {
+    max-width: 98vw;
+    padding: 10px 2vw 8px 2vw;
+  }
+  .chat-sparkle-box {
+    font-size: 0.98em;
+    min-height: 60px;
+    max-height: 140px;
+  }
+  .chat-sparkle-input {
+    font-size: 0.98em;
+    padding: 8px 8px;
+  }
+  .chat-sparkle-send {
+    font-size: 0.98em;
+    padding: 0 10px;
+  }
+}
+/* Migliora i link degli articoli nella lista, sia desktop che mobile */
+.main-content ul li a {
+  background: #2c1600;
+  color: #fffbe6 !important;
+  display: block;
+  padding: 18px 16px;
+  margin: 14px 0;
+  border-radius: 14px;
+  font-size: 1.22em;
+  font-weight: bold;
+  box-shadow: 0 2px 8px #bfa14a55;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.main-content ul li a:hover {
+  background: #bfa14a;
+  color: #2c1600 !important;
+}
+
+@media (max-width: 700px) {
+  .main-content ul li a {
+    font-size: 1.28em;
+    padding: 22px 10px;
+  }
+}

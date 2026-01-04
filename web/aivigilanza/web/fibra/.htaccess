@@ -1,0 +1,46 @@
+# Protezione directory fibra - Anti-flood + Solo GPT con X-API-Key
+
+RewriteEngine On
+
+# Rate limiting - Max 5 richieste per minuto per IP
+RewriteCond %{REQUEST_URI} !^/fibra/login\.html$
+RewriteCond %{REQUEST_URI} !^/fibra/auth\.js$
+RewriteMap ratelimit "txt:/tmp/ratelimit.txt"
+RewriteCond ${ratelimit:%{REMOTE_ADDR}} ^1$
+RewriteRule ^ - [F,L]
+
+# Log tentativi falliti per fail2ban
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %{X-API-Key}i" ftth_protected
+
+# Permetti accesso se presente X-API-Key corretta (per GPT)
+RewriteCond %{HTTP:X-API-Key} ^JHzxUzdAK8LJ33Y50MDgLf5E62flYset4MYA6ELpXpU=$
+RewriteRule ^ - [L]
+
+# Permetti accesso se presente cookie di autenticazione umana
+RewriteCond %{HTTP_COOKIE} ftth_auth=true [NC]
+RewriteRule ^ - [L]
+
+# Permetti accesso ai file statici necessari per il login
+RewriteCond %{REQUEST_URI} ^/fibra/login\.html$ [OR]
+RewriteCond %{REQUEST_URI} ^/fibra/auth\.js$
+RewriteRule ^ - [L]
+
+# Per tutto il resto, reindirizza al login (loggato come tentativo fallito)
+RewriteRule ^ /fibra/login.html [R=302,L]
+
+# Headers di sicurezza
+<IfModule mod_headers.c>
+    Header always set X-API-Protected "true"
+    Header always set X-Rate-Limit "5 per minute"
+    Header always set X-Frame-Options DENY
+    Header always set X-Content-Type-Options nosniff
+</IfModule>
+
+# Protezione flood con mod_ratelimit (se disponibile)
+<IfModule mod_ratelimit.c>
+    <Location />
+        SetOutputFilter RATE_LIMIT
+        SetEnv rate-limit 5
+        SetEnv rate-window 60
+    </Location>
+</IfModule>

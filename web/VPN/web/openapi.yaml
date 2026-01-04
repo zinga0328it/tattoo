@@ -1,0 +1,135 @@
+openapi: 3.1.0
+info:
+  title: API LIA GPT
+  version: 1.0.0
+  description: >
+    Questa API controlla la tua memoria, comandi e funzioni AI personalizzate.
+    Protetta da chiave segreta (X-Api-Key).
+
+servers:
+  - url: https://vpn-gypsy.com
+
+paths:
+  /ricorda:
+    get:
+      summary: Leggi le ultime memorie
+      operationId: leggi_memoria
+      responses:
+        '200':
+          description: Lista delle ultime memorie
+          content:
+            text/plain:
+              schema:
+                type: string
+      security:
+        - ApiKeyAuth: []
+
+  /memorizza:
+    post:
+      summary: Aggiungi una nuova memoria
+      operationId: salva_memoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titolo:
+                  type: string
+                contenuto:
+                  type: string
+      responses:
+        '200':
+          description: Conferma di salvataggio
+          content:
+            text/plain:
+              schema:
+                type: string
+      security:
+        - ApiKeyAuth: []
+
+  /scrivi:
+    post:
+      summary: Scrive un file remoto
+      operationId: scrivi_file
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                contenuto:
+                  type: string
+      responses:
+        '200':
+          description: File salvato
+          content:
+            text/plain:
+              schema:
+                type: string
+      security:
+        - ApiKeyAuth: []
+
+  /esegui:
+    post:
+      summary: Esegue un comando interno
+      operationId: esegui_comando
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comando:
+                  type: string
+                id:
+                  type: integer
+      responses:
+        '200':
+          description: Output esecuzione
+          content:
+            text/plain:
+              schema:
+                type: string
+      security:
+        - ApiKeyAuth: []
+
+  /comando:
+    post:
+      summary: Esegue un comando AI, bash o remoto
+      operationId: comando_unificato
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tipo:
+                  type: string
+                prompt:
+                  type: string
+                server:
+                  type: string
+      responses:
+        '200':
+          description: Risultato
+          content:
+            text/plain:
+              schema:
+                type: string
+      security:
+        - ApiKeyAuth: []
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+  schemas: {}

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Come Funziona il Nostro Sistema - Site-Python.com</title>
+    <meta name="description" content="Scopri come il nostro sistema isola database e API via Yggdrasil, combinando Apache ProxyPass, Flask API e SQLite per massima sicurezza e privacy.">
+    <meta name="keywords" content="Yggdrasil, Flask, SQLite, ProxyPass, API isolate, gestione dipendenti, siti sicuri">
+    <link rel="alternate" hreflang="it" href="https://site-python.com/spiegazione.html?lang=it" />
+    <link rel="alternate" hreflang="en" href="https://site-python.com/spiegazione.html?lang=en" />
+    <link rel="alternate" hreflang="ru" href="https://site-python.com/spiegazione.html?lang=ru" />
+    <link rel="alternate" hreflang="ar" href="https://site-python.com/spiegazione.html?lang=ar" />
+    <link rel="alternate" hreflang="zh" href="https://site-python.com/spiegazione.html?lang=zh" />
+    <!-- Default canonical for spiegazione (will be updated dynamically per lang) -->
+    <link rel="canonical" href="https://site-python.com/spiegazione.html" />
+    <!-- Google Site Verification: replace content value with the token from Search Console to verify site ownership -->
+    <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_SITE_VERIFICATION_CODE" />
+        <!-- JSON-LD Publisher / Organization schema for Google/SEO -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Site-Python.com",
+            "url": "https://site-python.com",
+            "contactPoint": [{
+                "@type": "ContactPoint",
+                "telephone": "+393510120753",
+                "contactType": "customer service"
+            }]
+        }
+        </script>
+    <!-- Google AdSense script: loads the adsbygoogle library for ad rendering -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2303858135011011" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: #0b1320;
+            color: #e8f0ff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #111a2b;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,.2);
+        }
+        h1, h2, h3 {
+            color: #4da3ff;
+        }
+        h1 {
+            text-align: center;
+        }
+        p, li {
+            margin-bottom: 15px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .step {
+            background: rgba(255,255,255,.05);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #4da3ff;
+        }
+        .tech {
+            background: rgba(77, 163, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .flow {
+            text-align: center;
+            font-family: monospace;
+            background: rgba(0,0,0,.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        a {
+            color: #1ee37d;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* Flag styles (local) */
+        .flag { width: 32px; height: 24px; border-radius: 4px; cursor: pointer; transition: transform 0.2s; border: 1px solid rgba(255,255,255,.1); }
+        .flag img { display:block; width:100%; height:100%; object-fit:contain; border-radius:4px; }
+        .flag:hover { transform: scale(1.1); }
+    .flag:focus { outline:2px solid #4da3ff; outline-offset:2px; }
+    .flag.active { border-color: #4da3ff; }
+    </style>
+</head>
+<body>
+    <!-- Flag Bar -->
+    <div class="flag-bar" style="display:flex; gap:8px; justify-content:flex-end; padding:8px 18px 0 0;">
+        <div id="flag-it" class="flag flag-it" title="Italiano" aria-label="Italiano" role="button" tabindex="0" onclick="cambiaLingua('it')" onkeydown="if(event.key==='Enter' || event.key===' ') { event.preventDefault(); cambiaLingua('it'); }">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 100'%3E%3Crect width='50' height='100' x='0' y='0' fill='%2300B04F'/%3E%3Crect width='50' height='100' x='50' y='0' fill='%23fff'/%3E%3Crect width='50' height='100' x='100' y='0' fill='%23DC143C'/%3E%3C/svg%3E" alt="IT">
+        </div>
+        <div id="flag-en" class="flag flag-en active" title="English" aria-label="English" role="button" tabindex="0" onclick="cambiaLingua('en')" onkeydown="if(event.key==='Enter' || event.key===' ') { event.preventDefault(); cambiaLingua('en'); }">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Cpath fill='%23006' d='M0 0h60v30H0z'/%3E%3Cpath stroke='%23fff' stroke-width='6' d='M0 0l60 30m0-30L0 30'/%3E%3Cpath stroke='%23c00' stroke-width='4' d='M0 0l60 30m0-30L0 30'/%3E%3Cpath stroke='%23fff' stroke-width='10' d='M30 0v30M0 15h60'/%3E%3Cpath stroke='%23c00' stroke-width='6' d='M30 0v30M0 15h60'/%3E%3C/svg%3E" alt="EN">
+        </div>
+        <div id="flag-ru" class="flag flag-ru" title="Русский" aria-label="Русский" role="button" tabindex="0" onclick="cambiaLingua('ru')" onkeydown="if(event.key==='Enter' || event.key===' ') { event.preventDefault(); cambiaLingua('ru'); }">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23fff' d='M0 0h900v200H0z'/%3E%3Cpath fill='%2300B4D8' d='M0 200h900v200H0z'/%3E%3Cpath fill='%23D52B1E' d='M0 400h900v200H0z'/%3E%3C/svg%3E" alt="RU">
+        </div>
+        <div id="flag-ar" class="flag flag-ar" title="العربية" aria-label="العربية" role="button" tabindex="0" onclick="cambiaLingua('ar')" onkeydown="if(event.key==='Enter' || event.key===' ') { event.preventDefault(); cambiaLingua('ar'); }">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23CE1126' d='M0 0h900v600H0z'/%3E%3Cpath fill='%23fff' d='M0 200h900v200H0z'/%3E%3Cpath fill='%2314B53A' d='M0 400h900v200H0z'/%3E%3C/svg%3E" alt="AR">
+        </div>
+        <div id="flag-zh" class="flag flag-zh" title="中文" aria-label="中文" role="button" tabindex="0" onclick="cambiaLingua('zh')" onkeydown="if(event.key==='Enter' || event.key===' ') { event.preventDefault(); cambiaLingua('zh'); }">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'%3E%3Cpath fill='%23DE2910' d='M0 0h900v600H0z'/%3E%3Cpath fill='%23FFDE00' d='M0 0l300 300h600V0z'/%3E%3Cpath fill='%23FFDE00' d='M0 600l300-300h600v300z'/%3E%3C/svg%3E" alt="ZH">
+        </div>
+        </div>
+        <script>
+            // Translations for spiegazione page
+            const translations = {
+                it: {
+                    title: "Come Funziona il Nostro Sistema - Site-Python.com",
+                    headerTitle: "🔒 Come Funziona il Nostro Sistema di Gestione Dipendenti",
+                    introParagraph: "Benvenuto! Se sei un cliente interessato al nostro sistema innovativo per gestire i dipendenti in modo sicuro e isolato, questa pagina ti spiegherà tutto passo dopo passo.",
+                    step1Title: "Passo 1: Il Frontend Pubblico (Quello Che Vedi)",
+                    step1Text: "Il sito web è fatto con HTML, CSS e JavaScript. È ospitato su Apache con HTTPS. Quando clicchi 'Aggiungi Dipendente', JavaScript invia una richiesta a /api/dipendenti.",
+                    step2Title: "Passo 2: Il Proxy Magico (Il Ponte Segreto)",
+                    step2Text: "Apache ProxyPass inoltra le richieste /api a un indirizzo Yggdrasil privato, isolato da internet.",
+                    step3Title: "Passo 3: La Rete Yggdrasil (La Strada Segreta)",
+                    step3Text: "Yggdrasil è una rete decentralizzata con IP 200:: e crittografia automatica; collega solo nodi autorizzati.",
+                    step4Title: "Passo 4: L'API Isolata (Il Cervello del Sistema)",
+                    step4Text: "Sul remoto c'è un backend Python Flask che verifica l'IP Ygg e una API key prima di permettere operazioni sul database.",
+                    step5Title: "Passo 5: Il Database Isolato (Il Deposito Sicuro)",
+                    step5Text: "I dati sono salvati in SQLite e sono accessibili solo via API Flask; il DB non è mai esposto a internet.",
+                    tech1: "<strong>Tecnologie:</strong> HTML per la struttura, CSS per lo stile (quel design scuro e moderno), JavaScript per l'interattività. Server: Apache con HTTPS (Let's Encrypt per certificati gratuiti).",
+                    tech2: "<strong>Tecnologie:</strong> Apache con moduli mod_proxy e mod_proxy_http. Configurazione: ProxyPass /api http://[indirizzo-ygg]:porta/api.",
+                    tech3: "<strong>Tecnologie:</strong> Yggdrasil (software open-source). Configurazione: Peer principali (come tls://ip:porta), chiavi pubbliche per autenticazione, limiti su AllowedPublicKeys per sicurezza. Architettura: Due PC separati (locale per frontend, remoto per backend).",
+                    tech4: "<strong>Tecnologie:</strong> Python con Flask (framework web leggero). Sicurezza: Controlli @app.before_request per IP e API key. Endpoint: /api/dipendenti, /api/key, ecc.",
+                    tech5: "<strong>Tecnologie:</strong> SQLite (database relazionale leggero). Schema: Tabelle per dipendenti, stipendi, malattie, ecc. Accesso: Solo via API Flask.",
+                    flowText: `Browser Pubblico (Tu) → Apache (ProxyPass) → Rete Yggdrasil → API Flask → Database SQLite`,
+                    contactText: "Se hai domande, contattaci!",
+                    whatsAppBtn: "Contattaci su WhatsApp",
+                    demoBtn: "🚀 Entra nel Nostro Brevetto: Sistema Isolati su Tunnel Virtuale!",
+                    specialTitle: "Perché Questo Sistema È Speciale? 🚀 Nostro Brevetto Innovativo!",
+                    specialParagraph1: "Immagina un mondo dove i tuoi dati più preziosi – stipendi, informazioni personali – non esistono su internet pubblico. Il nostro sistema rivoluzionario li nasconde dentro un <strong>tunnel virtuale sicuro</strong> chiamato Yggdrasil, una rete segreta decentralizzata che collega PC invisibili come fantasmi digitali. Il database? Nascosto dietro un PC remoto isolato, accessibile solo attraverso questo tunnel crittografato. È come avere una cassaforte volante che vola in un cielo privato, invisibile a hacker e occhi indiscreti!",
+                    specialParagraph2: "<strong>Questo è il nostro brevetto esclusivo:</strong> Un'architettura distribuita dove frontend pubblico incontra backend isolato via tunnel virtuale. Abbiamo creato qualcosa di unico al mondo – un web app che viaggia su Yggdrasil, con database nascosto dietro un PC invisibile. Nessun altro fa questo! È sicuro, scalabile e pronto per il futuro delle comunicazioni private.",
+                    stepsTitle: "I Passaggi Principali: Dal Browser al Database",
+                    stepsIntro: "Quando un utente (come te) visita il sito e aggiunge un dipendente, ecco cosa succede dietro le quinte. Te lo spiego come una storia:",
+                    flowTitle: "Il Flusso Completo: Un Esempio Visivo",
+                    flowIntro: "Ecco come appare il viaggio di una richiesta:",
+                    whyTitle: "Perché È Sicuro e Migliore?",
+                    why1: "<strong>Isolamento Completo:</strong> Il database e l'API non sono mai esposti a internet. Anche se qualcuno hackera il sito pubblico, non arriva al backend.",
+                    why2: "<strong>Decentralizzato:</strong> Nessun server centrale da attaccare. Yggdrasil collega i nodi direttamente.",
+                    why3: "<strong>Crittografato:</strong> Tutto in Yggdrasil è protetto automaticamente.",
+                    why4: "<strong>Scalabile:</strong> Puoi aggiungere più server Yggdrasil facilmente.",
+                    why5: "<strong>Privato:</strong> Nessun indirizzo pubblico per il backend – solo IPv6 privati.",
+                    conclusionTitle: "Conclusione: Pronto per il Futuro",
+                    conclusionParagraph: "Questo sistema è innovativo perché combina tecnologie moderne per creare qualcosa di nuovo: un web app distribuita e sicura senza compromettere la privacy. È perfetto per aziende che gestiscono dati sensibili come stipendi o informazioni personali. Se sei uno studente, pensa a come potresti applicare idee simili nei tuoi progetti!",
+                    challengesTitle: "Sfide Incontrate e Come Le Abbiamo Superate – La Nostra Forza!",
+                    challengesParagraph1: "Durante lo sviluppo del nostro brevetto, abbiamo affrontato sfide epiche come veri innovatori. Il fornitore iniziale ci ha fornito classi 'sballate' che rompevano tutto, ma invece di arrenderci, abbiamo sfoderato la nostra magia: rifatto il backend Flask da zero, migliorato gli errori per mostrare messaggi chiari, e testato ogni angolo per isolamento totale. Risultato? Un sistema che vola su Yggdrasil, con database nascosto dietro PC invisibili. Questo dimostra la nostra competenza: trasformiamo problemi in trionfi, creando brevetti che cambiano il gioco!",
+                    challengesParagraph2: "Il nostro progetto e completato entro il 28 Ottobre 2025, con demo live e documentazione top. Ecco il riassunto",
+                    challenge1: "<strong>Stato:</strong> ✅ Completato con successo, isolato su Yggdrasil – Nostro Brevetto!",
+                    challenge2: "<strong>Architettura Rivoluzionaria:</strong> Frontend pubblico + backend isolato in tunnel virtuale, database dietro PC invisibile.",
+                    challenge3: "<strong>Modifiche Chiave:</strong> Errori smart, sicurezza massima, innovazione pura.",
+                    challenge4: "<strong>Test:</strong> Tutto OK, isolamento totale – Pronto per brevettare!",
+                    challenge5: "<strong>Vantaggi:</strong> Sicurezza estrema, decentralizzazione, scalabilità infinita. È il futuro!",
+                    challengesParagraph3: "Con creatività e competenza, abbiamo creato qualcosa di unico. Questo è il nostro brevetto – un sistema che viaggia su tunnel virtuali, con dati nascosti dietro PC invisibili!",
+                    otherProjectsTitle: "Altri Progetti: Esempi di Lavoro",
+                    otherProjectsParagraph: "Per mostrarti altri esempi di ciò che facciamo, ecco un progetto reale che ho creato per un'amica che ha finito il corso di tattoo. Le ho regalato un sito completo per iniziare a lavorare, con funzioni per caricare foto da Telegram e creare SEO dinamico. Il codice è disponibile su GitHub come esempio open-source.",
+                    tattooSiteBtn: "Sito Tattoo Roma Studio (Progetto Completo)",
+                    tattooSiteDesc: "Sito live per l'amica: booking, foto, SEO. Disponibile anche su <a href=\"https://www.romastudiotattoo.com/\" target=\"_blank\">romastudiotattoo.com</a>.",
+                    githubRepoBtn: "Repository GitHub: Codice Sorgente",
+                    githubRepoDesc: "Il codice dello stesso progetto, open-source per ispirazione e riuso.",
+                    demoDesc: "Scopri l'innovazione esclusiva: database nascosto dietro PC invisibili in Yggdrasil, massima sicurezza e privacy – Il nostro brevetto rivoluzionario!"
+                    ,metaDescription: "Scopri come il nostro sistema isola database e API via Yggdrasil, combinando Apache ProxyPass, Flask API e SQLite per massima sicurezza."
+                    ,metaKeywords: "Yggdrasil, Flask, SQLite, ProxyPass, API isolate, gestione dipendenti, sicurezza"
+                    ,producedBy: "Prodotto da servicess.net"
+                    ,fibraBtn: "🚀 Sistema Fibra FTTH"
+                },
+                en: {
+                    title: "How Our System Works - Site-Python.com",
+                    headerTitle: "🔒 How Our Employee Management System Works",
+                    introParagraph: "Welcome! This page explains, step by step, how our secure, Yggdrasil-based employee management system works.",
+                    step1Title: "Step 1: Public Frontend (What You See)",
+                    step1Text: "The site uses HTML/CSS/JS and is hosted on Apache with HTTPS. When you click 'Add Employee', the JS sends an AJAX request to /api/dipendenti.",
+                    step2Title: "Step 2: The Magic Proxy (The Secret Bridge)",
+                    step2Text: "Apache ProxyPass forwards /api requests to a private Yggdrasil address isolated from the public internet.",
+                    step3Title: "Step 3: Yggdrasil Network (The Secret Road)",
+                    step3Text: "Yggdrasil is a decentralized IPv6 network (200::) with automatic encryption; only authorized nodes can communicate.",
+                    step4Title: "Step 4: The Isolated API (The Brain)",
+                    step4Text: "A Python Flask backend on the remote verifies Ygg IP and API key before processing requests.",
+                    step5Title: "Step 5: The Isolated Database (The Vault)",
+                    step5Text: "Data is stored in SQLite on the remote server and accessed only through the API; it is never exposed to the internet.",
+                    tech1: "<strong>Technologies:</strong> HTML for structure, CSS for styling (that dark, modern theme), JavaScript for interactivity. Server: Apache with HTTPS (Let's Encrypt for certificates).",
+                    tech2: "<strong>Technologies:</strong> Apache with mod_proxy and mod_proxy_http modules. Config: ProxyPass /api http://[ygg-address]:port/api.",
+                    tech3: "<strong>Technologies:</strong> Yggdrasil (open-source). Configuration: main peers, public/allowed keys, and two computers architecture (frontend public, remote backend).",
+                    tech4: "<strong>Technologies:</strong> Python with Flask (lightweight web framework). Security: checks in @app.before_request for Ygg IP and API key. Endpoints: /api/dipendenti, /api/key, etc.",
+                    tech5: "<strong>Technologies:</strong> SQLite (lightweight relational DB). Schema: tables for employees, salaries, sick days, etc. Access only via the Flask API.",
+                    flowText: `Browser → Apache (ProxyPass) → Yggdrasil → Flask API → SQLite DB`,
+                    contactText: "If you have questions, contact us!",
+                    whatsAppBtn: "Contact Us on WhatsApp",
+                    demoBtn: "🚀 Launch the Demo: Employee Management",
+                    specialTitle: "Why Is This System Special? 🚀 Our Innovative Patent!",
+                    specialParagraph1: "Imagine a world where your most precious data – salaries, personal info – never exists on the public internet. Our revolutionary system hides it inside a <strong>secure virtual tunnel</strong> called Yggdrasil, a secret decentralized network connecting invisible PCs like digital ghosts. The database? Hidden behind a remote PC, accessible only through this encrypted tunnel. It's like a flying safe in a private sky, invisible to hackers!",
+                    specialParagraph2: "<strong>This is our exclusive patent:</strong> A distributed architecture where the public frontend meets an isolated backend via a virtual tunnel. We created something unique – a web app running on Yggdrasil, with a database hidden behind an invisible PC. No one else does this! It's secure, scalable, and ready for the future of private communications.",
+                    stepsTitle: "Main Steps: From Browser to Database",
+                    stepsIntro: "When a user (like you) visits the site and adds an employee, here's what happens behind the scenes. Let me explain it as a story:",
+                    flowTitle: "Full Flow: A Visual Example",
+                    flowIntro: "Here's what a request's journey looks like:",
+                    whyTitle: "Why Is It Secure and Better?",
+                    why1: "<strong>Complete Isolation:</strong> The database and API are never exposed to the internet. Even if someone hacks the public site, they can't reach the backend.",
+                    why2: "<strong>Decentralized:</strong> No central server to attack. Yggdrasil connects nodes directly.",
+                    why3: "<strong>Encrypted:</strong> Everything in Yggdrasil is automatically protected.",
+                    why4: "<strong>Scalable:</strong> You can easily add more Yggdrasil servers.",
+                    why5: "<strong>Private:</strong> No public address for the backend – only private IPv6.",
+                    conclusionTitle: "Conclusion: Ready for the Future",
+                    conclusionParagraph: "This system is innovative because it combines modern technologies to create something new: a distributed, secure web app without compromising privacy. It's perfect for companies handling sensitive data like salaries or personal info. If you're a student, think about how you could apply similar ideas!",
+                    challengesTitle: "Challenges Faced and How We Overcame Them – Our Strength!",
+                    challengesParagraph1: "During the development of our patent, we faced epic challenges as true innovators. The initial provider gave us 'broken' classes that broke everything, but instead of giving up, we worked our magic: rebuilt the Flask backend from scratch, improved errors for clear messages, and tested every corner for total isolation. Result? A system flying on Yggdrasil, with a database hidden behind invisible PCs. This proves our skill: we turn problems into triumphs, creating game-changing patents!",
+                    challengesParagraph2: "Our project is completed by October 28, 2025, with live demo and top documentation. Here's the summary of our masterpiece:",
+                    challenge1: "<strong>Status:</strong> ✅ Successfully completed, isolated on Yggdrasil – Our Patent!",
+                    challenge2: "<strong>Revolutionary Architecture:</strong> Public frontend + backend isolated in a virtual tunnel, database behind invisible PC.",
+                    challenge3: "<strong>Key Changes:</strong> Smart errors, maximum security, pure innovation.",
+                    challenge4: "<strong>Testing:</strong> All OK, total isolation – Ready to patent!",
+                    challenge5: "<strong>Advantages:</strong> Extreme security, decentralization, infinite scalability. It's the future!",
+                    challengesParagraph3: "With creativity and skill, we've created something unique. This is our patent – a system traveling on virtual tunnels, with data hidden behind invisible PCs!",
+                    otherProjectsTitle: "Other Projects: Work Examples",
+                    otherProjectsParagraph: "To show you more examples of what we do, here's a real project I made for a friend who finished a tattoo course. I gave her a complete site to start working, with features to upload photos from Telegram and create dynamic SEO. The code is available on GitHub as an open-source example.",
+                    tattooSiteBtn: "Tattoo Roma Studio Site (Full Project)",
+                    tattooSiteDesc: "Live site for my friend: booking, photos, SEO. Also available at <a href=\"https://www.romastudiotattoo.com/\" target=\"_blank\">romastudiotattoo.com</a>.",
+                    githubRepoBtn: "GitHub Repository: Source Code",
+                    githubRepoDesc: "The same project's code, open-source for inspiration and reuse.",
+                    demoDesc: "Discover exclusive innovation: database hidden behind invisible PCs in Yggdrasil, maximum security and privacy – Our revolutionary patent!"
+                    ,metaDescription: "Learn how our system isolates databases and APIs using Yggdrasil, Apache ProxyPass, Flask API, and SQLite for top security."
+                    ,metaKeywords: "Yggdrasil, Flask, SQLite, ProxyPass, isolated API, employee management, secure web apps"
+                    ,producedBy: "Produced by servicess.net"
+                    ,fibraBtn: "🚀 Fibra FTTH System"
+                },
+                ru: {
+                    title: "Как работает наша система - Site-Python.com",
+                    headerTitle: "🔒 Как работает наша система управления сотрудниками",
+                    introParagraph: "Добро пожаловать! Эта страница объясняет пошагово, как работает наша защищенная система управления сотрудниками на Yggdrasil.",
+                    step1Title: "Шаг 1: Публичный фронтенд (То, что вы видите)",
+                    step1Text: "Сайт использует HTML/CSS/JS и размещен на Apache с HTTPS. При нажатии 'Добавить сотрудника' JS отправляет запрос на /api/dipendenti.",
+                    step2Title: "Шаг 2: Прокси (секретный мост)",
+                    step2Text: "Apache ProxyPass перенаправляет /api запросы на приватный Yggdrasil-адрес, изолированный от интернета.",
+                    step3Title: "Шаг 3: Сеть Yggdrasil (секретная дорога)",
+                    step3Text: "Yggdrasil — это децентрализованная сеть IPv6 (200::) с автоматическим шифрованием; общаются только авторизованные узлы.",
+                    step4Title: "Шаг 4: Изолированный API (мозг системы)",
+                    step4Text: "На удаленном сервере работает Flask/Python, который проверяет Ygg IP и API ключ, прежде чем обработать запрос.",
+                    step5Title: "Шаг 5: Изолированная база данных (хранилище)",
+                    step5Text: "Данные хранятся в SQLite на удаленном сервере и доступны только через API, не выставляются в интернет.",
+                    tech1: "<strong>Технологии:</strong> HTML для структуры, CSS для стиля, JavaScript для интерактивности. Сервер: Apache с HTTPS (Let's Encrypt для сертификатов).",
+                    tech2: "<strong>Технологии:</strong> Apache с модулями mod_proxy и mod_proxy_http. Конфигурация: ProxyPass /api http://[ygg-address]:port/api.",
+                    tech3: "<strong>Технологии:</strong> Yggdrasil (open-source). Конфигурация: основные пиры, публичные/разрешенные ключи, архитектура из двух компьютеров (публичный фронтенд, удалённый бэкенд).",
+                    tech4: "<strong>Технологии:</strong> Python + Flask (легковесный фреймворк). Безопасность: проверки в @app.before_request для Ygg IP и API ключей. Эндпоинты: /api/dipendenti, /api/key и т.д.",
+                    tech5: "<strong>Технологии:</strong> SQLite (легковесная реляционная БД). Схема: таблицы для сотрудников, зарплат, больничных и т.д. Доступ только через Flask API.",
+                    flowText: `Браузер → Apache (ProxyPass) → Yggdrasil → Flask API → SQLite DB`,
+                    contactText: "Если есть вопросы, свяжитесь с нами!",
+                    whatsAppBtn: "Свяжитесь с нами в WhatsApp",
+                    demoBtn: "🚀 Демонстрация: Управление сотрудниками",
+                    specialTitle: "Почему эта система особенная? 🚀 Наш инновационный патент!",
+                    specialParagraph1: "Представьте мир, где ваши самые ценные данные — зарплаты, личная информация — никогда не находятся в публичном интернете. Наша революционная система прячет их внутри <strong>безопасного виртуального туннеля</strong> под названием Yggdrasil, секретной децентрализованной сети, соединяющей невидимые ПК как цифровые привидения. База данных? Скрыта за удалённым ПК, доступна только через этот зашифрованный туннель.",
+                    specialParagraph2: "<strong>Это наш эксклюзивный патент:</strong> Распределённая архитектура, где публичный фронтенд соединяется с изолированным бэкендом через виртуальный туннель. Мы создали уникальный веб-приложение, работающее на Yggdrasil, с базой данных, скрытой за невидимым ПК.",
+                    stepsTitle: "Основные шаги: От браузера до базы данных",
+                    stepsIntro: "Когда пользователь (например, вы) посещает сайт и добавляет сотрудника, вот что происходит за кулисами:",
+                    flowTitle: "Полный поток: Визуальный пример",
+                    flowIntro: "Вот как выглядит путь запроса:",
+                    whyTitle: "Почему это безопаснее и лучше?",
+                    why1: "<strong>Полная изоляция:</strong> База данных и API никогда не доступны из интернета. Даже если кто-то взломает публичный сайт, он не попадёт в бэкенд.",
+                    why2: "<strong>Децентрализовано:</strong> Нет центрального сервера для атаки. Yggdrasil напрямую соединяет узлы.",
+                    why3: "<strong>Зашифровано:</strong> Всё в Yggdrasil автоматически защищено.",
+                    why4: "<strong>Масштабируемость:</strong> Вы можете легко добавить больше серверов Yggdrasil.",
+                    why5: "<strong>Приватность:</strong> Нет публичного адреса для бэкенда — только приватные IPv6.",
+                    conclusionTitle: "Заключение: Готово к будущему",
+                    conclusionParagraph: "Эта система инновационна, потому что комбинирует современные технологии для создания чего-то нового: распределённого защищённого веб-приложения без компромиссов по приватности. Она идеально подходит для компаний, работающих с конфиденциальными данными.",
+                    challengesTitle: "Проблемы и как мы их преодолели – наша сила!",
+                    challengesParagraph1: "Во время разработки нашего патента мы столкнулись с серьёзными вызовами, но не сдались: восстановили бэкенд Flask с нуля, улучшили обработку ошибок и протестировали систему до полной изоляции. Результат – система на Yggdrasil с базой данных, скрытой за невидимыми ПК.",
+                    challengesParagraph2: "Проект завершён к 28 октября 2025 года с живой демонстрацией и полноценной документацией. Вот краткое содержание нашего шедевра:",
+                    challenge1: "<strong>Статус:</strong> ✅ Успешно завершено, изолировано на Yggdrasil – наш патент!",
+                    challenge2: "<strong>Революционная архитектура:</strong> Публичный фронтенд + изолированный бэкенд в виртуальном туннеле, база данных за невидимым ПК.",
+                    challenge3: "<strong>Ключевые изменения:</strong> Умные ошибки, максимальная безопасность, чистая инновация.",
+                    challenge4: "<strong>Тестирование:</strong> Всё в порядке, полная изоляция – готово к патентованию!",
+                    challenge5: "<strong>Преимущества:</strong> Экстремальная безопасность, децентрализация, бесконечная масштабируемость. Это будущее!",
+                    challengesParagraph3: "С креативностью и опытом мы создали нечто уникальное. Это наш патент – система, путешествующая по виртуальным туннелям, с данными, скрытыми за невидимыми ПК!",
+                    otherProjectsTitle: "Другие проекты: примеры работ",
+                    otherProjectsParagraph: "Чтобы показать больше примеров нашей работы, вот реальный проект, который я сделал для подруги: сайт с функциями загрузки фото с Telegram и динамическим SEO. Код доступен на GitHub как пример с открытым исходным кодом.",
+                    tattooSiteBtn: "Tattoo Roma Studio – сайт (Проект)",
+                    tattooSiteDesc: "Живой сайт: бронирование, фото, SEO. Также доступен на <a href=\"https://www.romastudiotattoo.com/\" target=\"_blank\">romastudiotattoo.com</a>.",
+                    githubRepoBtn: "Репозиторий GitHub: исходный код",
+                    githubRepoDesc: "Код этого проекта с открытым исходным кодом для вдохновения и повторного использования.",
+                    demoDesc: "Узнайте об инновации: база данных скрыта за невидимыми ПК в Yggdrasil, максимальная безопасность и приватность – наш революционный патент!"
+                    ,metaDescription: "Узнайте, как наша система изолирует базы данных и API с помощью Yggdrasil, Apache ProxyPass, Flask и SQLite для максимальной безопасности."
+                    ,metaKeywords: "Yggdrasil, Flask, SQLite, ProxyPass, изолированный API, управление сотрудниками, безопасность"
+                    ,producedBy: "Произведено servicess.net"
+                    ,fibraBtn: "🚀 Система Fibра FTTH"
+                },
+                ar: {
+                    title: "كيف يعمل نظامنا - Site-Python.com",
+                    headerTitle: "🔒 كيف يعمل نظام إدارة الموظفين الخاص بنا",
+                    introParagraph: "مرحبًا! تشرح هذه الصفحة خطوة بخطوة كيف يعمل نظام إدارة الموظفين الآمن المبني على Yggdrasil.",
+                    step1Title: "الخطوة 1: الواجهة العامة (ما تراه)",
+                    step1Text: "يستخدم الموقع HTML/CSS/JS وهو مستضاف على Apache مع HTTPS. عندما تضغط على 'إضافة موظف' يرسل JavaScript طلبًا إلى /api/dipendenti.",
+                    step2Title: "الخطوة 2: وكيل التحويل (الجسر السري)",
+                    step2Text: "يقوم Apache ProxyPass بإعادة توجيه الطلبات /api إلى عنوان Yggdrasil خاص معزول عن الإنترنت العام.",
+                    step3Title: "الخطوة 3: شبكة Yggdrasil (الطريق السري)",
+                    step3Text: "Yggdrasil هي شبكة IPv6 لا مركزية (200::) مع تشفير تلقائي؛ فقط العقد المصرح لها تتواصل.",
+                    step4Title: "الخطوة 4: API المعزل (المخ)",
+                    step4Text: "على الخادم البعيد، يعمل Flask/Python ويتحقق من IP Ygg ومفتاح API قبل معالجة الطلب.",
+                    step5Title: "الخطوة 5: قاعدة البيانات المعزولة (الخزنة)",
+                    step5Text: "تُحفظ البيانات في SQLite على الخادم البعيد ولا يمكن الوصول إليها إلا عبر API، ولا تُعرض على الإنترنت.",
+                    tech1: "<strong>التقنيات:</strong> HTML للهيكل، CSS للتصميم (ذلك السمة الداكنة الحديثة)، JavaScript للتفاعلية. الخادم: Apache مع HTTPS (Let's Encrypt للشهادات).",
+                    tech2: "<strong>التقنيات:</strong> Apache مع وحدات mod_proxy و mod_proxy_http. التكوين: ProxyPass /api http://[ygg-address]:port/api.",
+                    tech3: "<strong>التقنيات:</strong> Yggdrasil (مشروع مفتوح المصدر). التكوين: أقران رئيسيون، مفاتيح عامة/مسموح بها، وبنية من جهازين (واجهة أمامية عامة، واجهة خلفية بعيدة).",
+                    tech4: "<strong>التقنيات:</strong> Python مع Flask (إطار ويب خفيف). الأمان: فحوصات في @app.before_request لعنوان Ygg ومفتاح API. نقاط النهاية: /api/dipendenti، /api/key، إلخ.",
+                    tech5: "<strong>التقنيات:</strong> SQLite (قاعدة بيانات علائقية خفيفة الوزن). المخطط: جداول للموظفين والرواتب والإجازات المرضية، إلخ. الوصول فقط عبر Flask API.",
+                    flowText: `المتصفح → Apache (ProxyPass) → Yggdrasil → Flask API → SQLite DB`,
+                    contactText: "إذا كانت لديك أسئلة، اتصل بنا!",
+                    whatsAppBtn: "اتصل بنا على WhatsApp",
+                    demoBtn: "🚀 عرض توضيحي: إدارة الموظفين",
+                    specialTitle: "لماذا هذا النظام مميز؟ 🚀 براءتنا المبتكرة!",
+                    specialParagraph1: "تخيل عالماً حيث لا توجد بياناتك الأكثر قيمة - الرواتب والمعلومات الشخصية - على الإنترنت العام. نظامنا الثوري يخفيها داخل <strong>نفق افتراضي آمن</strong> يسمى Yggdrasil، وهي شبكة لامركزية سرية تربط أجهزة الكمبيوتر غير المرئية مثل الأشباح الرقمية. قاعدة البيانات؟ مخفية خلف حاسوب بعيد ولا يمكن الوصول إليها إلا عبر هذا النفق المشفر.",
+                    specialParagraph2: "<strong>هذه هي براءتنا الحصرية:</strong> هندسة موزعة حيث تلتقي الواجهة العامة بواجهة خلفية معزولة عبر نفق افتراضي. أنشأنا تطبيق ويب فريد يعمل على Yggdrasil، مع قاعدة بيانات مخفية خلف حاسوب غير مرئي.",
+                    stepsTitle: "الخطوات الرئيسية: من المتصفح إلى قاعدة البيانات",
+                    stepsIntro: "عندما يزور مستخدم (مثلك) الموقع ويضيف موظفاً، هذا ما يحدث وراء الكواليس:",
+                    flowTitle: "التدفق الكامل: مثال مرئي",
+                    flowIntro: "هنا كيف يبدو مسار الطلب:",
+                    whyTitle: "لماذا هو آمن وأفضل؟",
+                    why1: "<strong>عزل كامل:</strong> قاعدة البيانات وواجهة برمجة التطبيقات لا تتعرضان أبداً للإنترنت. حتى لو اخترق شخص ما الموقع العام، فلن يصل إلى الواجهة الخلفية.",
+                    why2: "<strong>لامركزية:</strong> لا يوجد خادم مركزي للهجوم. يربط Yggdrasil العقد مباشرة.",
+                    why3: "<strong>تشفير:</strong> كل شيء في Yggdrasil محمي تلقائياً.",
+                    why4: "<strong>قابلية التوسع:</strong> يمكنك إضافة المزيد من خوادم Yggdrasil بسهولة.",
+                    why5: "<strong>خصوصية:</strong> لا يوجد عنوان عام للواجهة الخلفية - فقط IPv6 خاصة.",
+                    conclusionTitle: "الخلاصة: جاهز للمستقبل",
+                    conclusionParagraph: "هذا النظام مبتكر لأنه يجمع تقنيات حديثة لخلق شيء جديد: تطبيق ويب موزع وآمن دون المساس بالخصوصية. إنه مثالي للشركات التي تتعامل مع بيانات حساسة مثل الرواتب والمعلومات الشخصية.",
+                    challengesTitle: "التحديات وكيف تغلبنا عليها – قوتنا!",
+                    challengesParagraph1: "خلال تطوير براءتنا، واجهنا تحديات كبيرة، لكننا لم نستسلم: أعدنا بناء الواجهة الخلفية Flask من الصفر، وحسّنّا معالجة الأخطاء، واختبرنا النظام حتى العزل الكامل. النتيجة: نظام على Yggdrasil مع قاعدة بيانات مخفية خلف حواسيب غير مرئية.",
+                    challengesParagraph2: "اكتمل المشروع في 28 أكتوبر 2025، مع عرض توضيحي مباشر ووثائق ممتازة. إليك ملخص تحفتنا:",
+                    challenge1: "<strong>الحالة:</strong> ✅ اكتمل بنجاح، معزول على Yggdrasil – براءتنا!",
+                    challenge2: "<strong>الهندسة الثورية:</strong> الواجهة العامة + الواجهة الخلفية المعزولة في نفق افتراضي، قاعدة البيانات خلف حاسوب غير مرئي.",
+                    challenge3: "<strong>التغييرات الرئيسية:</strong> أخطاء ذكية، أمان أقصى، ابتكار خالص.",
+                    challenge4: "<strong>الاختبار:</strong> كل شيء بخير، عزل كامل – جاهز للتسجيل!",
+                    challenge5: "<strong>المزايا:</strong> أمان فائق، لامركزية، قابلية التوسع الواسعة. إنه المستقبل!",
+                    challengesParagraph3: "بالمهارة والإبداع، أنشأنا شيئاً فريداً. هذه هي براءتنا – نظام يسافر عبر أنفاق افتراضية، مع بيانات مخفية خلف حواسيب غير مرئية!",
+                    otherProjectsTitle: "مشاريع أخرى: أمثلة أعمال",
+                    otherProjectsParagraph: "لإظهار أمثلة أخرى لما نقوم به، إليك مشروعاً حقيقياً قمت به لصديقة: موقع مع ميزات رفع الصور من Telegram و SEO ديناميكي. الشيفرة متاحة على GitHub كمثال مفتوح المصدر.",
+                    tattooSiteBtn: "Tattoo Roma Studio – الموقع (المشروع الكامل)",
+                    tattooSiteDesc: "موقع حي: حجز، صور، SEO. متوفر أيضاً على <a href=\"https://www.romastudiotattoo.com/\" target=\"_blank\">romastudiotattoo.com</a>.",
+                    githubRepoBtn: "مستودع GitHub: الشيفرة المصدرية",
+                    githubRepoDesc: "شيفرة نفس المشروع مفتوحة المصدر للإلهام وإعادة الاستخدام.",
+                    demoDesc: "اكتشف الابتكار الحصري: قاعدة بيانات مخفية خلف حواسيب غير مرئية في Yggdrasil، أقصى درجات الأمان والخصوصية – براءتنا الثورية!"
+                    ,metaDescription: "تعرف على كيفية عزل قاعدة البيانات وواجهات الـ API باستخدام Yggdrasil، Apache ProxyPass، Flask وSQLite لتحقيق أعلى درجات الأمان."
+                    ,metaKeywords: "Yggdrasil, Flask, SQLite, ProxyPass, API معزولة, إدارة الموظفين, مواقع آمنة"
+                    ,producedBy: "منتج بواسطة servicess.net"
+                    ,fibraBtn: "🚀 نظام Fibra FTTH"
+                },
+                zh: {
+                    title: "我们的系统如何工作 - Site-Python.com",
+                    headerTitle: "🔒 我们的员工管理系统如何工作",
+                    introParagraph: "欢迎！本页面逐步解释了我们基于 Yggdrasil 的安全员工管理系统如何工作。",
+                    step1Title: "步骤1：公共前端（你看到的）",
+                    step1Text: "网站使用 HTML/CSS/JS 并托管在启用 HTTPS 的 Apache 上。点击 '添加员工' 时，JS 会向 /api/dipendenti 发送请求。",
+                    step2Title: "步骤2：代理（秘密桥梁）",
+                    step2Text: "Apache ProxyPass 将 /api 请求转发到与互联网隔离的私有 Yggdrasil 地址。",
+                    step3Title: "步骤3：Yggdrasil 网络（秘密通道）",
+                    step3Text: "Yggdrasil 是一个去中心化的 IPv6 网络（200::），自动加密；只有授权节点可以通信。",
+                    step4Title: "步骤4：隔离 API（系统核心）",
+                    step4Text: "远程服务器上运行 Flask/Python，会在处理请求前检查 Ygg IP 和 API 密钥。",
+                    step5Title: "步骤5：隔离数据库（保险库）",
+                    step5Text: "数据存储在远程服务器的 SQLite 中，仅通过 API 可访问，永不暴露在互联网上。",
+                    tech1: "<strong>技术：</strong>HTML 用于结构，CSS 用于样式（深色现代主题），JavaScript 用于交互。服务器：启用 HTTPS 的 Apache（Let's Encrypt 证书）。",
+                    tech2: "<strong>技术：</strong>Apache，使用 mod_proxy 和 mod_proxy_http 模块。配置：ProxyPass /api http://[ygg-address]:port/api。",
+                    tech3: "<strong>技术：</strong>Yggdrasil（开源）。配置：主对等节点、公共/允许键，以及两台主机架构（公共前端、远程后端）。",
+                    tech4: "<strong>技术：</strong>Python + Flask（轻量级 Web 框架）。安全性：在 @app.before_request 中检查 Ygg IP 与 API 密钥。端点：/api/dipendenti、/api/key 等。",
+                    tech5: "<strong>技术：</strong>SQLite（轻量级关系型数据库）。模式：员工、工资、病假等表。仅通过 Flask API 访问。",
+                    flowText: `浏览器 → Apache (ProxyPass) → Yggdrasil → Flask API → SQLite DB`,
+                    contactText: "如有问题，请与我们联系！",
+                    whatsAppBtn: "在 WhatsApp 上联系我们",
+                    demoBtn: "🚀 演示：员工管理",
+                    specialTitle: "为什么这个系统很特别？ 🚀 我们的创新专利！",
+                    specialParagraph1: "想象这样一个世界：你最宝贵的数据——工资、个人信息——永远不会出现在公共互联网。我们的革命性系统将其隐藏在名为 Yggdrasil 的<strong>安全虚拟隧道</strong>中，这是一张将不可见电脑连接在一起的秘密去中心化网络。数据库？隐藏在远程电脑后面，只能通过这个加密隧道访问。",
+                    specialParagraph2: "<strong>这是我们的独家专利：</strong>一种分布式架构，公共前端通过虚拟隧道与隔离后端连接。我们创建了一个独一无二的 Web 应用，运行在 Yggdrasil 上，数据库隐藏在不可见的电脑后面。",
+                    stepsTitle: "主要步骤：从浏览器到数据库",
+                    stepsIntro: "当用户（比如你）访问网站并添加员工时，幕后发生了什么：",
+                    flowTitle: "完整流程：一个可视化示例",
+                    flowIntro: "这是请求的旅程：",
+                    whyTitle: "为什么它更安全、更好？",
+                    why1: "<strong>完全隔离：</strong>数据库和 API 永远不向互联网暴露。即使有人入侵公共站点，也无法触及后端。",
+                    why2: "<strong>去中心化：</strong>没有中央服务器可被攻击。Yggdrasil 直接连接节点。",
+                    why3: "<strong>加密：</strong>Yggdrasil 中的一切都自动保护。",
+                    why4: "<strong>可扩展：</strong>可以轻松添加更多 Yggdrasil 服务器。",
+                    why5: "<strong>私密：</strong>后端没有公共地址——只有私有 IPv6。",
+                    conclusionTitle: "结论：为未来做好准备",
+                    conclusionParagraph: "这个系统具有创新性，因为它结合了现代技术，创造出一种新的东西：分布式、安全的 Web 应用，同时不牺牲隐私。它非常适合处理敏感数据的公司，例如工资和个人信息。",
+                    challengesTitle: "遇到的挑战以及我们如何克服——我们的实力！",
+                    challengesParagraph1: "在开发我们的专利期间，我们遇到了很多挑战：初期的提供者给了我们破损的类，导致很多问题，但我们没有放弃：我们从零重建了 Flask 后端，改进了错误信息，并为完全隔离测试了每个角落。结果是一套在 Yggdrasil 上运行、数据库隐藏在不可见电脑后的系统。",
+                    challengesParagraph2: "我们的项目计划在 2025 年 10 月 28 日完成，并配有实时演示和完善的文档。以下是我们杰作的摘要：",
+                    challenge1: "<strong>状态：</strong> ✅ 成功完成，在 Yggdrasil 上实现隔离——我们的专利！",
+                    challenge2: "<strong>革命性架构：</strong>公共前端 + 在虚拟隧道中隔离的后端，数据库隐藏在不可见的电脑后面。",
+                    challenge3: "<strong>关键更改：</strong>智能错误处理、最大安全性、纯粹的创新。",
+                    challenge4: "<strong>测试：</strong>一切正常，完全隔离——准备申请专利！",
+                    challenge5: "<strong>优势：</strong>极致的安全性、去中心化、无限扩展性。这就是未来！",
+                    challengesParagraph3: "凭借创造力与专业能力，我们创造了独一无二的东西。这是我们的专利——一个通过虚拟隧道传输、数据隐藏在不可见电脑后的系统！",
+                    otherProjectsTitle: "其他项目：作品示例",
+                    otherProjectsParagraph: "为了向您展示我们所做的更多示例，以下是我为一位朋友创建的真实项目：一个具有从 Telegram 上传照片和动态 SEO 功能的网站。源代码以开源形式发布在 GitHub 上。",
+                    tattooSiteBtn: "Tattoo Roma Studio 站点（完整项目）",
+                    tattooSiteDesc: "我的朋友的网站：预约、照片、SEO。同样可在 <a href=\"https://www.romastudiotattoo.com/\" target=\"_blank\">romastudiotattoo.com</a> 上访问。",
+                    githubRepoBtn: "GitHub 仓库：源代码",
+                    githubRepoDesc: "相同项目的源码，开源以供灵感和重复使用。",
+                    demoDesc: "探索独家创新：数据库隐藏在 Yggdrasil 中不可见的电脑后面，实现最大安全性与隐私——我们的革命性专利！"
+                    ,metaDescription: "了解我们的系统如何通过 Yggdrasil、Apache ProxyPass、Flask API 和 SQLite 隔离数据库和 API，实现最高安全性。"
+                    ,metaKeywords: "Yggdrasil, Flask, SQLite, ProxyPass, 隔离 API, 员工管理, 安全网站"
+                    ,producedBy: "由 servicess.net 生产"
+                    ,fibraBtn: "🚀 Fibra FTTH 系统"
+                }
+            };
+
+            function cambiaLingua(lang) {
+                // remove active class from all flags
+                document.querySelectorAll('.flag').forEach(f => f.classList.remove('active'));
+                // add active to selected
+                const el = document.getElementById('flag-' + lang);
+                if (el) el.classList.add('active');
+                localStorage.setItem('lang', lang);
+                setLanguage(lang);
+            }
+
+            function setLanguage(lang) {
+                const t = translations[lang] || translations['it'];
+                document.title = t.title;
+                document.documentElement.lang = lang;
+                document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+                const setMeta = (name, value) => {
+                    let el = document.querySelector(`meta[name="${name}"]`);
+                    if (!el) {
+                        el = document.createElement('meta');
+                        el.setAttribute('name', name);
+                        document.head.appendChild(el);
+                    }
+                    el.setAttribute('content', value || '');
+                };
+                setMeta('description', t.metaDescription || '');
+                setMeta('keywords', t.metaKeywords || '');
+                setCanonical(lang);
+                const setIf = (id, value, isHtml = false) => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    if (isHtml) el.innerHTML = value;
+                    else el.textContent = value;
+                };
+                setIf('headerTitle', t.headerTitle);
+                setIf('introParagraph', t.introParagraph);
+                // Special/Patented section
+                setIf('specialTitle', t.specialTitle);
+                setIf('specialParagraph1', t.specialParagraph1, true);
+                setIf('specialParagraph2', t.specialParagraph2, true);
+                // Steps intro
+                setIf('stepsTitle', t.stepsTitle);
+                setIf('stepsIntro', t.stepsIntro);
+                setIf('step1Title', t.step1Title);
+                setIf('step1Text', t.step1Text);
+                setIf('step2Title', t.step2Title);
+                setIf('step2Text', t.step2Text);
+                setIf('step3Title', t.step3Title);
+                setIf('step3Text', t.step3Text);
+                setIf('step4Title', t.step4Title);
+                setIf('step4Text', t.step4Text);
+                setIf('step5Title', t.step5Title);
+                setIf('step5Text', t.step5Text);
+                setIf('tech1', t.tech1, true);
+                setIf('tech2', t.tech2, true);
+                setIf('tech3', t.tech3, true);
+                setIf('tech4', t.tech4, true);
+                setIf('tech5', t.tech5, true);
+                setIf('flowTitle', t.flowTitle);
+                setIf('flowIntro', t.flowIntro);
+                setIf('flowText', t.flowText, true);
+                // Why section list
+                setIf('whyTitle', t.whyTitle);
+                setIf('why1', t.why1, true);
+                setIf('why2', t.why2, true);
+                setIf('why3', t.why3, true);
+                setIf('why4', t.why4, true);
+                setIf('why5', t.why5, true);
+                // Conclusion
+                setIf('conclusionTitle', t.conclusionTitle);
+                setIf('conclusionParagraph', t.conclusionParagraph);
+                // Challenges
+                setIf('challengesTitle', t.challengesTitle);
+                setIf('challengesParagraph1', t.challengesParagraph1);
+                setIf('challengesParagraph2', t.challengesParagraph2);
+                setIf('challenge1', t.challenge1, true);
+                setIf('challenge2', t.challenge2, true);
+                setIf('challenge3', t.challenge3, true);
+                setIf('challenge4', t.challenge4, true);
+                setIf('challenge5', t.challenge5, true);
+                setIf('challengesParagraph3', t.challengesParagraph3);
+                // Other projects
+                setIf('otherProjectsTitle', t.otherProjectsTitle);
+                setIf('otherProjectsParagraph', t.otherProjectsParagraph);
+                setIf('tattooSiteBtn', t.tattooSiteBtn);
+                setIf('tattooSiteDesc', t.tattooSiteDesc, true);
+                setIf('githubRepoBtn', t.githubRepoBtn);
+                setIf('githubRepoDesc', t.githubRepoDesc, true);
+                setIf('contactText', t.contactText);
+                setIf('whatsAppBtn', t.whatsAppBtn);
+                setIf('demoBtn', t.demoBtn);
+                setIf('demoDesc', t.demoDesc, true);
+                setIf('fibraBtn', t.fibraBtn);
+                setIf('producedBy', t.producedBy);
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const qs = new URLSearchParams(window.location.search);
+                const urlLang = qs.get('lang');
+                const lang = urlLang || localStorage.getItem('lang') || 'it';
+                if (urlLang) localStorage.setItem('lang', urlLang);
+                cambiaLingua(lang);
+            });
+
+            function setCanonical(lang) {
+                try {
+                    const url = new URL(window.location.href);
+                    url.host = 'site-python.com';
+                    url.protocol = 'https:';
+                    url.search = ''; // Remove all search params to set canonical to base URL
+                    url.hash = '';
+                    let link = document.querySelector('link[rel="canonical"]');
+                    if (!link) {
+                        link = document.createElement('link');
+                        link.setAttribute('rel', 'canonical');
+                        document.head.appendChild(link);
+                    }
+                    link.setAttribute('href', url.toString());
+                } catch (e) {
+                    // ignore
+                }
+            }
+        </script>
+    <div class="container">
+    <h1 id="headerTitle">🔒 Come Funziona il Nostro Sistema di Gestione Dipendenti</h1>
+    <p id="introParagraph">Benvenuto! Se sei un cliente interessato al nostro sistema innovativo per gestire i dipendenti in modo sicuro e isolato, questa pagina ti spiegherà tutto passo dopo passo, come se fossimo in classe insieme. Immagina di essere uno studente curioso: ti guiderò attraverso le tecnologie e i passaggi tecnici, senza troppi termini complicati, ma spiegando perché ogni pezzo è importante.</p>
+
+    <h2 id="specialTitle">Perché Questo Sistema È Speciale? 🚀 Nostro Brevetto Innovativo!</h2>
+    <p id="specialParagraph1">Immagina un mondo dove i tuoi dati più preziosi – stipendi, informazioni personali – non esistono su internet pubblico. Il nostro sistema rivoluzionario li nasconde dentro un <strong>tunnel virtuale sicuro</strong> chiamato Yggdrasil, una rete segreta decentralizzata che collega PC invisibili come fantasmi digitali. Il database? Nascosto dietro un PC remoto isolato, accessibile solo attraverso questo tunnel crittografato. È come avere una cassaforte volante che vola in un cielo privato, invisibile a hacker e occhi indiscreti!</p>
+    <p id="specialParagraph2"><strong>Questo è il nostro brevetto esclusivo:</strong> Un'architettura distribuita dove frontend pubblico incontra backend isolato via tunnel virtuale. Abbiamo creato qualcosa di unico al mondo – un web app che viaggia su Yggdrasil, con database nascosto dietro un PC invisibile. Nessun altro fa questo! È sicuro, scalabile e pronto per il futuro delle comunicazioni private.</p>
+
+    <h2 id="stepsTitle">I Passaggi Principali: Dal Browser al Database</h2>
+    <p id="stepsIntro">Quando un utente (come te) visita il sito e aggiunge un dipendente, ecco cosa succede dietro le quinte. Te lo spiego come una storia:</p>
+
+        <div class="step">
+            <h3 id="step1Title">Passo 1: Il Frontend Pubblico (Quello Che Vedi)</h3>
+            <p id="step1Text">Il sito web che stai guardando ora è fatto con HTML, CSS e JavaScript. È ospitato su un server pubblico chiamato Apache, con un certificato HTTPS per rendere tutto sicuro (quella "serratura" nella barra degli indirizzi). Quando clicchi "Aggiungi Dipendente", il JavaScript nel browser invia una richiesta (chiamata AJAX) a un indirizzo come "/api/dipendenti".</p>
+            <div id="tech1" class="tech">
+                <strong>Tecnologie:</strong> HTML per la struttura, CSS per lo stile (quel design scuro e moderno), JavaScript per l'interattività. Server: Apache con HTTPS (Let's Encrypt per certificati gratuiti).
+            </div>
+        </div>
+
+        <div class="step">
+            <h3 id="step2Title">Passo 2: Il Proxy Magico (Il Ponte Segreto)</h3>
+            <p id="step2Text">Il server Apache non risponde direttamente alla richiesta. Invece, ha una configurazione speciale chiamata "ProxyPass" che inoltra tutte le richieste che iniziano con "/api" a un indirizzo privato nascosto. Questo indirizzo è un IP speciale di Yggdrasil, non accessibile da internet normale. È come un ponte invisibile che collega il mondo pubblico a un mondo privato.</p>
+            <div id="tech2" class="tech">
+                <strong>Tecnologie:</strong> Apache con moduli mod_proxy e mod_proxy_http. Configurazione: ProxyPass /api http://[indirizzo-ygg]:porta/api.
+            </div>
+        </div>
+
+        <div class="step">
+            <h3 id="step3Title">Passo 3: La Rete Yggdrasil (La Strada Segreta)</h3>
+            <p id="step3Text">Yggdrasil è una rete decentralizzata, come una versione sicura di internet ma solo per chi ha il permesso. Usa indirizzi IPv6 che iniziano con "200::" e crittografa tutto automaticamente. Immagina una strada segreta dove solo i tuoi amici possono camminare, senza che nessuno dall'esterno possa vedere o disturbare. I nostri server (il tuo PC locale per il frontend pubblico e il server remoto per il backend isolato) sono connessi via Yggdrasil, non tramite internet pubblico. Abbiamo usato due PC separati per massima sicurezza: uno accessibile pubblicamente per il sito, l'altro nascosto in Yggdrasil per API e database. Ci siamo "ammazzati" con le porte interne (come 7123 sul remoto) per evitare conflitti e rendere tutto più sicuro!</p>
+            <div id="tech3" class="tech">
+                <strong>Tecnologie:</strong> Yggdrasil (software open-source). Configurazione: Peer principali (come tls://ip:porta), chiavi pubbliche per autenticazione, limiti su AllowedPublicKeys per sicurezza. Architettura: Due PC separati (locale per frontend, remoto per backend).
+            </div>
+        </div>
+
+        <div class="step">
+            <h3 id="step4Title">Passo 4: L'API Isolati (Il Cervello del Sistema)</h3>
+            <p id="step4Text">Sul server remoto (in Yggdrasil), c'è un programma Python chiamato Flask che gestisce le richieste API. Prima di fare qualsiasi cosa, controlla due cose: 1) La richiesta viene da un IP Yggdrasil (controlla se inizia con 200::), e 2) Ha una chiave API speciale (ottenuta dinamicamente dal frontend). Se tutto va bene, elabora i dati (aggiunge il dipendente) e risponde.</p>
+            <div id="tech4" class="tech">
+                <strong>Tecnologie:</strong> Python con Flask (framework web leggero). Sicurezza: Controlli @app.before_request per IP e API key. Endpoint: /api/dipendenti, /api/key, ecc.
+            </div>
+        </div>
+
+        <div class="step">
+            <h3 id="step5Title">Passo 5: Il Database Isolato (Il Deposito Sicuro)</h3>
+            <p id="step5Text">Infine, i dati vengono salvati in un database chiamato SQLite, che è un file semplice e sicuro. Questo database è ospitato sul server remoto e accessibile SOLO tramite l'API (non direttamente da internet). È come una cassaforte dentro la stanza segreta: nessuno può aprirla senza passare dal cervello (l'API).</p>
+            <div id="tech5" class="tech">
+                <strong>Tecnologie:</strong> SQLite (database relazionale leggero). Schema: Tabelle per dipendenti, stipendi, malattie, ecc. Accesso: Solo via API Flask.
+            </div>
+        </div>
+
+    <h2 id="flowTitle">Il Flusso Completo: Un Esempio Visivo</h2>
+    <p id="flowIntro">Ecco come appare il viaggio di una richiesta:</p>
+        <div class="flow">
+            <div id="flowText">
+Browser Pubblico (Tu)<br>
+    ↓ (Richiesta HTTPS)<br>
+Server Pubblico (Apache)<br>
+    ↓ (ProxyPass)<br>
+Rete Yggdrasil (Strada Segreta)<br>
+    ↓ (Controlli Sicurezza)<br>
+API Flask (Cervello)<br>
+    ↓ (Salva Dati)<br>
+Database SQLite (Cassaforte)<br>
+    ↑ (Risposta)<br>
+Torna al Browser (Vedi il Dipendente Aggiunto!)
+        </div>
+
+        <h2 id="whyTitle">Perché È Sicuro e Migliore?</h2>
+        <ul id="whyList">
+            <li id="why1"><strong>Isolamento Completo:</strong> Il database e l'API non sono mai esposti a internet. Anche se qualcuno hackera il sito pubblico, non arriva al backend.</li>
+            <li id="why2"><strong>Decentralizzato:</strong> Nessun server centrale da attaccare. Yggdrasil collega i nodi direttamente.</li>
+            <li id="why3"><strong>Crittografato:</strong> Tutto in Yggdrasil è protetto automaticamente.</li>
+            <li id="why4"><strong>Scalabile:</strong> Puoi aggiungere più server Yggdrasil facilmente.</li>
+            <li id="why5"><strong>Privato:</strong> Nessun indirizzo pubblico per il backend – solo IPv6 privati.</li>
+        </ul>
+
+    <h2 id="conclusionTitle">Conclusione: Pronto per il Futuro</h2>
+    <p id="conclusionParagraph">Questo sistema è innovativo perché combina tecnologie moderne per creare qualcosa di nuovo: un web app distribuita e sicura senza compromettere la privacy. È perfetto per aziende che gestiscono dati sensibili come stipendi o informazioni personali. Se sei uno studente, pensa a come potresti applicare idee simili nei tuoi progetti!</p>
+
+        <h2 id="challengesTitle">Sfide Incontrate e Come Le Abbiamo Superate – La Nostra Forza!</h2>
+        <p id="challengesParagraph1">Durante lo sviluppo del nostro brevetto, abbiamo affrontato sfide epiche come veri innovatori. Il fornitore iniziale ci ha fornito classi 'sballate' che rompevano tutto, ma invece di arrenderci, abbiamo sfoderato la nostra magia: rifatto il backend Flask da zero, migliorato gli errori per mostrare messaggi chiari, e testato ogni angolo per isolamento totale. Risultato? Un sistema che vola su Yggdrasil, con database nascosto dietro PC invisibili. Questo dimostra la nostra competenza: trasformiamo problemi in trionfi, creando brevetti che cambiano il gioco!</p>
+        <p id="challengesParagraph2">Il nostro progetto e completato entro il 28 Ottobre 2025, con demo live e documentazione top. Ecco il riassunto</p>
+        <ul id="challengesList">
+            <li id="challenge1"><strong>Stato:</strong> ✅ Completato con successo, isolato su Yggdrasil – Nostro Brevetto!</li>
+            <li id="challenge2"><strong>Architettura Rivoluzionaria:</strong> Frontend pubblico + backend isolato in tunnel virtuale, database dietro PC invisibile.</li>
+            <li id="challenge3"><strong>Modifiche Chiave:</strong> Errori smart, sicurezza massima, innovazione pura.</li>
+            <li id="challenge4"><strong>Test:</strong> Tutto OK, isolamento totale – Pronto per brevettare!</li>
+            <li id="challenge5"><strong>Vantaggi:</strong> Sicurezza estrema, decentralizzazione, scalabilità infinita. È il futuro!</li>
+        </ul>
+        <p id="challengesParagraph3">Con creatività e competenza, abbiamo creato qualcosa di unico. Questo è il nostro brevetto – un sistema che viaggia su tunnel virtuali, con dati nascosti dietro PC invisibili!</p>
+
+    <h2 id="otherProjectsTitle">Altri Progetti: Esempi di Lavoro</h2>
+    <p id="otherProjectsParagraph">Per mostrarti altri esempi di ciò che facciamo, ecco un progetto reale che ho creato per un'amica che ha finito il corso di tattoo. Le ho regalato un sito completo per iniziare a lavorare, con funzioni per caricare foto da Telegram e creare SEO dinamico. Il codice è disponibile su GitHub come esempio open-source.</p>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <a id="tattooSiteBtn" href="https://www.romastudiotattoo.it/" target="_blank" style="display: inline-block; padding: 10px 20px; background: #4da3ff; color: #e8f0ff; text-decoration: none; border-radius: 8px; margin: 10px;">Sito Tattoo Roma Studio (Progetto Completo)</a>
+            <p id="tattooSiteDesc" style="font-size: 14px; margin: 10px 0;">Sito live per l'amica: booking, foto, SEO. Disponibile anche su <a href="https://www.romastudiotattoo.com/" target="_blank">romastudiotattoo.com</a>.</p>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <a id="githubRepoBtn" href="https://github.com/zinga0328it/tattoo/" target="_blank" style="display: inline-block; padding: 10px 20px; background: #1ee37d; color: #0b1320; text-decoration: none; border-radius: 8px; margin: 10px;">Repository GitHub: Codice Sorgente</a>
+            <p id="githubRepoDesc" style="font-size: 14px; margin: 10px 0;">Il codice dello stesso progetto, open-source per ispirazione e riuso.</p>
+        </div>
+
+    <p id="contactText">Se hai domande, contattaci!</p>
+        <div style="text-align: center; margin: 10px 0;">
+            <a id="whatsAppBtn" href="https://wa.me/393510120753" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 10px 18px; background: #4da3ff; color: #e8f0ff; text-decoration: none; border-radius: 8px; margin: 6px;">Contact Us on WhatsApp</a>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <button id="demoBtn" onclick="window.location.href='https://site-python.com/dipendenti.html'" style="padding: 15px 30px; background: linear-gradient(45deg, #4da3ff, #1ee37d); color: #e8f0ff; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,.2); transition: transform 0.2s;"></button>
+            <p id="demoDesc" style="font-size: 16px; margin: 10px 0; color: #e8f0ff; font-weight: bold;"></p>
+            <button id="fibraBtn" onclick="window.location.href='https://site-python.com/fibra.html'" style="padding: 15px 30px; background: linear-gradient(45deg, #1ee37d, #4da3ff); color: #e8f0ff; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,.2); transition: transform 0.2s; margin-top: 10px;"></button>
+        </div>
+
+        <p id="producedBy" style="text-align: center; margin: 20px 0; font-size: 14px; color: #94a3b8;"></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,209 @@
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session, make_response
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask_captcha2 import FlaskCaptcha
+from captcha.image import ImageCaptcha
+import bcrypt
+import jwt
+import datetime
+import os
+import logging
+import json
+from collections import defaultdict
+import time
+import random
+import string
+
+# Configurazione logging dettagliata
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+app = Flask(__name__, template_folder='/var/www/eternia/')
+app.secret_key = os.environ.get('SECRET_KEY', 'super-secret-key-change-in-production')
+
+# CAPTCHA
+captcha = FlaskCaptcha(app=app)
+
+# Limiter per prevenire brute force
+limiter = Limiter(get_remote_address, app=app)
+
+# Database simulato utenti
+users = {
+    'lia': bcrypt.hashpw(b'03288639', bcrypt.gensalt(rounds=4)).decode('utf-8')  # Password per test
+}
+
+# Tracking tentativi per IP
+failed_attempts = defaultdict(list)
+blocked_ips = set()
+
+# Contromisure avanzate
+MAX_ATTEMPTS = 5
+BLOCK_TIME = 300  # 5 minuti
+HONEYPOT_FIELD = 'website'  # Campo honeypot
+
+# CAPTCHA locale
+image_captcha = ImageCaptcha()
+
+def is_ip_blocked(ip):
+    """Controlla se IP è bloccato"""
+    if ip in blocked_ips:
+        return True
+    return False
+
+def log_security_event(event_type, details, ip=None):
+    """Log dettagliato per eventi di sicurezza"""
+    if not ip:
+        ip = request.remote_addr
+    log_entry = {
+        'timestamp': datetime.datetime.now().isoformat(),
+        'event_type': event_type,
+        'ip': ip,
+        'user_agent': request.headers.get('User-Agent', 'Unknown'),
+        'details': details
+    }
+    logging.info(json.dumps(log_entry))
+
+def generate_token(username):
+    payload = {
+        'username': username,
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+    }
+    return jwt.encode(payload, app.secret_key, algorithm='HS256')
+
+@app.before_request
+def security_middleware():
+    """Middleware di sicurezza per ogni richiesta"""
+    ip = request.remote_addr
+    
+    # Controlla IP bloccato
+    if is_ip_blocked(ip):
+        log_security_event('BLOCKED_IP_ACCESS', {'url': request.url}, ip)
+        return make_response('Accesso bloccato per tentativi eccessivi', 429)
+    
+    # Log ogni richiesta
+    log_security_event('REQUEST', {
+        'method': request.method,
+        'url': request.url,
+        'data': dict(request.form) if request.method == 'POST' else {}
+    }, ip)
+
+@app.route('/')
+def home():
+    log_security_event('PAGE_ACCESS', {'page': 'home'})
+    return render_template('index.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        honeypot = request.form.get(HONEYPOT_FIELD, '')
+        
+        # Controllo honeypot
+        if honeypot:
+            log_security_event('HONEYPOT_TRIGGERED', {'username': username})
+            return redirect(url_for('login'))
+        
+        if username in users:
+            log_security_event('REGISTRATION_FAILED', {'reason': 'username_exists', 'username': username})
+            return render_template('register.html', error='Username già esistente')
+        
+        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        users[username] = hashed
+        log_security_event('REGISTRATION_SUCCESS', {'username': username})
+        return redirect(url_for('login'))
+    
+    return render_template('register.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+
+def login():
+    ip = request.remote_addr
+    
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        captcha_response = request.form.get('captcha')
+        honeypot = request.form.get(HONEYPOT_FIELD, '')
+        
+        # Controllo honeypot
+        if honeypot:
+            log_security_event('HONEYPOT_TRIGGERED', {'username': username}, ip)
+            failed_attempts[ip].append(time.time())
+            return render_template('login.html', error='Accesso negato')
+        
+        # Verifica CAPTCHA
+        if captcha_response != session.get('captcha'):
+            log_security_event('CAPTCHA_FAILED', {'username': username}, ip)
+            failed_attempts[ip].append(time.time())
+            return render_template('login.html', error='CAPTCHA non valido')
+        
+        # Controllo tentativi falliti recenti
+        now = time.time()
+        recent_attempts = [t for t in failed_attempts[ip] if now - t < BLOCK_TIME]
+        failed_attempts[ip] = recent_attempts
+        
+        if len(recent_attempts) >= MAX_ATTEMPTS:
+            blocked_ips.add(ip)
+            log_security_event('IP_BLOCKED', {'username': username, 'attempts': len(recent_attempts)}, ip)
+            return make_response('Troppi tentativi. IP bloccato temporaneamente.', 429)
+        
+        if username in users and bcrypt.checkpw(password.encode('utf-8'), users[username].encode('utf-8')):
+            token = generate_token(username)
+            session['token'] = token
+            log_security_event('LOGIN_SUCCESS', {'username': username}, ip)
+            return redirect(url_for('dashboard'))
+        else:
+            failed_attempts[ip].append(now)
+            log_security_event('LOGIN_FAILED', {'username': username, 'reason': 'invalid_credentials'}, ip)
+            return render_template('login.html', error='Credenziali non valide')
+    
+    return render_template('login.html')
+
+@app.route('/dashboard')
+def dashboard():
+    token = session.get('token')
+    if not token:
+        log_security_event('UNAUTHORIZED_DASHBOARD_ACCESS', {})
+        return redirect(url_for('login'))
+    
+    try:
+        payload = jwt.decode(token, app.secret_key, algorithms=['HS256'])
+        return render_template('dashboard.html', username=payload['username'])
+    except jwt.ExpiredSignatureError:
+        log_security_event('TOKEN_EXPIRED', {})
+        return redirect(url_for('login'))
+    except jwt.InvalidTokenError:
+        log_security_event('INVALID_TOKEN', {})
+        return redirect(url_for('login'))
+
+@app.route('/logout')
+def logout():
+    log_security_event('LOGOUT', {})
+    session.pop('token', None)
+    return redirect(url_for('login'))
+
+# Route per sbloccare IP (solo per test)
+@app.route('/admin/unblock/<ip>')
+def unblock_ip(ip):
+    if ip in blocked_ips:
+        blocked_ips.remove(ip)
+        log_security_event('IP_UNBLOCKED', {'unblocked_ip': ip})
+        return f'IP {ip} sbloccato'
+    return f'IP {ip} non era bloccato'
+
+# Route per generare CAPTCHA
+@app.route('/captcha')
+def captcha():
+    text = generate_captcha_text()
+    session['captcha'] = text
+    data = image_captcha.generate(text)
+    response = make_response(data.read())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
+def generate_captcha_text():
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=False)

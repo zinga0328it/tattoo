@@ -1,0 +1,860 @@
+openapi: 3.1.0
+info:
+  title: FTTH Management System API
+  description: |
+    API per la gestione dei lavori di installazione fibra ottica (FTTH).
+    Permette di creare, visualizzare e gestire lavori, tecnici e squadre.
+    
+    **Architettura**: Questo endpoint pubblico (servicess.net) fa da proxy 
+    verso il backend privato tramite rete Yggdrasil IPv6.
+    
+    **🔔 Sistema Notifiche Telegram Completo**: Il sistema supporta notifiche automatiche 
+    complete via Telegram con webhook e comandi interattivi:
+    
+    - `POST /works/{id}/notify` - Notifica automatica assegnazione lavoro
+    - `PUT /works/{id}/assign/{technician_id}` - Assegna lavoro con notifica
+    - `POST /telegram/webhook/{bot_token}` - Webhook per comandi tecnici
+    - `POST /telegram/gpt/send` - Invio messaggi da GPT ai tecnici
+    
+    **Comandi Telegram Disponibili**:
+    - `/start` - Registrazione tecnico
+    - `/miei_lavori` - Lista lavori assegnati
+    - `/accetta <WR>` - Accetta lavoro
+    - `/rifiuta <WR>` - Rifiuta lavoro  
+    - `/chiudi <WR>` - Chiudi lavoro
+    - `/help` - Mostra comandi
+    
+    **Esempio workflow completo**:
+    1. Abilita GPT: `POST /telegram/gpt/status` con `{"enabled": true}`
+    2. Crea lavoro: `POST /manual/works` con dati lavoro
+    3. Assegna tecnico: `PUT /works/{id}/assign/{technician_id}`
+    4. Invia messaggio GPT: `POST /telegram/gpt/send` con `{"target_id": 1, "message": "Nuovo lavoro!"}`
+  version: 1.0.0
+  contact:
+    name: Servicess.net
+    url: https://servicess.net
+
+servers:
+  - url: https://servicess.net/gestionale
+    description: Server di produzione (proxy Apache → Yggdrasil → Backend)
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /health/:
+    get:
+      operationId: getHealth
+      summary: Verifica stato del sistema
+      description: Restituisce lo stato di salute del backend FTTH
+      responses:
+        '200':
+          description: Sistema operativo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /works/:
+    get:
+      operationId: getWorks
+      summary: Lista tutti i lavori
+      description: Restituisce l'elenco completo dei lavori FTTH con dettagli cliente, stato e tecnico assegnato
+      responses:
+        '200':
+          description: Lista lavori
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Work'
+
+  /works/{work_id}:
+    get:
+      operationId: getWorkById
+      summary: Dettaglio singolo lavoro
+      description: Restituisce i dettagli completi di un lavoro specifico
+      parameters:
+        - name: work_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del lavoro
+      responses:
+        '200':
+          description: Dettaglio lavoro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Work'
+        '404':
+          description: Lavoro non trovato
+
+    put:
+      operationId: updateWork
+      summary: Aggiorna lavoro esistente
+      description: Modifica i dati di un lavoro esistente (stato, tecnico, note, etc.)
+      parameters:
+        - name: work_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del lavoro da aggiornare
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stato:
+                  type: string
+                  enum: [aperto, in_corso, sospeso, chiuso]
+                  description: Nuovo stato del lavoro
+                  example: "in_corso"
+                tecnico_assegnato:
+                  type: integer
+                  description: ID del tecnico da assegnare
+                  example: 1
+                note:
+                  type: string
+                  description: Nuove note aggiuntive
+                  example: "Aggiornato dal GPT"
+                nome_cliente:
+                  type: string
+                  description: Aggiorna nome cliente
+                  example: "Mario Rossi"
+                indirizzo:
+                  type: string
+                  description: Aggiorna indirizzo
+                  example: "Via Milano 456, Roma"
+                operatore:
+                  type: string
+                  description: Aggiorna operatore
+                  example: "Tecnico B"
+                tipo_lavoro:
+                  type: string
+                  description: Aggiorna tipo lavoro
+                  example: "Manutenzione"
+                telefono_cliente:
+                  type: string
+                  description: Aggiorna telefono
+                  example: "3339876543"
+                extra_fields:
+                  type: object
+                  description: Aggiorna campi extra
+                  example: {"priorita": "bassa", "data_appuntamento": "2025-02-01"}
+      responses:
+        '200':
+          description: Lavoro aggiornato con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Work'
+        '404':
+          description: Lavoro non trovato
+        '400':
+          description: Dati non validi
+
+  /manual/works:
+    post:
+      operationId: createManualWork
+      summary: Crea nuovo lavoro manuale
+      description: Inserisce un nuovo lavoro nel database FTTH con tutti i dettagli richiesti
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - numero_wr
+                - operatore
+                - indirizzo
+              properties:
+                numero_wr:
+                  type: string
+                  description: Numero identificativo unico del lavoro
+                  example: "WR-001"
+                nome_cliente:
+                  type: string
+                  description: Nome del cliente
+                  example: "Mario Rossi"
+                indirizzo:
+                  type: string
+                  description: Indirizzo dell'installazione
+                  example: "Via Roma 123, Milano"
+                operatore:
+                  type: string
+                  description: Operatore di rete (obbligatorio)
+                  example: "Open Fiber"
+                tipo_lavoro:
+                  type: string
+                  description: Tipo di lavoro
+                  enum: ["Installazione", "Attivazione", "Riparazione", "Manutenzione", "Installazione FTTH", "Manutenzione FTTH", "Test Connessione"]
+                  example: "Installazione"
+                telefono_cliente:
+                  type: string
+                  description: Numero di telefono del cliente
+                  example: "3331234567"
+                note:
+                  type: string
+                  description: Note aggiuntive
+                  example: "Installazione urgente"
+                stato:
+                  type: string
+                  enum: [aperto, in_corso, sospeso, chiuso]
+                  description: Stato iniziale del lavoro
+                  example: "aperto"
+                tecnico_assegnato:
+                  type: integer
+                  description: ID del tecnico da assegnare
+                  example: 1
+                extra_fields:
+                  type: object
+                  description: Campi aggiuntivi personalizzati
+                  example: {"priorita": "alta", "data_appuntamento": "2025-01-15"}
+      responses:
+        '200':
+          description: Lavoro creato con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+                  id:
+                    type: integer
+                    description: ID del lavoro creato
+                    example: 21
+                  numero_wr:
+                    type: string
+                    description: Numero WR confermato
+                    example: "WR-001"
+        '400':
+          description: Dati non validi
+        '500':
+          description: Errore interno del server
+
+  /technicians/:
+    get:
+      operationId: getTechnicians
+      summary: Lista tutti i tecnici
+      description: Restituisce l'elenco dei tecnici con informazioni su squadra e Telegram
+      responses:
+        '200':
+          description: Lista tecnici
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Technician'
+
+  /teams/:
+    get:
+      operationId: getTeams
+      summary: Lista tutte le squadre
+      description: Restituisce l'elenco delle squadre di lavoro
+      responses:
+        '200':
+          description: Lista squadre
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+
+  /stats/weekly:
+    get:
+      operationId: getWeeklyStats
+      summary: Statistiche settimanali
+      description: Restituisce il conteggio dei lavori chiusi e sospesi questa settimana
+      responses:
+        '200':
+          description: Statistiche settimanali
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  closed_this_week:
+                    type: integer
+                    description: Lavori chiusi questa settimana
+                  suspended:
+                    type: integer
+                    description: Lavori sospesi
+
+  /stats/closed_by_operator:
+    get:
+      operationId: getClosedByOperator
+      summary: Chiusure per operatore
+      description: Restituisce il conteggio dei lavori chiusi raggruppati per operatore (Open Fiber, FiberCop, etc.)
+      responses:
+        '200':
+          description: Statistiche per operatore
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    operatore:
+                      type: string
+                      example: "Open Fiber"
+                    closed:
+                      type: integer
+
+  /stats/closed_by_technician:
+    get:
+      operationId: getClosedByTechnician
+      summary: Chiusure per tecnico
+      description: Restituisce il conteggio dei lavori chiusi raggruppati per tecnico
+      responses:
+        '200':
+          description: Statistiche per tecnico
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tecnico:
+                      type: string
+                      example: "Mario Rossi"
+                    closed:
+                      type: integer
+
+  /stats/daily_closed:
+    get:
+      operationId: getDailyClosed
+      summary: Chiusure giornaliere
+      description: Restituisce il conteggio dei lavori chiusi per giorno
+      responses:
+        '200':
+          description: Statistiche giornaliere
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      example: "2025-12-14"
+                    closed:
+                      type: integer
+
+  /stats/yearly:
+    get:
+      operationId: getYearlyStats
+      summary: Statistiche annuali
+      description: Restituisce le statistiche aggregate per l'anno corrente
+      responses:
+        '200':
+          description: Statistiche annuali
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      example: "2025-12"
+                    closed:
+                      type: integer
+                      description: Lavori chiusi in quel mese
+
+  /telegram/commands:
+    get:
+      operationId: getTelegramCommands
+      summary: Comandi bot Telegram
+      description: Restituisce la lista dei comandi configurati per il bot Telegram
+      responses:
+        '200':
+          description: Lista comandi
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        command:
+                          type: string
+                        description:
+                          type: string
+
+  /telegram/status:
+    get:
+      operationId: getTelegramStatus
+      summary: Stato bot Telegram
+      description: Restituisce informazioni sullo stato del bot Telegram e autorizzazioni GPT
+      responses:
+        '200':
+          description: Stato bot
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bot_active:
+                    type: boolean
+                    description: Se il bot è attivo
+                  bot_username:
+                    type: string
+                    description: Username del bot Telegram
+                  webhook_configured:
+                    type: boolean
+                    description: Se il webhook è configurato
+                  gpt_authorized:
+                    type: boolean
+                    description: Se il GPT è autorizzato a inviare messaggi
+                  enable_gpt_button:
+                    type: boolean
+                    description: Se mostrare il pulsante per abilitare GPT
+                  chat_id:
+                    type: string
+                    description: Chat ID configurato per le notifiche
+    post:
+      operationId: enableGPTSending
+      summary: Abilita invio messaggi da GPT
+      description: Abilita l'invio di messaggi Telegram da parte del GPT Actions
+      responses:
+        '200':
+          description: GPT abilitato con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "GPT autorizzato a inviare messaggi Telegram"
+        '400':
+          description: Errore nell'abilitazione
+
+  /telegram/send:
+    post:
+      operationId: sendTelegramMessage
+      summary: Invia messaggio Telegram diretto
+      description: Invia un messaggio Telegram usando parametri query (chat_id e text)
+      parameters:
+        - name: chat_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID della chat Telegram destinataria
+        - name: text
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Testo del messaggio da inviare
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Chiave API per autenticazione
+      responses:
+        '200':
+          description: Messaggio inviato con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message_id:
+                    type: integer
+                    description: ID del messaggio inviato
+                    example: 12345
+        '400':
+          description: Parametri mancanti
+        '500':
+          description: Errore nell'invio del messaggio
+
+  /documents/:
+    get:
+      operationId: getDocuments
+      summary: Lista documenti
+      description: Restituisce l'elenco dei documenti caricati
+      responses:
+        '200':
+          description: Lista documenti
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+
+  /telegram/gpt/send:
+    post:
+      operationId: sendGptMessage
+      summary: Invia messaggio GPT ai tecnici
+      description: Invia messaggi Telegram ai tecnici tramite GPT Actions usando target_id del tecnico
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Chiave API per autenticazione
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target_id
+                - message
+              properties:
+                target_id:
+                  type: integer
+                  description: ID del tecnico destinatario (da tabella technicians)
+                  example: 1
+                message:
+                  type: string
+                  description: Testo del messaggio da inviare
+                  example: "🎉 Nuovo lavoro assegnato: WR-001 - Via Roma 123, Milano"
+      responses:
+        '200':
+          description: Messaggio inviato con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Messaggio inviato a 1 destinatari"
+                  sent:
+                    type: integer
+                    example: 1
+                  failed:
+                    type: integer
+                    example: 0
+                  total_recipients:
+                    type: integer
+                    example: 1
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        recipient:
+                          type: string
+                          example: "Tecnico Test"
+        '400':
+          description: Parametri mancanti (target_id obbligatorio)
+        '403':
+          description: GPT non autorizzato
+        '500':
+          description: Errore nell'invio del messaggio
+
+  /telegram/gpt/status:
+    post:
+      operationId: enableGptTelegram
+      summary: Abilita/disabilita invio messaggi da GPT
+      description: Abilita o disabilita l'invio di messaggi Telegram da parte del GPT
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Chiave API per autenticazione
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - enabled
+              properties:
+                enabled:
+                  type: boolean
+                  description: True per abilitare, False per disabilitare
+                  example: true
+      responses:
+        '200':
+          description: Stato aggiornato con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "GPT Telegram abilitato"
+                  enabled:
+                    type: boolean
+                    example: true
+        '400':
+          description: Parametri non validi
+        '403':
+          description: GPT non autorizzato
+        '500':
+          description: Errore nell'abilitazione
+
+  /works/{work_id}/notify:
+    post:
+      operationId: notifyWorkAssignment
+      summary: Notifica assegnazione lavoro
+      description: Invia notifica Telegram automatica al tecnico assegnato per il lavoro specificato
+      parameters:
+        - name: work_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del lavoro da notificare
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Chiave API per autenticazione
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                custom_message:
+                  type: string
+                  description: Messaggio personalizzato da aggiungere alla notifica
+                  example: "Lavoro urgente - priorità alta"
+      responses:
+        '200':
+          description: Notifica inviata con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+        '400':
+          description: Lavoro senza tecnico assegnato
+        '500':
+          description: Errore nell'invio della notifica
+
+  /works/{work_id}/assign/{technician_id}:
+    put:
+      operationId: assignWorkToTechnician
+      summary: Assegna lavoro a tecnico
+      description: Assegna un lavoro specifico a un tecnico e invia notifica automatica
+      parameters:
+        - name: work_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del lavoro da assegnare
+        - name: technician_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del tecnico destinatario
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Chiave API per autenticazione
+      responses:
+        '200':
+          description: Lavoro assegnato con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Assigned"
+        '404':
+          description: Lavoro o tecnico non trovato
+        '500':
+          description: Errore nell'assegnazione
+
+  /telegram/webhook/{bot_token}:
+    post:
+      operationId: telegramWebhook
+      summary: Webhook Telegram
+      description: Endpoint webhook per ricevere aggiornamenti da Telegram Bot
+      parameters:
+        - name: bot_token
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Token del bot Telegram
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              description: Payload webhook Telegram
+              oneOf:
+                - type: object
+                  additionalProperties: true
+                - type: object
+                  properties: {}
+      responses:
+        '200':
+          description: Webhook elaborato con successo
+        '400':
+          description: Payload webhook non valido
+        '500':
+          description: Errore nell'elaborazione webhook
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  schemas:
+    Work:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID univoco del lavoro
+        numero_wr:
+          type: string
+          description: Numero Work Request (es. WR-001)
+        operatore:
+          type: string
+          description: Operatore di rete (Open Fiber, FiberCop)
+        indirizzo:
+          type: string
+          description: Indirizzo del cliente
+        nome_cliente:
+          type: string
+          description: Nome del cliente
+        tipo_lavoro:
+          type: string
+          description: Tipo di intervento (Installazione, Attivazione, Riparazione, Manutenzione)
+        note:
+          type: string
+          nullable: true
+          description: Note aggiuntive
+        stato:
+          type: string
+          enum: [aperto, in_corso, sospeso, chiuso]
+          description: Stato attuale del lavoro
+        data_apertura:
+          type: string
+          format: date-time
+          description: Data di apertura del lavoro
+        data_chiusura:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data di chiusura (se chiuso)
+        tecnico_assegnato:
+          $ref: '#/components/schemas/Technician'
+          nullable: true
+          description: Tecnico assegnato al lavoro
+        extra_fields:
+          type: object
+          description: Campi extra (telefono, etc.)
+
+    Technician:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID univoco del tecnico
+        nome:
+          type: string
+          description: Nome del tecnico
+        cognome:
+          type: string
+          description: Cognome del tecnico
+        telefono:
+          type: string
+          description: Numero di telefono
+        telegram_id:
+          type: string
+          nullable: true
+          description: ID Telegram per notifiche
+        squadra:
+          $ref: '#/components/schemas/Team'
+          nullable: true
+          description: Squadra di appartenenza
+
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID univoco della squadra
+        nome:
+          type: string
+          description: Nome della squadra
+
+    Document:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID univoco del documento
+        filename:
+          type: string
+          description: Nome del file
+        upload_date:
+          type: string
+          format: date-time
+          description: Data di caricamento
+        parsed:
+          type: boolean
+          description: Se il documento è stato processato

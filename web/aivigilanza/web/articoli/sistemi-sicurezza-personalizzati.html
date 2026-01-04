@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="sicurezza-title">Un Sistema di Sicurezza Tutto Tuo | AiVigilanza</title>
+  <meta name="description" content="Perché accontentarsi di sistemi di sicurezza standard? Scopri come creare un sistema personalizzato che si adatta perfettamente alle tue esigenze.">
+  <style>
+    :root {
+      --bg: #0b1320;
+      --card: #111a2b;
+      --text: #e8f0ff;
+      --muted: #94a3b8;
+      --brand: #4da3ff;
+      --ok: #1ee37d;
+      --error: #ff4757;
+      --warning: #ffa500;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      margin: 0 0 16px;
+      color: var(--text);
+      font-size: 1.5em;
+    }
+    .card h3 {
+      margin: 20px 0 12px;
+      color: var(--brand);
+      font-size: 1.2em;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .card li {
+      margin: 8px 0;
+      color: var(--muted);
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: var(--brand);
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 18px;
+      box-shadow: 0 4px 16px rgba(77,163,255,.3);
+      transition: all 0.2s;
+      font-size: 1.1em;
+    }
+    .btn:hover {
+      background: var(--ok);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(30,194,139,.4);
+    }
+    .hero {
+      text-align: center;
+      margin: 40px 0;
+      padding: 40px;
+      background: linear-gradient(135deg, rgba(77,163,255,.1), rgba(30,227,125,.1));
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      margin: 0 0 20px;
+      background: linear-gradient(135deg, var(--brand), var(--ok));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.2em;
+      color: var(--muted);
+      margin: 0;
+    }
+    .advice-box {
+      background: linear-gradient(135deg, rgba(255,165,0,.1), rgba(77,163,255,.1));
+      border: 2px solid var(--warning);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .advice-box h3 {
+      color: var(--warning);
+      margin-top: 0;
+    }
+    .contact-card {
+      background: linear-gradient(135deg, rgba(77,163,255,.1), rgba(30,227,125,.1));
+      border: 2px solid var(--brand);
+      text-align: center;
+      padding: 30px;
+      border-radius: 16px;
+      margin: 40px 0;
+    }
+    .contact-card h2 {
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .phone-number {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--ok);
+      margin: 20px 0;
+    }
+    .personal-note {
+      font-style: italic;
+      color: var(--muted);
+      border-left: 4px solid var(--brand);
+      padding-left: 16px;
+      margin: 20px 0;
+    }
+    footer {
+      padding: 30px 20px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,.08);
+      margin-top: 60px;
+    }
+    .flag-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding: 10px 18px 0 0;
+      user-select: none;
+    }
+    .flag {
+      width: 32px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      background: rgba(255,255,255,.05);
+    }
+    .flag:hover { transform: scale(1.1); }
+    .flag.active { border-color: var(--brand); }
+    @media (max-width: 700px) {
+      .wrap { padding: 18px 4vw; }
+      .card { padding: 16px; }
+      .hero h1 { font-size: 2em; }
+      .hero { padding: 20px; }
+    }
+  </style>
+  <script src="traduzioni/traduzioni-sicurezza.js"></script>
+  <script>
+    // Funzione per cambiare lingua
+    function cambiaLingua(lang) {
+      // Rimuovi classe active da tutte le flag
+      document.querySelectorAll('.flag').forEach(f => f.classList.remove('active'));
+      // Aggiungi classe active alla flag selezionata
+      document.getElementById('flag-' + lang).classList.add('active');
+      // Salva la lingua nel localStorage
+      localStorage.setItem('lang', lang);
+
+      // Applica le traduzioni
+      applicaTraduzioni(lang);
+    }
+
+    // Funzione per applicare le traduzioni
+    function applicaTraduzioni(lang) {
+      console.log('=== INIZIO TRADUZIONI ===');
+      console.log('Lingua richiesta:', lang);
+      console.log('window.traduzioniSicurezza disponibile?', typeof window.traduzioniSicurezza);
+      
+      if (typeof window.traduzioniSicurezza === 'undefined') {
+        console.error('ERRORE: window.traduzioniSicurezza non è definito!');
+        return;
+      }
+      
+      let traduzioni = window.traduzioniSicurezza[lang];
+      if (!traduzioni) {
+        console.warn('Traduzioni non trovate per lingua:', lang, '- uso fallback su English');
+        const fallback = window.traduzioniSicurezza['en'] || window.traduzioniSicurezza['it'] || Object.values(window.traduzioniSicurezza)[0];
+        traduzioni = fallback || {};
+        console.log('Lingue disponibili:', Object.keys(window.traduzioniSicurezza));
+      }
+
+      console.log('Numero di traduzioni trovate:', Object.keys(traduzioni).length);
+
+      // Traduzioni per elementi con data-i18n
+      const elementiConI18n = document.querySelectorAll('[data-i18n]');
+      console.log('Elementi con data-i18n trovati:', elementiConI18n.length);
+      
+      elementiConI18n.forEach((element, index) => {
+        const key = element.getAttribute('data-i18n');
+        if (traduzioni[key]) {
+          if (element.tagName === 'TITLE') {
+            document.title = traduzioni[key];
+          } else if (element.tagName === 'META' && element.getAttribute('name') === 'description') {
+            element.setAttribute('content', traduzioni[key]);
+          } else {
+            element.innerHTML = traduzioni[key];
+          }
+          console.log(`✓ [${index + 1}] ${key}: OK`);
+        } else {
+          console.warn(`✗ [${index + 1}] ${key}: MANCANTE`);
+        }
+      });
+      
+      console.log('=== FINE TRADUZIONI ===');
+    }
+
+    // Inizializzazione
+    document.addEventListener('DOMContentLoaded', function() {
+      const lang = localStorage.getItem('lang') || 'it';
+      cambiaLingua(lang);
+    });
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Barra delle Lingue -->
+    <div class="flag-bar">
+      <div id="flag-it" class="flag flag-it active" onclick="cambiaLingua('it')" title="Italiano">
+        🇮🇹
+      </div>
+      <div id="flag-en" class="flag flag-en" onclick="cambiaLingua('en')" title="English">
+        🇬🇧
+      </div>
+      <div id="flag-he" class="flag flag-he" onclick="cambiaLingua('he')" title="עברית">
+        🇮🇱
+      </div>
+      <div id="flag-ar" class="flag flag-ar" onclick="cambiaLingua('ar')" title="العربية">
+        🇸🇦
+      </div>
+      <div id="flag-ru" class="flag flag-ru" onclick="cambiaLingua('ru')" title="Русский">
+        🇷🇺
+      </div>
+      <div id="flag-zh" class="flag flag-zh" onclick="cambiaLingua('zh')" title="中文">
+        🇨🇳
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1 data-i18n="sicurezza-hero-title">🤔 Perché Accontentarsi di Sistemi Standard?</h1>
+      <p data-i18n="sicurezza-hero-subtitle">Ti svelo perché un sistema di sicurezza personalizzato è molto più efficace di quelli commerciali...</p>
+    </div>
+
+    <!-- Il Problema -->
+    <div class="card">
+      <h2 data-i18n="sicurezza-limite-title">🎯 Il Limite dei Sistemi Commerciali</h2>
+      <p style="color: var(--muted); margin-bottom: 20px;" data-i18n="sicurezza-limite-text">
+        I sistemi di sicurezza che trovi nei negozi sono ottimi prodotti, ma hanno un limite:
+        sono conosciuti da tutti. Chiunque può documentarsi online e imparare come funzionano.
+      </p>
+
+      <div class="advice-box">
+        <h3 data-i18n="sicurezza-consiglio-title">💡 Il Mio Suggerimento</h3>
+        <p data-i18n="sicurezza-consiglio-text"><strong>Crea qualcosa di unico.</strong> Un sistema progettato specificamente per te,
+        con logiche che solo tu conosci. È come avere una serratura personalizzata che nessun fabbro standard può aprire!</p>
+      </div>
+
+      <h3 data-i18n="sicurezza-vantaggi-title">Perché un Sistema Personalizzato è Migliore:</h3>
+      <ul>
+        <li data-i18n="sicurezza-vantaggio-1"><strong>🔒 Unicità:</strong> Nessuno avrà esattamente lo stesso sistema</li>
+        <li data-i18n="sicurezza-vantaggio-2"><strong>🎯 Su Misura:</strong> Adattato alle tue esigenze specifiche</li>
+        <li data-i18n="sicurezza-vantaggio-3"><strong>🧠 Imprevedibile:</strong> Logiche personalizzate difficili da indovinare</li>
+        <li data-i18n="sicurezza-vantaggio-4"><strong>⚡ Efficiente:</strong> Solo le funzioni che ti servono davvero</li>
+        <li data-i18n="sicurezza-vantaggio-5"><strong>🔧 Flessibile:</strong> Puoi modificarlo e migliorarlo nel tempo</li>
+      </ul>
+    </div>
+
+    <!-- Cosa Facciamo -->
+    <div class="card">
+      <h2 data-i18n="sicurezza-aiuto-title">🛠️ Come Ti Aiutiamo Noi</h2>
+      <p style="color: var(--muted); margin-bottom: 20px;" data-i18n="sicurezza-aiuto-text">
+        Non vendiamo prodotti preconfezionati. Ti progettiamo un sistema di sicurezza personalizzato,
+        come se fosse creato su misura per la tua situazione specifica.
+      </p>
+
+      <h3 data-i18n="sicurezza-metodo-title">Il Nostro Metodo:</h3>
+      <ul>
+        <li data-i18n="sicurezza-metodo-1"><strong>📞 Ascoltiamo le tue esigenze:</strong> Dove vivi? Cosa vuoi proteggere? Quali sono le tue abitudini?</li>
+        <li data-i18n="sicurezza-metodo-2"><strong>💻 Scriviamo il codice apposta:</strong> Programmazione Python personalizzata per Raspberry Pi</li>
+        <li data-i18n="sicurezza-metodo-3"><strong>🔧 Selezioniamo l'hardware:</strong> Sensori e dispositivi scelti per il tuo caso specifico</li>
+        <li data-i18n="sicurezza-metodo-4"><strong>📱 Ti diamo il controllo:</strong> Interfaccia personalizzata per gestire tutto</li>
+        <li data-i18n="sicurezza-metodo-5"><strong>🛟 Supporto continuo:</strong> Assistenza per eventuali modifiche future</li>
+      </ul>
+
+      <div class="personal-note" data-i18n="sicurezza-testimonianza">
+        "Ho creato un sistema personalizzato per il mio monopattino elettrico.
+        Ora ho il controllo completo e so sempre dove si trova.
+        È molto più sicuro di qualsiasi antifurto commerciale!"
+      </div>
+    </div>
+
+    <!-- Esempi Pratici -->
+    <div class="card">
+      <h2 data-i18n="sicurezza-esempi-title">🚀 Esempi di Sistemi Personalizzati</h2>
+
+      <h3 data-i18n="sicurezza-casa-title">🏠 Per Casa e Garage</h3>
+      <p data-i18n="sicurezza-casa-text">Non un semplice allarme che suona. Un sistema intelligente che:</p>
+      <ul>
+        <li data-i18n="sicurezza-casa-1">Riconosce quando sei tu che entri (via Bluetooth del telefono)</li>
+        <li data-i18n="sicurezza-casa-2">Accende le luci automaticamente se rileva movimenti insoliti</li>
+        <li data-i18n="sicurezza-casa-3">Chiude automaticamente il cancello se dimentichi di farlo</li>
+        <li data-i18n="sicurezza-casa-4">Ti invia notifiche personalizzate quando serve</li>
+      </ul>
+
+      <h3 data-i18n="sicurezza-veicoli-title">🚗 Per Veicoli</h3>
+      <p data-i18n="sicurezza-veicoli-text">Più di un semplice antifurto GPS:</p>
+      <ul>
+        <li data-i18n="sicurezza-veicoli-1">Monitora i tuoi spostamenti in modo intelligente</li>
+        <li data-i18n="sicurezza-veicoli-2">Si collega al tuo telefono senza app di terze parti</li>
+        <li data-i18n="sicurezza-veicoli-3">Ti avverte di situazioni particolari</li>
+        <li data-i18n="sicurezza-veicoli-4">Si adatta alle tue esigenze specifiche</li>
+      </ul>
+
+      <h3 data-i18n="sicurezza-negozi-title">🏪 Per Attività Commerciali</h3>
+      <p data-i18n="sicurezza-negozi-text">Sistemi che vanno oltre la semplice sorveglianza:</p>
+      <ul>
+        <li data-i18n="sicurezza-negozi-1">Gestione intelligente degli accessi</li>
+        <li data-i18n="sicurezza-negozi-2">Monitoraggio personalizzato degli ambienti</li>
+        <li data-i18n="sicurezza-negozi-3">Integrazione con i tuoi processi lavorativi</li>
+        <li data-i18n="sicurezza-negozi-4">Adattabile alle tue esigenze specifiche</li>
+      </ul>
+    </div>
+
+    <!-- Il Nostro Vantaggio -->
+    <div class="card">
+      <h2 data-i18n="sicurezza-vantaggi-noi-title">✨ Perché Scegliere Noi</h2>
+
+      <h3 data-i18n="sicurezza-personalizzazione-title">🎯 Personalizzazione Totale</h3>
+      <p data-i18n="sicurezza-personalizzazione-text">Ogni sistema è studiato per adattarsi perfettamente alle tue esigenze specifiche.</p>
+
+      <h3 data-i18n="sicurezza-prezzi-title">💰 Trasparenza nei Prezzi</h3>
+      <p data-i18n="sicurezza-prezzi-text">Prezzi chiari e onesti. Sai esattamente cosa stai acquistando e perché.</p>
+
+      <h3 data-i18n="sicurezza-competenza-title">🧠 Competenza Tecnica</h3>
+      <p data-i18n="sicurezza-competenza-text">Anni di esperienza con tecnologie IoT, sensori e programmazione embedded.</p>
+
+      <h3 data-i18n="sicurezza-approccio-title">🤝 Approccio Personale</h3>
+      <p data-i18n="sicurezza-approccio-text">Lavoriamo come artigiani digitali, curando ogni dettaglio del tuo progetto.</p>
+    </div>
+
+    <!-- Contatti -->
+    <div class="contact-card">
+      <h2 data-i18n="sicurezza-contatto-title">📞 Interessato a un Sistema Personalizzato?</h2>
+      <p style="color: var(--muted); margin-bottom: 20px;" data-i18n="sicurezza-contatto-text">
+        Parliamone insieme. Ti aiuto a capire come possiamo creare una soluzione
+        di sicurezza unica per le tue esigenze. È più semplice di quello che pensi!
+      </p>
+      <div class="phone-number">
+        📱 +39 351 012 0753
+      </div>
+      <p style="color: var(--muted); font-size: 0.9em; margin: 20px 0;" data-i18n="sicurezza-contatto-note">
+        Chiamami quando vuoi. Possiamo fare una chiacchierata per capire le tue esigenze
+        e proporti soluzioni concrete. Nessun impegno, solo consigli utili.
+      </p>
+      <a href="ricontatti.html" class="btn" data-i18n="sicurezza-contatto-btn">💬 Chiedimi un Consiglio</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AiVigilanza - Sistemi di Sicurezza Personalizzati</p>
+  </footer>
+</body>
+</html>

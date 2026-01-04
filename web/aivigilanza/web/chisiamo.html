@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://servicess.net/chisiamo.html">
+  <title>Chi siamo – AiVigilanza</title>
+  <style>
+    body {
+      font-family: 'Georgia', 'Segoe UI', serif;
+      background: linear-gradient(135deg, #181204 0%, #bfa14a 80%, #fffbe6 100%);
+      color: #fffbe6;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .lock-menu-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      margin-bottom: 30px;
+      user-select: none;
+    }
+    .lock-menu-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 18px;
+    }
+    .lock-menu {
+      width: 340px;
+      height: 220px;
+      background: rgba(34,34,34,0.8);
+      border-radius: 30px;
+      box-shadow: 0 0 30px #bfa14a99;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .lock-menu .menu-item {
+      width: 260px;
+      height: 54px;
+      line-height: 54px;
+      font-size: 1.45em;
+      color: #bfa14a;
+      opacity: 0.5;
+      transition: all 0.2s;
+      background: none;
+      border-radius: 20px;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+      text-align: center;
+    }
+    .lock-menu .menu-item.selected {
+      background: #bfa14a;
+      color: #181204;
+      font-size: 1.5em;
+      opacity: 1;
+      box-shadow: 0 2px 12px #bfa14a99;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .lock-menu .menu-item.above, .lock-menu .menu-item.below {
+      opacity: 0.8;
+      font-size: 1em;
+      color: #fffbe6;
+    }
+    .lock-menu .menu-item.far {
+      opacity: 0.3;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    #leftBtn, #rightBtn {
+      background: #bfa14a;
+      color: #181204;
+      border: none;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      font-size: 2.3em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #bfa14a88;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #leftBtn:hover, #rightBtn:hover {
+      background: #229ED9;
+      color: #fff;
+    }
+    .main-content {
+      background: rgba(34,34,34,0.92);
+      border-radius: 24px;
+      box-shadow: 0 0 32px #bfa14a99;
+      padding: 48px 32px 36px 32px;
+      max-width: 700px;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      z-index: 1;
+      position: relative;
+    }
+    h1 {
+      color: #bfa14a;
+      font-size: 2.1em;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+    .bio-box {
+      background: #bfa14a11;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px #bfa14a22;
+      padding: 32px 24px;
+      margin: 32px auto 0 auto;
+      color: #fffbe6;
+      font-size: 1.13em;
+      max-width: 600px;
+      text-align: left;
+    }
+    @media (max-width: 700px) {
+      .lock-menu {
+        width: 98vw;
+        height: 120px;
+      }
+      .lock-menu .menu-item {
+        width: 98vw;
+        height: 36px;
+        font-size: 1.1em;
+      }
+      #leftBtn, #rightBtn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.5em;
+      }
+      .main-content { padding: 18px 4vw; }
+      .bio-box { font-size: 1em; padding: 16px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra bandierine per selezione lingua, visibile anche senza JS -->
+  <div class="flag-bar" style="display:flex;gap:8px;justify-content:flex-end;padding:10px 18px 0 0;">
+    <button class="flag-btn" data-lang="it" title="Italiano" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇹</button>
+    <button class="flag-btn" data-lang="en" title="English" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇬🇧</button>
+    <button class="flag-btn" data-lang="fr" title="Français" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇫🇷</button>
+    <button class="flag-btn" data-lang="de" title="Deutsch" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇩🇪</button>
+    <button class="flag-btn" data-lang="es" title="Español" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇪🇸</button>
+    <button class="flag-btn" data-lang="ru" title="Русский" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇷🇺</button>
+    <button class="flag-btn" data-lang="ar" title="العربية" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇸🇦</button>
+    <button class="flag-btn" data-lang="zh" title="中文" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇨🇳</button>
+    <button class="flag-btn" data-lang="ja" title="日本語" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇯🇵</button>
+    <button class="flag-btn" data-lang="hi" title="हिन्दी" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇳</button>
+  </div>
+  <div class="lock-menu-container">
+    <div class="lock-menu-row">
+      <button id="leftBtn" aria-label="Precedente">&#9664;</button>
+      <div class="lock-menu" id="lockMenu"></div>
+      <button id="rightBtn" aria-label="Successivo">&#9654;</button>
+    </div>
+  </div>
+  <div class="main-content">
+    <h1 id="chisiamo-title">Chi siamo</h1>
+    <div class="bio-box" id="chisiamo-bio">
+      <div style="margin-bottom:18px;">
+        <b>Operiamo nella sicurezza dal 2000.</b><br>
+        Siamo partiti con un servizio di vigilanza durante il Giubileo, poi nel 2006 io e alcuni amici siamo entrati come agenti di sicurezza in importanti film come <b>Angeli e Demoni</b>. Nel 2008 abbiamo iniziato a scortare gli incassi di locali che guadagnavano anche 400 euro al giorno, specializzandoci poi in <b>scorte e protezione per aziende</b>, controllo della selezione del personale, scorta riservata alle famiglie dei committenti, sistemi di monitoraggio a distanza e controspionaggio della concorrenza.<br><br>
+        Oggi offriamo soluzioni avanzate per la sicurezza, la privacy e la protezione di persone, aziende e famiglie. Se hai bisogno di un servizio riservato, professionale e su misura, contattaci senza impegno.
+      </div>
+      Sono un operatore della sicurezza avanzata, organizzo corsi para-militari sull’uso di droni e sulle contromisure di guerra elettronica.<br><br>
+      Appassionato di programmazione e realizzazione dispositivi, progetto e costruisco soluzioni su misura: dai server con SIM 5G grandi come un pacchetto di sigarette, capaci di ospitare siti e crittografare la rete telefonica privata con nodi di sicurezza militari (Yggdrasil, WireGuard, Tor sincronizzati) per mantenere la linea veloce senza sovraccaricare la banda.<br><br>
+      Sviluppo AI personale in grado di realizzare praticamente di tutto, come siti web in videochiamata con LiA su server privato con SIM 5G, IP statico e pubblico, che ospita il sito, cripta le telefonate e consuma solo 3W al giorno.<br><br>
+      Seleziono persone per lavorare in punti critici e offro servizi di autisti, hostess, buttafuori, accompagnatrici e molto altro.<br><br>
+      La nostra missione è offrire soluzioni di sicurezza, tecnologia e riservatezza su misura per ogni esigenza.
+      <div style="margin-top:32px;text-align:center;">
+        <a id="chisiamo-whatsapp" href="https://wa.me/393510120753" target="_blank" style="display:inline-block;background:#bfa14a;color:#181204;font-weight:bold;padding:14px 28px;border-radius:16px;text-decoration:none;box-shadow:0 2px 8px #bfa14a55;font-size:1.13em;transition:background 0.2s;">📱 Chiamami su WhatsApp</a>
+      </div>
+    </div>
+  </div>
+  <script src="traduzione/chisiamo.js"></script>
+  <script>
+    // Funzione per ottenere la lingua salvata o di default
+    function getLanguage() {
+      return localStorage.getItem('lang') || 'it';
+    }
+
+    // Funzione per cambiare lingua e aggiornare titolo, menu e bio
+    function setLanguage(lang) {
+      const t = window.translationsChisiamo?.[lang] || window.translationsChisiamo['it'];
+      // Titolo
+      document.getElementById('chisiamo-title').textContent = t.title;
+      // Bio
+      document.getElementById('chisiamo-bio').innerHTML = t.bio;
+      // Menu
+      if (t.menu && window.menuItems) {
+        for (let i = 0; i < window.menuItems.length; i++) {
+          window.menuItems[i].label = t.menu[i] || window.menuItems[i].label;
+        }
+        if (typeof renderMenu === 'function') renderMenu();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        setLanguage(getLanguage());
+      }, 0);
+
+      // Collega le bandiere per cambiare lingua
+      document.querySelectorAll('.flag-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const lang = btn.getAttribute('data-lang');
+          setLanguage(lang);
+          // Salva la lingua scelta in localStorage
+          localStorage.setItem('lang', lang);
+        });
+      });
+    });
+  </script>
+  <script>
+    const menuItems = [
+      { label: 'Home', href: 'index.html' },
+      { label: 'Guardiania', href: 'guardiania.html' },
+      { label: 'Legale', href: 'legale.html' },
+      { label: 'Domotica', href: 'domotica.html' },
+      { label: 'Criptotelefonia', href: 'https://vpn-gypsy.com/' },
+      { label: '7070', href: 'antivirus.html' },
+      { label: 'Bonifiche', href: 'bonifiche.html' },
+      { label: 'SafeNode™', href: 'SafeNode.html' },
+      { label: 'Pulizie Straordinarie', href: 'straordinarie.html' },
+      { label: 'Telecamere', href: 'articoli/telecamere.html' },
+      { label: 'Contatti', href: 'contatti.html' },
+      { label: 'Chi siamo', href: 'chisiamo.html' }
+    ];
+    let selectedIdx = 0;
+    const lockMenu = document.getElementById('lockMenu');
+    function renderMenu() {
+      lockMenu.innerHTML = '';
+      for (let i = -2; i <= 2; i++) {
+        let idx = (selectedIdx + i + menuItems.length) % menuItems.length;
+        let item = document.createElement('a');
+        item.className = 'menu-item';
+        if (i === 0) item.classList.add('selected');
+        else if (Math.abs(i) === 1) item.classList.add(i < 0 ? 'above' : 'below');
+        else item.classList.add('far');
+        item.href = menuItems[idx].href;
+        item.textContent = menuItems[idx].label;
+        if (i === 0) item.tabIndex = 0;
+        lockMenu.appendChild(item);
+      }
+    }
+    function moveUp() {
+      selectedIdx = (selectedIdx - 1 + menuItems.length) % menuItems.length;
+      renderMenu();
+    }
+    function moveDown() {
+      selectedIdx = (selectedIdx + 1) % menuItems.length;
+      renderMenu();
+    }
+    document.getElementById('leftBtn').onclick = moveUp;
+    document.getElementById('rightBtn').onclick = moveDown;
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') { moveUp(); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { moveDown(); e.preventDefault(); }
+    });
+    let touchStartX = null;
+    lockMenu.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    });
+    lockMenu.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      let deltaX = e.changedTouches[0].clientX - touchStartX;
+      if (deltaX < -30) moveDown();
+      if (deltaX > 30) moveUp();
+      touchStartX = null;
+    });
+    renderMenu();
+  </script>
+  <script>
+  (function() {
+    function uuidv4() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+    function getOrSetUserId() {
+      let match = document.cookie.match(/(?:^|; )user_id=([^;]*)/);
+      if (match) return match[1];
+      let id = uuidv4();
+      document.cookie = "user_id=" + id + "; path=/; max-age=31536000";
+      return id;
+    }
+    function registraVisita() {
+      const user_id = getOrSetUserId();
+      fetch("http://93.57.240.131:2626/?user_id=" + encodeURIComponent(user_id) + "&pagina=chisiamo.html", {
+        method: "GET",
+        credentials: "include"
+      });
+    }
+    registraVisita();
+  })();
+  </script>
+  <script>
+    // Lista di browser umani
+    const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+    let isBot = true;
+    for (let b of safeBrowsers) {
+      if (navigator.userAgent.includes(b)) {
+        isBot = false;
+        break;
+      }
+    }
+    // Se è un bot, lo reindirizzi alla trappola
+    if (isBot) {
+      window.location.href = "/home.html";
+    }
+  </script>
+</body>
+</html>

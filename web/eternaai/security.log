@@ -1,0 +1,687 @@
+2025-09-08 08:25:18,716 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.74:5001
+2025-09-08 08:25:18,716 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:26:00,206 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.74:5000
+2025-09-08 08:26:00,206 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:26:18,285 - INFO - {"timestamp": "2025-09-08T08:26:18.285642", "event_type": "REQUEST", "ip": "127.0.0.1", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.103.2 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36", "details": {"method": "GET", "url": "http://localhost:5000/?id=e1607d49-8058-4e8b-96ec-c6287d13d0c8&vscodeBrowserReqId=1757319978245", "data": {}}}
+2025-09-08 08:26:18,285 - INFO - {"timestamp": "2025-09-08T08:26:18.285840", "event_type": "PAGE_ACCESS", "ip": "127.0.0.1", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.103.2 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:26:18,289 - INFO - 127.0.0.1 - - [08/Sep/2025 08:26:18] "GET /?id=e1607d49-8058-4e8b-96ec-c6287d13d0c8&vscodeBrowserReqId=1757319978245 HTTP/1.1" 200 -
+2025-09-08 08:26:58,083 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.74:5000
+2025-09-08 08:26:58,083 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:35:28,144 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.74:5000
+2025-09-08 08:35:28,144 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:36:53,296 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.74:5000
+2025-09-08 08:36:53,296 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:38:02,301 - INFO - {"timestamp": "2025-09-08T08:38:02.301014", "event_type": "REQUEST", "ip": "43.131.26.226", "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1", "details": {"method": "GET", "url": "http://oracolodigitale.it/index.html", "data": {}}}
+2025-09-08 08:38:48,888 - INFO - {"timestamp": "2025-09-08T08:38:48.888474", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "HEAD", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:38:48,888 - INFO - {"timestamp": "2025-09-08T08:38:48.888675", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:38:55,024 - INFO - {"timestamp": "2025-09-08T08:38:55.024817", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:38:55,025 - INFO - {"timestamp": "2025-09-08T08:38:55.025052", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:39:46,202 - INFO - {"timestamp": "2025-09-08T08:39:46.202540", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:39:46,202 - INFO - {"timestamp": "2025-09-08T08:39:46.202741", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:40:40,416 - INFO - {"timestamp": "2025-09-08T08:40:40.416536", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:40:40,416 - INFO - {"timestamp": "2025-09-08T08:40:40.416775", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:41:04,962 - INFO - {"timestamp": "2025-09-08T08:41:04.962459", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:41:04,962 - INFO - {"timestamp": "2025-09-08T08:41:04.962661", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:41:17,311 - INFO - {"timestamp": "2025-09-08T08:41:17.311759", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:41:17,311 - INFO - {"timestamp": "2025-09-08T08:41:17.311948", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:41:41,474 - INFO - {"timestamp": "2025-09-08T08:41:41.474850", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:41:41,475 - INFO - {"timestamp": "2025-09-08T08:41:41.475036", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:41:54,682 - INFO - {"timestamp": "2025-09-08T08:41:54.682083", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:41:54,682 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/usr/local/lib/python3.10/dist-packages/flask_limiter/extension.py", line 1314, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: login.html
+2025-09-08 08:42:07,453 - INFO - {"timestamp": "2025-09-08T08:42:07.453432", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:42:07,454 - INFO - {"timestamp": "2025-09-08T08:42:07.453949", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:42:08,375 - INFO - {"timestamp": "2025-09-08T08:42:08.374795", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:42:08,375 - INFO - {"timestamp": "2025-09-08T08:42:08.375317", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:42:08,642 - INFO - {"timestamp": "2025-09-08T08:42:08.642407", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:42:08,643 - INFO - {"timestamp": "2025-09-08T08:42:08.642939", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:42:10,163 - INFO - {"timestamp": "2025-09-08T08:42:10.163567", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/register", "data": {}}}
+2025-09-08 08:42:10,164 - ERROR - Exception on /register [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "<string>", line 110, in register
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: register.html
+2025-09-08 08:42:30,022 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.74:5000
+2025-09-08 08:42:30,022 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:43:51,780 - INFO - {"timestamp": "2025-09-08T08:43:51.780070", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/register", "data": {}}}
+2025-09-08 08:43:51,780 - ERROR - Exception on /register [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "<string>", line 110, in register
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: register.html
+2025-09-08 08:43:54,569 - INFO - {"timestamp": "2025-09-08T08:43:54.569212", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:43:54,569 - INFO - {"timestamp": "2025-09-08T08:43:54.569678", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:43:54,901 - INFO - {"timestamp": "2025-09-08T08:43:54.901499", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:43:54,902 - INFO - {"timestamp": "2025-09-08T08:43:54.901956", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:43:55,120 - INFO - {"timestamp": "2025-09-08T08:43:55.120711", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:43:55,121 - INFO - {"timestamp": "2025-09-08T08:43:55.121169", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:43:56,431 - INFO - {"timestamp": "2025-09-08T08:43:56.431525", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:43:56,433 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/usr/local/lib/python3.10/dist-packages/flask_limiter/extension.py", line 1314, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: login.html
+2025-09-08 08:44:01,600 - INFO - {"timestamp": "2025-09-08T08:44:01.600432", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/register", "data": {}}}
+2025-09-08 08:44:01,601 - ERROR - Exception on /register [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "<string>", line 110, in register
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: register.html
+2025-09-08 08:44:21,462 - INFO - {"timestamp": "2025-09-08T08:44:21.461914", "event_type": "REQUEST", "ip": "127.0.0.1", "user_agent": "Werkzeug/3.1.3", "details": {"method": "GET", "url": "http://localhost/", "data": {}}}
+2025-09-08 08:44:21,462 - INFO - {"timestamp": "2025-09-08T08:44:21.462112", "event_type": "PAGE_ACCESS", "ip": "127.0.0.1", "user_agent": "Werkzeug/3.1.3", "details": {"page": "home"}}
+2025-09-08 08:44:21,462 - ERROR - Exception on / [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "<string>", line 87, in home
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: index.html
+2025-09-08 08:45:19,643 - INFO - {"timestamp": "2025-09-08T08:45:19.643338", "event_type": "REQUEST", "ip": "43.133.187.11", "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1", "details": {"method": "GET", "url": "http://oracolodigitale.it/login", "data": {}}}
+2025-09-08 08:45:19,649 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/usr/local/lib/python3.10/dist-packages/flask_limiter/extension.py", line 1314, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:45:29,630 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.74:5000
+2025-09-08 08:45:29,630 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:45:38,940 - INFO - {"timestamp": "2025-09-08T08:45:38.940205", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:45:38,940 - INFO - {"timestamp": "2025-09-08T08:45:38.940673", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:45:40,372 - INFO - {"timestamp": "2025-09-08T08:45:40.372764", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/register", "data": {}}}
+2025-09-08 08:45:40,373 - ERROR - Exception on /register [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "<string>", line 110, in register
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: register.html
+2025-09-08 08:45:43,621 - INFO - {"timestamp": "2025-09-08T08:45:43.621261", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:45:43,623 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/usr/local/lib/python3.10/dist-packages/flask_limiter/extension.py", line 1314, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: login.html
+2025-09-08 08:45:48,018 - INFO - {"timestamp": "2025-09-08T08:45:48.018229", "event_type": "REQUEST", "ip": "127.0.0.1", "user_agent": "Werkzeug/3.1.3", "details": {"method": "GET", "url": "http://localhost/", "data": {}}}
+2025-09-08 08:45:48,018 - INFO - {"timestamp": "2025-09-08T08:45:48.018402", "event_type": "PAGE_ACCESS", "ip": "127.0.0.1", "user_agent": "Werkzeug/3.1.3", "details": {"page": "home"}}
+2025-09-08 08:46:04,686 - INFO - {"timestamp": "2025-09-08T08:46:04.686551", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:46:04,686 - INFO - {"timestamp": "2025-09-08T08:46:04.686749", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:46:37,621 - INFO - {"timestamp": "2025-09-08T08:46:37.621551", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:46:37,621 - INFO - {"timestamp": "2025-09-08T08:46:37.621793", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:46:57,209 - INFO - {"timestamp": "2025-09-08T08:46:57.209612", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:46:57,209 - INFO - {"timestamp": "2025-09-08T08:46:57.209816", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:47:00,966 - INFO - {"timestamp": "2025-09-08T08:47:00.966052", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/about.php", "data": {}}}
+2025-09-08 08:47:01,026 - INFO - {"timestamp": "2025-09-08T08:47:01.026429", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/about/function.php", "data": {}}}
+2025-09-08 08:47:01,086 - INFO - {"timestamp": "2025-09-08T08:47:01.086682", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/admin.php", "data": {}}}
+2025-09-08 08:47:01,148 - INFO - {"timestamp": "2025-09-08T08:47:01.147944", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/admin/admin.php", "data": {}}}
+2025-09-08 08:47:01,207 - INFO - {"timestamp": "2025-09-08T08:47:01.207743", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/admin/function.php", "data": {}}}
+2025-09-08 08:47:01,268 - INFO - {"timestamp": "2025-09-08T08:47:01.268145", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/admin/index.php", "data": {}}}
+2025-09-08 08:47:01,329 - INFO - {"timestamp": "2025-09-08T08:47:01.329020", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/adminfuns.php", "data": {}}}
+2025-09-08 08:47:01,389 - INFO - {"timestamp": "2025-09-08T08:47:01.389020", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/akc.php", "data": {}}}
+2025-09-08 08:47:01,449 - INFO - {"timestamp": "2025-09-08T08:47:01.449358", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/al.php", "data": {}}}
+2025-09-08 08:47:01,509 - INFO - {"timestamp": "2025-09-08T08:47:01.509411", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/alfa.php", "data": {}}}
+2025-09-08 08:47:01,569 - INFO - {"timestamp": "2025-09-08T08:47:01.569368", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/as.php", "data": {}}}
+2025-09-08 08:47:01,629 - INFO - {"timestamp": "2025-09-08T08:47:01.629423", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/asasx.php", "data": {}}}
+2025-09-08 08:47:01,690 - INFO - {"timestamp": "2025-09-08T08:47:01.689870", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/assets/images/doc.php", "data": {}}}
+2025-09-08 08:47:01,748 - INFO - {"timestamp": "2025-09-08T08:47:01.748576", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/atomlib.php", "data": {}}}
+2025-09-08 08:47:01,807 - INFO - {"timestamp": "2025-09-08T08:47:01.806982", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/auth.php", "data": {}}}
+2025-09-08 08:47:01,867 - INFO - {"timestamp": "2025-09-08T08:47:01.867394", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/autoload_classmap.php", "data": {}}}
+2025-09-08 08:47:01,928 - INFO - {"timestamp": "2025-09-08T08:47:01.928002", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/autoload_classmap/function.php", "data": {}}}
+2025-09-08 08:47:01,989 - INFO - {"timestamp": "2025-09-08T08:47:01.989015", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/b.php", "data": {}}}
+2025-09-08 08:47:02,048 - INFO - {"timestamp": "2025-09-08T08:47:02.048794", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/blog/fw.php", "data": {}}}
+2025-09-08 08:47:02,108 - INFO - {"timestamp": "2025-09-08T08:47:02.108563", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/bugz.php", "data": {}}}
+2025-09-08 08:47:02,169 - INFO - {"timestamp": "2025-09-08T08:47:02.168988", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/byp.php", "data": {}}}
+2025-09-08 08:47:02,229 - INFO - {"timestamp": "2025-09-08T08:47:02.229011", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/cc.php", "data": {}}}
+2025-09-08 08:47:02,289 - INFO - {"timestamp": "2025-09-08T08:47:02.289192", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/chosen.php", "data": {}}}
+2025-09-08 08:47:02,349 - INFO - {"timestamp": "2025-09-08T08:47:02.349624", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/class.php", "data": {}}}
+2025-09-08 08:47:02,410 - INFO - {"timestamp": "2025-09-08T08:47:02.410108", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/classwithtostring.php", "data": {}}}
+2025-09-08 08:47:02,470 - INFO - {"timestamp": "2025-09-08T08:47:02.470039", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/composer.php", "data": {}}}
+2025-09-08 08:47:02,530 - INFO - {"timestamp": "2025-09-08T08:47:02.530044", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/css.php", "data": {}}}
+2025-09-08 08:47:02,588 - INFO - {"timestamp": "2025-09-08T08:47:02.588870", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/dropdown.php", "data": {}}}
+2025-09-08 08:47:02,652 - INFO - {"timestamp": "2025-09-08T08:47:02.652272", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/edit.php", "data": {}}}
+2025-09-08 08:47:02,712 - INFO - {"timestamp": "2025-09-08T08:47:02.712483", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/f35.php", "data": {}}}
+2025-09-08 08:47:02,789 - INFO - {"timestamp": "2025-09-08T08:47:02.789202", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/file.php", "data": {}}}
+2025-09-08 08:47:02,849 - INFO - {"timestamp": "2025-09-08T08:47:02.849349", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/file2.php", "data": {}}}
+2025-09-08 08:47:02,909 - INFO - {"timestamp": "2025-09-08T08:47:02.909399", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/filemanager.php", "data": {}}}
+2025-09-08 08:47:02,969 - INFO - {"timestamp": "2025-09-08T08:47:02.969388", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/files/index.php", "data": {}}}
+2025-09-08 08:47:03,029 - INFO - {"timestamp": "2025-09-08T08:47:03.029367", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/fix.php", "data": {}}}
+2025-09-08 08:47:03,090 - INFO - {"timestamp": "2025-09-08T08:47:03.090354", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/flower.php", "data": {}}}
+2025-09-08 08:47:03,150 - INFO - {"timestamp": "2025-09-08T08:47:03.149926", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/fox.php", "data": {}}}
+2025-09-08 08:47:03,214 - INFO - {"timestamp": "2025-09-08T08:47:03.214348", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/function/function.php", "data": {}}}
+2025-09-08 08:47:03,273 - INFO - {"timestamp": "2025-09-08T08:47:03.273016", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/g.php", "data": {}}}
+2025-09-08 08:47:03,332 - INFO - {"timestamp": "2025-09-08T08:47:03.332152", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/gecko.php", "data": {}}}
+2025-09-08 08:47:03,392 - INFO - {"timestamp": "2025-09-08T08:47:03.392434", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/gel4y.php", "data": {}}}
+2025-09-08 08:47:03,455 - INFO - {"timestamp": "2025-09-08T08:47:03.455580", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/gelay.php", "data": {}}}
+2025-09-08 08:47:03,516 - INFO - {"timestamp": "2025-09-08T08:47:03.516129", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/gg.php", "data": {}}}
+2025-09-08 08:47:03,576 - INFO - {"timestamp": "2025-09-08T08:47:03.576206", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/goat.php", "data": {}}}
+2025-09-08 08:47:03,636 - INFO - {"timestamp": "2025-09-08T08:47:03.636172", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/goods.php", "data": {}}}
+2025-09-08 08:47:03,696 - INFO - {"timestamp": "2025-09-08T08:47:03.696157", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/h.php", "data": {}}}
+2025-09-08 08:47:03,756 - INFO - {"timestamp": "2025-09-08T08:47:03.755990", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/images/admin.php", "data": {}}}
+2025-09-08 08:47:03,816 - INFO - {"timestamp": "2025-09-08T08:47:03.815934", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/images/class-config.php", "data": {}}}
+2025-09-08 08:47:03,877 - INFO - {"timestamp": "2025-09-08T08:47:03.876967", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/inc.php", "data": {}}}
+2025-09-08 08:47:03,945 - INFO - {"timestamp": "2025-09-08T08:47:03.945178", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/index.bak.php", "data": {}}}
+2025-09-08 08:47:04,029 - INFO - {"timestamp": "2025-09-08T08:47:04.028990", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/index/function.php", "data": {}}}
+2025-09-08 08:47:04,091 - INFO - {"timestamp": "2025-09-08T08:47:04.090907", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/info.php", "data": {}}}
+2025-09-08 08:47:04,154 - INFO - {"timestamp": "2025-09-08T08:47:04.154017", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/infos.php", "data": {}}}
+2025-09-08 08:47:04,214 - INFO - {"timestamp": "2025-09-08T08:47:04.214353", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/ioxi-o.php", "data": {}}}
+2025-09-08 08:47:04,274 - INFO - {"timestamp": "2025-09-08T08:47:04.274107", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/k.php", "data": {}}}
+2025-09-08 08:47:04,333 - INFO - {"timestamp": "2025-09-08T08:47:04.333690", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/m.php", "data": {}}}
+2025-09-08 08:47:04,400 - INFO - {"timestamp": "2025-09-08T08:47:04.400204", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/mar.php", "data": {}}}
+2025-09-08 08:47:04,460 - INFO - {"timestamp": "2025-09-08T08:47:04.460331", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/mini", "data": {}}}
+2025-09-08 08:47:04,523 - INFO - {"timestamp": "2025-09-08T08:47:04.523521", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/mini.php", "data": {}}}
+2025-09-08 08:47:04,583 - INFO - {"timestamp": "2025-09-08T08:47:04.583511", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/mm.php", "data": {}}}
+2025-09-08 08:47:04,643 - INFO - {"timestamp": "2025-09-08T08:47:04.643172", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/ms-edit.php", "data": {}}}
+2025-09-08 08:47:04,703 - INFO - {"timestamp": "2025-09-08T08:47:04.703418", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/ms-themes.php", "data": {}}}
+2025-09-08 08:47:04,763 - INFO - {"timestamp": "2025-09-08T08:47:04.763404", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/options-general.php", "data": {}}}
+2025-09-08 08:47:04,823 - INFO - {"timestamp": "2025-09-08T08:47:04.823414", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/options-reading.php", "data": {}}}
+2025-09-08 08:47:04,883 - INFO - {"timestamp": "2025-09-08T08:47:04.883672", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/options-writing.php", "data": {}}}
+2025-09-08 08:47:04,943 - INFO - {"timestamp": "2025-09-08T08:47:04.943657", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/ova.php", "data": {}}}
+2025-09-08 08:47:05,003 - INFO - {"timestamp": "2025-09-08T08:47:05.003161", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/pages.php", "data": {}}}
+2025-09-08 08:47:05,063 - INFO - {"timestamp": "2025-09-08T08:47:05.063779", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/php.php", "data": {}}}
+2025-09-08 08:47:05,124 - INFO - {"timestamp": "2025-09-08T08:47:05.124727", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/php8.php", "data": {}}}
+2025-09-08 08:47:05,186 - INFO - {"timestamp": "2025-09-08T08:47:05.186049", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/pinfo.php", "data": {}}}
+2025-09-08 08:47:05,245 - INFO - {"timestamp": "2025-09-08T08:47:05.245627", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/radio.php", "data": {}}}
+2025-09-08 08:47:05,305 - INFO - {"timestamp": "2025-09-08T08:47:05.305625", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/robots.php", "data": {}}}
+2025-09-08 08:47:05,363 - INFO - {"timestamp": "2025-09-08T08:47:05.363738", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/rt.php", "data": {}}}
+2025-09-08 08:47:05,420 - INFO - {"timestamp": "2025-09-08T08:47:05.420346", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/s.php", "data": {}}}
+2025-09-08 08:47:05,432 - INFO - {"timestamp": "2025-09-08T08:47:05.432644", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:47:05,436 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/usr/local/lib/python3.10/dist-packages/flask_limiter/extension.py", line 1314, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:47:05,479 - INFO - {"timestamp": "2025-09-08T08:47:05.479173", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/setup.php", "data": {}}}
+2025-09-08 08:47:05,536 - INFO - {"timestamp": "2025-09-08T08:47:05.536930", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/simple.php", "data": {}}}
+2025-09-08 08:47:05,594 - INFO - {"timestamp": "2025-09-08T08:47:05.594540", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/sts.php", "data": {}}}
+2025-09-08 08:47:05,653 - INFO - {"timestamp": "2025-09-08T08:47:05.653446", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/system_log.php", "data": {}}}
+2025-09-08 08:47:05,711 - INFO - {"timestamp": "2025-09-08T08:47:05.711697", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/test1.php", "data": {}}}
+2025-09-08 08:47:05,769 - INFO - {"timestamp": "2025-09-08T08:47:05.769059", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/themes/zMousse/otuz1.php", "data": {}}}
+2025-09-08 08:47:05,828 - INFO - {"timestamp": "2025-09-08T08:47:05.828671", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/tinyfilemanager.php", "data": {}}}
+2025-09-08 08:47:05,888 - INFO - {"timestamp": "2025-09-08T08:47:05.888625", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/ty.php", "data": {}}}
+2025-09-08 08:47:05,948 - INFO - {"timestamp": "2025-09-08T08:47:05.948697", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/users.php", "data": {}}}
+2025-09-08 08:47:06,008 - INFO - {"timestamp": "2025-09-08T08:47:06.008430", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/w.php", "data": {}}}
+2025-09-08 08:47:06,067 - INFO - {"timestamp": "2025-09-08T08:47:06.067806", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/wp-aa.php", "data": {}}}
+2025-09-08 08:47:06,128 - INFO - {"timestamp": "2025-09-08T08:47:06.128253", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/wp-admin/", "data": {}}}
+2025-09-08 08:47:06,189 - INFO - {"timestamp": "2025-09-08T08:47:06.189763", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/wp-admin/admin.php", "data": {}}}
+2025-09-08 08:47:06,249 - INFO - {"timestamp": "2025-09-08T08:47:06.249695", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/wp-admin/classwithtostring.php", "data": {}}}
+2025-09-08 08:47:06,309 - INFO - {"timestamp": "2025-09-08T08:47:06.309641", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/wp-admin/css/colors/blue/index.php", "data": {}}}
+2025-09-08 08:47:06,372 - INFO - {"timestamp": "2025-09-08T08:47:06.372636", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/wp-admin/css/colors/ectoplasm/about.php", "data": {}}}
+2025-09-08 08:47:06,432 - INFO - {"timestamp": "2025-09-08T08:47:06.432574", "event_type": "REQUEST", "ip": "135.220.210.229", "user_agent": "Unknown", "details": {"method": "GET", "url": "https://eternaai.cloud/wp-admin/css/colors/light/wp-login.php", "data": {}}}
+2025-09-08 08:47:30,392 - INFO - {"timestamp": "2025-09-08T08:47:30.392540", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:47:30,393 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/usr/local/lib/python3.10/dist-packages/flask_limiter/extension.py", line 1314, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:47:56,094 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.74:5000
+2025-09-08 08:47:56,094 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:48:06,247 - INFO - {"timestamp": "2025-09-08T08:48:06.247043", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:48:06,247 - INFO - {"timestamp": "2025-09-08T08:48:06.247532", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:48:08,642 - INFO - {"timestamp": "2025-09-08T08:48:08.642560", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:48:08,645 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/usr/local/lib/python3.10/dist-packages/flask_limiter/extension.py", line 1314, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:48:17,141 - INFO - {"timestamp": "2025-09-08T08:48:17.141369", "event_type": "REQUEST", "ip": "127.0.0.1", "user_agent": "Werkzeug/3.1.3", "details": {"method": "GET", "url": "http://localhost/login", "data": {}}}
+2025-09-08 08:48:17,147 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/usr/local/lib/python3.10/dist-packages/flask_limiter/extension.py", line 1314, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:48:46,751 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.74:5000
+2025-09-08 08:48:46,752 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:49:00,597 - INFO - {"timestamp": "2025-09-08T08:49:00.597702", "event_type": "REQUEST", "ip": "127.0.0.1", "user_agent": "Werkzeug/3.1.3", "details": {"method": "GET", "url": "http://localhost/login", "data": {}}}
+2025-09-08 08:49:00,603 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/usr/local/lib/python3.10/dist-packages/flask_limiter/extension.py", line 1314, in __inner
+    return cast(R, flask.current_app.ensure_sync(obj)(*a, **k))
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:49:27,364 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.74:5000
+2025-09-08 08:49:27,364 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:49:40,006 - INFO - {"timestamp": "2025-09-08T08:49:40.006276", "event_type": "REQUEST", "ip": "127.0.0.1", "user_agent": "Werkzeug/3.1.3", "details": {"method": "GET", "url": "http://localhost/login", "data": {}}}
+2025-09-08 08:49:40,011 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "<string>", line 155, in login
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:52:30,763 - INFO - {"timestamp": "2025-09-08T08:52:30.763052", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "HEAD", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:52:30,763 - INFO - {"timestamp": "2025-09-08T08:52:30.763248", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:52:39,020 - INFO - {"timestamp": "2025-09-08T08:52:39.020452", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:52:39,020 - INFO - {"timestamp": "2025-09-08T08:52:39.020644", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:52:48,732 - INFO - {"timestamp": "2025-09-08T08:52:48.732702", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:52:48,736 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/alex/web/eternaai/app.py", line 155, in login
+    return render_template('login.html')
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:52:58,594 - INFO - {"timestamp": "2025-09-08T08:52:58.594748", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:52:58,595 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/alex/web/eternaai/app.py", line 155, in login
+    return render_template('login.html')
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:54:17,293 - INFO - {"timestamp": "2025-09-08T08:54:17.293208", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:54:17,293 - INFO - {"timestamp": "2025-09-08T08:54:17.293446", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"page": "home"}}
+2025-09-08 08:54:25,422 - INFO - {"timestamp": "2025-09-08T08:54:25.421937", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:54:25,422 - INFO - {"timestamp": "2025-09-08T08:54:25.422578", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:54:26,119 - INFO - {"timestamp": "2025-09-08T08:54:26.119636", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:54:26,120 - INFO - {"timestamp": "2025-09-08T08:54:26.120248", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:54:26,375 - INFO - {"timestamp": "2025-09-08T08:54:26.375327", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/", "data": {}}}
+2025-09-08 08:54:26,376 - INFO - {"timestamp": "2025-09-08T08:54:26.375920", "event_type": "PAGE_ACCESS", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"page": "home"}}
+2025-09-08 08:54:27,717 - INFO - {"timestamp": "2025-09-08T08:54:27.717212", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:54:27,718 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/alex/web/eternaai/app.py", line 155, in login
+    return render_template('login.html')
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable
+2025-09-08 08:54:32,579 - INFO - {"timestamp": "2025-09-08T08:54:32.579363", "event_type": "REQUEST", "ip": "93.57.240.131", "user_agent": "curl/7.81.0", "details": {"method": "GET", "url": "https://eternaai.cloud/login", "data": {}}}
+2025-09-08 08:54:32,583 - ERROR - Exception on /login [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/alex/web/eternaai/app.py", line 155, in login
+    return render_template('login.html')
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/usr/local/lib/python3.10/dist-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/usr/local/lib/python3.10/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/alex/web/eternaai/templates/login.html", line 106, in top-level template code
+    {{ captcha() }}
+TypeError: 'FlaskCaptcha' object is not callable

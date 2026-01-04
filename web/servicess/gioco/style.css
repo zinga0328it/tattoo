@@ -1,0 +1,92 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #00BFFF;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #333;
+    border: 2px solid #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 10px;
+}
+
+.cell:hover {
+    background-color: #444;
+}
+
+.cell.x, .cell.o {
+    cursor: not-allowed;
+}
+
+.cell.x::before {
+    content: 'X';
+    color: #FF6347; /* Tomato */
+}
+
+.cell.o::before {
+    content: 'O';
+    color: #00BFFF; /* DeepSkyBlue */
+}
+
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 4rem;
+}
+
+.winning-message.show {
+    display: flex;
+}
+
+#restartButton {
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #00BFFF;
+    color: #121212;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#restartButton:hover {
+    background-color: #009ACD;
+    transform: scale(1.05);
+}

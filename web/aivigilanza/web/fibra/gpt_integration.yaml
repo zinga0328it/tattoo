@@ -1,0 +1,30 @@
+# GPT Integration Configuration for FTTH Management System
+# Configurazione per l'integrazione GPT nel sistema di gestione FTTH
+
+telegram:
+  enabled: true
+  bot_token: ${TELEGRAM_BOT_TOKEN}        # il token del bot ftth01_bot
+  allow_gpt_send: true                    # 🔑 abilita invio GPT → Telegram
+  endpoint: "https://servicess.net/api/telegram/send"
+  default_chat_id: "7586394272"           # ID del tecnico / gruppo principale
+
+# Logging configuration
+logging:
+  level: INFO
+  file: logs/gpt_integration.log
+  max_size: 10MB
+  backups: 5
+
+# Retry configuration for Telegram API calls
+retry:
+  max_attempts: 3
+  backoff_factor: 1.5
+  timeout: 30
+
+# Security settings
+security:
+  api_key_required: true
+  rate_limit: 100  # requests per hour
+  allowed_origins:
+    - "https://chat.openai.com"
+    - "https://servicess.net"

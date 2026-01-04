@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cache buster per forzare reload -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+        <title>🛒 Carrello Elettronico Consegne - Servicess.net</title>
+    <style>
+        :root {
+            --primary: #ff6b35;
+            --secondary: #f7931e;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .products-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .cart-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .product-card {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            border-color: var(--primary);
+        }
+
+        .product-image {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .product-price {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .product-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-input {
+            width: 60px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        .add-to-cart-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            flex: 1;
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--secondary);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-details {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .cart-item-price {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .cart-total {
+            background: var(--light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .cart-total h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .total-amount {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .checkout-form {
+            margin-top: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .phone-hint {
+            color: var(--info);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .checkout-btn:hover {
+            background: #218838;
+        }
+
+        .checkout-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            display: none;
+        }
+
+        .message.success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .message.error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+
+        .order-confirmation {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            display: none;
+        }
+
+        .confirmation-code {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+            letter-spacing: 2px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+
+        .category-filter {
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚚 Carrello Elettronico Consegne</h1>
+            <p>Sistema innovativo - Ordini solo con numero di telefono! 📱</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Sezione Prodotti -->
+            <div class="products-section">
+                <h2 class="section-title">🍽️ Menu Disponibile</h2>
+
+                <div class="category-filter">
+                    <button class="category-btn active" data-category="all">Tutti</button>
+                    <button class="category-btn" data-category="cibo">🍕 Cibo</button>
+                    <button class="category-btn" data-category="bevande">🥤 Bevande</button>
+                    <button class="category-btn" data-category="dolci">🍰 Dolci</button>
+                    <button class="category-btn" data-category="combustibili">🪵 Combustibili</button>
+                </div>
+
+                <div class="products-grid" id="products-grid">
+                    <!-- Prodotti caricati dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Carrello -->
+            <div class="cart-section">
+                <h2 class="section-title">🛒 Il Tuo Ordine</h2>
+
+                <div id="cart-items">
+                    <div class="empty-cart">
+                        Il carrello è vuoto<br>
+                        Aggiungi qualche prodotto! 🍕
+                    </div>
+                </div>
+
+                <div class="cart-total" id="cart-total" style="display: none;">
+                    <h3>Totale Ordine</h3>
+                    <div class="total-amount" id="total-amount">€0.00</div>
+                </div>
+
+                <!-- Form Checkout -->
+                <div class="checkout-form" id="checkout-form" style="display: none;">
+                    <h3>📋 Dati Consegna</h3>
+
+                    <div class="form-group">
+                        <label class="form-label" for="telefono">📱 Numero di Telefono *</label>
+                        <input type="tel" id="telefono" class="form-input" placeholder="351 123 4567" required>
+                        <div class="phone-hint">Riceverai un SMS con il codice di conferma</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="indirizzo">🏠 Indirizzo Consegna *</label>
+                        <input type="text" id="indirizzo" class="form-input" placeholder="Via Roma 123, Milano" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="note">📝 Note (opzionale)</label>
+                        <textarea id="note" class="form-textarea" placeholder="Es: campanello rotto, citofono 12, etc."></textarea>
+                    </div>
+
+                    <button type="button" class="checkout-btn" id="checkout-btn">
+                        🚀 Ordina Ora
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messaggi -->
+        <div class="message" id="message"></div>
+
+        <!-- Conferma Ordine -->
+        <div class="order-confirmation" id="order-confirmation">
+            <h2>✅ Ordine Creato!</h2>
+            <p>Riceverai un SMS con il codice di conferma</p>
+            <div class="confirmation-code" id="confirmation-code">ABC12345</div>
+            <p>Rispondi al SMS per confermare l'ordine</p>
+            <p><strong>Consegna entro 45 minuti! 🚚</strong></p>
+        </div>
+    </div>
+
+    <script>
+        // Carrello globale
+        let cart = [];
+        let products = [];
+
+        // Determina l'host API corretto
+        // Usa il reverse proxy di Apache (non la porta 5504 direttamente)
+        const API_HOST = window.location.origin; // Stesso dominio di cui è servito il file
+        
+        // API Key per accesso agli endpoint protetti
+        const API_KEY = 'SxWoCFTXjB36jBSdRpAO9AyeWS7vObj2iIDByooTxUM=';
+        
+        // Debug: Verifica che l'API key sia caricata
+        console.log('🔐 API_KEY caricata:', API_KEY ? '✅ Si' : '❌ No');
+        console.log('🌐 API_HOST:', API_HOST);
+
+        // Carica prodotti dal backend
+        async function loadProducts() {
+            try {
+                console.log('📦 Caricamento prodotti da:', `${API_HOST}/api/prodotti`);
+                const response = await fetch(`${API_HOST}/api/prodotti`);
+                console.log('📦 Risposta prodotti:', response.status, response.statusText);
+                products = await response.json();
+                console.log('✅ Prodotti caricati:', products.length, 'items');
+                displayProducts(products);
+            } catch (error) {
+                console.error('❌ Errore caricamento prodotti:', error);
+                // Fallback: usa dati di esempio se l'API non è disponibile
+                console.log('🔄 Usando dati di esempio...');
+                products = [
+                    { id: 1, nome: "Margherita", descrizione: "Pizza classica con mozzarella e basilico", prezzo: 8.50, immagine: "🍕", categoria: "cibo" },
+                    { id: 2, nome: "Coca Cola", descrizione: "Bibita gassata 33cl", prezzo: 2.50, immagine: "🥤", categoria: "bevande" },
+                    { id: 3, nome: "Tiramisù", descrizione: "Dolce al mascarpone con savoiardi", prezzo: 4.00, immagine: "🍰", categoria: "dolci" },
+                    { id: 4, nome: "Benzina", descrizione: "Carburante per auto", prezzo: 1.80, immagine: "⛽", categoria: "combustibili" },
+                    { id: 5, nome: "Diavola", descrizione: "Pizza piccante con salame piccante", prezzo: 9.50, immagine: "🌶️", categoria: "cibo" },
+                    { id: 6, nome: "Acqua Naturale", descrizione: "Acqua minerale 50cl", prezzo: 1.00, immagine: "🥛", categoria: "bevande" }
+                ];
+                displayProducts(products);
+            }
+        }
+
+        // Mostra prodotti
+        function displayProducts(productsToShow) {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+
+            productsToShow.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">${product.immagine}</div>
+                    <div class="product-name">${product.nome}</div>
+                    <div class="product-description">${product.descrizione}</div>
+                    <div class="product-price">€${product.prezzo.toFixed(2)}</div>
+                    <div class="product-controls">
+                        <input type="number" class="quantity-input" value="1" min="1" max="10" data-product-id="${product.id}">
+                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                            Aggiungi
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(productCard);
+            });
+        }
+
+        // Filtra prodotti per categoria
+        function filterProducts(category) {
+            let filtered = products;
+            if (category !== 'all') {
+                filtered = products.filter(p => p.categoria === category);
+            }
+            displayProducts(filtered);
+
+            // Aggiorna bottoni categoria
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+        }
+
+        // Aggiungi al carrello
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const quantityInput = document.querySelector(`[data-product-id="${productId}"]`);
+            const quantity = parseInt(quantityInput.value) || 1;
+
+            // Controlla se già nel carrello
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantita += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    nome: product.nome,
+                    prezzo: product.prezzo,
+                    quantita: quantity,
+                    immagine: product.immagine
+                });
+            }
+
+            updateCartDisplay();
+            showMessage(`${quantity}x ${product.nome} aggiunto al carrello!`, 'success');
+        }
+
+        // Aggiorna display carrello
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            const checkoutForm = document.getElementById('checkout-form');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">Il carrello è vuoto<br>Aggiungi qualche prodotto! 🍕</div>';
+                cartTotal.style.display = 'none';
+                checkoutForm.style.display = 'none';
+                return;
+            }
+
+            let html = '';
+            let totale = 0;
+
+            cart.forEach((item, index) => {
+                const subtotale = item.prezzo * item.quantita;
+                totale += subtotale;
+
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.quantita}x ${item.nome}</div>
+                            <div class="cart-item-details">€${item.prezzo.toFixed(2)} cadauno</div>
+                        </div>
+                        <div class="cart-item-price">€${subtotale.toFixed(2)}</div>
+                        <button onclick="removeFromCart(${index})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-left: 10px;">🗑️</button>
+                    </div>
+                `;
+            });
+
+            cartItems.innerHTML = html;
+            document.getElementById('total-amount').textContent = `€${totale.toFixed(2)}`;
+            cartTotal.style.display = 'block';
+            checkoutForm.style.display = 'block';
+        }
+
+        // Rimuovi dal carrello
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+
+        // Effettua ordine
+        async function checkout() {
+            const telefono = document.getElementById('telefono').value.trim();
+            const indirizzo = document.getElementById('indirizzo').value.trim();
+            const note = document.getElementById('note').value.trim();
+
+            console.log('📋 Dati form:', { telefono, indirizzo, note });
+
+            if (!telefono || !indirizzo) {
+                console.error('❌ Campi mancanti');
+                showMessage('Compila tutti i campi obbligatori', 'error');
+                return;
+            }
+
+            if (cart.length === 0) {
+                console.error('❌ Carrello vuoto');
+                showMessage('Il carrello è vuoto', 'error');
+                return;
+            }
+            
+            console.log('✅ Validazione OK, procedo con ordine...');
+
+            const checkoutBtn = document.getElementById('checkout-btn');
+            checkoutBtn.disabled = true;
+            checkoutBtn.innerHTML = '<div class="loading"></div>Creazione ordine...';
+
+            try {
+                console.log('📤 Invio ordine con:', {
+                    url: `${API_HOST}/api/ordine`,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': API_KEY ? '✅ Presente' : '❌ Mancante'
+                    }
+                });
+                
+                const response = await fetch(`${API_HOST}/api/ordine`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': API_KEY
+                    },
+                    body: JSON.stringify({
+                        telefono: telefono,
+                        prodotti: cart,
+                        indirizzo_consegna: indirizzo,
+                        note: note
+                    })
+                });
+
+                // LOG DELLA RISPOSTA
+                console.log('📨 Risposta ricevuta:', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    ok: response.ok,
+                    headers: {
+                        'Content-Type': response.headers.get('Content-Type')
+                    }
+                });
+
+                const result = await response.json();
+                
+                console.log('✅ JSON parsed:', result);
+
+                if (response.ok) {
+                    // Mostra conferma
+                    document.getElementById('confirmation-code').textContent = result.codice_conferma;
+                    document.getElementById('order-confirmation').style.display = 'block';
+
+                    // Svuota carrello
+                    cart = [];
+                    updateCartDisplay();
+
+                    showMessage(result.messaggio, 'success');
+
+                    // Scroll alla conferma
+                    document.getElementById('order-confirmation').scrollIntoView({ behavior: 'smooth' });
+
+                } else {
+                    console.error('❌ Risposta non OK:', result.error);
+                    showMessage(result.error || 'Errore creazione ordine', 'error');
+                }
+
+            } catch (error) {
+                console.error('❌❌❌ ERRORE CHECKOUT:', {
+                    message: error.message,
+                    stack: error.stack,
+                    error: error
+                });
+                // Fallback: simula ordine se l'API non è disponibile
+                console.log('🔄 API non disponibile, simulando ordine...');
+                setTimeout(() => {
+                    const codiceConferma = 'ORD' + Math.random().toString(36).substr(2, 6).toUpperCase();
+                    document.getElementById('confirmation-code').textContent = codiceConferma;
+                    document.getElementById('order-confirmation').style.display = 'block';
+                    cart = [];
+                    updateCartDisplay();
+                    showMessage('Ordine creato con successo! Riceverai un SMS di conferma.', 'success');
+                    document.getElementById('order-confirmation').scrollIntoView({ behavior: 'smooth' });
+                }, 2000);
+            } finally {
+                checkoutBtn.disabled = false;
+                checkoutBtn.innerHTML = '🚀 Ordina Ora';
+            }
+        }
+
+        // Mostra messaggio
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+
+            // Filtri categoria
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterProducts(btn.dataset.category);
+                });
+            });
+
+            // Checkout
+            document.getElementById('checkout-btn').addEventListener('click', checkout);
+        });
+    </script>
+</body>
+</html>

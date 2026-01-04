@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://servicess.net/domotica.html">
+  <title>Domotica - Casa Intelligente</title>
+  <style>
+    body {
+      font-family: 'Georgia', 'Segoe UI', serif;
+      margin: 0;
+      background: linear-gradient(135deg, #181204 0%, #bfa14a 80%, #fffbe6 100%);
+      color: #fffbe6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .lock-menu-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      margin-bottom: 30px;
+      user-select: none;
+    }
+    .lock-menu-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 18px;
+    }
+    .lock-menu {
+      width: 340px;
+      height: 220px;
+      background: rgba(34,34,34,0.8);
+      border-radius: 30px;
+      box-shadow: 0 0 30px #bfa14a99;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .lock-menu .menu-item {
+      width: 260px;
+      height: 54px;
+      line-height: 54px;
+      font-size: 1.45em;
+      color: #bfa14a;
+      opacity: 0.5;
+      transition: all 0.2s;
+      background: none;
+      border-radius: 20px;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+      text-align: center;
+    }
+    .lock-menu .menu-item.selected {
+      background: #bfa14a;
+      color: #181204;
+      font-size: 1.5em;
+      opacity: 1;
+      box-shadow: 0 2px 12px #bfa14a99;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .lock-menu .menu-item.above, .lock-menu .menu-item.below {
+      opacity: 0.8;
+      font-size: 1em;
+      color: #fffbe6;
+    }
+    .lock-menu .menu-item.far {
+      opacity: 0.3;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    #leftBtn, #rightBtn {
+      background: #bfa14a;
+      color: #181204;
+      border: none;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      font-size: 2.3em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #bfa14a88;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #leftBtn:hover, #rightBtn:hover {
+      background: #229ED9;
+      color: #fff;
+    }
+    .domotica-box {
+      background: rgba(34,34,34,0.92);
+      border-radius: 24px;
+      box-shadow: 0 0 32px #bfa14a99;
+      padding: 48px 36px;
+      max-width: 540px;
+      text-align: center;
+      margin: 0 auto 40px auto;
+    }
+    h1 {
+      color: #bfa14a;
+      font-size: 2.3em;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      font-family: 'Georgia', serif;
+    }
+    h2 {
+      color: #bfa14a;
+      font-size: 1.4em;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      font-family: 'Georgia', serif;
+    }
+    ul {
+      text-align: left;
+      margin: 0 auto 18px auto;
+      padding-left: 1.2em;
+      max-width: 420px;
+      color: #fffbe6;
+      font-size: 1.13em;
+    }
+    li {
+      margin-bottom: 8px;
+      padding-left: 0.2em;
+    }
+    .carmela-box {
+      background: #181204;
+      border: 1px solid #bfa14a;
+      border-radius: 16px;
+      color: #bfa14a;
+      font-size: 1.08em;
+      padding: 18px 16px;
+      margin: 24px auto 0 auto;
+      max-width: 420px;
+      box-shadow: 0 2px 8px #bfa14a33;
+    }
+    @media (max-width: 700px) {
+      .lock-menu {
+        width: 98vw;
+        height: 120px;
+      }
+      .lock-menu .menu-item {
+        width: 98vw;
+        height: 36px;
+        font-size: 1.1em;
+      }
+      #leftBtn, #rightBtn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.5em;
+      }
+      .domotica-box {
+        padding: 18px 4vw;
+      }
+    }
+    /* Chat Carmela */
+    .chat-sparkle-container {
+      max-width: 420px;
+      margin: 36px auto 0 auto;
+      background: linear-gradient(135deg, #181204 80%, #bfa14a 120%);
+      border-radius: 22px;
+      box-shadow: 0 0 32px #bfa14a99, 0 0 0 4px #222 inset;
+      padding: 0 0 18px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      position: relative;
+      animation: sparkle-glow 2.5s infinite alternate;
+    }
+    @keyframes sparkle-glow {
+      0% { box-shadow: 0 0 32px #bfa14a99, 0 0 0 4px #222 inset; }
+      100% { box-shadow: 0 0 48px #bfa14aee, 0 0 0 4px #229ED9 inset; }
+    }
+    .chat-sparkle-box {
+      min-height: 140px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding: 18px 16px 10px 16px;
+      font-size: 1em;
+      color: #fffbe6;
+      background: transparent;
+      border-radius: 22px 22px 0 0;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .chat-sparkle-msg {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      margin-bottom: 2px;
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chat-sparkle-msg.user { justify-content: flex-end; }
+    .chat-sparkle-msg.carmela { justify-content: flex-start; }
+    .chat-sparkle-bubble {
+      padding: 10px 16px;
+      border-radius: 18px;
+      max-width: 75%;
+      word-break: break-word;
+      font-size: 1.05em;
+      box-shadow: 0 2px 8px #0005;
+      background: #bfa14a;
+      color: #181204;
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 18px;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      position: relative;
+    }
+    .chat-sparkle-msg.carmela .chat-sparkle-bubble {
+      background: #181204;
+      color: #bfa14a;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 18px;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+    }
+    .chat-sparkle-form {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border-radius: 0 0 22px 22px;
+      background: #181204;
+      padding: 0 8px 0 8px;
+      border-top: 1px solid #bfa14a;
+    }
+    .chat-sparkle-input {
+      border: none;
+      border-radius: 0 0 22px 22px;
+      padding: 16px 14px;
+      font-size: 1.1em;
+      outline: none;
+      background: #222;
+      color: #fffbe6;
+      flex: 1;
+      margin: 0;
+      transition: box-shadow 0.2s;
+      box-shadow: 0 2px 8px #bfa14a33 inset;
+    }
+    .chat-sparkle-input:focus {
+      box-shadow: 0 0 0 2px #bfa14a;
+    }
+    .chat-sparkle-input::placeholder {
+      color: #aaa;
+    }
+    .chat-sparkle-send {
+      background: linear-gradient(135deg, #bfa14a 60%, #229ED9 100%);
+      color: #181204;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.5em;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 8px;
+      box-shadow: 0 2px 10px #bfa14a88;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .chat-sparkle-send:hover {
+      background: linear-gradient(135deg, #229ED9 60%, #bfa14a 100%);
+      color: #fff;
+      box-shadow: 0 0 16px #229ED9cc;
+    }
+    @media (max-width: 700px) {
+      .chat-sparkle-container { max-width: 98vw; }
+      .chat-sparkle-box { padding: 10px 4px 6px 4px; }
+      .chat-sparkle-input { padding: 12px 8px; font-size: 1em; }
+      .chat-sparkle-send { width: 36px; height: 36px; font-size: 1.1em; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra bandierine per selezione lingua, visibile anche senza JS -->
+  <div class="flag-bar" style="display:flex;gap:8px;justify-content:flex-end;padding:10px 18px 0 0;">
+    <button class="flag-btn" data-lang="it" title="Italiano" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇹</button>
+    <button class="flag-btn" data-lang="en" title="English" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇬🇧</button>
+    <button class="flag-btn" data-lang="fr" title="Français" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇫🇷</button>
+    <button class="flag-btn" data-lang="de" title="Deutsch" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇩🇪</button>
+    <button class="flag-btn" data-lang="es" title="Español" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇪🇸</button>
+    <button class="flag-btn" data-lang="ar" title="العربية" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇸🇦</button>
+    <button class="flag-btn" data-lang="ru" title="Русский" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇷🇺</button>
+    <button class="flag-btn" data-lang="zh" title="中文" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇨🇳</button>
+    <button class="flag-btn" data-lang="ja" title="日本語" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇯🇵</button>
+    <button class="flag-btn" data-lang="hi" title="हिन्दी" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇳</button>
+  </div>
+  <div class="lock-menu-container">
+    <div class="lock-menu-row">
+      <button id="leftBtn" aria-label="Precedente">&#9664;</button>
+      <div class="lock-menu" id="lockMenu"></div>
+      <button id="rightBtn" aria-label="Successivo">&#9654;</button>
+    </div>
+  </div>
+  <div class="domotica-box">
+    <h1 id="domotica-title">Domotica: Semplifica la Tua Vita con la Tecnologia Intelligente</h1>
+    <p id="domotica-desc">Affidati a noi per trasformare la tua casa in un ambiente connesso, sicuro e innovativo. Grazie alla nostra esperienza, installiamo dispositivi smart che rendono ogni aspetto della tua vita più semplice, efficiente e confortevole.</p>
+    <h2 id="domotica-offer-title">Cosa Offriamo</h2>
+    <ul id="domotica-list">
+      <li id="domotica-list-1"><strong>Installazione Personalizzata:</strong> Sistemi di illuminazione, termostati intelligenti, videocamere e serrature smart, tutto su misura per te.</li>
+      <li id="domotica-list-2"><strong>Comfort e Automazione:</strong> Gestione completa da smartphone o tramite comandi vocali, per una casa che si adatta alle tue abitudini.</li>
+      <li id="domotica-list-3"><strong>Massima Sicurezza:</strong> Monitoraggio in tempo reale, notifiche istantanee e controllo totale anche a distanza.</li>
+    </ul>
+    <p id="domotica-final">I nostri esperti ascoltano le tue esigenze e ti propongono soluzioni su misura. Semplifica la tua vita: scegli la domotica professionale, affidati a noi.</p>
+    <div class="carmela-box" id="domotica-carmela-box">
+      <strong
+      <span id="domotica-carmela-desc">Vuoi una casa smart senza stress? Pensiamo a tutto noi: dalla scelta dei dispositivi all’installazione rapida. E se desideri un tocco speciale, Carmela, la nostra designer, è pronta ad aiutarti a trasformare la tua casa in un capolavoro tecnologico.</span>
+      <br><br>
+      <a id="domotica-whatsapp" href="https://wa.me/393
+        display:inline-block;
+        background:linear-gradient(135deg,#25d366 60%,#bfa14a 100%);
+        color:#181204;
+        font-weight:bold;
+        font-size:1.15em;
+        padding:12px 28px;
+        border-radius:16px;
+        box-shadow:0 2px 10px #25d36655;
+        margin-top:14px;
+        text-decoration:none;
+        transition:background 0.2s,color 0.2s;">
+        <span id="domotica-whatsapp-label" style="vertical-align:middle;">💬 Contattaci su WhatsApp</span>
+      </a>
+    </div>
+  </div>
+  <div class="chat-sparkle-container">
+    <div class="chat-sparkle-box" id="chat-box"></div>
+    <form class="chat-sparkle-form" onsubmit="sendMessage(event)">
+      <input type="text" id="chat-input" class="chat-sparkle-input" placeholder="Scrivi la tua domanda su domotica o sicurezza..." autocomplete="off">
+      <button type="submit" class="chat-sparkle-send" aria-label="Invia"><span>Invia</span></button>
+    </form>
+  </div>
+  <script>
+    // Menu stile "lucchetto a combinazione"
+    const menuItems = [
+      { label: 'Home', href: 'index.html' },
+      { label: 'Guardiania', href: 'guardiania.html' },
+      { label: 'Legale', href: 'legale.html' },
+      { label: 'Domotica', href: 'domotica.html' },
+      { label: 'Criptotelefonia', href: 'https://vpn-gypsy.com/' },
+      { label: '7070', href: 'antivirus.html' },
+      { label: 'Bonifiche', href: 'bonifiche.html' },
+      { label: 'Telecamere', href: 'articoli/telecamere.html' },
+      { label: 'Contatti', href: 'contatti.html' },
+      { label: 'Chi siamo', href: 'chisiamo.html' }
+    ];
+    let selectedIdx = 3;
+    const lockMenu = document.getElementById('lockMenu');
+    function renderMenu() {
+      lockMenu.innerHTML = '';
+      for (let i = -2; i <= 2; i++) {
+        let idx = (selectedIdx + i + menuItems.length) % menuItems.length;
+        let item = document.createElement('a');
+        item.className = 'menu-item';
+        if (i === 0) item.classList.add('selected');
+        else if (Math.abs(i) === 1) item.classList.add(i < 0 ? 'above' : 'below');
+        else item.classList.add('far');
+        item.href = menuItems[idx].href;
+        item.textContent = menuItems[idx].label;
+        if (i === 0) item.tabIndex = 0;
+        lockMenu.appendChild(item);
+      }
+    }
+    function moveUp() {
+      selectedIdx = (selectedIdx - 1 + menuItems.length) % menuItems.length;
+      renderMenu();
+    }
+    function moveDown() {
+      selectedIdx = (selectedIdx + 1) % menuItems.length;
+      renderMenu();
+    }
+    document.getElementById('leftBtn').onclick = moveUp;
+    document.getElementById('rightBtn').onclick = moveDown;
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') { moveUp(); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { moveDown(); e.preventDefault(); }
+    });
+    let touchStartX = null;
+    lockMenu.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    });
+    lockMenu.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      let deltaX = e.changedTouches[0].clientX - touchStartX;
+      if (deltaX < -30) moveDown();
+      if (deltaX > 30) moveUp();
+      touchStartX = null;
+    });
+    renderMenu();
+    // Chat Carmela professionale con effetto scintilla e API ready
+    const chatBox = document.getElementById('chat-box');
+    const chatInput = document.getElementById('chat-input');
+    function appendMsg(text, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'chat-sparkle-msg ' + sender;
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-sparkle-bubble';
+      bubble.textContent = text;
+      msgDiv.appendChild(bubble);
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    async function sendMessage(e) {
+      if (e) e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+      appendMsg(text, 'user');
+      chatInput.value = '';
+      chatInput.focus();
+      appendMsg('Carmela sta scrivendo...', 'carmela');
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+        const data = await response.json();
+        chatBox.removeChild(chatBox.lastChild);
+        appendMsg(data.reply || 'Errore, riprova più tardi!', 'carmela');
+      } catch {
+        chatBox.removeChild(chatBox.lastChild);
+        appendMsg('Errore di connessione con Carmela.', 'carmela');
+      }
+    }
+    appendMsg('Ciao! Sono Carmela, la tua consulente per la domotica e la sicurezza. Vuoi rendere la tua casa più smart? Scrivimi qui sotto!', 'carmela');
+  </script>
+  <script src="traduzione/domotica.js"></script>
+  <script>
+    // Funzione per aggiornare i testi in base alla lingua scelta
+    function setDomoticaLang(lang) {
+      const t = window.translationsDomotica[lang] || window.translationsDomotica['it'];
+      document.getElementById('domotica-title').textContent = t.title;
+      document.getElementById('domotica-desc').textContent = t.desc;
+      document.getElementById('domotica-offer-title').textContent = t.offerTitle;
+      document.getElementById('domotica-list-1').innerHTML = t.list[0];
+      document.getElementById('domotica-list-2').innerHTML = t.list[1];
+      document.getElementById('domotica-list-3').innerHTML = t.list[2];
+      document.getElementById('domotica-final').textContent = t.final;
+      document.getElementById('domotica-carmela-title').textContent = t.carmelaTitle;
+      document.getElementById('domotica-carmela-desc').textContent = t.carmelaDesc;
+      document.getElementById('domotica-whatsapp-label').textContent = t.whatsapp;
+      document.getElementById('chat-input').placeholder = t.chatPlaceholder;
+      // Reset chat con messaggio di benvenuto nella lingua scelta
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML = '';
+      appendMsg(t.chatWelcome, 'carmela');
+    }
+
+    // Collega le bandiere
+    document.querySelectorAll('.flag-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        setDomoticaLang(this.dataset.lang);
+      });
+    });
+
+    // Imposta la lingua iniziale (italiano)
+    setDomoticaLang('it');
+  </script>
+  <script>
+(function() {
+  function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+  function getOrSetUserId() {
+    let match = document.cookie.match(/(?:^|; )user_id=([^;]*)/);
+    if (match) return match[1];
+    let id = uuidv4();
+    document.cookie = "user_id=" + id + "; path=/; max-age=31536000";
+    return id;
+  }
+  function registraVisita() {
+    const user_id = getOrSetUserId();
+    fetch("http://93.57.240.131:2626/?user_id=" + encodeURIComponent(user_id) + "&pagina=domotica.html", {
+      method: "GET",
+      credentials: "include"
+    });
+  }
+  registraVisita();
+})();
+</script>
+<script>
+    // Lista di browser umani
+    const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+    let isBot = true;
+    for (let b of safeBrowsers) {
+      if (navigator.userAgent.includes(b)) {
+        isBot = false;
+        break;
+      }
+    }
+    // Se è un bot, lo reindirizzi alla trappola
+    if (isBot) {
+      window.location.href = "/home.html";
+    }
+  </script>
+</body>
+</html>

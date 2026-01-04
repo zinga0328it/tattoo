@@ -1,0 +1,36 @@
+RewriteEngine On
+
+# Forza HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Forza dominio senza www
+RewriteCond %{HTTP_HOST} ^www\.servicess\.net [NC]
+RewriteRule ^(.*)$ https://servicess.net/$1 [L,R=301]
+
+# Block forbidden paths
+RewriteRule ^carrello/?$ - [F,L]
+RewriteRule ^chat/?$ - [F,L]
+RewriteRule ^cdn-cgi/ - [F,L]
+RewriteRule ^genera-contratto-ricontatto/?$ - [F,L]
+RewriteRule ^invia-consenso/?$ - [F,L]
+
+# Disable caching for gestionale.html
+<Files "gestionale.html">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+    Header set ETag ""
+</Files>
+
+# Disable caching for carrello.html
+<Files "carrello.html">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</Files>
+
+# General cache policy
+<Files "*.html">
+    Header set Cache-Control "public, max-age=3600"
+</Files>

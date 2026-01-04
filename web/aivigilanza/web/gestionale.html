@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- Cache bust: v6 - Mappe + Valutazioni + Responsive -->
+    <link rel="canonical" href="https://servicess.net/gestionale.html">
+  <title>🛵 Gestionale Consegne - ServiceSS</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --primary: #ff6b35;
+            --secondary: #f7931e;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-btn:not(.active):hover {
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .tab-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .orders-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .order-card {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .order-card.banned-user {
+            opacity: 0.7;
+            border-left-color: var(--danger);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .order-card.banned-user .order-header {
+            opacity: 0.8;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .order-id {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .order-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-in_attesa { background: var(--warning); color: white; }
+        .status-confermato { background: var(--info); color: white; }
+        .status-in_consegna { background: var(--primary); color: white; }
+        .status-consegnato { background: var(--success); color: white; }
+        .status-cancellato { background: var(--danger); color: white; }
+
+        .order-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: var(--dark);
+        }
+
+        .order-products {
+            background: rgba(255,255,255,0.5);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .btn-confirm { background: var(--info); color: white; }
+        .btn-confirm:hover { background: #138496; }
+
+        .btn-deliver { background: var(--primary); color: white; }
+        .btn-deliver:hover { background: #e55a2b; }
+
+        .btn-complete { background: var(--success); color: white; }
+        .btn-complete:hover { background: #218838; }
+
+        .btn-cancel { background: var(--danger); color: white; }
+        .btn-cancel:hover { background: #c82333; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: bold;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .login-form {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            min-width: 350px;
+        }
+
+        .login-form h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .login-error {
+            color: #dc3545;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .captcha-container {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .captcha-question {
+            color: white;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .captcha-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            font-size: 1em;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .captcha-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        }
+
+        .main-content {
+            display: none;
+        }
+
+        .main-content.authenticated {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            
+            .header h1 { font-size: 1.8em; }
+            
+            .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .tab-btn { min-width: 100px; padding: 12px 10px; font-size: 0.85em; white-space: nowrap; }
+            
+            .stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .stat-card { padding: 12px; }
+            .stat-number { font-size: 1.8em; }
+            
+            .order-details { grid-template-columns: 1fr; }
+            .order-actions { flex-direction: column; }
+            .action-btn { width: 100%; }
+            
+            .login-form { padding: 25px; min-width: auto; margin: 15px; }
+        }
+
+        /* ========== MAPPE ========== */
+        .order-map {
+            height: 180px;
+            border-radius: 8px;
+            margin: 10px 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            margin-right: 10px;
+        }
+
+        .map-btn:hover { background: #138496; }
+
+        /* ========== RATING ========== */
+        .rating-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 10px;
+        }
+
+        .rating-stars {
+            display: inline-flex;
+            gap: 2px;
+            cursor: pointer;
+        }
+
+        .rating-star {
+            font-size: 1.2em;
+            transition: transform 0.2s;
+        }
+
+        .rating-star:hover { transform: scale(1.3); }
+
+        .rating-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .rating-good { background: #d4edda; color: #155724; }
+        .rating-warning { background: #fff3cd; color: #856404; }
+        .rating-bad { background: #f8d7da; color: #721c24; }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            max-width: 350px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .modal-stars {
+            font-size: 2.5em;
+            margin: 20px 0;
+        }
+
+        .modal-stars span {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .modal-stars span:hover { transform: scale(1.2); }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .modal-btn-primary { background: var(--primary); color: white; }
+        .modal-btn-secondary { background: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="login-container">
+        <div class="login-form">
+            <h2>🔐 Accesso Gestionale</h2>
+            <input type="text" id="username" class="login-input" placeholder="Username" autocomplete="username">
+            <input type="password" id="password" class="login-input" placeholder="Password" autocomplete="current-password">
+            
+            <!-- CAPTCHA Matematico -->
+            <div class="captcha-container">
+                <div id="captcha-question" class="captcha-question">Quanto fa 2 + 3?</div>
+                <input type="text" id="captcha-answer" class="captcha-input" placeholder="Risposta" autocomplete="off">
+            </div>
+            
+            <button onclick="login()" class="login-btn">🔓 Accedi</button>
+            <div id="login-error" class="login-error">Credenziali non valide</div>
+            
+            <!-- Credenziali disponibili -->
+            <div style="margin-top: 25px; padding: 18px; background: rgba(77, 163, 255, 0.1); border-radius: 8px; border-left: 4px solid #4da3ff; font-size: 0.95em;">
+                <strong style="color: #4da3ff;">📋 Credenziali Disponibili:</strong>
+                <div style="margin-top: 12px; line-height: 1.8;">
+                    <div><strong>Admin:</strong> admin / ServiceSS2025!</div>
+                    <div><strong>Gestore:</strong> gestore / Consegne2025!</div>
+                    <div><strong>Rider:</strong> rider / Rider2025!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container main-content" id="main-content">
+        <div class="header">
+            <h1>🛵 Gestionale Consegne</h1>
+            <p>ServiceSS - Sistema di gestione ordini e consegne</p>
+            <button onclick="logout()" style="position: absolute; top: 20px; right: 20px; padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer;">🚪 Logout</button>
+        </div>
+
+        <div class="stats" id="stats">
+            <!-- Statistiche caricate dinamicamente -->
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="aperte" onclick="showTab('aperte')">📋 Consegn Aperti</button>
+            <button class="tab-btn" data-tab="chiuse" onclick="showTab('chiuse')">✅ Consegn Chiuse</button>
+            <button class="tab-btn" data-tab="clienti" onclick="showTab('clienti')">👥 Clienti</button>
+            <button class="tab-btn" data-tab="utenti" onclick="showTab('utenti')">🚫 Gestione Utenti</button>
+            <button class="tab-btn" data-tab="tutte" onclick="showTab('tutte')">📊 Tutte</button>
+        </div>
+
+        <div id="orders-container">
+            <div class="tab-content">
+                <div class="loading">Caricamento ordini...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'aperte';
+        let allOrders = [];
+        let isAuthenticated = false;
+
+        // Determina l'host API corretto - usa Apache proxy per accessibilità
+        // Se loggato da servicess.net usa il proxy, altrimenti fallback a IPv6
+        const API_HOST = window.location.hostname === 'servicess.net' 
+            ? window.location.origin 
+            : 'https://[201:27c:546:5df7:176:95f3:c909:6834]:5504';
+
+        console.log('🔧 API_HOST:', API_HOST);
+        console.log('🔧 Protocol:', window.location.protocol);
+        console.log('🔧 Hostname:', window.location.hostname);
+
+        // Credenziali (in produzione usare un sistema più sicuro)
+        const VALID_CREDENTIALS = {
+            'admin': 'ServiceSS2025!',
+            'gestore': 'Consegne2025!',
+            'rider': 'Rider2025!'
+        };
+
+        // Variabili CAPTCHA
+        let captchaNum1, captchaNum2, captchaOperation, captchaResult;
+
+        // Genera CAPTCHA matematico casuale
+        function generateCaptcha() {
+            captchaNum1 = Math.floor(Math.random() * 10) + 1; // 1-10
+            captchaNum2 = Math.floor(Math.random() * 10) + 1; // 1-10
+            
+            // Scegli operazione casuale (solo addizione e sottrazione per semplicità)
+            const operations = ['+', '-'];
+            captchaOperation = operations[Math.floor(Math.random() * operations.length)];
+            
+            // Calcola risultato
+            if (captchaOperation === '+') {
+                captchaResult = captchaNum1 + captchaNum2;
+            } else {
+                // Per sottrazione, assicurati che il risultato sia positivo
+                if (captchaNum1 < captchaNum2) {
+                    [captchaNum1, captchaNum2] = [captchaNum2, captchaNum1];
+                }
+                captchaResult = captchaNum1 - captchaNum2;
+            }
+            
+            // Mostra domanda
+            const questionDiv = document.getElementById('captcha-question');
+            questionDiv.textContent = `Quanto fa ${captchaNum1} ${captchaOperation} ${captchaNum2}?`;
+            
+            // Pulisci campo risposta
+            document.getElementById('captcha-answer').value = '';
+        }
+
+        // Inizializza CAPTCHA al caricamento pagina
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCaptcha();
+        });
+
+        // Funzione di login
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const captchaAnswer = document.getElementById('captcha-answer').value;
+            const errorDiv = document.getElementById('login-error');
+
+            // Verifica CAPTCHA
+            if (parseInt(captchaAnswer) !== captchaResult) {
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = 'Risposta CAPTCHA errata';
+                generateCaptcha(); // Genera nuovo CAPTCHA
+                return;
+            }
+
+            if (VALID_CREDENTIALS[username] === password) {
+                isAuthenticated = true;
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('main-content').classList.add('authenticated');
+                loadData();
+                errorDiv.style.display = 'none';
+            } else {
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = 'Credenziali non valide';
+                generateCaptcha(); // Genera nuovo CAPTCHA anche se credenziali sbagliate
+            }
+        }
+
+        // Logout
+        function logout() {
+            isAuthenticated = false;
+            document.getElementById('login-container').style.display = 'flex';
+            document.getElementById('main-content').classList.remove('authenticated');
+            // Clear form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('captcha-answer').value = '';
+            // Genera nuovo CAPTCHA
+            generateCaptcha();
+        }
+
+        // Gestisci invio form con Enter
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('username').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') document.getElementById('password').focus();
+            });
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') login();
+            });
+        });
+
+        // Carica ordini e statistiche
+        async function loadData() {
+            if (!isAuthenticated) return;
+
+            try {
+                const headers = { 'x-api-key': 'SxWoCFTXjB36jBSdRpAO9AyeWS7vObj2iIDByooTxUM=' };
+                console.log('🔄 Caricando dati dal server...', API_HOST);
+                
+                // Testa prima se la connessione funziona
+                console.log('📡 Test connessione a /api/gestionale/ordini');
+                const testResponse = await fetch(`${API_HOST}/api/gestionale/ordini`, { headers });
+                console.log('📡 Status:', testResponse.status);
+                console.log('📡 Headers:', {
+                    'content-type': testResponse.headers.get('content-type'),
+                    'x-api-key-check': testResponse.headers.get('x-api-key')
+                });
+                
+                const [ordiniResponse, valutazioniResponse] = await Promise.all([
+                    fetch(`${API_HOST}/api/gestionale/ordini`, { headers }),
+                    fetch(`${API_HOST}/api/gestionale/valutazioni`, { headers })
+                ]);
+
+                console.log('📦 Ordini Response Status:', ordiniResponse.status);
+                console.log('⭐ Valutazioni Response Status:', valutazioniResponse.status);
+
+                if (!ordiniResponse.ok || !valutazioniResponse.ok) {
+                    throw new Error(`Errore HTTP ${ordiniResponse.status} / ${valutazioniResponse.status}`);
+                }
+
+                const ordiniData = await ordiniResponse.json();
+                const valutazioniData = await valutazioniResponse.json();
+
+                console.log('📦 Ordini ricevuti:', ordiniData);
+                console.log('⭐ Valutazioni ricevute:', valutazioniData);
+
+                // Controlla se ordiniData ha 'ordini' oppure 'success'
+                if (ordiniData.ordini && valutazioniData.valutazioni) {
+                    allOrders = ordiniData.ordini;
+                    window.valutazioniClienti = valutazioniData.valutazioni;
+                    console.log('✅ Dati caricati con successo');
+                    
+                    // Se ci sono stats, usale, altrimenti calcolale
+                    if (ordiniData.stats) {
+                        updateStats(ordiniData.stats);
+                    } else {
+                        calculateStats();
+                    }
+                    showTab(currentTab);
+                } else {
+                    console.error('❌ Formato risposta non valido');
+                    showError('Errore caricamento dati - verifica autenticazione');
+                }
+            } catch (error) {
+                console.error('❌ Errore dettagliato:', error.message, error);
+                showError('Errore connessione al server: ' + error.message + ' - Ricarica la pagina');
+            }
+        }
+
+        // Calcola statistiche dai dati ordinari
+        function calculateStats() {
+            const stats = {
+                in_attesa: allOrders.filter(o => o.stato === 'in_attesa').length,
+                confermato: allOrders.filter(o => o.stato === 'confermato').length,
+                in_consegna: allOrders.filter(o => o.stato === 'in_consegna').length,
+                consegnato: allOrders.filter(o => o.stato === 'consegnato').length,
+                annullato: allOrders.filter(o => o.stato === 'annullato').length
+            };
+            updateStats(stats);
+        }
+
+        // Aggiorna statistiche
+        function updateStats(stats) {
+            const statsContainer = document.getElementById('stats');
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${stats.in_attesa || 0}</div>
+                    <div class="stat-label">In Attesa</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.confermato}</div>
+                    <div class="stat-label">Confermati</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.in_consegna}</div>
+                    <div class="stat-label">In Consegna</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.consegnato}</div>
+                    <div class="stat-label">Completati</div>
+                </div>
+            `;
+        }
+
+        // Mostra tab selezionato
+        function showTab(tabName) {
+            currentTab = tabName;
+
+            // Aggiorna bottoni tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Aggiorna il bottone attivo (usa event.target se disponibile, altrimenti cerca per data-tab)
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                document.querySelector(`[data-tab="${tabName}"]`)?.classList.add('active');
+            }
+
+            // Filtra ordini o mostra clienti
+            if (tabName === 'clienti') {
+                displayClients();
+                return;
+            }
+
+            if (tabName === 'utenti') {
+                displayUsers();
+                return;
+            }
+
+            let filteredOrders;
+            switch(tabName) {
+                case 'aperte':
+                    filteredOrders = allOrders.filter(order =>
+                        ['in_attesa', 'confermato', 'in_consegna'].includes(order.stato)
+                    );
+                    break;
+                case 'chiuse':
+                    filteredOrders = allOrders.filter(order =>
+                        ['consegnato', 'cancellato'].includes(order.stato)
+                    );
+                    break;
+                default:
+                    filteredOrders = allOrders;
+            }
+
+            displayOrders(filteredOrders);
+        }
+
+        // Mostra ordini
+        function displayOrders(orders) {
+            const container = document.getElementById('orders-container');
+
+            if (orders.length === 0) {
+                container.innerHTML = `
+                    <div class="tab-content">
+                        <div class="empty-state">
+                            <h3>📭 Nessun ordine trovato</h3>
+                            <p>Non ci sono ordini in questa categoria</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const ordersHtml = orders.map(order => {
+                const prodotti = JSON.parse(order.prodotti);
+                const prodottiHtml = prodotti.map(prod =>
+                    `<div class="product-item">
+                        <span>${prod.quantita}x ${prod.nome}</span>
+                        <span>€${(prod.prezzo * prod.quantita).toFixed(2)}</span>
+                    </div>`
+                ).join('');
+
+                const actionsHtml = getActionsHtml(order.stato, order.id);
+
+                return `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-id">#${order.id}</div>
+                            <div class="order-status status-${order.stato}">${formatStatus(order.stato)}</div>
+                        </div>
+
+                        <div class="order-details">
+                            <div class="detail-item">
+                                <div class="detail-label">📱 Telefono</div>
+                                <div class="detail-value">${order.telefono} ${getValutazioneCliente(order.telefono)}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">🏠 Indirizzo</div>
+                                <div class="detail-value">${order.indirizzo_consegna}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">💰 Totale</div>
+                                <div class="detail-value">€${order.totale.toFixed(2)}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">📅 Data</div>
+                                <div class="detail-value">${new Date(order.created_at).toLocaleString('it-IT')}</div>
+                            </div>
+                        </div>
+
+                        ${order.note ? `
+                            <div class="detail-item" style="grid-column: 1 / -1;">
+                                <div class="detail-label">📝 Note</div>
+                                <div class="detail-value">${order.note}</div>
+                            </div>
+                        ` : ''}
+
+                        <div class="order-products">
+                            <strong>🛒 Prodotti:</strong>
+                            ${prodottiHtml}
+                        </div>
+
+                        <div style="margin-bottom: 10px;">
+                            <button class="map-btn" onclick="toggleMap(${order.id}, '${order.indirizzo_consegna.replace(/'/g, "\\'")}')">
+                                🗺️ Mostra Mappa
+                            </button>
+                            <button class="action-btn" style="background: #6c757d;" onclick="openRatingModal('${order.telefono}')">
+                                ⭐ Valuta Cliente
+                            </button>
+                        </div>
+                        <div id="map-${order.id}" class="order-map"></div>
+
+                        <div class="order-actions">
+                            ${actionsHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `<div class="tab-content"><div class="orders-grid">${ordersHtml}</div></div>`;
+        }
+
+        // Ottieni valutazione cliente
+        function getValutazioneCliente(telefono) {
+            if (window.valutazioniClienti && window.valutazioniClienti[telefono]) {
+                const valutazione = window.valutazioniClienti[telefono].valutazione;
+                const stelle = '⭐'.repeat(valutazione) + '☆'.repeat(5 - valutazione);
+                let badgeClass = 'rating-warning';
+                if (valutazione >= 4) badgeClass = 'rating-good';
+                else if (valutazione <= 2) badgeClass = 'rating-bad';
+                return `<span class="rating-badge ${badgeClass}">${stelle}</span>`;
+            }
+            return '<span class="rating-badge" style="background:#e9ecef;color:#666;">Nuovo</span>';
+        }
+
+        // Ottieni HTML azioni per stato ordine
+        function getActionsHtml(stato, orderId) {
+            switch(stato) {
+                case 'in_attesa':
+                    return `
+                        <button class="action-btn btn-confirm" onclick="updateOrderStatus(${orderId}, 'confermato')">
+                            ✅ Conferma
+                        </button>
+                        <button class="action-btn btn-cancel" onclick="updateOrderStatus(${orderId}, 'cancellato')">
+                            ❌ Cancella
+                        </button>
+                    `;
+                case 'confermato':
+                    return `
+                        <button class="action-btn btn-deliver" onclick="updateOrderStatus(${orderId}, 'in_consegna')">
+                            🚚 Inizia Consegna
+                        </button>
+                        <button class="action-btn btn-cancel" onclick="updateOrderStatus(${orderId}, 'cancellato')">
+                            ❌ Cancella
+                        </button>
+                    `;
+                case 'in_consegna':
+                    return `
+                        <button class="action-btn btn-complete" onclick="updateOrderStatus(${orderId}, 'consegnato')">
+                            ✅ Consegna Completata
+                        </button>
+                    `;
+                default:
+                    return '';
+            }
+        }
+
+        // Aggiorna stato ordine
+        async function updateOrderStatus(orderId, newStatus) {
+            if (!isAuthenticated) {
+                showMessage('Sessione scaduta - rieffettua il login', 'error');
+                logout();
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_HOST}/api/gestionale/ordine/${orderId}/stato`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': 'SxWoCFTXjB36jBSdRpAO9AyeWS7vObj2iIDByooTxUM='
+                    },
+                    body: JSON.stringify({ stato: newStatus })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Ricarica dati
+                    await loadData();
+                    showMessage(`Ordine #${orderId} aggiornato: ${formatStatus(newStatus)}`, 'success');
+                } else {
+                    showMessage('Errore aggiornamento ordine - verifica permessi', 'error');
+                }
+            } catch (error) {
+                console.error('Errore:', error);
+                showMessage('Errore connessione', 'error');
+            }
+        }
+
+        // Formatta stato per display
+        function formatStatus(stato) {
+            const statusMap = {
+                'in_attesa': 'In Attesa',
+                'confermato': 'Confermato',
+                'in_consegna': 'In Consegna',
+                'consegnato': 'Consegnato',
+                'cancellato': 'Cancellato'
+            };
+            return statusMap[stato] || stato;
+        }
+
+        // Mostra messaggio
+        function showMessage(text, type) {
+            // Crea elemento messaggio se non esiste
+            let messageDiv = document.getElementById('message');
+            if (!messageDiv) {
+                messageDiv = document.createElement('div');
+                messageDiv.id = 'message';
+                messageDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    color: white;
+                    font-weight: bold;
+                    z-index: 1000;
+                    display: none;
+                `;
+                document.body.appendChild(messageDiv);
+            }
+
+            messageDiv.textContent = text;
+            messageDiv.style.background = type === 'success' ? '#28a745' : '#dc3545';
+            messageDiv.style.display = 'block';
+
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        // Mostra errore
+        function showError(message) {
+            document.getElementById('orders-container').innerHTML = `
+                <div class="tab-content">
+                    <div class="empty-state">
+                        <h3>❌ Errore</h3>
+                        <p>${message}</p>
+                        <button onclick="loadData()" style="padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                            🔄 Riprova
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Mostra clienti valutati
+        function displayClients() {
+            const container = document.getElementById('orders-container');
+
+            if (!window.valutazioniClienti || Object.keys(window.valutazioniClienti).length === 0) {
+                container.innerHTML = `
+                    <div class="tab-content">
+                        <div class="empty-state">
+                            <h3>👥 Nessun cliente valutato</h3>
+                            <p>Valuta i clienti dopo le consegne per vederli qui</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const clientsHtml = Object.entries(window.valutazioniClienti)
+                .sort(([,a], [,b]) => b.valutazione - a.valutazione) // Ordina per valutazione decrescente
+                .map(([telefono, dati]) => {
+                    const stelle = '⭐'.repeat(dati.valutazione);
+                    const ultimoOrdine = dati.ultimo_ordine_id ? `#${dati.ultimo_ordine_id}` : 'N/A';
+                    const ultimaValutazione = new Date(dati.updated_at).toLocaleString('it-IT');
+
+                    return `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <div class="order-id">📱 ${telefono}</div>
+                                <div class="order-status" style="background: ${getValutazioneColor(dati.valutazione)};">${stelle} (${dati.valutazione}/5)</div>
+                            </div>
+
+                            <div class="order-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">🏷️ Tipo Cliente</div>
+                                    <div class="detail-value">${getTipoCliente(dati.valutazione)}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">📦 Ultimo Ordine</div>
+                                    <div class="detail-value">${ultimoOrdine}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">📅 Ultima Valutazione</div>
+                                    <div class="detail-value">${ultimaValutazione}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">📊 Statistiche</div>
+                                    <div class="detail-value">${getStatisticheCliente(telefono)}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            container.innerHTML = `<div class="tab-content"><div class="orders-grid">${clientsHtml}</div></div>`;
+        }
+
+        // Mostra gestione utenti
+        function displayUsers() {
+            const container = document.getElementById('orders-container');
+
+            // Carica dati utenti se non presenti
+            if (!window.allUsers || window.allUsers.length === 0) {
+                loadUsers();
+                return;
+            }
+
+            if (window.allUsers.length === 0) {
+                container.innerHTML = `
+                    <div class="tab-content">
+                        <div class="empty-state">
+                            <h3>🚫 Nessun utente trovato</h3>
+                            <p>Gli utenti appariranno qui dopo aver effettuato ordini</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const usersHtml = window.allUsers
+                .sort((a, b) => (b.ordini_totali || 0) - (a.ordini_totali || 0))
+                .map(utente => {
+                    const valutazione = Math.floor(utente.valutazione || 5);
+                    const stelle = '⭐'.repeat(valutazione) + '☆'.repeat(5 - valutazione);
+                    const isBanned = utente.banned;
+                    const ordiniTotali = utente.ordini_totali || 0;
+                    const ordiniCompletati = utente.ordini_completati || 0;
+                    const ordiniCancellati = utente.ordini_cancellati || 0;
+                    
+                    // Calcola classe in base a problematicità
+                    let cardClass = 'order-card';
+                    if (isBanned) cardClass += ' banned-user';
+                    else if (ordiniCancellati >= 3 || valutazione <= 2) cardClass += ' problematic';
+                    
+                    return `
+                        <div class="${cardClass}">
+                            <div class="order-header">
+                                <div class="order-id">📱 <a href="tel:${utente.telefono}">${utente.telefono}</a></div>
+                                <div class="order-status" style="background: ${getUserStatusColorNew(utente)};">
+                                    ${isBanned ? '🚫 Bannato' : getUserStatusNew(utente)}
+                                </div>
+                            </div>
+
+                            <div class="order-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">⭐ Valutazione</div>
+                                    <div class="detail-value" style="cursor:pointer" onclick="openRatingModal('${utente.telefono}')">${stelle}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">📦 Ordini Totali</div>
+                                    <div class="detail-value">${ordiniTotali}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">✅ Completati</div>
+                                    <div class="detail-value">${ordiniCompletati}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">❌ Cancellati</div>
+                                    <div class="detail-value">${ordiniCancellati}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">� Ultimo Ordine</div>
+                                    <div class="detail-value">${utente.last_order_at ? new Date(utente.last_order_at).toLocaleDateString('it-IT') : 'Mai'}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">� Note</div>
+                                    <div class="detail-value">${utente.note || '—'}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="order-actions">
+                                <button class="action-btn ${isBanned ? 'btn-complete' : 'btn-cancel'}" onclick="toggleUserBan('${utente.telefono}')">
+                                    ${isBanned ? '✅ Sbanna' : '🚫 Banna'}
+                                </button>
+                                <button class="action-btn btn-confirm" onclick="showUserOrders('${utente.telefono}')">
+                                    📋 Vedi Ordini
+                                </button>
+                                <button class="action-btn" style="background:#6c757d" onclick="openRatingModal('${utente.telefono}')">
+                                    ⭐ Valuta
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            container.innerHTML = `<div class="tab-content"><div class="orders-grid">${usersHtml}</div></div>`;
+        }
+        
+        // Funzioni helper per status utente (nuovo formato)
+        function getUserStatusColorNew(utente) {
+            if (utente.banned) return '#6c757d';
+            if (utente.ordini_cancellati >= 3 || utente.valutazione <= 2) return '#dc3545';
+            if (utente.ordini_totali >= 10) return '#28a745';
+            return '#ffc107';
+        }
+        
+        function getUserStatusNew(utente) {
+            if (utente.ordini_cancellati >= 3) return '🚨 Problema';
+            if (utente.valutazione <= 2) return '⚠️ Bassa val.';
+            if (utente.ordini_totali >= 10) return '⭐ VIP';
+            if (utente.ordini_totali >= 5) return '👤 Regolare';
+            return '🆕 Nuovo';
+        }
+
+        // Carica dati utenti
+        async function loadUsers() {
+            try {
+                const response = await fetch(`${API_HOST}/api/gestionale/utenti`, {
+                    headers: { 'x-api-key': 'SxWoCFTXjB36jBSdRpAO9AyeWS7vObj2iIDByooTxUM=' }
+                });
+                const data = await response.json();
+                
+                if (data.success && data.utenti) {
+                    window.allUsers = data.utenti;
+                    displayUsers();
+                } else {
+                    throw new Error('Errore caricamento utenti');
+                }
+            } catch (error) {
+                console.error('Errore caricamento utenti:', error);
+                document.getElementById('orders-container').innerHTML = `
+                    <div class="tab-content">
+                        <div class="empty-state">
+                            <h3>❌ Errore caricamento utenti</h3>
+                            <p>${error.message}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Ottieni colore per valutazione
+        function getValutazioneColor(valutazione) {
+            if (valutazione >= 4) return '#28a745'; // Verde
+            if (valutazione >= 3) return '#ffc107'; // Giallo
+            return '#dc3545'; // Rosso
+        }
+
+        // Ottieni colore per status utente
+        function getUserStatusColor(stats, isBanned) {
+            if (isBanned) return '#6c757d'; // Grigio
+            if (stats.cancellati > stats.ordini_totali * 0.3) return '#dc3545'; // Rosso se molti cancellati
+            if (stats.ordini_totali >= 10) return '#28a745'; // Verde se cliente fedele
+            return '#ffc107'; // Giallo default
+        }
+
+        // Ottieni status utente basato su statistiche
+        function getUserStatus(stats) {
+            if (stats.cancellati > stats.ordini_totali * 0.3) return '⚠️ Problema';
+            if (stats.ordini_totali >= 10) return '⭐ Cliente VIP';
+            if (stats.ordini_totali >= 5) return '🟡 Cliente Regolare';
+            return '🟢 Nuovo Cliente';
+        }
+
+        // Toggle ban utente
+        async function toggleUserBan(telefono) {
+            // Trova utente nell'array
+            const utente = window.allUsers?.find(u => u.telefono === telefono);
+            const isCurrentlyBanned = utente?.banned || false;
+            const action = isCurrentlyBanned ? 'sbannare' : 'bannare';
+            
+            if (!confirm(`Sei sicuro di ${action} l'utente ${telefono}?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_HOST}/api/gestionale/utente/${telefono}/ban`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'x-api-key': 'SxWoCFTXjB36jBSdRpAO9AyeWS7vObj2iIDByooTxUM='
+                    }
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    // Ricarica utenti
+                    window.allUsers = null;
+                    loadUsers();
+                    showMessage(`✅ Utente ${data.banned ? 'bannato' : 'sbannato'}`, 'success');
+                } else {
+                    throw new Error(data.error || 'Errore nell\'operazione');
+                }
+            } catch (error) {
+                console.error('Errore toggle ban:', error);
+                showMessage(`❌ Errore: ${error.message}`, 'error');
+            }
+        }
+
+        // Mostra ordini di un utente specifico
+        function showUserOrders(telefono) {
+            // Filtra ordini per questo utente
+            const userOrders = allOrders.filter(order => order.telefono === telefono);
+            
+            if (userOrders.length === 0) {
+                alert('Nessun ordine trovato per questo utente');
+                return;
+            }
+
+            // Mostra tab "tutte" filtrata per questo utente
+            currentTab = 'tutte';
+            showTab('tutte');
+            
+            // Potremmo aggiungere un filtro temporaneo qui
+            setTimeout(() => {
+                alert(`Mostrando ${userOrders.length} ordini dell'utente ${telefono}`);
+            }, 500);
+        }
+
+        // Ottieni tipo cliente basato sulla valutazione
+        function getTipoCliente(valutazione) {
+            if (valutazione >= 4) return '⭐ Eccellente';
+            if (valutazione >= 3) return '🟡 Buono';
+            if (valutazione >= 2) return '🟠 Nella media';
+            return '🔴 Problema';
+        }
+
+        // Calcola statistiche cliente
+        function getStatisticheCliente(telefono) {
+            const ordiniCliente = allOrders.filter(order => order.telefono === telefono);
+            const totaleOrdini = ordiniCliente.length;
+            const ordiniCompletati = ordiniCliente.filter(order => order.stato === 'consegnato').length;
+            const totaleSpeso = ordiniCliente.reduce((sum, order) => sum + order.totale, 0);
+
+            return `${totaleOrdini} ordini, ${ordiniCompletati} completati, €${totaleSpeso.toFixed(2)}`;
+        }
+
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            // Non caricare dati automaticamente - aspetta login
+            // setInterval(loadData, 30000); // Commentato - caricherà dopo login
+        });
+
+        // Ricarica dati periodicamente se autenticato
+        setInterval(() => {
+            if (isAuthenticated) {
+                loadData();
+            }
+        }, 30000);
+
+        // ========== MAPPE ==========
+        let mapsInstances = {};
+
+        async function toggleMap(orderId, indirizzo) {
+            const mapDiv = document.getElementById(`map-${orderId}`);
+            
+            if (mapDiv.style.display === 'block') {
+                mapDiv.style.display = 'none';
+                return;
+            }
+            
+            mapDiv.style.display = 'block';
+            
+            // Se mappa già inizializzata
+            if (mapsInstances[orderId]) {
+                mapsInstances[orderId].invalidateSize();
+                return;
+            }
+
+            try {
+                // Geocoding con Nominatim
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(indirizzo + ', Italia')}`);
+                const data = await response.json();
+                
+                let lat = 42.3162, lng = 11.9778; // Default: Vetralla
+                
+                if (data && data.length > 0) {
+                    lat = parseFloat(data[0].lat);
+                    lng = parseFloat(data[0].lon);
+                }
+
+                const map = L.map(`map-${orderId}`).setView([lat, lng], 16);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap'
+                }).addTo(map);
+                
+                L.marker([lat, lng]).addTo(map)
+                    .bindPopup(`<b>📍 ${indirizzo}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">🚗 Naviga</a>`)
+                    .openPopup();
+
+                mapsInstances[orderId] = map;
+                
+                setTimeout(() => map.invalidateSize(), 100);
+                
+            } catch (error) {
+                console.error('Errore mappa:', error);
+                mapDiv.innerHTML = '<p style="padding:15px;color:#666;text-align:center">❌ Impossibile caricare la mappa</p>';
+            }
+        }
+
+        // ========== MODAL VALUTAZIONE ==========
+        function openRatingModal(telefono) {
+            const currentRating = window.valutazioniClienti?.[telefono]?.valutazione || 5;
+            
+            const modal = document.createElement('div');
+            modal.id = 'rating-modal';
+            modal.className = 'modal-overlay';
+            modal.onclick = (e) => { if (e.target === modal) closeRatingModal(); };
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3 style="margin-bottom: 10px">⭐ Valuta Cliente</h3>
+                    <p style="color: #666; margin-bottom: 15px">📱 ${telefono}</p>
+                    
+                    <div class="modal-stars" id="modal-stars">
+                        ${[1,2,3,4,5].map(n => `
+                            <span onclick="setRating('${telefono}', ${n})" 
+                                  onmouseover="previewStars(${n})" 
+                                  onmouseout="resetStars(${currentRating})">
+                                ${n <= currentRating ? '⭐' : '☆'}
+                            </span>
+                        `).join('')}
+                    </div>
+                    <p id="rating-text" style="color: #666; margin-bottom: 20px">${currentRating}/5</p>
+                    
+                    <button class="modal-btn modal-btn-secondary" onclick="closeRatingModal()">Chiudi</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function closeRatingModal() {
+            document.getElementById('rating-modal')?.remove();
+        }
+
+        function previewStars(rating) {
+            const starsDiv = document.getElementById('modal-stars');
+            if (!starsDiv) return;
+            starsDiv.querySelectorAll('span').forEach((span, i) => {
+                span.textContent = i < rating ? '⭐' : '☆';
+            });
+            document.getElementById('rating-text').textContent = `${rating}/5`;
+        }
+
+        function resetStars(rating) {
+            previewStars(rating);
+        }
+
+        async function setRating(telefono, rating) {
+            try {
+                const response = await fetch(`${API_HOST}/api/gestionale/utente/${telefono}/valutazione`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': 'SxWoCFTXjB36jBSdRpAO9AyeWS7vObj2iIDByooTxUM='
+                    },
+                    body: JSON.stringify({ valutazione: rating })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage(`✅ Valutazione salvata: ${'⭐'.repeat(rating)}`, 'success');
+                    closeRatingModal();
+                    // Aggiorna localmente
+                    if (!window.valutazioniClienti) window.valutazioniClienti = {};
+                    if (!window.valutazioniClienti[telefono]) window.valutazioniClienti[telefono] = {};
+                    window.valutazioniClienti[telefono].valutazione = rating;
+                    showTab(currentTab); // Ricarica vista
+                } else {
+                    showMessage('❌ Errore: ' + (result.error || 'Sconosciuto'), 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Errore connessione', 'error');
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</body>
+</html>

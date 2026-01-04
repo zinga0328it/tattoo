@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guardiania - Operatore di Sicurezza</title>
+  <style>
+    body {
+      font-family: 'Georgia', 'Segoe UI', serif;
+      margin: 0;
+      background: linear-gradient(135deg, #181204 0%, #bfa14a 80%, #fffbe6 100%);
+      color: #fffbe6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .lock-menu-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      margin-bottom: 30px;
+      user-select: none;
+    }
+    .lock-menu-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 18px;
+    }
+    .lock-menu {
+      width: 340px;
+      height: 220px;
+      background: rgba(34,34,34,0.8);
+      border-radius: 30px;
+      box-shadow: 0 0 30px #bfa14a99;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .lock-menu .menu-item {
+      width: 260px;
+      height: 54px;
+      line-height: 54px;
+      font-size: 1.45em;
+      color: #bfa14a;
+      opacity: 0.5;
+      transition: all 0.2s;
+      background: none;
+      border-radius: 20px;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+      text-align: center;
+    }
+    .lock-menu .menu-item.selected {
+      background: #bfa14a;
+      color: #181204;
+      font-size: 1.5em;
+      opacity: 1;
+      box-shadow: 0 2px 12px #bfa14a99;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .lock-menu .menu-item.above, .lock-menu .menu-item.below {
+      opacity: 0.8;
+      font-size: 1em;
+      color: #fffbe6;
+    }
+    .lock-menu .menu-item.far {
+      opacity: 0.3;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    #leftBtn, #rightBtn {
+      background: #bfa14a;
+      color: #181204;
+      border: none;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      font-size: 2.3em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #bfa14a88;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #leftBtn:hover, #rightBtn:hover {
+      background: #229ED9;
+      color: #fff;
+    }
+    .guardiania-box {
+      background: rgba(34,34,34,0.92);
+      border-radius: 24px;
+      box-shadow: 0 0 32px #bfa14a99;
+      padding: 48px 36px;
+      max-width: 540px;
+      text-align: center;
+      margin: 0 auto 40px auto;
+    }
+    h1 {
+      color: #bfa14a;
+      font-size: 2.3em;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      font-family: 'Georgia', serif;
+    }
+    p {
+      color: #fffbe6;
+      font-size: 1.18em;
+      line-height: 1.6;
+    }
+    label {
+      color: #bfa14a;
+      font-weight: bold;
+      font-size: 1.08em;
+    }
+    input, textarea {
+      background: #181204;
+      color: #fffbe6;
+      border: 1px solid #bfa14a;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 1.1em;
+      margin-bottom: 18px;
+      width: 80%;
+      box-shadow: 0 2px 8px #bfa14a22 inset;
+      transition: box-shadow 0.2s;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #bfa14a;
+    }
+    button[type="submit"] {
+      background: #bfa14a;
+      color: #181204;
+      font-weight: bold;
+      padding: 12px 32px;
+      border: none;
+      border-radius: 18px;
+      font-size: 1.2em;
+      box-shadow: 0 2px 10px #bfa14a88;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    button[type="submit"]:hover {
+      background: #229ED9;
+      color: #fff;
+    }
+    #preventivoResult {
+      color: #fffbe6;
+      background: #181204;
+      border: 1px solid #bfa14a;
+      border-radius: 12px;
+      padding: 18px 12px;
+      font-size: 1.1em;
+      margin-top: 18px;
+      box-shadow: 0 2px 8px #bfa14a33;
+    }
+    #ibanBox {
+      color: #bfa14a;
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-top: 18px;
+    }
+    @media (max-width: 700px) {
+      .lock-menu {
+        width: 98vw;
+        height: 120px;
+      }
+      .lock-menu .menu-item {
+        width: 98vw;
+        height: 36px;
+        font-size: 1.1em;
+      }
+      #leftBtn, #rightBtn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.5em;
+      }
+      .guardiania-box {
+        padding: 18px 4vw;
+      }
+  </style>
+</head>
+<body>
+  <!-- Barra bandierine per selezione lingua, visibile anche senza JS -->
+  <div class="flag-bar" style="display:flex;gap:8px;justify-content:flex-end;padding:10px 18px 0 0;">
+    <button class="flag-btn" data-lang="it" title="Italiano" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇹</button>
+    <button class="flag-btn" data-lang="en" title="English" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇬🇧</button>
+    <button class="flag-btn" data-lang="fr" title="Français" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇫🇷</button>
+    <button class="flag-btn" data-lang="de" title="Deutsch" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇩🇪</button>
+    <button class="flag-btn" data-lang="es" title="Español" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇪🇸</button>
+    <button class="flag-btn" data-lang="ar" title="العربية" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇸🇦</button>
+    <button class="flag-btn" data-lang="ru" title="Русский" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇷🇺</button>
+    <button class="flag-btn" data-lang="zh" title="中文" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇨🇳</button>
+    <button class="flag-btn" data-lang="ja" title="日本語" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇯🇵</button>
+    <button class="flag-btn" data-lang="hi" title="हिन्दी" style="font-size:1.7em;background:none;border:none;cursor:pointer;">🇮🇳</button>
+  </div>
+  <div class="lock-menu-container">
+    <div class="lock-menu-row">
+      <button id="leftBtn" aria-label="Precedente">&#9664;</button>
+      <div class="lock-menu" id="lockMenu">
+        <!-- Menu items will be injected here by JS -->
+      </div>
+      <button id="rightBtn" aria-label="Successivo">&#9654;</button>
+    </div>
+  </div>
+  <div class="guardiania-box">
+    <h1 id="guardiania-title">Guardiania e Vigilanza Disarmata</h1>
+    <p id="guardiania-desc">L’operatore di guardiania e vigilanza disarmata è responsabile del monitoraggio attivo delle aree critiche, garantendo la sicurezza di ospedali, discoteche, magazzini e centri commerciali. Con un’attenzione costante agli accessi e alle attività sospette, questo professionista utilizza tecnologie avanzate per collaborare con i sistemi di sorveglianza. È sempre pronto a intervenire in caso di situazioni critiche, offrendo supporto e assistenza al personale e ai visitatori.</p>
+    <form id="preventivoForm" style="margin-top:32px;">
+      <label id="guardiania-form-title" for="numPersone" style="display:block;margin-bottom:8px;font-weight:bold;">Numero di operatori richiesti:</label>
+      <input type="number" id="numPersone" name="numPersone" min="1" required style="width:80%;padding:10px;margin-bottom:18px;border-radius:8px;border:none;font-size:1.1em;">
+      <label id="guardiania-form-place" for="luogo" style="display:block;margin-bottom:8px;font-weight:bold;">Luogo/Area di servizio:</label>
+      <input type="text" id="luogo" name="luogo" required style="width:80%;padding:10px;margin-bottom:18px;border-radius:8px;border:none;font-size:1.1em;">
+      <label id="guardiania-form-calendar" for="calendario" style="display:block;margin-bottom:8px;font-weight:bold;">Calendario turni (date e orari):</label>
+      <textarea id="calendario" name="calendario" rows="3" required style="width:80%;padding:10px;margin-bottom:8px;border-radius:8px;border:none;font-size:1.1em;"></textarea>
+      <label id="guardiania-form-phone" for="telefono" style="display:block;margin-bottom:8px;font-weight:bold;">Recapito telefonico (WhatsApp o cellulare):</label>
+      <input type="tel" id="telefono" name="telefono" required pattern="[0-9+ ]{7,}" style="width:80%;padding:10px;margin-bottom:18px;border-radius:8px;border:none;font-size:1.1em;">
+      <label id="guardiania-form-notes" for="contatti" style="display:block;margin-bottom:8px;font-weight:bold;">Contatti alternativi o note (email, Telegram, preferenze, ecc):</label>
+      <textarea id="contatti" name="contatti" rows="2" id="guardiania-form-notes-input" placeholder="Scrivi qui qualsiasi informazione utile per ricontattarti o richieste particolari..." style="width:80%;padding:10px;margin-bottom:18px;border-radius:8px;border:none;font-size:1.1em;"></textarea>
+      <button type="submit" id="guardiania-form-btn" style="background:#bfa14a;color:#222;font-weight:bold;padding:12px 32px;border:none;border-radius:18px;font-size:1.2em;box-shadow:0 2px 10px #bfa14a88;cursor:pointer;">Genera Preventivo PDF</button>
+    </form>
+    <div id="preventivoResult" style="margin-top:28px;display:none;"></div>
+  </div>
+  <script>
+    // Menu stile "lucchetto a combinazione"
+    const menuItems = [
+      { label: 'Home', href: 'index.html' },
+      { label: 'Guardiania', href: 'guardiania.html' },
+      { label: 'Legale', href: 'legale.html' },
+      { label: 'Domotica', href: 'domotica.html' },
+      { label: 'Criptotelefonia', href: 'https://vpn-gypsy.com/' },
+      { label: '7070', href: 'antivirus.html' },
+      { label: 'Bonifiche', href: 'bonifiche.html' },
+      { label: 'SafeNode™', href: 'SafeNode.html' },
+      { label: 'Pulizie Straordinarie', href: 'straordinarie.html' },
+      { label: 'Contatti', href: 'contatti.html' },
+      { label: 'Chi siamo', href: 'chisiamo.html' }
+    ];
+    let selectedIdx = 1;
+    const lockMenu = document.getElementById('lockMenu');
+    function renderMenu() {
+      lockMenu.innerHTML = '';
+      for (let i = -2; i <= 2; i++) {
+        let idx = (selectedIdx + i + menuItems.length) % menuItems.length;
+        let item = document.createElement('a');
+        item.className = 'menu-item';
+        if (i === 0) item.classList.add('selected');
+        else if (Math.abs(i) === 1) item.classList.add(i < 0 ? 'above' : 'below');
+        else item.classList.add('far');
+        item.href = menuItems[idx].href;
+        item.textContent = menuItems[idx].label;
+        if (i === 0) item.tabIndex = 0;
+        lockMenu.appendChild(item);
+      }
+    }
+    function moveUp() {
+      selectedIdx = (selectedIdx - 1 + menuItems.length) % menuItems.length;
+      renderMenu();
+    }
+    function moveDown() {
+      selectedIdx = (selectedIdx + 1) % menuItems.length;
+      renderMenu();
+    }
+    document.getElementById('leftBtn').onclick = moveUp;
+    document.getElementById('rightBtn').onclick = moveDown;
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') { moveUp(); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { moveDown(); e.preventDefault(); }
+    });
+    let touchStartX = null;
+    lockMenu.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    });
+    lockMenu.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      let deltaX = e.changedTouches[0].clientX - touchStartX;
+      if (deltaX < -30) moveDown();
+      if (deltaX > 30) moveUp();
+      touchStartX = null;
+    });
+    renderMenu();
+    // Form preventivo con generazione PDF (placeholder, motore da implementare)
+    document.getElementById('preventivoForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const lang = localStorage.getItem('lang') || (navigator.language || 'it').slice(0,2).toLowerCase();
+      const t = window.translations && window.translations[lang] ? window.translations[lang] : window.translations['it'];
+      const numPersone = document.getElementById('numPersone').value;
+      const luogo = document.getElementById('luogo').value;
+      const calendario = document.getElementById('calendario').value;
+      const oreTotali = 8; // Placeholder, da calcolare dal calendario
+      const prezzo = numPersone * oreTotali * 13;
+      // Dati minimi per il backend (aggiungi altri campi se vuoi)
+      const dati = {
+        nome_cliente: '', // puoi aggiungere un campo nome nel form se vuoi
+        indirizzo_cliente: luogo,
+        cf_cliente: '', // opzionale, aggiungi campo se vuoi
+        durata_mesi: '1', // o altro valore
+        data_inizio: new Date().toLocaleDateString('it-IT'),
+        numero_operatori: numPersone,
+        ore_per_operatore: oreTotali,
+        tariffa_oraria: 13,
+        foro_competente: luogo,
+        luogo_data: luogo + ', ' + new Date().toLocaleDateString('it-IT'),
+        firma_cliente: '',
+        luogo: luogo,
+        calendario: calendario
+      };
+      // Chiamata al backend
+      try {
+  const response = await fetch('/genera-contratto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dati)
+        });
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Errore generazione contratto:', errorText);
+          throw new Error('Errore generazione contratto: ' + errorText);
+        }
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `contratto_guardiania_${luogo.replace(/\s+/g,'_')}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        document.getElementById('preventivoResult').style.display = 'block';
+        document.getElementById('preventivoResult').innerHTML =
+          (t.guardianiaResultOk || '<strong>Contratto generato!</strong><br>Controlla i download per il file.<br>')+
+          `${numPersone} ${(t.guardianiaResultPrice||'operatori x ore x 13€/ora = <span style=\'color:#bfa14a;font-size:1.3em;\'>€</span>').replace('operatori','operatori').replace('ore','ore').replace('13€/ora','13€/ora').replace('€', prezzo)}`;
+      } catch (err) {
+        console.error('Errore fetch preventivo:', err);
+        document.getElementById('preventivoResult').style.display = 'block';
+        document.getElementById('preventivoResult').innerHTML = (t.guardianiaResultErr || 'Errore nella generazione del contratto. Riprova.') + '<br><pre style="color:red;">' + err + '</pre>';
+      }
+    };
+  </script>
+  <!-- lang.js rimosso: non necessario -->
+  <script src="traduzione/guardiania.js"></script>
+  <!-- Assicurati che questo script sia caricato PRIMA degli altri script che usano window.translations -->
+  <script>
+    // Funzione per cambiare lingua e aggiornare i testi
+    function setGuardianiaLanguage(lang) {
+      localStorage.setItem('lang', lang);
+      const t = window.translations && window.translations[lang] ? window.translations[lang] : window.translations['it'];
+      // Titolo e descrizione
+      document.getElementById('guardiania-title').textContent = {
+        it: "Guardiania e Vigilanza Disarmata",
+        en: "Unarmed Security and Surveillance",
+        fr: "Surveillance et Gardiennage non armé",
+        de: "Unbewaffneter Wachdienst",
+        es: "Guardianía y Vigilancia sin armas",
+        ar: "الحراسة والمراقبة بدون سلاح",
+        ru: "Охрана и невооружённое наблюдение",
+        zh: "无武装守卫与监控",
+        ja: "無武装ガーディアン・警備",
+        hi: "असशस्त्र गार्डियनिया और निगरानी"
+      }[lang] || "Guardiania e Vigilanza Disarmata";
+      document.getElementById('guardiania-desc').textContent = {
+        it: "L’operatore di guardiania e vigilanza disarmata è responsabile del monitoraggio attivo delle aree critiche, garantendo la sicurezza di ospedali, discoteche, magazzini e centri commerciali. Con un’attenzione costante agli accessi e alle attività sospette, questo professionista utilizza tecnologie avanzate per collaborare con i sistemi di sorveglianza. È sempre pronto a intervenire in caso di situazioni critiche, offrendo supporto e assistenza al personale e ai visitatori.",
+        en: "The unarmed security operator is responsible for actively monitoring critical areas, ensuring the safety of hospitals, clubs, warehouses, and shopping centers. With constant attention to access points and suspicious activities, this professional uses advanced technologies to collaborate with surveillance systems. Always ready to intervene in critical situations, providing support and assistance to staff and visitors.",
+        fr: "L’opérateur de surveillance et de gardiennage non armé est responsable de la surveillance active des zones critiques, garantissant la sécurité des hôpitaux, discothèques, entrepôts et centres commerciaux. Grâce à une attention constante aux accès et aux activités suspectes, ce professionnel utilise des technologies avancées pour collaborer avec les systèmes de surveillance. Il est toujours prêt à intervenir en cas de situations critiques, offrant soutien et assistance au personnel et aux visiteurs.",
+        de: "Der unbewaffnete Sicherheitsmitarbeiter ist für die aktive Überwachung kritischer Bereiche verantwortlich und gewährleistet die Sicherheit von Krankenhäusern, Diskotheken, Lagern und Einkaufszentren. Mit ständiger Aufmerksamkeit für Zugänge und verdächtige Aktivitäten nutzt dieser Profi fortschrittliche Technologien zur Zusammenarbeit mit Überwachungssystemen. Er ist stets bereit, in kritischen Situationen einzugreifen und Personal sowie Besuchern Unterstützung zu bieten.",
+        es: "El operador de guardianía y vigilancia sin armas es responsable de la monitorización activa de áreas críticas, garantizando la seguridad de hospitales, discotecas, almacenes y centros comerciales. Con
+        a.download = `contratto_guardiania_${luogo.replace(/\s+/g,'_')}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        document.getElementById('preventivoResult').style.display = 'block';
+        document.getElementById('preventivoResult').innerHTML =
+          (t.guardianiaResultOk || '<strong>Contratto generato!</strong><br>Controlla i download per il file.<br>')+
+          `${numPersone} ${(t.guardianiaResultPrice||'operatori x ore x 13€/ora = <span style=\'color:#bfa14a;font-size:1.3em;\'>€</span>').replace('operatori','operatori').replace('ore','ore').replace('13€/ora','13€/ora').replace('€', prezzo)}`;
+      } catch (err) {
+        console.error('Errore fetch preventivo:', err);
+        document.getElementById('preventivoResult').style.display = 'block';
+        document.getElementById('preventivoResult').innerHTML = (t.guardianiaResultErr || 'Errore nella generazione del contratto. Riprova.') + '<br><pre style="color:red;">' + err + '</pre>';
+      }
+    };
+  </script>
+  <!-- lang.js rimosso: non necessario -->
+  <script src="traduzione/guardiania.js"></script>
+  <!-- Assicurati che questo script sia caricato PRIMA degli altri script che usano window.translations -->
+  <script>
+    // Funzione per cambiare lingua e aggiornare i testi
+    function setGuardianiaLanguage(lang) {
+      localStorage.setItem('lang', lang);
+      const t = window.translations && window.translations[lang] ? window.translations[lang] : window.translations['it'];
+      // Titolo e descrizione
+      document.getElementById('guardiania-title').textContent = {
+        it: "Guardiania e Vigilanza Disarmata",
+        en: "Unarmed Security and Surveillance",
+        fr: "Surveillance et Gardiennage non armé",
+        de: "Unbewaffneter Wachdienst",
+        es: "Guardianía y Vigilancia sin armas",
+        ar: "الحراسة والمراقبة بدون سلاح",
+        ru: "Охрана и невооружённое наблюдение",
+        zh: "无武装守卫与监控",
+        ja: "無武装ガーディアン・警備",
+        hi: "असशस्त्र गार्डियनिया और निगरानी"
+      }[lang] || "Guardiania e Vigilanza Disarmata";
+      document.getElementById('guardiania-desc').textContent = {
+        it: "L’operatore di guardiania e vigilanza disarmata è responsabile del monitoraggio attivo delle aree critiche, garantendo la sicurezza di ospedali, discoteche, magazzini e centri commerciali. Con un’attenzione costante agli accessi e alle attività sospette, questo professionista utilizza tecnologie avanzate per collaborare con i sistemi di sorveglianza. È sempre pronto a intervenire in caso di situazioni critiche, offrendo supporto e assistenza al personale e ai visitatori.",
+        en: "The unarmed security operator is responsible for actively monitoring critical areas, ensuring the safety of hospitals, clubs, warehouses, and shopping centers. With constant attention to access points and suspicious activities, this professional uses advanced technologies to collaborate with surveillance systems. Always ready to intervene in critical situations, providing support and assistance to staff and visitors.",
+        fr: "L’opérateur de surveillance et de gardiennage non armé est responsable de la surveillance active des zones critiques, garantissant la sécurité des hôpitaux, discothèques, entrepôts et centres commerciaux. Grâce à une attention constante aux accès et aux activités suspectes, ce professionnel utilise des technologies avancées pour collaborer avec les systèmes de surveillance. Il est toujours prêt à intervenir en cas de situations critiques, offrant soutien et assistance au personnel et aux visiteurs.",
+        de: "Der unbewaffnete Sicherheitsmitarbeiter ist für die aktive Überwachung kritischer Bereiche verantwortlich und gewährleistet die Sicherheit von Krankenhäusern, Diskotheken, Lagern und Einkaufszentren. Mit ständiger Aufmerksamkeit für Zugänge und verdächtige Aktivitäten nutzt dieser Profi fortschrittliche Technologien zur Zusammenarbeit mit Überwachungssystemen. Er ist stets bereit, in kritischen Situationen einzugreifen und Personal sowie Besuchern Unterstützung zu bieten.",
+        es: "El operador de guardianía y vigilancia sin armas es responsable de la monitorización activa de áreas críticas, garantizando la seguridad de hospitales, discotecas, almacenes y centros comerciales. Con
+    // Form preventivo con generazione PDF (placeholder, motore da implementare)
+    document.getElementById('preventivoForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const lang = localStorage.getItem('lang') || (navigator.language || 'it').slice(0,2).toLowerCase();
+      const t = window.translations && window.translations[lang] ? window.translations[lang] : window.translations['it'];
+      const numPersone = document.getElementById('numPersone').value;
+      const luogo = document.getElementById('luogo').value;
+      const calendario = document.getElementById('calendario').value;
+      const oreTotali = 8; // Placeholder, da calcolare dal calendario
+      const prezzo = numPersone * oreTotali * 13;
+      // Dati minimi per il backend (aggiungi altri campi se vuoi)
+      const dati = {
+        nome_cliente: '', // puoi aggiungere un campo nome nel form se vuoi
+        indirizzo_cliente: luogo,
+        cf_cliente: '', // opzionale, aggiungi campo se vuoi
+        durata_mesi: '1', // o altro valore
+        data_inizio: new Date().toLocaleDateString('it-IT'),
+        numero_operatori: numPersone,
+        ore_per_operatore: oreTotali,
+        tariffa_oraria: 13,
+        foro_competente: luogo,
+        luogo_data: luogo + ', ' + new Date().toLocaleDateString('it-IT'),
+        firma_cliente: '',
+        luogo: luogo,
+        calendario: calendario
+      };
+      // Chiamata al backend
+      try {
+  const response = await fetch('/genera-contratto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dati)
+        });
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Errore generazione contratto:', errorText);
+          throw new Error('Errore generazione contratto: ' + errorText);
+        }
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `contratto_guardiania_${luogo.replace(/\s+/g,'_')}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        document.getElementById('preventivoResult').style.display = 'block';
+        document.getElementById('preventivoResult').innerHTML =
+          (t.guardianiaResultOk || '<strong>Contratto generato!</strong><br>Controlla i download per il file.<br>')+
+          `${numPersone} ${(t.guardianiaResultPrice||'operatori x ore x 13€/ora = <span style=\'color:#bfa14a;font-size:1.3em;\'>€</span>').replace('operatori','operatori').replace('ore','ore').replace('13€/ora','13€/ora').replace('€', prezzo)}`;
+        document.getElementById('ibanBox').style.display = 'block';
+      } catch (err) {
+        console.error('Errore fetch preventivo:', err);
+        document.getElementById('preventivoResult').style.display = 'block';
+        document.getElementById('preventivoResult').innerHTML = (t.guardianiaResultErr || 'Errore nella generazione del contratto. Riprova.') + '<br><pre style="color:red;">' + err + '</pre>';
+      }
+    };
+  </script>
+  <!-- lang.js rimosso: non necessario -->
+  <script src="traduzione/guardiania.js"></script>
+  <!-- Assicurati che questo script sia caricato PRIMA degli altri script che usano window.translations -->
+  <script>
+    // Funzione per cambiare lingua e aggiornare i testi
+    function setGuardianiaLanguage(lang) {
+      localStorage.setItem('lang', lang);
+      const t = window.translations && window.translations[lang] ? window.translations[lang] : window.translations['it'];
+      // Titolo e descrizione
+      document.getElementById('guardiania-title').textContent = {
+        it: "Guardiania e Vigilanza Disarmata",
+        en: "Unarmed Security and Surveillance",
+        fr: "Surveillance et Gardiennage non armé",
+        de: "Unbewaffneter Wachdienst",
+        es: "Guardianía y Vigilancia sin armas",
+        ar: "الحراسة والمراقبة بدون سلاح",
+        ru: "Охрана и невооружённое наблюдение",
+        zh: "无武装守卫与监控",
+        ja: "無武装ガーディアン・警備",
+        hi: "असशस्त्र गार्डियनिया और निगरानी"
+      }[lang] || "Guardiania e Vigilanza Disarmata";
+      document.getElementById('guardiania-desc').textContent = {
+        it: "L’operatore di guardiania e vigilanza disarmata è responsabile del monitoraggio attivo delle aree critiche, garantendo la sicurezza di ospedali, discoteche, magazzini e centri commerciali. Con un’attenzione costante agli accessi e alle attività sospette, questo professionista utilizza tecnologie avanzate per collaborare con i sistemi di sorveglianza. È sempre pronto a intervenire in caso di situazioni critiche, offrendo supporto e assistenza al personale e ai visitatori.",
+        en: "The unarmed security operator is responsible for actively monitoring critical areas, ensuring the safety of hospitals, clubs, warehouses, and shopping centers. With constant attention to access points and suspicious activities, this professional uses advanced technologies to collaborate with surveillance systems. Always ready to intervene in critical situations, providing support and assistance to staff and visitors.",
+        fr: "L’opérateur de surveillance et de gardiennage non armé est responsable de la surveillance active des zones critiques, garantissant la sécurité des hôpitaux, discothèques, entrepôts et centres commerciaux. Grâce à une attention constante aux accès et aux activités suspectes, ce professionnel utilise des technologies avancées pour collaborer avec les systèmes de surveillance. Il est toujours prêt à intervenir en cas de situations critiques, offrant soutien et assistance au personnel et aux visiteurs.",
+        de: "Der unbewaffnete Sicherheitsmitarbeiter ist für die aktive Überwachung kritischer Bereiche verantwortlich und gewährleistet die Sicherheit von Krankenhäusern, Diskotheken, Lagern und Einkaufszentren. Mit ständiger Aufmerksamkeit für Zugänge und verdächtige Aktivitäten nutzt dieser Profi fortschrittliche Technologien zur Zusammenarbeit mit Überwachungssystemen. Er ist stets bereit, in kritischen Situationen einzugreifen und Personal sowie Besuchern Unterstützung zu bieten.",
+        es: "El operador de guardianía y vigilancia sin armas es responsable de la monitorización activa de áreas críticas, garantizando la seguridad de hospitales, discotecas, almacenes y centros comerciales. Con atención constante a los accesos y actividades sospechosas, este profesional utiliza tecnologías avanzadas para colaborar con los sistemas de vigilancia. Siempre está listo para intervenir en situaciones críticas, ofreciendo apoyo y asistencia al personal y visitantes.",
+        ar: "مشغل الحراسة والمراقبة بدون سلاح مسؤول عن المراقبة النشطة للمناطق الحرجة، وضمان أمان المستشفيات والنوادي والمخازن والمراكز التجارية. مع الانتباه الدائم للمداخل والأنشطة المشبوهة، يستخدم هذا المحترف تقنيات متقدمة للتعاون مع أنظمة المراقبة. وهو دائمًا مستعد للتدخل في الحالات الحرجة، وتقديم الدعم والمساعدة للموظفين والزوار.",
+        ru: "Оператор охраны и невооружённого наблюдения отвечает за активный мониторинг критических зон, обеспечивая безопасность больниц, клубов, складов и торговых центров. Постоянно следя за доступами и подозрительной активностью, этот специалист использует современные технологии для взаимодействия с системами видеонаблюдения. Всегда готов вмешаться в критических ситуациях, оказывая поддержку персоналу и посетителям.",
+        zh: "无武装守卫与监控操作员负责对关键区域进行主动监控，保障医院、夜总会、仓库和购物中心的安全。该专业人员时刻关注出入口和可疑活动，利用先进技术与监控系统协作。始终准备在关键情况下介入，为员工和访客提供支持和协助。",
+        ja: "無武装ガーディアン・警備員は重要エリアの積極的な監視を担当し、病院、クラブ、倉庫、ショッピングセンターの安全を確保します。出入口や不審な活動に常に注意を払い、先進技術を活用して監視システムと連携します。常に緊急時に対応し、スタッフや来訪者にサポートと支援を提供します。",
+        hi: "असशस्त्र गार्डियनिया और निगरानी ऑपरेटर महत्वपूर्ण क्षेत्रों की सक्रिय निगरानी के लिए जिम्मेदार है, जो अस्पतालों, डिस्को, गोदामों और शॉपिंग सेंटरों की सुरक्षा सुनिश्चित करता है। यह पेशेवर प्रवेश बिंदुओं और संदिग्ध गतिविधियों पर लगातार ध्यान देता है और निगरानी प्रणालियों के साथ सहयोग के लिए उन्नत तकनीकों का उपयोग करता है। यह हमेशा संकट की स्थिति में हस्तक्षेप करने, कर्मचारियों और आगंतुकों को सहायता और समर्थन देने के लिए तैयार रहता है।"
+      }[lang] || document.getElementById('guardiania-desc').textContent;
+      // Form labels (aggiungi qui le traduzioni se vuoi)
+      // Placeholder: puoi aggiungere traduzioni per i label come fatto sopra
+    // Collega le bandiere
+    document.querySelectorAll('.flag-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        setGuardianiaLanguage(this.getAttribute('data-lang'));
+      });
+    });
+    // Lingua di default
+    setGuardianiaLanguage(localStorage.getItem('lang') || (navigator.language || 'it').slice(0,2).toLowerCase());
+  </script>
+  <script>
+(function() {
+  function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+  function getOrSetUserId() {
+    let match = document.cookie.match(/(?:^|; )user_id=([^;]*)/);
+    if (match) return match[1];
+    let id = uuidv4();
+    document.cookie = "user_id=" + id + "; path=/; max-age=31536000";
+    return id;
+  }
+  function registraVisita() {
+    const user_id = getOrSetUserId();
+  fetch("https://93.57.240.131:2626/?user_id=" + encodeURIComponent(user_id), {
+      method: "GET",
+      credentials: "include"
+    });
+  }
+  registraVisita();
+})();
+  </script>
+  <script>
+    // Lista di browser umani
+    const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+    let isBot = true;
+    for (let b of safeBrowsers) {
+      if (navigator.userAgent.includes(b)) {
+        isBot = false;
+        break;
+      }
+    }
+    // Se è un bot, lo reindirizzi alla trappola
+    if (isBot) {
+      window.location.href = "/home.html";
+    }
+  </script>
+</body>
+</html>

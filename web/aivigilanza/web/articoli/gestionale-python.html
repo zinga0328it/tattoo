@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestionale Python - Sistema FTTH Avanzato</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Gestionale Python FTTH",
+    "description": "Sistema avanzato di gestione ordini fibra ottica con architettura distribuita e integrazione IA",
+    "url": "https://servicess.net/articoli/gestionale-python.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Linux",
+    "programmingLanguage": "Python",
+    "author": {
+      "@type": "Organization",
+      "name": "Servicess"
+    }
+  }
+  </script>
+
+  <!-- Anti-bot -->
+  <script>
+    const safeBrowsers = ["Chrome", "Firefox", "Safari", "Edg", "Opera"];
+    let isBot = true;
+    for (let b of safeBrowsers) {
+      if (navigator.userAgent.includes(b)) {
+        isBot = false;
+        break;
+      }
+    }
+    if (isBot) {
+      window.location.href = "/home.html";
+    }
+  </script>
+
+  <!-- Stile -->
+  <style>
+    body {
+      background: #2a1d12;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #f1c40f;
+      line-height: 1.6;
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .main-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px 16px;
+      box-sizing: border-box;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(59, 43, 32, 0.8);
+      border-radius: 15px;
+      border: 1px solid rgba(241, 196, 15, 0.2);
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #f1c40f;
+    }
+
+    .header p {
+      font-size: 16px;
+      color: #d4af37;
+      margin: 0;
+    }
+
+    .section {
+      background: rgba(59, 43, 32, 0.8);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(241, 196, 15, 0.1);
+    }
+
+    .section h2 {
+      color: #f1c40f;
+      font-size: 22px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #f1c40f;
+      padding-bottom: 8px;
+    }
+
+    .section h3 {
+      color: #d4af37;
+      font-size: 18px;
+      margin: 20px 0 10px 0;
+    }
+
+    .tech-spec {
+      background: rgba(0, 0, 0, 0.3);
+      border-left: 4px solid #f1c40f;
+      padding: 15px;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    .code-block {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      color: #f1c40f;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(241, 196, 15, 0.1);
+    }
+
+    .feature-list li:before {
+      content: "⚡";
+      margin-right: 10px;
+      color: #f1c40f;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, #f1c40f 0%, #d4af37 100%);
+      color: #2a1d12;
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid #f1c40f;
+      margin: 20px 0;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(241, 196, 15, 0.3);
+    }
+
+    .architecture-diagram {
+      text-align: center;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #d4af37;
+    }
+
+    .warning {
+      background: rgba(220, 53, 69, 0.1);
+      border: 1px solid #dc3545;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+    }
+
+    .warning strong {
+      color: #ff6b6b;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 15px 10px;
+      }
+      .header h1 {
+        font-size: 24px;
+      }
+      .section {
+        padding: 20px;
+      }
+      .code-block {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <div class="header">
+      <h1>🔧 Gestionale Python - Sistema FTTH Avanzato</h1>
+      <p>Sistema di gestione ordini fibra ottica con architettura distribuita e IA integrata</p>
+    </div>
+
+    <div class="section">
+      <h2>🏗️ Architettura Tecnica</h2>
+      <p>Il sistema è costruito con un'architettura distribuita sicura che combina tecnologie moderne per garantire massima affidabilità e prestazioni.</p>
+
+      <div class="architecture-diagram">
+        ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐<br>
+        │   Frontend      │    │   Apache Proxy  │    │   Backend API   │<br>
+        │   (HTML/JS)     │◄──►│   (mod_proxy)   │◄──►│   (FastAPI)     │<br>
+        │                 │    │   HTTPS/WSS     │    │   Python 3.9+   │<br>
+        └─────────────────┘    └─────────────────┘    └─────────────────┘<br>
+               │                        │                        │<br>
+               ▼                        ▼                        ▼<br>
+        ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐<br>
+        │   Yggdrasil     │    │   fail2ban      │    │   PostgreSQL    │<br>
+        │   IPv6 Network  │    │   + nftables    │    │   Database      │<br>
+        │   (Sicurezza)   │    │   (Firewall)    │    │   (Dati)        │<br>
+        └─────────────────┘    └─────────────────┘    └─────────────────┘
+      </div>
+
+      <h3>Componenti Principali</h3>
+      <ul class="feature-list">
+        <li><strong>Backend FastAPI:</strong> Framework Python asincrono per API REST ad alte prestazioni</li>
+        <li><strong>Yggdrasil Network:</strong> Overlay network IPv6 crittografata per comunicazioni sicure</li>
+        <li><strong>Apache Proxy:</strong> Reverse proxy con terminazione SSL e bilanciamento del carico</li>
+        <li><strong>PostgreSQL:</strong> Database relazionale per persistenza dati con ottimizzazioni JSONB</li>
+        <li><strong>fail2ban + nftables:</strong> Sistema di sicurezza con ban automatici e firewall avanzato</li>
+        <li><strong>WebSocket Integration:</strong> Comunicazioni real-time per aggiornamenti live</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🤖 Integrazione con OpenAI GPT</h2>
+      <p>Il sistema include un'interfaccia avanzata per l'integrazione con modelli di linguaggio di OpenAI, permettendo operazioni automatizzate e assistenza intelligente.</p>
+
+      <div class="tech-spec">
+        <strong>API Integration:</strong><br>
+        • Endpoint dedicati per elaborazione testo e comandi vocali<br>
+        • Autenticazione sicura con API keys rotanti<br>
+        • Rate limiting intelligente per evitare sovraccarichi<br>
+        • Logging completo per audit e debugging
+      </div>
+
+      <h3>Funzionalità GPT</h3>
+      <ul class="feature-list">
+        <li><strong>Creazione Automatica Lavori:</strong> Generazione ordini da descrizioni testuali</li>
+        <li><strong>Assegnazione Intelligente:</strong> Suggerimenti tecnici basati su competenza e disponibilità</li>
+        <li><strong>Report Automatici:</strong> Generazione documentazione tecnica e rapporti di stato</li>
+        <li><strong>Assistenza Virtuale:</strong> Chatbot integrato per supporto operativo 24/7</li>
+        <li><strong>Analisi Predittiva:</strong> Previsioni sui tempi di completamento basate su dati storici</li>
+      </ul>
+
+      <div class="code-block">
+# Esempio di chiamata API GPT integrata
+curl -X POST "https://servicess.net/gestionale/gpt/process" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "create_work_order",
+    "description": "Installazione fibra ottica presso cliente Mario Rossi, Via Roma 123",
+    "priority": "high"
+  }'
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🔒 Sicurezza e Autenticazione</h2>
+      <p>Il sistema implementa multiple livelli di sicurezza per proteggere dati sensibili e garantire integrità operativa.</p>
+
+      <h3>Livelli di Sicurezza</h3>
+      <ul class="feature-list">
+        <li><strong>Autenticazione API:</strong> API keys crittografate con rotazione automatica</li>
+        <li><strong>Crittografia End-to-End:</strong> Tutte le comunicazioni protette con TLS 1.3</li>
+        <li><strong>Network Isolation:</strong> Yggdrasil garantisce isolamento dalla rete pubblica</li>
+        <li><strong>Rate Limiting:</strong> Protezione contro attacchi DDoS e brute force</li>
+        <li><strong>Audit Logging:</strong> Tracciamento completo di tutte le operazioni</li>
+        <li><strong>Backup Automatici:</strong> Snapshots crittografati con versioning</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠️ Nota di Sicurezza:</strong> Il sistema è progettato per ambienti critici con compliance GDPR e requisiti di sicurezza elevati. Tutti i dati sono crittografati a riposo e in transito.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📊 Funzionalità Tecniche</h2>
+
+      <h3>Gestione Lavori FTTH</h3>
+      <ul class="feature-list">
+        <li><strong>Workflow Completo:</strong> Da creazione ordine a completamento con tracking real-time</li>
+        <li><strong>Assegnazione Dinamica:</strong> Algoritmi intelligenti per ottimizzazione risorse</li>
+        <li><strong>Integrazione GIS:</strong> Mappatura geografica con OpenStreetMap e geocoding</li>
+        <li><strong>Notifiche Telegram:</strong> Sistema di comunicazione integrato per tecnici</li>
+        <li><strong>Dashboard Analytics:</strong> Reportistica avanzata con metriche operative</li>
+        <li><strong>API RESTful:</strong> Interfacce standard per integrazioni terze parti</li>
+      </ul>
+
+      <h3>Performance e Scalabilità</h3>
+      <div class="tech-spec">
+        <strong>Metriche Prestazionali:</strong><br>
+        • Latenza API: < 50ms per operazioni standard<br>
+        • Throughput: > 1000 richieste/secondo<br>
+        • Uptime: 99.9% con failover automatico<br>
+        • Scalabilità: Architettura orizzontale con load balancing
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🚀 Accesso al Sistema</h2>
+      <p>Per accedere al gestionale completo e testare tutte le funzionalità, utilizza il pulsante qui sotto per entrare nell'interfaccia principale del sistema FTTH.</p>
+
+      <div style="text-align: center;">
+        <a href="/fibra/index.html" class="btn-primary">
+          🔗 Accedi al Gestionale FTTH
+        </a>
+        <br><br>
+        <a href="/articoli/manuale_ftth.html" class="btn-primary">
+          📖 Info Manuale Tecnico
+        </a>
+      </div>
+
+      <div class="tech-spec" style="margin-top: 20px;">
+        <strong>URL di Accesso:</strong> https://servicess.net/fibra/<br>
+        <strong>Autenticazione:</strong> Richiesta per accesso completo<br>
+        <strong>Browser Supportati:</strong> Chrome, Firefox, Safari, Edge
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📞 Supporto e Documentazione</h2>
+      <p>Per assistenza tecnica o domande specifiche sul sistema, consulta la documentazione completa o contatta il team di sviluppo.</p>
+
+      <ul class="feature-list">
+        <li><strong>Documentazione API:</strong> Specifiche complete su GitHub</li>
+        <li><strong>Guide di Installazione:</strong> Setup per ambienti di sviluppo e produzione</li>
+        <li><strong>Best Practices:</strong> Raccomandazioni per deployment sicuro</li>
+        <li><strong>Community:</strong> Forum e canali di supporto dedicati</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

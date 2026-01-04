@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricontattaci - Servicess.net</title>
+    <style>
+        :root {
+            --bg: #0b1320;
+            --card: #111a2b;
+            --text: #e8f0ff;
+            --muted: #94a3b8;
+            --brand: #4da3ff;
+            --success: #1ee37d;
+            --error: #ff4757;
+            --warning: #ffa500;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--brand);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--muted);
+            font-size: 1.1em;
+        }
+
+        .form-section, .contract-section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .form-section h2, .contract-section h2 {
+            color: var(--brand);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--brand);
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--brand);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            margin-top: 2px;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .privacy-text {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .contract-text {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contract-text h3 {
+            color: var(--brand);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .contract-text p {
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--brand);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3a8eff;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .message.success {
+            background: rgba(30, 227, 125, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .message.error {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--brand);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .required {
+            color: var(--error);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .form-section, .contract-section {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔔 Ricontattaci</h1>
+            <p>Richiedi una consulenza gratuita per i nostri servizi di vigilanza e pulizie</p>
+        </div>
+
+        <form id="ricontattoForm">
+            <div class="form-section">
+                <h2>📋 Dati Personali</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nome">Nome <span class="required">*</span></label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cognome">Cognome <span class="required">*</span></label>
+                        <input type="text" id="cognome" name="cognome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Telefono</label>
+                        <input type="tel" id="telefono" name="telefono">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="indirizzo">Indirizzo</label>
+                        <input type="text" id="indirizzo" name="indirizzo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="citta">Città</label>
+                        <input type="text" id="citta" name="citta">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cap">CAP</label>
+                        <input type="text" id="cap" name="cap" pattern="[0-9]{5}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cf_piva">Codice Fiscale / P.IVA</label>
+                        <input type="text" id="cf_piva" name="cf_piva">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo_servizio">Tipo di Servizio <span class="required">*</span></label>
+                    <select id="tipo_servizio" name="tipo_servizio" required>
+                        <option value="">Seleziona un servizio</option>
+                        <option value="vigilanza">Vigilanza Privata</option>
+                        <option value="pulizie">Pulizie Professionali</option>
+                        <option value="sicurezza">Consulenza Sicurezza</option>
+                        <option value="web">Servizi Web</option>
+                        <option value="altro">Altro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="descrizione_richiesta">Descrivi la tua richiesta</label>
+                    <textarea id="descrizione_richiesta" name="descrizione_richiesta"
+                        placeholder="Descrivi brevemente le tue esigenze e il tipo di servizio che stai cercando..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>🔒 Informativa Privacy</h2>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="privacy_accettata" name="privacy_accettata" required>
+                    <label for="privacy_accettata">
+                        <strong>Accetto l'informativa privacy</strong> <span class="required">*</span>
+                    </label>
+                </div>
+
+                <div class="privacy-text">
+                    <strong>INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI</strong><br><br>
+
+                    Ai sensi dell'art. 13 del Regolamento (UE) 2016/679 (GDPR), La informiamo che:<br><br>
+
+                    <strong>1. Titolare del trattamento:</strong> Servicess.net di Alessandro Pepe - Via G. Galopini, 1 - 00133 Roma (RM) - P.IVA: 10807641005<br>
+                    <strong>2. Finalità:</strong> Rispondere alla sua richiesta di ricontatto e fornire informazioni sui nostri servizi<br>
+                    <strong>3. Base giuridica:</strong> Consenso dell'interessato (art. 6.1.a GDPR)<br>
+                    <strong>4. Dati trattati:</strong> Nome, cognome, email, telefono, indirizzo, dati di navigazione<br>
+                    <strong>5. Conservazione:</strong> I dati saranno conservati per 2 anni dalla raccolta<br>
+                    <strong>6. Diritti:</strong> Accesso, rettifica, cancellazione, opposizione, portabilità<br>
+                    <strong>7. Contatti:</strong> info@servicess.net<br><br>
+
+                    Per maggiori informazioni, consulta la nostra <a href="/consenso.html" target="_blank" style="color: var(--brand);">Privacy Policy completa</a>.
+                </div>
+            </div>
+
+            <div class="contract-section">
+                <h2>📄 Contratto di Ricontatto</h2>
+
+                <div class="contract-text">
+                    <h3>CONTRATTO DI RICONTATTO E CONSULENZA</h3>
+
+                    <p><strong>Tra:</strong><br>
+                    Servicess.net di Alessandro Pepe<br>
+                    Via G. Galopini, 1 - 00133 Roma (RM)<br>
+                    P.IVA: 10807641005 - C.F.: PPELSN79M18H501R<br>
+                    Email: info@servicess.net</p>
+
+                    <p><strong>E:</strong><br>
+                    [I dati che inserirai nel form sopra]</p>
+
+                    <h3>1. OGGETTO DEL CONTRATTO</h3>
+                    <p>Il presente contratto ha ad oggetto la richiesta di ricontatto e consulenza per servizi di vigilanza privata e pulizie professionali.</p>
+
+                    <h3>2. CONSULENZA E INFORMAZIONI</h3>
+                    <p>Servicess.net si impegna a fornire informazioni accurate e complete sui propri servizi, senza alcun obbligo di stipula.</p>
+
+                    <h3>3. TRATTAMENTO DEI DATI PERSONALI</h3>
+                    <p>I dati forniti saranno trattati nel rispetto del GDPR 2016/679 e utilizzati esclusivamente per le finalità indicate.</p>
+
+                    <h3>4. CONSENSO AL TRATTAMENTO</h3>
+                    <p>Il sottoscritto dichiara di aver letto e compreso l'informativa privacy e acconsente al trattamento dei propri dati personali.</p>
+
+                    <h3>5. DIRITTI DELL'INTERESSATO</h3>
+                    <p>L'interessato ha diritto di accedere, rettificare, cancellare i propri dati o opporsi al loro trattamento.</p>
+
+                    <h3>6. FORO COMPETENTE</h3>
+                    <p>Per qualsiasi controversia sarà competente il Foro di Roma.</p>
+
+                    <h3>7. ACCETTAZIONE</h3>
+                    <p>Il presente contratto si intende accettato con la sottoscrizione elettronica del modulo di richiesta.</p>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="contratto_accettato" name="contratto_accettato" required>
+                    <label for="contratto_accettato">
+                        <strong>Accetto i termini del contratto di ricontatto</strong> <span class="required">*</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="message" id="message"></div>
+
+            <div class="buttons">
+                <button type="button" class="btn btn-secondary" onclick="window.history.back()">Annulla</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    📤 Invia Richiesta e Scarica PDF
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('ricontattoForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('message');
+
+            // Mostra loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="loading"></div>Invio in corso...';
+            messageDiv.style.display = 'none';
+
+            try {
+                // Raccogli i dati del form
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+
+                // Converti checkbox in booleani
+                data.privacy_accettata = this.privacy_accettata.checked;
+                data.contratto_accettato = this.contratto_accettato.checked;
+
+                console.log('Dati da inviare:', data);
+
+                // Invia i dati al backend
+                const response = await fetch('/genera-contratto-ricontatto', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Errore durante l\'invio');
+                }
+
+                // Scarica il PDF
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'contratto_ricontatto.pdf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+
+                // Messaggio di successo
+                messageDiv.className = 'message success';
+                messageDiv.textContent = '✅ Richiesta inviata con successo! Il PDF è stato scaricato.';
+                messageDiv.style.display = 'block';
+
+                submitBtn.innerHTML = '✅ Completato!';
+
+                // Reset form dopo 3 secondi
+                setTimeout(() => {
+                    this.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '📤 Invia Richiesta e Scarica PDF';
+                    messageDiv.style.display = 'none';
+                }, 3000);
+
+            } catch (error) {
+                console.error('Errore:', error);
+                messageDiv.className = 'message error';
+                messageDiv.textContent = `❌ Errore: ${error.message}`;
+                messageDiv.style.display = 'block';
+
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '📤 Riprova';
+            }
+        });
+
+        // Validazione in tempo reale
+        document.querySelectorAll('input[required], select[required]').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = 'var(--error)';
+                } else {
+                    this.style.borderColor = 'var(--brand)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
